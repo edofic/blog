@@ -1,0 +1,6 @@
+_cache
+_site
+*.swp
+/site*
+
+
