@@ -1,6 +1,5 @@
 ---
 title: Hakyll
-author: edofic
 ---
 
 Hello there. I think I'm gonna resurrect this blog as I feel like writing again. 

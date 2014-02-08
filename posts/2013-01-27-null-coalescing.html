@@ -1,0 +1,30 @@
+---
+title: Null-coalescing(??) in scala
+---
+
+I was doing my homework today(yes I am aware I should be enjoying myself on 30th December)
+
+[caption id="" align="alignright" width="150"]<a href="http://commons.wikipedia.org/wiki/File:BlackHole.jpg" target="_blank"><img class="zemanta-img-inserted zemanta-img-configured" title="The supermassive black holes are all that rema..." alt="The supermassive black holes are all that rema..." src="http://upload.wikimedia.org/wikipedia/commons/thumb/d/d4/BlackHole.jpg/300px-BlackHole.jpg" width="150" /></a> Null reminds me of black holes.[/caption]
+
+and rad some problems with <a class="zem_slink" title="Concatenation" href="http://en.wikipedia.org/wiki/Concatenation" target="_blank" rel="wikipedia">concatenating</a> possibly null strings in <a class="zem_slink" title="Language Integrated Query" href="http://en.wikipedia.org/wiki/Language_Integrated_Query" target="_blank" rel="wikipedia">LINQ</a>. Quick trip to <a class="zem_slink" title="Stack Overflow" href="http://stackoverflow.com/" target="_blank" rel="homepage">StackOverflow</a> and I find out <a class="zem_slink" title="C Sharp (programming language)" href="http://msdn2.microsoft.com/en-us/vcsharp/aa336809.aspx" target="_blank" rel="homepage">C#</a> has some funky operators that solve this in a (sort-of) clean way.
+<pre lang="csharp">var outputString = input1 ?? "" + input2 ?? "";</pre>
+I like <a class="zem_slink" title="Type inference" href="http://en.wikipedia.org/wiki/Type_inference" target="_blank" rel="wikipedia">type inference</a> so I use var's extensively - please don't judge me. What this does is concatenate input1 and input2 substituting null values with <a class="zem_slink" title="Empty string" href="http://en.wikipedia.org/wiki/Empty_string" target="_blank" rel="wikipedia">empty string</a>. In scala you would write something like
+<pre lang="scala">val outputString = Option(input1).getOrElse("") + Option(input2).getOrElse("")</pre>
+but that's verbose and ugly. Wrapping and unwrapping to get some added semantics of the Option factory(returns None for null). But you shouldn't have nulls in the first place if you're using scala. That's what Option is for! Enough ranting, let's implement this <a class="zem_slink" title="Null coalescing operator" href="http://en.wikipedia.org/wiki/Null_coalescing_operator" target="_blank" rel="wikipedia">?? operator</a> in scala.
+<pre lang="scala">implicit class NullCoalescent[A](a: A){
+  def ??(b: => A) = if(a!=null) a else b
+}</pre>
+Yup. That's it! You only need this in scope and of you go writing code C#-style.
+<pre lang="scala">scala> "hi" ?? "there"
+res0: String = hi
+
+scala> (null:String) ?? "empty"
+res2: String = empty</pre>
+Note the type of b parameter in ?? method. It's =&gt; A. By name evaluation. This means our new operator behaves properly and only evaluates right hand side if value is in fact null. This lets you for example log unexpected nulls while substituting for default value
+<pre lang="scala">val key = valueFromUser ?? {
+  log("key is null!"}
+  defaultKey
+}</pre>
+This works because scala let's you do side effects like that.
+
+I just wanted to add one reason why I love scala is this easy way of defining structures that feel like they're part of the language while being nothing more than just libraries.
