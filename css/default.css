@@ -1,8 +1,10 @@
 body {
-    color: black;
-    font-size: 16px;
+    color: #222;
+    font-family: serif;
+    font-size: 18px;
+    line-height: 27px;
     margin: 0px auto 0px auto;
-    width: 600px;
+    max-width: 720px;
 }
 
 div#header {
@@ -14,7 +16,7 @@ div#header {
 div#logo a {
     color: black;
     float: left;
-    font-size: 18px;
+    font-size: 18   px;
     font-weight: bold;
     text-decoration: none;
 }
@@ -42,11 +44,23 @@ div#footer {
 }
 
 h1 {
-    font-size: 24px;
+    font-size: 30px;
 }
 
 h2 {
-    font-size: 20px;
+    font-size: 26px;
+}
+
+h3 {
+    font-size: 22px;
+}
+
+h4 {
+    font-size: 24px;
+}
+
+code {
+    font-size: 14px;
 }
 
 div.info {
