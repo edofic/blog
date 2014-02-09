@@ -1,5 +1,6 @@
 body {
-    color: #222;
+    color: #333;
+    background-color: #f7f7e7;
     font-family: serif;
     font-size: 18px;
     line-height: 27px;
@@ -41,6 +42,10 @@ div#footer {
     margin-top: 30px;
     padding: 12px 0px 12px 0px;
     text-align: right;
+}
+
+p {
+    text-align: justify;
 }
 
 h1 {
