@@ -65,7 +65,7 @@ Much simpler.
 
 ### Go errors
 
-A typical Go function has some side-effects and computes a value of returns an error. For example
+A typical Go function has some side-effects and computes a value or returns an error. For example
 
 ```go
 func f(parameter string) (Result, error) {
