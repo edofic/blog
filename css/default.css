@@ -76,8 +76,9 @@ h3 {
 }
 
 
-code {
+pre.sourceCode {
     font-size: 12px;
+    line-height: 1em;
 }
 
 h1, h2, h3, h4, a {
