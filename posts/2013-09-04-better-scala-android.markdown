@@ -149,18 +149,13 @@ and to generate project file you use "eclipse" command in sbt console.
 ### Links
 
 Gathered for conveniance
--   Typesafe
-    stack [http://typesafe.com/stack/download-agreed](http://typesafe.com/stack/download-agreed)[](http://typesafe.com/)
--   SBT [http://www.scala-sbt.org/](http://www.scala-sbt.org/)
--   Giter8 [https://github.com/n8han/giter8](https://github.com/n8han/giter8)
--   SBT anroid
-    plugin [https://github.com/jberkel/android-plugin](https://github.com/jberkel/android-plugin)
--   plugin author's
-    template [https://github.com/jberkel/android-app.g8](https://github.com/jberkel/android-app.g8)
--   sbt eclipse
-    plugin [https://github.com/typesafehub/sbteclipse](https://github.com/typesafehub/sbteclipse)
--   sbt idea
-    plugin [https://github.com/mpeltonen/sbt-idea](https://github.com/mpeltonen/sbt-idea)
--   scala installer for
-    android [https://play.google.com/store/apps/details?id=com.mobilemagic.scalainstaller](https://play.google.com/store/apps/details?id=com.mobilemagic.scalainstaller)
+
+* Typesafe stack [http://typesafe.com/stack/download-agreed](http://typesafe.com/stack/download-agreed)[](http://typesafe.com/)
+* SBT [http://www.scala-sbt.org/](http://www.scala-sbt.org/)
+* Giter8 [https://github.com/n8han/giter8](https://github.com/n8han/giter8)
+* SBT anroid plugin [https://github.com/jberkel/android-plugin](https://github.com/jberkel/android-plugin)
+* plugin author's template [https://github.com/jberkel/android-app.g8](https://github.com/jberkel/android-app.g8)
+* sbt eclipse plugin [https://github.com/typesafehub/sbteclipse](https://github.com/typesafehub/sbteclipse)
+* sbt idea plugin [https://github.com/mpeltonen/sbt-idea](https://github.com/mpeltonen/sbt-idea)
+* scala installer for android [https://play.google.com/store/apps/details?id=com.mobilemagic.scalainstaller](https://play.google.com/store/apps/details?id=com.mobilemagic.scalainstaller)
 
