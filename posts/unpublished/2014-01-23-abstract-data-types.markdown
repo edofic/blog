@@ -1,5 +1,6 @@
 ---
 title: Unfolding Abstract Datatypes
+published: false
 ---
 
 # Unfolding Abstract Datatypes by Jeremy Gibbons
