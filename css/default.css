@@ -86,10 +86,22 @@ h3 {
     font-size: 20px;
 }
 
+code {
+    background-color: #f8f8f8;
+    border: 1px solid #ddd;
+    border-radius: 3px;
+    display: inline-block;
+    padding-left: 3px;
+    padding-right: 3px;
+    font-size: 12px;
+}
 
 pre.sourceCode {
-    font-size: 12px;
-    line-height: 1.5em;
+    line-height: 1.3;
+}
+
+pre.sourceCode > code.sourceCode {
+    padding: 3px;
 }
 
 h1, h2, h3, h4, a {
