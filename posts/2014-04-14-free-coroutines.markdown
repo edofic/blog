@@ -32,7 +32,7 @@ This is quite trivial to implement. Consider this definition.
 ```haskell
 data Trampoline a = Return a | Bounce (Trampoline a)
 
-runTrampoline :: Trampoline a 
+runTrampoline :: Trampoline a -> a
 runTrampoline (Return a) = a
 runTrampoline (Bounce t) = runTrampoline t
 ```
