@@ -107,3 +107,11 @@ pre.sourceCode > code.sourceCode {
 h1, h2, h3, h4, a {
     color: #21759b;
 }
+
+#share-buttons img {
+width: 35px;
+padding: 5px;
+border: 0;
+box-shadow: 0;
+display: inline;
+}

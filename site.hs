@@ -15,6 +15,10 @@ main = hakyll $ do
         route   idRoute
         compile copyFileCompiler
 
+    match "icons/*" $ do
+        route   idRoute
+        compile copyFileCompiler
+
     match "images/*/*" $ do
         route   idRoute
         compile copyFileCompiler
