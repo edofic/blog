@@ -170,5 +170,78 @@ request r = fromResponse <$> client (toRaw r)
 
 I believe we achieved our goal. We can add a new request without modifying existing code by simply adding new instances. And we can still add new backends that only rely on the intermediate form. We still can have pure tests and as a bonus big APIs will not require giant functions anymore, we can even break them up into several modules.
 
+## Free 
+I added this section after reddit user *aaronlevin* reminded me I forgot about the `Free` monad.
+
+The essence of using free is building a pure description of *the whole program* and then writing an interpreter to run it. You can use `FreeT` transformer if you want to mix in some other effects.
+
+We start of by defining a functor that specifies our language. I defined the structure and derived the `Functor` instance since it's trivial.
+
+```haskell
+data ApiF f = RequestGet Id (Record -> f)
+            | RequestCreate Record (Id -> f)
+            deriving Functor
+```
+
+You can read this as follows: an API call is either a get request with an `Id` and a continuation that takes a `Record` or a create request with a `Record` and a continuation that takes an `Id`.
+
+And then by applying `Free` we get a monadic language for free. But this is a bit cumbersome to use so we'll define some helper functions..
+
+```haskell
+type Api = Free ApiF
+
+get :: Id -> Api Record
+get id = Free $ RequestGet id return
+
+create :: Record -> Api Id
+create record = Free $ RequestCreate record return
+```
+
+`get` wraps a `RequestGet` and puts `return` as the continuation to lift the return value into the monad, `create` does the same for `RequestCreate`.
+
+Since we've established that having an intermediate representation is a good thing let's create another free monad that defines a program in terms of raw requests. Then we can write an interpreter that converts the program into this language.
+```haskell
+data RawF f = Raw Method Path (Maybe RequestBody) (Response -> f) deriving Functor
+type Raw = Free RawF
+
+toRaw :: Api a -> Raw a
+toRaw (Pure a) = Pure a
+toRaw (Free (RequestGet id k)) = 
+  Free $ Raw "GET" (show id) Nothing (toRaw . k . fromJSON)
+toRaw (Free (RequestCreate rec k)) =
+  Free $ Raw "POST" "" (Just $ toJSON rec) (toRaw . k . fromJSON)
+```
+
+And finally we can run this.
+```haskell
+client :: Raw -> IO Response
+...
+
+runRaw :: Raw a -> IO a
+runRaw (Pure a) = return a
+runRaw (Free (Raw method path body k)) = do
+  res <- client method path body
+  runRaw $ k res
+
+runApi :: Api a -> IO a
+runApi = runRaw . toRaw
+
+Usage of this is fairly straightforward 
+
+```haskell
+program :: Api Bool
+program = do
+  newId <- create someRecord
+  newRecord <- get newId
+  return $ someRecord == newRecord
+
+test :: IO Bool
+test = runApi program
+```
+
+If I recall correctly the [operational package](http://hackage.haskell.org/package/operational) defines some machinery that simplifies definition of our language and interpreters but I haven't used it yet so I'm not familiar with the details.
+
+In either case you still have a closed set of operations that are defined by your functor. An modifying this functor requires modifying all existing interpreters for its free monad.
+
 ## Conclusion
 I would argue that each of these approaches (except unsafe ADTs) has its pros and cons and therefore its place in some implementation. If I missed anything or made an error please let me know - I'll be happy to update the post.
