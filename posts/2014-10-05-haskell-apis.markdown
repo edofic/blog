@@ -241,7 +241,9 @@ test = runApi program
 
 If I recall correctly the [operational package](http://hackage.haskell.org/package/operational) defines some machinery that simplifies definition of our language and interpreters but I haven't used it yet so I'm not familiar with the details.
 
-In either case you still have a closed set of operations that are defined by your functor. An modifying this functor requires modifying all existing interpreters for its free monad.
+In either case you still have a closed set of operations that are defined by your functor. And modifying this functor requires modifying all existing interpreters for its free monad. But there are two more downsides. Some boilerplate is required to make usage of actions from our functor simple though this could probably be automated away. More importantly there are performance issues with `Free` in some cases. 
+
+Monad laws require the instance of `Free` to define `>>=` in a way that is associative. And it does that. But if you look at the definition of `Free` you will see that it closely resembles linked list `[]` which also has an associative concatenation operation `++`. But `++` has performance problems if used in a certain way, namely repeatedly putting big lists on the left side. And `Free`'s bind has this problem too. Everything is okay if you just use the `do` notation with simple actions as there will always the smallest possible instance on the left, but problems arise if you compose and nest instances of `Free`. And by problems I mean bind being linear in the size of the instance on the left. There is active work to mitigate this(e.g. [Codensity](http://hackage.haskell.org/package/category-extras-0.53.3/docs/Control-Monad-Codensity.html) and [Reflection without Remorse](http://homepages.cwi.nl/~ploeg/papers/zseq.pdf)) but it's out of the scope of this article.
 
 ## Conclusion
 I would argue that each of these approaches (except unsafe ADTs) has its pros and cons and therefore its place in some implementation. If I missed anything or made an error please let me know - I'll be happy to update the post.
