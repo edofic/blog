@@ -1,0 +1,15 @@
+name:                blog
+version:             0.1.0.0
+license:             Apache-2.0
+license-file:        LICENSE
+author:              Andraz Bajt
+maintainer:          andraz@bajt.me
+build-type:          Simple
+extra-source-files:  README.md
+cabal-version:       >=1.10
+
+executable blog
+  main-is:             site.hs
+  build-depends:       base
+                     , hakyll
+  default-language:    Haskell2010
