@@ -1,5 +1,5 @@
 ---
-title: Cool Monday: HList and Shapeless
+title: Cool Monday - HList and Shapeless
 ---
 
 HList as in
@@ -22,10 +22,10 @@ Just introduce additional [type
 parameter](http://en.wikipedia.org/wiki/TypeParameter "TypeParameter").
 Apocalisp has a [great
 post](http://apocalisp.wordpress.com/2008/10/23/heterogeneous-lists-and-the-limits-of-the-java-type-system/)
-on implementing them in Java. 
+on implementing them in Java.
 Java requires A LOT of [type
 annotation](http://en.wikipedia.org/wiki/Type_signature "Type signature").
-It works but it's just painful and it doesn't pay off. 
+It works but it's just painful and it doesn't pay off.
 
 ### [Type inference](http://en.wikipedia.org/wiki/Type_inference "Type inference") to the rescue
 
@@ -45,10 +45,10 @@ object HNil extends HList[Nothing, Nothing]{
 case class Hcons[H,T<:HList[_,_]](
     private val head: H, private val tail: T) extends HList[H, T]
 ```
-So this list can be instantiated like this 
+So this list can be instantiated like this
 ```scala
 scala> val myHList = 1 :: "hi" :: 2.0 :: HNil
-myHList: Hcons[Int,HList[java.lang.String,HList[Double,HList[Nothing,Nothing]]]] = 
+myHList: Hcons[Int,HList[java.lang.String,HList[Double,HList[Nothing,Nothing]]]] =
     Hcons(1,Hcons(hi,Hcons(2.0,HNil$@dbb62c)))
 ```
 

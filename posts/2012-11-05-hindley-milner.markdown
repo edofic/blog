@@ -1,5 +1,5 @@
 ---
-title: Cool Monday: Hindley-Milner on a dynamic language
+title: Cool Monday - Hindley-Milner on a dynamic language
 ---
 
 So I'm getting into type theory. Slowly. Note to self: read a proper
@@ -106,7 +106,7 @@ have not seen a practical usage but it doesn't work and that bothers me.
 Dynamic code in scrat just works, but same code translated to haskell
 yields a compiler error - "can't instantiate infinite type". But
 apparently infinite types can be detected, so maybe I can find a way to
-present them and it will compile. 
+present them and it will compile.
 
 ### Conclusion
 

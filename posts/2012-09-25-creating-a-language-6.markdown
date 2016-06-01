@@ -1,5 +1,5 @@
 ---
-title: Making a programming language: Part 6 - functions
+title: Making a programming language Part 6 - functions
 ---
 
   --------------------
@@ -62,19 +62,19 @@ just post the interesting bits here - see [the full
 commit](https://github.com/edofic/scrat-lang/commit/181d513801567cb51e7ebc5637d1a64913290b13) if
 you're interested in details.
 
-The function definition boils down to: 
+The function definition boils down to:
 ```scala
 private def exprList: Parser[List[Expression]] = repsep(expr, "\\n+".
-private def block: Parser[List[Expression]] = 
+private def block: Parser[List[Expression]] =
   """\{\n*""".r ~> exprList <~ """\n*\}""".
-private def functionDef: Parser[FunctionDef] = 
+private def functionDef: Parser[FunctionDef] =
   "func" ~> identifier ~ ("(" ~> repsep(identifier, ",") <~ ")") ~ block ^^ {
     case id ~ args ~ body => FunctionDef(id, args, body)
   }
 ```
 
 Oh yes, and since I use newlines as separators now, they aren't
-whitespace and I have to handle them explicitly. 
+whitespace and I have to handle them explicitly.
 ```scala
 override protected val whiteSpace = """[ \t\x0B\f\r]""".r
 ```
@@ -84,9 +84,9 @@ only shcange is opt(identifier) in the parser.
 
 ### Evaluation
 
-It's just another node in the AST - a case class. 
+It's just another node in the AST - a case class.
 ```scala
-case class FunctionDef(name: Identifier, args: List[Identifier], 
+case class FunctionDef(name: Identifier, args: List[Identifier],
                        body: List[Expression]) extends Expression
 ```
 
@@ -94,8 +94,8 @@ Now I needed something to execute the definition and create a [function
 value](http://en.wikipedia.org/wiki/Function_%28mathematics%29 "Function (mathematics)")
 in the enclosing scope. (this is in Evaluator class)
 ```scala
-def createFunFromAst(arglist: List[Identifier], 
-      body: List[Expression], scope: SScope): FunctionVarArg = 
+def createFunFromAst(arglist: List[Identifier],
+      body: List[Expression], scope: SScope): FunctionVarArg =
   (args: Any) => args match {
     case lst: List[Any] => {
       if (lst.length != arglist.length) {
@@ -108,7 +108,7 @@ def createFunFromAst(arglist: List[Identifier],
         }
         apply(body)(closure)        }
     }
-    case other => 
+    case other =>
       throw new ScratInvalidTypeError("expected list of arguments but got" + other)
   }
 ```
@@ -133,7 +133,7 @@ Evaluator.
 
 ### A sample
 
-First thing I tried to implement(literaly) was fibonaci's sequence 
+First thing I tried to implement(literaly) was fibonaci's sequence
 
   func fib(n) { if n==0 then 1 else if n==1 then 1 else fib(n-1) + fib(n-2) }
   println("20th fibbonacci number is", fib(20))

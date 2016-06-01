@@ -1,10 +1,10 @@
 ---
-title: Making a programming language: Part 2 - something that kinda works
---- 
+title: Making a programming language Part 2 - something that kinda works
+---
 
 [Table of contents](/posts/2012-08-29-creating-a-language-1.html),
 [Whole project on github](https://github.com/edofic/scrat-lang),
-[relevant version on github](https://github.com/edofic/scrat-lang/tree/blogpost1and2) 
+[relevant version on github](https://github.com/edofic/scrat-lang/tree/blogpost1and2)
 
 In the [Part 1](/posts/2012-08-29-creating-a-language-1.html) I posted a working
 repl([read-eval-print-loop](http://en.wikipedia.org/wiki/Read–eval–print_loop "Read–eval–print loop"))
@@ -58,14 +58,14 @@ been implicitly converted. So in my lambda I already know(scala can
 infer) the type of s to be String. One last example
 ```scala
 private def term: Parser[Expression] = factor ~ rep(("*" | "/") ~ factor) ^^ {
-  case head ~ tail => 
+  case head ~ tail =>
     var tree: Expression = head
     tail.foreach {
         case "*" ~ e => tree = Multiply(tree, e)
         case "/" ~ e => tree = Divide(tree, e)
-    }       
+    }
     tree
-}       
+}
 ```
 Function rep is also from Parsers class matches any number of
 repetitions(including 0). Here's the type signature
@@ -115,7 +115,7 @@ object Evaluator {
     case Add(l, r) => apply(l) + apply(r)
     case Subtract(l, r) => apply(l) - apply(r)
     case Multiply(l, r) => apply(l) * apply(r)
-    case Divide(l, r) => apply(l) / apply(r)    
+    case Divide(l, r) => apply(l) / apply(r)
   }
 }
 ```

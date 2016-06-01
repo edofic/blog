@@ -1,5 +1,5 @@
 ---
-title: Making a programming language: Part 5 - variables and decisions 
+title: Making a programming language Part 5 - variables and decisions
 ---
 
   ---------------
@@ -24,7 +24,7 @@ function readln.
 
 ### Variables
 
-I could cheat a bit and write something like this 
+I could cheat a bit and write something like this
 
     println("who are you?")
     println("hello", readln())
@@ -36,13 +36,13 @@ simplified authentication. So I want to store the input. Something like
     print("enter passcode")
     input = readln()
 
-So I first create a case class to represent this 
+So I first create a case class to represent this
 ```scala
 case class Assignment(to: Identifier, from: Expression) extends Expression
 ```
-parsing isn't that hard either 
+parsing isn't that hard either
 ```scala
-private def assignment: Parser[Assignment] = 
+private def assignment: Parser[Assignment] =
   identifier ~ "=" ~ expr ^^ {
     case id ~ "=" ~ exp => Assignment(id, exp)
   }
@@ -67,7 +67,7 @@ diff [here](https://github.com/edofic/scrat-lang/commit/51008205be59ec325dcb1de
 Evaluation of assignment is now simple map put
 ```scala
 case Assignment(name, exp) => {
-  val e = apply(exp)  
+  val e = apply(exp)
   runtime.identifiers.put(name.id, e)
   e
 }
@@ -95,7 +95,7 @@ I didn't need inequalities until now(didn't even think about before
 writing this post) so they aren't in the language yet.
 
 Sample if expression
-  
+
   if input1*input2 then "okay" else "nooooooo"
 
 See, no parens. And I was inspired by scala to make the else part
@@ -106,37 +106,37 @@ expressions: predicate, true value and false value. Evaluation just
 evaluates the predicate(recursion!!) and then evaluates and returns the
 appropriate expression
 ```scala
-case IfThenElse(pred, then, els) => 
+case IfThenElse(pred, then, els) =>
   apply(pred) match {
-    case d: Double => 
+    case d: Double =>
       if (d != 0) apply(then) else apply(els)
-    case other => 
+    case other =>
       throw new ScratInvalidTypeError("expected a number, got " + other)
   }
 ```
 
-That error is just a class that extends exception. 
+That error is just a class that extends exception.
 I added some more case classes and evaluation cases for Equals and
 NotEquals. They're very simple so I won't include them here([diff on
 github](https://github.com/edofic/scrat-lang/commit/97312113282b484fa53357f61fb05990da0cd3ea))
 Parsing on the other hand is more interesting, here's the changed part.
 ```scala
-private def ifThenElse: Parser[IfThenElse] =  
+private def ifThenElse: Parser[IfThenElse] =
   "if" ~ expr ~ "then" ~ expr ~ "else" ~ expr ^^ {
-    case "if" ~ predicate ~ "then" ~ then ~ "else" ~ els => 
+    case "if" ~ predicate ~ "then" ~ then ~ "else" ~ els =>
       IfThenElse(predicate, then, els)
   }
-private def equality: Parser[Expression] = 
+private def equality: Parser[Expression] =
   noEqExpr ~ rep(("==" | "!=") ~ noEqExpr) ^^ {
-    case head ~ tail => 
+    case head ~ tail =>
       var tree: Expression = head
       tail.foreach {
         case "==" ~ e => tree = Equals(tree, e)
         case "!=" ~ e => tree = NotEquals(tree, e)
-      }    
+      }
       tree
   }
-private def noEqExpr: Parser[Expression] = 
+private def noEqExpr: Parser[Expression] =
   sum ||| assignment ||| ifThenElseprivate def expr = noEqExpr ||| equality
 
   ------------------

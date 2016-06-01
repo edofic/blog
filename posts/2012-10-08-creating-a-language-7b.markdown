@@ -1,5 +1,5 @@
 ---
-title: Making a programming language: Part 7b - using objects
+title: Making a programming language Part 7b - using objects
 ---
 
 [Table of contents](/posts/2012-08-29-creating-a-language-1.html), 
@@ -9,7 +9,7 @@ Something like EPIC FAIL occured to me and I [published a post](/posts/2012-08-2
 containing only half the content I intended to write. So I'm doing a
 part b.
 
-My intended usage of objects is something along the lines of 
+My intended usage of objects is something along the lines of
 
     objectName.someProperty
     objectName.someFunction()
@@ -45,7 +45,7 @@ everything. 
 ```scala
 case class DotAccess(lst: List[Expression]) extends Expression
 
-private def identifier: Parser[DotAccess] = 
+private def identifier: Parser[DotAccess] =
     rep1sep((functionCall | simpleIdentifier), ".") ^^ DotAccess.apply
 ```
 
@@ -59,8 +59,8 @@ the parent scope. If dot access exposes full addressing functionality a
 powerful feature ceases to exist. So some protection should be in place.
 Something like strict get
 ```scala
-class SScope 
-  ... 
+class SScope
+  ...
   def getStrict(key: String): Option[Any] = map.get(key)
   ...
 ```
@@ -84,10 +84,10 @@ def apply(e: List[Expression])(implicit scope: SScope): Any = {
   (e map apply).lastOption match {
     case Some(a) => a
     case None => ()
-  } 
+  }
 }
 
-def apply(e: Expression)(implicit scope: SScope): Any = apply(e, None)(scope)  
+def apply(e: Expression)(implicit scope: SScope): Any = apply(e, None)(scope)
 
 def apply(e: Expression, auxScope: Option[SScope])
          (implicit scope: SScope): Any = e match {
@@ -96,12 +96,12 @@ def apply(e: Expression, auxScope: Option[SScope])
     val outerScope = scope
     def step(list: List[Expression])
             (implicit scope: SScope): Any = list match {
-      case Nil => 
+      case Nil =>
         throw new ScratInvalidTokenError("got empty list in DotAccess")
       case elem :: Nil => apply(elem, Some(scope))(outerScope)
       case head :: tail => apply(head) match {
         case s: SScope => step(tail)(s.unlinked)
-        case other => 
+        case other =>
           throw new ScratInvalidTypeError("expected scope, got " + other)
       }
     }

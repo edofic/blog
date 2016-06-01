@@ -1,5 +1,5 @@
---- 
-title: Making a programming language: Part 4 - Hello World 
+---
+title: Making a programming language Part 4 - Hello World
 ---
 
   ------------------
@@ -28,9 +28,9 @@ This one is super easy. Just wrap scala's println. Here's the whole
 code
 ```scala
 lazy val sprint: FunctionVarArg = {
-  case lst: List[_] => 
+  case lst: List[_] =>
     lst --> mkString --> println
-  case other => 
+  case other =>
     throw ScratInvalidTypeError("expected a commaList but got " + other)
 }
 ```
@@ -50,7 +50,7 @@ This is the so called [pimp my library pattern in
 scala](http://www.artima.com/weblogs/viewpost.jsp?thread=179766). It
 adds the `-->` operator to all objects. This operator takes another
 single argument function, applies it and returns the result.
-So I can have 
+So I can have
 ```scala
 lst --> mkString --> println
 ```
@@ -65,7 +65,7 @@ operator even if it works in a different way. Oh yes, mkString is
 another function that I put into StdLib that takes a List(takes Any but
 does pattern matching) and returns `List.mkString`
 
-And now I have my Hello Math World 
+And now I have my Hello Math World
 ```scala
 println(1)
 ```
@@ -74,7 +74,7 @@ println(1)
 
 First I have to parse strings
 ```scala
-private def string: Parser[SString] = "\".*?\"".r ^^ { s => 
+private def string: Parser[SString] = "\".*?\"".r ^^ { s =>
   SString(s.substring(1, s.length - 1))
 }
 private def value: Parser[Expression] = number | string | identifier
@@ -88,7 +88,7 @@ wrapped in "". I even spend half an hour debugging my evaluator before
 it dawned on me.
 I believe the evaluation of this is trivial.
 
-Now I have a REAL hello world: 
+Now I have a REAL hello world:
 ```scala
     println("Hello world")
 ```
@@ -109,8 +109,8 @@ object Interpreter {
       println("parameters: filename to interpret")
     } else {
       interpretFile(new File(args(0)))
-    }  
-  }  
+    }
+  }
   val runtime = new ScratRuntime
   def interpretFile(file: File) {
     if (file.canRead) {
@@ -119,7 +119,7 @@ object Interpreter {
       source.close()
     } else {
       println("cannot open file " + file.getPath)
-    }  
+    }
   }
 }
 ```

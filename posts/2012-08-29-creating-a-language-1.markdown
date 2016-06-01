@@ -1,5 +1,5 @@
 ---
-title: Making a programming language: Part 1 - how to start
+title: Making a programming language Part 1 - how to start
 ---
 
 ### Table of contents

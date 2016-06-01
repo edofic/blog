@@ -1,6 +1,6 @@
 ---
-title: Cool Monday: Exploration of dynamic db acces from scala 
---- 
+title: Cool Monday - Exploration of dynamic db acces from scala
+---
 
 I use [scala](http://www.scala-lang.org/ "Scala (programming language)") on
 [Android](http://www.t-mobile.com/shop/phones/?capcode=AGE "Android phones")
@@ -49,15 +49,15 @@ class WrappedCursor(cursor: Cursor) implements Cursor{  //delegated methods go h
 ```
 Why I need this? Cake pattern of course, Dynamic cursor get's mixed in.
 ```scala
-trait DynamicCursor extends Dynamic{ this: Cursor =>  
+trait DynamicCursor extends Dynamic{ this: Cursor =>
     def selectDynamic(name: String) = getColumn(getColumnIndex(name))
     def getColumn(index: Int) = getType(index) match {
         case Cursor.FIELD_TYPE_BLOB => getBlob(index)
         case Cursor.FIELD_TYPE_FLOAT => getDouble(index)
         case Cursor.FIELD_TYPE_INTEGER => getLong(index)
         case Cursor.FIELD_TYPE_NULL => null
-        case Cursor.FIELD_TYPE_STRING => getString(index)  
-    }  
+        case Cursor.FIELD_TYPE_STRING => getString(index)
+    }
     def toSeq = (0 until getColumnCount) map getColumn
 }
 
@@ -98,18 +98,18 @@ def CursorStream(cursor: DynamicCursorRaw with Cursor) = {
         else {
             val snapshot = cursor.toSeq
             cursor.moveToNext()
-            snapshot #:: loop()    
-        }  
-    }  
-    cursor.moveToFirst()  
+            snapshot #:: loop()
+        }
+    }
+    cursor.moveToFirst()
     loop()
 }
 ```
 
-And some more implicits to help 
+And some more implicits to help
 ```scala
 implicit class RichCursorRaw(cursor: Cursor) extends AnyVal{
-    def dynamicRaw = new WrappedCursor(cursor) with DynamicCursorRaw  
+    def dynamicRaw = new WrappedCursor(cursor) with DynamicCursorRaw
     def toStream = CursorStream(dynamicRaw)
 }
 ```

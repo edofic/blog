@@ -1,6 +1,6 @@
 ---
-title: Cool Monday: CERC and my trip to Krakow
---- 
+title: Cool Monday - CERC and my trip to Krakow
+---
 
 This week's post is a bit different. Well very different. My team
 qualified for [CERC ICPC](http://icpc.baylor.edu/public/worldMap/1317)(european programming

@@ -1,6 +1,6 @@
 ---
-title: Cool Monday: Functional compilers and atoms 
---- 
+title: Cool Monday - Functional compilers and atoms
+---
 
 I've seen
 [this great
@@ -78,10 +78,10 @@ class Atom[A] {
 
   def update(a: A) {
     if (!isSet || !isForced){
-      value = a      
+      value = a
       isSet = true
     }
-  }  
+  }
 
   def apply(): A {
     isForced = true

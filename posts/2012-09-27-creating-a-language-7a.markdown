@@ -1,5 +1,5 @@
 ---
-title: Making a programming language: Part 7a - objects
+title: Making a programming language Part 7a - objects
 ---
 
 [Table of contents](/posts/2012-08-29-creating-a-language-1.html), 
@@ -50,7 +50,7 @@ You don't even need access modifiers, you can use shadowing and nesting
 
     func private(n) {
         that = this
-        func (){ 
+        func (){
             func get() { that.n }
             func set(v) { that.n = v }
             this
@@ -72,6 +72,6 @@ is not bullet-proof
 
 Returns 3. Though knowledge of implementation is needed to execute such
 attack. **update:** I kinda sorta forgot to include how I made that
-dot-access thingy-o.get() to work. Continuation below 
+dot-access thingy-o.get() to work. Continuation below
 
 **next: [using objects](/posts/2012-10-08-creating-a-language-7b.html)**

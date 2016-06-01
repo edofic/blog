@@ -1,5 +1,5 @@
 ---
-title: Making a programming language: Part 3 - adding features
+title: Making a programming language Part 3 - adding features
 ---
 
 [Table of
@@ -26,7 +26,7 @@ private def factor: Parser[Expression] = number | ("(" ~> expr <~ ")")
 
 And I change that to
 ```scala
-private def factor: Parser[Expression] = value | parenExpr 
+private def factor: Parser[Expression] = value | parenExpr
 private def value: Parser[Expression] = number | identifier
 private def identifier: Parser[Identifier] = "[a-zA-Z]\\w*".r ^^ {
   s => Identifier(s)
@@ -65,8 +65,8 @@ Because apparently such grammars don't work with
 [RDP](http://en.wikipedia.org/wiki/Recursive_descent_parser "Recursive descent parser").
 I turned out I don't understand grammars.
 ```scala
-private def exponent: Parser[Expression] = 
-  (value | parenExpr) ~ "^" ~ (value | parenExpr) ^^ { 
+private def exponent: Parser[Expression] =
+  (value | parenExpr) ~ "^" ~ (value | parenExpr) ^^ {
     case a ~ "^" ~ b => Exponent(a,b)
   }
 
@@ -91,14 +91,14 @@ Simple: function call is a name and list of expressions to evaluate for
 arguments(wrapped because even an expression list is an expression)
 
 Parser:
-```scala        
+```scala
   private def arglist: Parser[ExpList] = "(" ~> list <~ ")"
   private def functionCall: Parser[FunctionCall] = identifier ~ arglist ^^ {
     case id ~ args => FunctionCall(id, args)
   }
   private def value: Parser[Expression] = number | (identifier ||| functionCall)
 ```
-Again, I was having trouble - parser just didn't work and resorted to `|||`. 
+Again, I was having trouble - parser just didn't work and resorted to `|||`.
 `functionCall` should come before identifier.
 
 Evaluating this is more interesting. I decided to make functions be

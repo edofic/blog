@@ -1,5 +1,5 @@
 ---
-title: Cool Monday: Scala Macros
+title: Cool Monday - Scala Macros
 ---
 
   ----------------------
@@ -118,7 +118,7 @@ really)
 for( i <- 1 to 5 ) show(i)
 ```
 But this doesnt generate the same AST(and bytecode)!
-Protip: use 
+Protip: use
 
     scalac -Xprint:parser -Yshow-trees Manual.scala
 
@@ -134,7 +134,7 @@ With a proper unroll macro defined. I spent an hour to come up with this
 implementation...and then scalac started crashing on me... Is there
 something terrible in my code?
 I gave up and went on to do useful stuff...But macros hear me! I'll be
-back. 
+back.
 ```scala
 import reflect.macros.Context
 import scala.language.experimental.macros
@@ -150,7 +150,7 @@ object Macros {
     val invocations = Range(start_value, end_value, step_value) map { n =>
       val n_exp = c.Expr(Literal(Constant(n)))
       reify{((body.splice)(n_exp.splice))}.tree
-    }    
+    }
     c.Expr(Block(invocations:_*))
   }
 }

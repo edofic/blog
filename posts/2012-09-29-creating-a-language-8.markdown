@@ -1,5 +1,5 @@
 ---
-title: Making a programming language: Part 8 - going faster
+title: Making a programming language Part 8 - going faster
 ---
 
 [Table of contents](/posts/2012-08-29-creating-a-language-1.html), 
@@ -51,12 +51,12 @@ Internets here I come. 
 
 My thoughts were confirmed. I found some guys on forums complaining over
 speed and then Mr. Odersky himself commented something like this(from
-memory): 
+memory):
 
 > Well the parsers in scala standard library are more like an example
-> how to do recusive descent, functional style. They are perfectly 
-> usable for parsing command lines but not for long files. You should 
-> use a parser generator for that.  
+> how to do recusive descent, functional style. They are perfectly
+> usable for parsing command lines but not for long files. You should
+> use a parser generator for that.
 
 I was bummed. The reason I didn't use a parser generator was this close
 integration that parser as a library could provide me. By the way
@@ -83,7 +83,7 @@ and memoization to reduce object creation and speed things up.
 ### Conversion and results
 
 Conversion is dead easy. It's fully described in scala api
-documentation. Basically you mix in PackratParsers and change 
+documentation. Basically you mix in PackratParsers and change
 `def : Parser[] = ...` to `lazy val : PackratParser[] = ...` and that's it. Mixed
 in trait provides the necessary implicit conversions, lazy makes sure
 the creation is only done once and new implementation of parseAll does
