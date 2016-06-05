@@ -1,8 +1,11 @@
-{ nixpkgs ? import <nixpkgs> {}, compiler ? "default" }:
+{ stdenv
+, glibcLocales
+, haskell
+}:
 
 let
 
-  inherit (nixpkgs) pkgs;
+  haskellPackages = haskell.packages.ghc7103;
 
   f = { mkDerivation, base, hakyll, stdenv }:
       mkDerivation {
@@ -15,12 +18,23 @@ let
         license = stdenv.lib.licenses.asl20;
       };
 
-  haskellPackages = if compiler == "default"
-                       then pkgs.haskellPackages
-                       else pkgs.haskell.packages.${compiler};
+in rec {
 
-  drv = haskellPackages.callPackage f {};
+  blogBuilder = haskellPackages.callPackage f {}; # use .env for shell
 
-in
+  blogContent = stdenv.mkDerivation {
+    name = "edofic-com";
+    src = ./content;
+    buildInputs = [ blogBuilder ];
+    installPhase = ''
+      export LANG="en_US.UTF-8"
+      export LOCALE_ARCHIVE=${glibcLocales}/lib/locale/locale-archive
 
-  if pkgs.lib.inNixShell then drv.env else drv
+      blog build
+
+      mkdir $out
+      cp -R _site/. $out/.
+    '';
+  };
+
+}
