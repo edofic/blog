@@ -8,7 +8,7 @@ let
       mkDerivation {
         pname = "blog";
         version = "0.1.0.0";
-        src = ./.;
+        src = ./generator;
         isLibrary = false;
         isExecutable = true;
         executableHaskellDepends = [ base hakyll ];
