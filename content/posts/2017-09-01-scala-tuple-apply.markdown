@@ -3,7 +3,7 @@ title: Implementing apply on tuples in Scala
 ---
 
 One of the first things you learn as a newcomer to Scala is the difference
-between a list and a tuple: a list must be homogeneous but a list can be
+between a list and a tuple: a list must be homogeneous but a tuple can be
 heterogeneous. That is all elements of a list must have the same types but a
 tuple can contain things of different types.
 
