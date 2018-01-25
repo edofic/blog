@@ -5,7 +5,7 @@
 
 let
 
-  haskellPackages = haskell.packages.ghc7103;
+  haskellPackages = haskell.packages.ghc822;
 
   f = { mkDerivation, base, hakyll, stdenv }:
       mkDerivation {
