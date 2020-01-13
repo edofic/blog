@@ -1,0 +1,7 @@
+baseURL = "https://edofic.com"
+languageCode = "en-us"
+title = "My Programming Escapades"
+disableKinds = ["section"]
+theme = "diary"
+copyright = "Andraz Bajt"
+
