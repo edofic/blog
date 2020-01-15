@@ -16,9 +16,11 @@ copyright = "Andraz Bajt"
   [[menu.main]]
     identifier = "archive"
     name = "Archive"
-    title = "Blog Archive"
     url = "/"
-    weight = -110
+  [[menu.main]]
+    identifier = "about"
+    name = "About Me"
+    url = "/about"
 
 [author]
     name = "Andraz Bajt"
