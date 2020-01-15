@@ -1,0 +1,26 @@
+baseURL = "https://edofic.com"
+languageCode = "en-us"
+title = "My Programming Escapades"
+disableKinds = ["section"]
+theme = "diary"
+copyright = "Andraz Bajt"
+
+[params]
+    subtitle = "Andraz Bajt"
+    github = "edofic"
+    linkedin = "edofic"
+    twitter = "edofic"
+    email = "edofic@edofic.com"
+
+[menu]
+  [[menu.main]]
+    identifier = "archive"
+    name = "Archive"
+    url = "/"
+  [[menu.main]]
+    identifier = "about"
+    name = "About Me"
+    url = "/about"
+
+[author]
+    name = "Andraz Bajt"
