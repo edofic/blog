@@ -64,10 +64,7 @@ simpler way?
 So by asking how I **compute** a power set I obtained the imperative
 algorithm above.
 
-  -----------------------------
-  [![Balanced tree](http://upload.wikimedia.org/wikipedia/commons/thumb/3/33/Balanced_tree.png/300px-Balanced_tree.png)](http://commons.wikipedia.org/wiki/File%3ABalanced_tree.png)
-  Balanced tree (Photo credit: [Wikipedia](http://commons.wikipedia.org/wiki/File%3ABalanced_tree.png))
-  -----------------------------
+[![Balanced tree](http://upload.wikimedia.org/wikipedia/commons/thumb/3/33/Balanced_tree.png/300px-Balanced_tree.png)](http://commons.wikipedia.org/wiki/File%3ABalanced_tree.png)
 
 Time to change the question. What **is** a power set?
 

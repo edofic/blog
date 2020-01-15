@@ -7,7 +7,7 @@ date: 2013-09-04
 
 I did [a tutorial how to set up
 everything using
-IntelliJ](/posts/2012-10-22-scala-android.html)
+IntelliJ](/posts/2012-10-22-scala-android)
 a while ago. I still think [IntelliJ
 IDEA](http://www.jetbrains.com/idea/ "IntelliJ IDEA") is awesome and you
 should use it(it has a free and open version) but I've found a better

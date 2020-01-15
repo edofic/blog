@@ -4,7 +4,7 @@ date: 2012-08-31
 ---
 
 [Table of
-contents](/posts/2012-08-29-creating-a-language-1.html), 
+contents](/posts/2012-08-29-creating-a-language-1), 
 [Whole project on github](https://github.com/edofic/scrat-lang)
 
 So now I have a repl that can evaluate stuff like
@@ -152,4 +152,4 @@ But that's nearly not enough. I want to be Touring-complete an ideally
 to be able to compile/interpret itself.\
 
 
-**next: [Hello World(strings, printing and interpreter)](/posts/2012-09-01-creating-a-language4.html)**
+**next: [Hello World(strings, printing and interpreter)](/posts/2012-09-01-creating-a-language4)**

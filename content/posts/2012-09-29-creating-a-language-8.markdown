@@ -3,7 +3,7 @@ title: Making a programming language Part 8 - going faster
 date: 2012-09-29
 ---
 
-[Table of contents](/posts/2012-08-29-creating-a-language-1.html), 
+[Table of contents](/posts/2012-08-29-creating-a-language-1), 
 [Whole project on github](https://github.com/edofic/scrat-lang)
 
 First of all, I wrote some tests for scrat. That was a bit challenging

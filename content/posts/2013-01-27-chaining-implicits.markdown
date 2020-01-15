@@ -80,10 +80,7 @@ and sees that a conversion from Baz to Bar exists in the scope and it
 satisfies the need for b. It inserts this conversions and compilation
 happily chucks along.
 
- --------------------
- ![Nest all the implicit conversions!](/images/chaining-implicits/all_the.jpg)
- Nest all the implicit conversions!
- --------------------
+![Nest all the implicit conversions!](/images/chaining-implicits/all_the.jpg)
 
 Please don't do that.
 Implicits can make code hard to read even without nesting. So use with

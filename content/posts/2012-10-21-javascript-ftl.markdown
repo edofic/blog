@@ -3,16 +3,13 @@ title: Javascript faster than light! (well C actually)
 date: 2012-10-21
 ---
 
-  -----------------------
-  [![157/365. Acorn - Oak Nut - The Scrat Problem.](http://farm8.static.flickr.com/7156/6772086623_646ee6ab31_m.jpg)](http://www.flickr.com/photos/42149364@N03/6772086623)
-  157/365. Acorn - Oak Nut - The Scrat Problem. (Photo credit: [Anant N S (www.thelensor.tumblr.com)](http://www.flickr.com/photos/42149364@N03/6772086623))
-  -----------------------
+[![157/365. Acorn - Oak Nut - The Scrat Problem.](http://farm8.static.flickr.com/7156/6772086623_646ee6ab31_m.jpg)](http://www.flickr.com/photos/42149364@N03/6772086623)
 
 Disclaimer: I never was a fan of js, but I've come to think it's quite
 AWESOME!
 
 Anyway I [invented my own toy language
-scrat](/posts/2012-08-29-creating-a-language-1.html)
+scrat](/posts/2012-08-29-creating-a-language-1)
 recently. And I now I want it to go fast and do cool stuff. So I went on
 to compile it. Well more appropriate term would be
 "[translate](http://en.wikipedia.org/wiki/Translation "Translation")"(as
@@ -128,8 +125,7 @@ than javascript. I'm not sure how is this even possible. It's probably
 just my bad implementation. But rules were: keep the style.
 So I hereby declare: js is faster than C. (in this microbenchmark)
 
-UPDATE:
--------
+# UPDATE
 
 I did something terribly wrong. Look at the C code closely. Its `fib(39)`
 where in scrat and js I called `fib(30)`. I just compared apples and

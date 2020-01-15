@@ -3,11 +3,11 @@ title: Making a programming language Part 2 - something that kinda works
 date: 2012-08-30
 ---
 
-[Table of contents](/posts/2012-08-29-creating-a-language-1.html),
+[Table of contents](/posts/2012-08-29-creating-a-language-1),
 [Whole project on github](https://github.com/edofic/scrat-lang),
 [relevant version on github](https://github.com/edofic/scrat-lang/tree/blogpost1and2)
 
-In the [Part 1](/posts/2012-08-29-creating-a-language-1.html) I posted a working
+In the [Part 1](/posts/2012-08-29-creating-a-language-1) I posted a working
 repl([read-eval-print-loop](http://en.wikipedia.org/wiki/Read–eval–print_loop "Read–eval–print loop"))
 for simple math expressions but I kinda cheated and only explained how I
 built the [AST](http://en.wikipedia.org/wiki/Abstract_syntax_tree "Abstract syntax tree").
@@ -124,4 +124,4 @@ This is all the code. Just pattern matching and recursion. But yes,
 still hardcoded double as the data-type. Looking back, not a great
 decision...but hey I got something working and this is fun.
 
-**next time: [Adding features(contants, exponents, function calls)](/posts/2012-08-31-creating-a-language3.html)**
+**next time: [Adding features(contants, exponents, function calls)](/posts/2012-08-31-creating-a-language3)**

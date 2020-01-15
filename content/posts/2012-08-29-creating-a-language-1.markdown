@@ -5,22 +5,15 @@ date: 2012-08-29
 
 ### Table of contents
 
--   Part 1 - how to start (this article)
--   [Part 2 - something that kinda
-    works](/posts/2012-08-30-creating-a-language-2.html)
--   [Part 3 - adding
-    features](/posts/2012-08-31-creating-a-language3.html)
--   [Part 4 - Hello World](/posts/2012-09-01-creating-a-language4.html)
--   [Part 5 - variables and
-    decisions](/posts/2012-09-02-creating-a-language-5.html)
--   [Part 6 - user defined
-    functions](/posts/2012-09-25-creating-a-language-6.html)
--   [Part 7a - constructors and
-    objects](/posts/2012-09-27-creating-a-language-7a.html)
--   [Part 7b - using
-    objects](/posts/2012-10-08-creating-a-language-7b.html)
--   [Part 8 - going
-    faster](/posts/2012-09-29-creating-a-language-8.html)
+- Part 1 - how to start (this article)
+- [Part 2 - something that kinda works](/posts/2012-08-30-creating-a-language-2)
+- [Part 3 - adding features](/posts/2012-08-31-creating-a-language3)
+- [Part 4 - Hello World](/posts/2012-09-01-creating-a-language4)
+- [Part 5 - variables and decisions](/posts/2012-09-02-creating-a-language-5)
+- [Part 6 - user defined functions](/posts/2012-09-25-creating-a-language-6)
+- [Part 7a - constructors and objects](/posts/2012-09-27-creating-a-language-7a)
+- [Part 7b - using objects](/posts/2012-10-08-creating-a-language-7b)
+- [Part 8 - going faster](/posts/2012-09-29-creating-a-language-8)
 
 #### [Source version for this post](https://github.com/edofic/scrat-lang/tree/blogpost1and2)
 
@@ -78,10 +71,7 @@ side effects. I wan't pretty functions :(
 
 I considered doing a framework for this in scala or perhaps java but...
 
-  ----------------------------
-  [![Scala (programming language)](http://upload.wikimedia.org/wikipedia/en/thumb/8/85/Scala_logo.png/300px-Scala_logo.png)](http://en.wikipedia.org/wiki/File%3AScala_logo.png)
-  Scala (programming language) (Photo credit: [Wikipedia](http://en.wikipedia.org/wiki/File%3AScala_logo.png))
-  ----------------------------
+[![Scala (programming language)](http://upload.wikimedia.org/wikipedia/en/thumb/8/85/Scala_logo.png/300px-Scala_logo.png)](http://en.wikipedia.org/wiki/File%3AScala_logo.png)
 
 Enter scala's [parser
 combinators](http://en.wikipedia.org/wiki/Parser_combinator "Parser combinator").
@@ -113,4 +103,4 @@ Notice the `^^` symbol. It sends the output from the parser  combinator
 into my mapping function(anonymous). And I just create the case
 class.There is also an evaluator at the and...but that's in part 2.
 
-**[next -\> Part 2: something that kinda works](/posts/2012-08-30-creating-a-language-2.html)**
+**[next -\> Part 2: something that kinda works](/posts/2012-08-30-creating-a-language-2)**

@@ -3,10 +3,8 @@ title: Pretty function composition in scala and asynchronous function compositio
 date: 2012-09-17
 ---
 
-  ----------------------
-  [![Surjective composition: the first function nee...](http://upload.wikimedia.org/wikipedia/commons/thumb/a/a2/Surjective_composition.svg/300px-Surjective_composition.svg.png)](http://commons.wikipedia.org/wiki/File%3ASurjective_composition.svg)
-  Surjective composition: the first function need not be surjective. (Photo credit: [Wikipedia](http://commons.wikipedia.org/wiki/File%3ASurjective_composition.svg))
-  ----------------------
+[![Surjective composition: the first function nee...](http://upload.wikimedia.org/wikipedia/commons/thumb/a/a2/Surjective_composition.svg/300px-Surjective_composition.svg.png)](http://commons.wikipedia.org/wiki/File%3ASurjective_composition.svg)
+Surjective composition: the first function need not be surjective. (Photo credit: [Wikipedia](http://commons.wikipedia.org/wiki/File%3ASurjective_composition.svg))
 
 Function composition is a nice way to sequence transformations on data.
 For example in a
@@ -74,11 +72,6 @@ function, applies it to the source and then applies codegen to it's
 result.
 
 ### Goin async
-
-  ---------------------
-  [![Image representing Android as depicted in Crun...](http://www.crunchbase.com/assets/images/resized/0001/4601/14601v1-max-450x450.png)](http://www.crunchbase.com/product/android)
-  Image via [CrunchBase](http://www.crunchbase.com/)
-  ---------------------
 
 What about asynchronous calls? Can I compose those too? I think it's
 possible with Lift actors(or with scalaz's?), but I needed to integrate

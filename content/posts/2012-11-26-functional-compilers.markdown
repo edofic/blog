@@ -23,7 +23,7 @@ parsing](http://en.wikipedia.org/wiki/Scannerless_parsing "Scannerless parsing")
 expressions](http://en.wikipedia.org/wiki/Regular_expression "Regular expression")
 into your grammar. In fact this approach seems simpler to me, as the
 [only proper parser I've
-done](/posts/2012-08-29-creating-a-language-1.html)
+done](/posts/2012-08-29-creating-a-language-1)
 works this way. But this is not the interesting part.
 
 

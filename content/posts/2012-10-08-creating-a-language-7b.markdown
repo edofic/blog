@@ -3,10 +3,10 @@ title: Making a programming language Part 7b - using objects
 date: 2012-10-08
 ---
 
-[Table of contents](/posts/2012-08-29-creating-a-language-1.html), 
+[Table of contents](/posts/2012-08-29-creating-a-language-1), 
 [Whole project on github](https://github.com/edofic/scrat-lang)
 
-Something like EPIC FAIL occured to me and I [published a post](/posts/2012-08-29-creating-a-language-1.html)
+Something like EPIC FAIL occured to me and I [published a post](/posts/2012-08-29-creating-a-language-1)
 containing only half the content I intended to write. So I'm doing a
 part b.
 
@@ -113,4 +113,4 @@ So an optional aux scope is the answer. It doesn't seem pretty to me,
 but it does the job. 
 
 
-**next: **[trying to go faster](/posts/2012-09-29-creating-a-language-8.html)
+**next: **[trying to go faster](/posts/2012-09-29-creating-a-language-8)

@@ -17,10 +17,7 @@ the picture in my head.
 
 ### General
 
- --------------
- ![Challenge Accepted!](http://farm8.static.flickr.com/7192/6857158741_a4e3d23649_m.jpg "Challenge Accepted!")
- Challenge Accepted! (Photo credit: pierreee)
- --------------
+![Challenge Accepted!](http://farm8.static.flickr.com/7192/6857158741_a4e3d23649_m.jpg "Challenge Accepted!")
 
 So we've
 established that generic singletons are just a silly idea, now let's try

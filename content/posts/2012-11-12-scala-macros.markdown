@@ -3,10 +3,7 @@ title: Cool Monday - Scala Macros
 date: 2012-11-12
 ---
 
-  ----------------------
-  [![Garden flower](http://upload.wikimedia.org/wikipedia/commons/thumb/b/b6/Garden_flower_.jpg/300px-Garden_flower_.jpg)](http://commons.wikipedia.org/wiki/File%3AGarden_flower_.jpg)
-  Macro shot (Photo credit: [Wikipedia](http://commons.wikipedia.org/wiki/File%3AGarden_flower_.jpg))
-  ----------------------
+[![Garden flower](http://upload.wikimedia.org/wikipedia/commons/thumb/b/b6/Garden_flower_.jpg/300px-Garden_flower_.jpg)](http://commons.wikipedia.org/wiki/File%3AGarden_flower_.jpg)
 
 For me the highlight of this week was discovering Bootstrap. I heard of
 it before but never looked into it. Probably because I wasn't doing web
@@ -69,7 +66,7 @@ lazily wraps rows into classes. And you need to make sure by hand that
 your class coresponds to columns of your result set. Not very safe. I
 had an idea to make static-typed safe inferface for the database when I
 first heard about HList. You would do projection as a
-[HList](/posts/2012-10-29-hlist-shapeless.html) and
+[HList](/posts/2012-10-29-hlist-shapeless) and
 result rows would be lazily wrapped into HLists. But using them for
 wrapping every row(possibly filling data in with reflection) would be a
 performance penalty. Not to mention a mess to implement. Now consider

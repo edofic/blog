@@ -8,7 +8,7 @@ book on this topic. I'm getting familiar with it through some practical
 applications. Namely scala and haskell. 
 
 That same [discussion about design
-patterns](/posts/2012-10-29-design-patterns-bullshit.html) also
+patterns](/posts/2012-10-29-design-patterns-bullshit) also
 included dynamic vs [static
 typing](http://en.wikipedia.org/wiki/Type_system "Type system"). And I
 asked twitter about it. [HairyFotr](https://twitter.com/HairyFotr) linked
@@ -22,7 +22,7 @@ to me. Basically there are two conclusions to be drawn
     dynamic typed languages can. Safely.
 
 As I'm (still) [implementing a
-language](/posts/2012-08-29-creating-a-language-1.html) that
+language](/posts/2012-08-29-creating-a-language-1) that
 happens to be dynamic(because I was too lazy to look-up how to do type
 checking) second point interests me more. 
 
@@ -40,6 +40,7 @@ Java, C# and many other mainstream languages use [nominal
 typing](http://en.wikipedia.org/wiki/Nominative_type_system "Nominative type system")
 at the level of the vm. This means that type A is a subtype of type B
 precisely when name of A is a subtype of name ob B. For example 
+
 ```java
 interface Foo{
     void method(int a);
@@ -48,6 +49,7 @@ interface Foo{
 interface Bar{
     void method(int b);
 }
+```
 
 If you have a method that takes in an instance of Foo, you cannot pass
 an instance of Bar. Because Bar isn't subtype of Foo. Even though they

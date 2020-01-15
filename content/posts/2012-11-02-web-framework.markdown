@@ -3,11 +3,6 @@ title: Hunt for a web framework that works
 date: 2012-11-02
 ---
 
-  -------------------------
-  [![Never Internet Explorer](http://upload.wikimedia.org/wikipedia/en/e/ea/Never_Internet_Explorer.png)](http://en.wikipedia.org/wiki/File%3ANever_Internet_Explorer.png)
-  Never Internet Explorer (Photo credit: [Wikipedia](http://en.wikipedia.org/wiki/File%3ANever_Internet_Explorer.png))
-  -------------------------
-
 I have this personal project I want to do that includes a web
 application and I want to learn something. So I'm on the hunt for
 language, environment and framework.

@@ -42,16 +42,20 @@ up a surrogate key that conforms to this.
 Let `A` be an input array of 16 bit integers. We allocate another array of size
 `2 ^ 16` - 64k. Then we loop over the input
 
-    tmp = [0] * (2 ** 16)
-    for a in A:
-      tmp[a] += 1
+```python
+tmp = [0] * (2 ** 16)
+for a in A:
+  tmp[a] += 1
+```
 
 This is enough to spit out the sorted array
 
-    var sorted = [];
-    for i, c in enumerate(A):
-      for _ in range(c):
-        sorted.append(i)
+```python
+var sorted = [];
+for i, c in enumerate(A):
+  for _ in range(c):
+    sorted.append(i)
+```
 
 And we didn't use comparisons! I will even argue this is linear with respect to
 the length of the input array. We allocated an array of constant size. This is

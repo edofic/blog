@@ -3,7 +3,7 @@ title: Making a programming language Part 7a - objects
 date: 2012-09-27
 ---
 
-[Table of contents](/posts/2012-08-29-creating-a-language-1.html), 
+[Table of contents](/posts/2012-08-29-creating-a-language-1), 
 [Whole project on github](https://github.com/edofic/scrat-lang)
 
 My goal in this post is for this to compile
@@ -28,7 +28,7 @@ language needs a new [local
 scope](http://en.wikipedia.org/wiki/Local_variable "Local variable") for
 every execution(not all functions, but this is a simplification because
 I don't care about performance, see [previous
-post](/posts/2012-09-25-creating-a-language-6.html)
+post](/posts/2012-09-25-creating-a-language-6)
 for details). New scope. New something. New. Bells should be ringing
 right now. I'm creating objects. I could just as well pass the reference
 to that object. I even have the reference. It's current scope - "this"
@@ -75,4 +75,4 @@ Returns 3. Though knowledge of implementation is needed to execute such
 attack. **update:** I kinda sorta forgot to include how I made that
 dot-access thingy-o.get() to work. Continuation below
 
-**next: [using objects](/posts/2012-10-08-creating-a-language-7b.html)**
+**next: [using objects](/posts/2012-10-08-creating-a-language-7b)**

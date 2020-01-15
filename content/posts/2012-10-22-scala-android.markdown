@@ -3,15 +3,9 @@ title: Setting up for scala development on Android
 date: 2012-10-22
 ---
 
-  -------------------------
-  [![Image representing Android as depicted in Crun...](http://www.crunchbase.com/assets/images/resized/0001/4601/14601v1-max-450x450.png)](http://www.crunchbase.com/product/android)
-  Image via [CrunchBase](http://www.crunchbase.com/)
-  -------------------------
+[![Image representing Android as depicted in Crun...](http://www.crunchbase.com/assets/images/resized/0001/4601/14601v1-max-450x450.png)](http://www.crunchbase.com/product/android)
 
-  -------------------------
-  [![Scala (programming language)](http://upload.wikimedia.org/wikipedia/en/thumb/8/85/Scala_logo.png/300px-Scala_logo.png)](http://en.wikipedia.org/wiki/File%3AScala_logo.png)
-  Scala (programming language) (Photo credit: [Wikipedia](http://en.wikipedia.org/wiki/File%3AScala_logo.png))
-  -------------------------
+[![Scala (programming language)](http://upload.wikimedia.org/wikipedia/en/thumb/8/85/Scala_logo.png/300px-Scala_logo.png)](http://en.wikipedia.org/wiki/File%3AScala_logo.png)
 
 I've been developing for android more than a year now and a few months
 in scala. So naturally I wanted to combine the two. But it's not dead

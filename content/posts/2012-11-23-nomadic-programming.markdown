@@ -21,10 +21,7 @@ chosen
 stack doesn't matter. And I agree. ([Patrick does
 too](http://www.kalzumeus.com/2011/10/28/dont-call-yourself-a-programmer/)).
 
-  ----------------------
-  [![](http://www.thatericalper.com/wp-content/uploads/2012/11/years.jpg)](http://www.thatericalper.com/wp-content/uploads/2012/11/years.jpg)
-  20 years later all this fits in your pocket
-  ----------------------
+[![](http://www.thatericalper.com/wp-content/uploads/2012/11/years.jpg)](http://www.thatericalper.com/wp-content/uploads/2012/11/years.jpg)
 
 I'm an [engineer](http://en.wikipedia.org/wiki/Engineer "Engineer") not
 a programmer(or god forbid, a

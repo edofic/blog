@@ -3,15 +3,12 @@ title: Making a programming language Part 5 - variables and decisions
 date: 2012-09-02
 ---
 
-  ---------------
-  [![A typical text terminal produces input and dis...](http://upload.wikimedia.org/wikipedia/commons/thumb/7/70/Stdstreams-notitle.svg/300px-Stdstreams-notitle.svg.png)](http://commons.wikipedia.org/wiki/File%3AStdstreams-notitle.svg)
-  A typical text terminal produces input and displays output and errors (Photo credit: [Wikipedia](http://commons.wikipedia.org/wiki/File%3AStdstreams-notitle.svg))
-  ---------------
+[![A typical text terminal produces input and dis...](http://upload.wikimedia.org/wikipedia/commons/thumb/7/70/Stdstreams-notitle.svg/300px-Stdstreams-notitle.svg.png)](http://commons.wikipedia.org/wiki/File%3AStdstreams-notitle.svg)
 
-[Table of contents](/posts/2012-08-29-creating-a-language-1.html), 
+[Table of contents](/posts/2012-08-29-creating-a-language-1), 
 [Whole project on github](https://github.com/edofic/scrat-lang)
 
-In [Part 4](/posts/2012-09-01-creating-a-language4.html) I
+In [Part 4](/posts/2012-09-01-creating-a-language4) I
 managed to create a [Hello World](http://en.wikipedia.org/wiki/Hello_world_program "Hello world program").
 What's the next program after this in every programming tutorial? A
 program that asks your name and greets you. Greeter perhaps?
@@ -139,11 +136,9 @@ private def equality: Parser[Expression] =
   }
 private def noEqExpr: Parser[Expression] =
   sum ||| assignment ||| ifThenElseprivate def expr = noEqExpr ||| equality
+```
 
-  ------------------
-  [![layers](http://farm5.static.flickr.com/4074/4947839133_086f0266e4_m.jpg)](http://www.flickr.com/photos/90863480@N00/4947839133)
-  layers (Photo credit: [theilr](http://www.flickr.com/photos/90863480@N00/4947839133))
-  ------------------
+[![layers](http://farm5.static.flickr.com/4074/4947839133_086f0266e4_m.jpg)](http://www.flickr.com/photos/90863480@N00/4947839133)
 
 I finally got around to understand grammars a bit more. In order to make
 the grammar not ambiguous an not left recursive you stack layers upon
@@ -165,4 +160,4 @@ A quick sample in scrat to finish it of
     println("access", state)
 
 
-**next [implementing user defined functions](/posts/2012-09-25-creating-a-language-6.html)**
+**next [implementing user defined functions](/posts/2012-09-25-creating-a-language-6)**

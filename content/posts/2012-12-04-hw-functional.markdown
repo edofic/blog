@@ -30,10 +30,7 @@ essence the algorithm looks like this
 -   repeat until all elements are on single track(hopefully sorted in
     non-descending order)
 
-  ----------------------
-  [![Reel of 1/2](http://upload.wikimedia.org/wikipedia/commons/thumb/a/ae/Tapesticker.jpg/300px-Tapesticker.jpg)](http://commons.wikipedia.org/wiki/File%3ATapesticker.jpg)
-  Reel of 1/2" tape showing beginning-of-tape reflective marker. (Photo credit: [Wikipedia](http://commons.wikipedia.org/wiki/File%3ATapesticker.jpg))
-  ----------------------
+[![Reel of 1/2](http://upload.wikimedia.org/wikipedia/commons/thumb/a/ae/Tapesticker.jpg/300px-Tapesticker.jpg)](http://commons.wikipedia.org/wiki/File%3ATapesticker.jpg)
 
 Quite simple right? TA's even provided us classes(talking Java here)
 InTrack and OutTrack to manage tracks and I/O. Well my problem is that I
@@ -72,16 +69,12 @@ uneeded utility methods and comments ~220 lines. Eww.. Thats way too
 much.
 
 
-Scala to the rescue
--------------------
+# Scala to the rescue
 
 Lets rewrite this in a functional matter using scala. And while I'm at
 it, no vars or mutable collections. 
 
-  ------------------------------
-  [![Scala (programming language)](http://upload.wikimedia.org/wikipedia/en/thumb/8/85/Scala_logo.png/300px-Scala_logo.png)](http://en.wikipedia.org/wiki/File%3AScala_logo.png)
-  Scala (programming language) (Photo credit: [Wikipedia](http://en.wikipedia.org/wiki/File%3AScala_logo.png))
-  ------------------------------
+[![Scala (programming language)](http://upload.wikimedia.org/wikipedia/en/thumb/8/85/Scala_logo.png/300px-Scala_logo.png)](http://en.wikipedia.org/wiki/File%3AScala_logo.png)
 
 Input can be a collection right? Just implement Traversable. Not really.
 The whole point of tracks is they only hold one element in memory(or a

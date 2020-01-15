@@ -3,12 +3,9 @@ title: Making a programming language Part 6 - functions
 date: 2012-09-25
 ---
 
-  --------------------
-  [![Illustration of Function (mathematics).](http://upload.wikimedia.org/wikipedia/commons/thumb/8/8a/Function_illustration.svg/200px-Function_illustration.svg.png)](http://commons.wikipedia.org/wiki/File%3AFunction_illustration.svg)
-  Illustration of Function (mathematics). (Photo credit: [Wikipedia](http://commons.wikipedia.org/wiki/File%3AFunction_illustration.svg))
-  --------------------
+[![Illustration of Function (mathematics).](http://upload.wikimedia.org/wikipedia/commons/thumb/8/8a/Function_illustration.svg/200px-Function_illustration.svg.png)](http://commons.wikipedia.org/wiki/File%3AFunction_illustration.svg)
 
-[Table of contents](/posts/2012-08-29-creating-a-language-1.html),
+[Table of contents](/posts/2012-08-29-creating-a-language-1),
 [Whole project on github](https://github.com/edofic/scrat-lang)
 
 Long overdue, I'm finally writing about the most interesting part -
@@ -149,4 +146,4 @@ constructors like:
 
   func create(n){this}
 
-**next [objects and costructors](/posts/2012-09-27-creating-a-language-7a.html)**
+**next [objects and costructors](/posts/2012-09-27-creating-a-language-7a)**

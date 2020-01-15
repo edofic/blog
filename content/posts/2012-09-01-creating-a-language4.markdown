@@ -3,12 +3,8 @@ title: Making a programming language Part 4 - Hello World
 date: 2012-09-01
 ---
 
-  ------------------
-  [![printf(](http://farm8.static.flickr.com/7153/6691167811_440ed057ba_m.jpg)](http://www.flickr.com/photos/90209911@N00/6691167811)
-  printf("hello, world\\n"); (Photo credit: [isipeoria](http://www.flickr.com/photos/90209911@N00/6691167811))
-  ------------------
 [Table of
-contents](/posts/2012-08-29-creating-a-language-1.html),
+contents](/posts/2012-08-29-creating-a-language-1),
 [Whole project on github](https://github.com/edofic/scrat-lang)
 
 What good is a language if you cannot do a [Hello World
@@ -137,5 +133,5 @@ Age](http://en.wikipedia.org/wiki/Ice_age "Ice age")). And them some
 more funny names, but scrat stuck with me. So I named the file
 hello.scrat.
 
-**next: [variables and decisions](/posts/2012-09-02-creating-a-language-5.html)**
+**next: [variables and decisions](/posts/2012-09-02-creating-a-language-5)**
 

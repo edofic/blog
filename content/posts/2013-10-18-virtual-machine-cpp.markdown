@@ -30,7 +30,7 @@ I digressed a bit. Then came the most optimistic idea. A [virtual
 machine](http://www.symantec.com/theme.jsp?themeid=protect-virtual-environments "Virtual machine").
 Something quite high level(instruction to print) an eventually an
 assembler. I now realize I was always [into language
-stuff](/posts/2012-08-29-creating-a-language-1.html).
+stuff](/posts/2012-08-29-creating-a-language-1).
 So a designed a [machine
 language](http://en.wikipedia.org/wiki/Machine_code "Machine code") with
 just enough instructions to do [Hello
@@ -42,7 +42,7 @@ that is PRINT and END.
 At first I thought about doing a monolithic structure - [switch
 case](http://en.wikipedia.org/wiki/Switch_statement "Switch statement")(in
 fact what I've [done with scrat
-recently](/posts/2012-08-29-creating-a-language-1.html)).
+recently](/posts/2012-08-29-creating-a-language-1)).
 But I had some considerations. What if number of of instruction rises a
 lot? I'll be left maintaining [spaghetti
 code](http://en.wikipedia.org/wiki/Spaghetti_code "Spaghetti code"). Or

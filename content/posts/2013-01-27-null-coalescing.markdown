@@ -3,11 +3,6 @@ title: Null-coalescing(??) in scala
 date: 2013-01-27
 ---
 
- -----------------
- ![The supermassive black holes](http://upload.wikimedia.org/wikipedia/commons/thumb/d/d4/BlackHole.jpg/300px-BlackHole.jpg)
- Null reminds me of black holes.
- -----------------
-
 I was doing my homework
 today(yes I am aware I should be enjoying myself on 30th December) and had some problems
 with [concatenating](http://en.wikipedia.org/wiki/Concatenation "Concatenation") possibly

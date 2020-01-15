@@ -18,10 +18,7 @@ page](http://code.google.com/p/scalaz/) is
 [IO](http://en.wikipedia.org/wiki/Io_%28programming_language%29 "Io (programming language)")
 monad implementation.
 
----------------------
 ![Denali Landscape](http://farm7.static.flickr.com/6157/6183470322_cbbf4881d2_m.jpg "Denali Landscape")
-Real World Tm - the thing your programs have to interact with (Photo credit: blmiers2)
----------------------
 
 I've written a bit about monadic IO but let's recap. IO monad is a data structure that represents a tiny
 language which let's you describe and compose IO actions without
