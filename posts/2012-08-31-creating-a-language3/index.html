@@ -1,339 +1,92 @@
-<!DOCTYPE html>
-<html><head>
-<title>Making a programming language Part 3 - adding features</title>
-
-<meta charset="utf-8">
-<meta name="X-UA-Compatible" content="IE=edge">
-<meta name="google-site-verification" content="">
-<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
-<meta content="telephone=no" name="format-detection">
-<meta name="renderer" content="webkit">
-<meta name="theme-color" content="#ffffff">
-
-
-
-
-<script src="/vendor/js/jquery.min.js" ></script>
-<script src="/vendor/js/popper.min.js" ></script>
-<script src="/vendor/js/bootstrap.min.js" ></script>
-<script src="/vendor/js/smooth-scroll.polyfills.min.js" ></script>
-<link type="text/css" rel="stylesheet" href="/vendor/css/bootstrap.min.css">
-<script src="/vendor/js/vue.min.js" ></script>
-
-
-
-<link rel="stylesheet" href="/scss/journal.min.9d1b3d6c4f3ff1773fff9bdca1bc24452f33129e12f67f2ab14f2ddaf1603468.css" media="screen">
-
-<script src="/js/loadCSS.js"></script>
-<script>
-    loadCSS("https://fonts.googleapis.com/css?family=Lora|Montserrat|Fira+Mono|Noto+Serif+SC|Material+Icons");
-</script>
-
-</head>
-<body>
-    	<div id="app"><div ref="sideContainer" class="side-container">
-    <div class="a-block nav-head false">
-        <div class="nav-title">
-            My Programming Escapades
-        </div>
-        <div class="nav-subtitle">
-            
-                Andraz Bajt
-            
-        </div>
-            
-                <a href="https://github.com/edofic"><img src="/icons/github.svg" width="20"/></a>
-            
-            
-                <a href="https://www.linkedin.com/in/edofic"><img src="/icons/linkedin.svg" width="20"/></a>
-            
-            
-                <a href="https://twitter.com/edofic"><img src="/icons/twitter.svg" width="20"/></a>
-            
-            <a href="/index.xml"><img src="/icons/rss.svg" width="20"/></a>
-            
-                <a href="mailto:edofic@edofic.com"><img src="/icons/email.svg" width="20"/></a>
-            
-    </div>
-
-
-    <div class="nav-link-list">
-        
-        
-            
-            
-            <a class="a-block nav-link-item" href="/about">
-                About Me
-            </a>
-        
-            
-            
-            <a class="a-block nav-link-item" href="/">
-                Archive
-            </a>
-        
-    </div>
-
-    <div class="nav-footer">
-        &copy;
-    2020
-	
-	Andraz Bajt
-	
-
-    </div>
-
-</div>
-<div ref="extraContainer" class="extra-container">
-    
-    <div class="pagination">
-        <a id="globalBackToTop" class="pagination-action animated-visibility" href="#top" :class="{ invisible: scrollY == 0 }">
-            <i class="material-icons pagination-action-icon">
-                keyboard_arrow_up
-            </i>
-        </a>
-        
-    </div>
-</div><div class="single-column-drawer-container" ref="drawer"
-     v-bind:class="{ 'single-column-drawer-container-active': isDrawerOpen }">
-    <div class="drawer-content">
-        <div class="drawer-menu">
-        
-        
-            
-                
-                
-                <a class="a-block drawer-menu-item" href="/about">
-                    About Me
-                </a>
-        
-            
-                
-                
-                    
-                
-                <a class="a-block drawer-menu-item" href="/">
-                    Archive
-                </a>
-        
-        </div>
-    </div>
-</div>
-<transition name="fade">
-    <div v-bind:class="{ 'single-column-drawer-mask': mounted }" v-if="isDrawerOpen" v-on:click="toggleDrawer"></div>
-</transition>
-<nav ref="navBar" class="navbar sticky-top navbar-light single-column-nav-container">
-    <div ref="navBackground" class="nav-background"></div>
-    <div class="container container-narrow nav-content">
-        <button id="nav_dropdown_btn" class="nav-dropdown-toggle" type="button" v-on:click="toggleDrawer">
-            <i class="material-icons">
-                menu
-            </i>
-        </button>
-        <a ref="navTitle" class="navbar-brand" href="/">
-            My Programming Escapades
-        </a>
-    </div>
-</nav>
-<div class="single-column-header-container" ref="pageHead"
-     v-bind:style="{ transform: 'translateZ(0px) translateY('+.3*scrollY+'px)', opacity: 1-navOpacity }">
-        <a href="/">
-            <div class="single-column-header-title">My Programming Escapades</div>
-            
-            <div class="single-column-header-subtitle">Andraz Bajt</div>
-            
-        </a>
-
-        
-            <a href="https://github.com/edofic"><img src="/icons/github.svg" width="20"/></a>
-        
-        
-            <a href="https://www.linkedin.com/in/edofic"><img src="/icons/linkedin.svg" width="20"/></a>
-        
-        
-            <a href="https://twitter.com/edofic"><img src="/icons/twitter.svg" width="20"/></a>
-        
-        <a href="/index.xml"><img src="/icons/rss.svg" width="20"/></a>
-        
-            <a href="mailto:edofic@edofic.com"><img src="/icons/email.svg" width="20"/></a>
-        
-
-</div>
-
-            <div id="content">
-<div ref="streamContainer" class="stream-container">
-    <div class="post-list-container post-list-container-shadow">
-        <div class="post">
-            
-            
-            
-
-            <div class="post-head-wrapper-text-only"
-                 style="background-image: url('/')">
-                <div class="post-title">
-                    Making a programming language Part 3 - adding features
-                    <div class="post-meta">
-                        
-                            <time itemprop="datePublished">
-                                2012-08-31
-                            </time>
-                        
-
-                        
-
-                        
-                    </div>
-                </div>
-            </div>
-
-            <div class="post-body-wrapper">
-                <div class="post-body">
-                    <p><a href="/posts/2012-08-29-creating-a-language-1">Table of
+<!doctype html><html><head><title>Making a programming language Part 3 - adding features</title><meta charset=utf-8><meta name=X-UA-Compatible content="IE=edge"><meta name=google-site-verification content><meta content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=0" name=viewport><meta content="telephone=no" name=format-detection><meta name=renderer content="webkit"><meta name=theme-color content="#ffffff"><script src=/vendor/js/jquery.min.js></script><script src=/vendor/js/popper.min.js></script><script src=/vendor/js/bootstrap.min.js></script><script src=/vendor/js/smooth-scroll.polyfills.min.js></script><link type=text/css rel=stylesheet href=/vendor/css/bootstrap.min.css><script src=/vendor/js/vue.min.js></script><link rel=stylesheet href=/scss/journal.min.3bdd3e0bba961aa48fdce1402e6f01783c435b4dfb0025c8d0022ddaea0f3d19.css media=screen><script src=/js/loadCSS.js></script><script>loadCSS("https://fonts.googleapis.com/css?family=Lora|Montserrat|Fira+Mono|Noto+Serif+SC|Material+Icons");</script></head><body><div id=app><div ref=sideContainer class=side-container><div class="a-block nav-head false"><div class=nav-title>My Programming Escapades</div><div class=nav-subtitle>Andraz Bajt</div><a href=https://github.com/edofic><img src=/icons/github.svg width=20></a>
+<a href=https://www.linkedin.com/in/edofic><img src=/icons/linkedin.svg width=20></a>
+<a href=https://twitter.com/edofic><img src=/icons/twitter.svg width=20></a>
+<a href=/index.xml><img src=/icons/rss.svg width=20></a>
+<a href=mailto:edofic@edofic.com><img src=/icons/email.svg width=20></a></div><div class=nav-link-list><a class="a-block nav-link-item" href=/about>About Me</a>
+<a class="a-block nav-link-item" href=/>Archive</a></div><div class=nav-footer>&copy;
+2020
+Andraz Bajt</div></div><div ref=extraContainer class=extra-container><div class=pagination><a id=globalBackToTop class="pagination-action animated-visibility" href=#top :class="{ invisible: scrollY == 0 }"><i class="material-icons pagination-action-icon">keyboard_arrow_up</i></a></div></div><div class=single-column-drawer-container ref=drawer v-bind:class="{ 'single-column-drawer-container-active': isDrawerOpen }"><div class=drawer-content><div class=drawer-menu><a class="a-block drawer-menu-item" href=/about>About Me</a>
+<a class="a-block drawer-menu-item" href=/>Archive</a></div></div></div><transition name=fade><div v-bind:class="{ 'single-column-drawer-mask': mounted }" v-if=isDrawerOpen v-on:click=toggleDrawer></div></transition><nav ref=navBar class="navbar sticky-top navbar-light single-column-nav-container"><div ref=navBackground class=nav-background></div><div class="container container-narrow nav-content"><button id=nav_dropdown_btn class=nav-dropdown-toggle type=button v-on:click=toggleDrawer>
+<i class=material-icons>menu</i></button>
+<a ref=navTitle class=navbar-brand href=/>My Programming Escapades</a></div></nav><div class=single-column-header-container ref=pageHead v-bind:style="{ transform: 'translateZ(0px) translateY('+.3*scrollY+'px)', opacity: 1-navOpacity }"><a href=/><div class=single-column-header-title>My Programming Escapades</div><div class=single-column-header-subtitle>Andraz Bajt</div></a><a href=https://github.com/edofic><img src=/icons/github.svg width=20></a>
+<a href=https://www.linkedin.com/in/edofic><img src=/icons/linkedin.svg width=20></a>
+<a href=https://twitter.com/edofic><img src=/icons/twitter.svg width=20></a>
+<a href=/index.xml><img src=/icons/rss.svg width=20></a>
+<a href=mailto:edofic@edofic.com><img src=/icons/email.svg width=20></a></div><div id=content><div ref=streamContainer class=stream-container><div class="post-list-container post-list-container-shadow"><div class=post><div class=post-head-wrapper-text-only style="background-image:url('/')"><div class=post-title>Making a programming language Part 3 - adding features<div class=post-meta><time itemprop=datePublished>2012-08-31</time></div></div></div><div class=post-body-wrapper><div class=post-body><p><a href=/posts/2012-08-29-creating-a-language-1>Table of
 contents</a>, 
-<a href="https://github.com/edofic/scrat-lang">Whole project on github</a></p>
-<p>So now I have a repl that can evaluate stuff like</p>
-<pre><code>(2+3)*(7/2-1)
-</code></pre>
-<p>Not much of a <a href="http://en.wikipedia.org/wiki/Programming_language" title="Programming language">programming language</a></p>
-<ul>
-<li>more like a calculator, and not even a good one. Lets add some
-features!</li>
-</ul>
-<h3 id="constants">Constants</h3>
-<p>Like pi, e and such. I have to change the grammar to match identifiers too.</p>
-<p>Now I have</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-scala" data-lang="scala"><span style="color:#66d9ef">private</span> <span style="color:#66d9ef">def</span> factor<span style="color:#66d9ef">:</span> <span style="color:#66d9ef">Parser</span><span style="color:#f92672">[</span><span style="color:#66d9ef">Expression</span><span style="color:#f92672">]</span> <span style="color:#66d9ef">=</span> number <span style="color:#f92672">|</span> <span style="color:#f92672">(</span><span style="color:#e6db74">&#34;(&#34;</span> <span style="color:#f92672">~&gt;</span> expr <span style="color:#f92672">&lt;~</span> <span style="color:#e6db74">&#34;)&#34;</span><span style="color:#f92672">)</span>
-</code></pre></div><p>And I change that to</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-scala" data-lang="scala"><span style="color:#66d9ef">private</span> <span style="color:#66d9ef">def</span> factor<span style="color:#66d9ef">:</span> <span style="color:#66d9ef">Parser</span><span style="color:#f92672">[</span><span style="color:#66d9ef">Expression</span><span style="color:#f92672">]</span> <span style="color:#66d9ef">=</span> value <span style="color:#f92672">|</span> parenExpr
-<span style="color:#66d9ef">private</span> <span style="color:#66d9ef">def</span> value<span style="color:#66d9ef">:</span> <span style="color:#66d9ef">Parser</span><span style="color:#f92672">[</span><span style="color:#66d9ef">Expression</span><span style="color:#f92672">]</span> <span style="color:#66d9ef">=</span> number <span style="color:#f92672">|</span> identifier
-<span style="color:#66d9ef">private</span> <span style="color:#66d9ef">def</span> identifier<span style="color:#66d9ef">:</span> <span style="color:#66d9ef">Parser</span><span style="color:#f92672">[</span><span style="color:#66d9ef">Identifier</span><span style="color:#f92672">]</span> <span style="color:#66d9ef">=</span> <span style="color:#e6db74">&#34;[a-zA-Z]\\w*&#34;</span><span style="color:#f92672">.</span>r <span style="color:#f92672">^^</span> <span style="color:#f92672">{</span>
-  s <span style="color:#66d9ef">=&gt;</span> <span style="color:#a6e22e">Identifier</span><span style="color:#f92672">(</span>s<span style="color:#f92672">)</span>
-<span style="color:#f92672">}</span>
-</code></pre></div><p>and I also added a new token type</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-scala" data-lang="scala"><span style="color:#66d9ef">case</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Identifier</span><span style="color:#f92672">(</span>id<span style="color:#66d9ef">:</span> <span style="color:#66d9ef">String</span><span style="color:#f92672">)</span> <span style="color:#66d9ef">extends</span> <span style="color:#a6e22e">Expression</span>
-</code></pre></div><p>and enabled this in evaluator\</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-scala" data-lang="scala"><span style="color:#66d9ef">case</span> <span style="color:#a6e22e">Identifier</span><span style="color:#f92672">(</span>name<span style="color:#f92672">)</span> <span style="color:#66d9ef">=&gt;</span> <span style="color:#f92672">{</span>
-  <span style="color:#a6e22e">StdLib</span><span style="color:#f92672">(</span>name<span style="color:#f92672">)</span> <span style="color:#66d9ef">match</span> <span style="color:#f92672">{</span>
-    <span style="color:#66d9ef">case</span> <span style="color:#a6e22e">Some</span><span style="color:#f92672">(</span>v<span style="color:#66d9ef">:</span> <span style="color:#66d9ef">Double</span><span style="color:#f92672">)</span> <span style="color:#66d9ef">=&gt;</span> v
-    <span style="color:#66d9ef">case</span> <span style="color:#66d9ef">_</span> <span style="color:#66d9ef">=&gt;</span> <span style="color:#66d9ef">throw</span> <span style="color:#66d9ef">new</span> <span style="color:#a6e22e">SemanticError</span><span style="color:#f92672">(</span>name <span style="color:#f92672">+</span> <span style="color:#e6db74">&#34; not found&#34;</span><span style="color:#f92672">)</span>
-  <span style="color:#f92672">}</span>
-<span style="color:#f92672">}</span>
+<a href=https://github.com/edofic/scrat-lang>Whole project on github</a></p><p>So now I have a repl that can evaluate stuff like</p><pre><code>(2+3)*(7/2-1)
+</code></pre><p>Not much of a <a href=http://en.wikipedia.org/wiki/Programming_language title="Programming language">programming language</a></p><ul><li>more like a calculator, and not even a good one. Lets add some
+features!</li></ul><h3 id=constants>Constants</h3><p>Like pi, e and such. I have to change the grammar to match identifiers too.</p><p>Now I have</p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-scala data-lang=scala><span style=color:#66d9ef>private</span> <span style=color:#66d9ef>def</span> factor<span style=color:#66d9ef>:</span> <span style=color:#66d9ef>Parser</span><span style=color:#f92672>[</span><span style=color:#66d9ef>Expression</span><span style=color:#f92672>]</span> <span style=color:#66d9ef>=</span> number <span style=color:#f92672>|</span> <span style=color:#f92672>(</span><span style=color:#e6db74>&#34;(&#34;</span> <span style=color:#f92672>~&gt;</span> expr <span style=color:#f92672>&lt;~</span> <span style=color:#e6db74>&#34;)&#34;</span><span style=color:#f92672>)</span>
+</code></pre></div><p>And I change that to</p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-scala data-lang=scala><span style=color:#66d9ef>private</span> <span style=color:#66d9ef>def</span> factor<span style=color:#66d9ef>:</span> <span style=color:#66d9ef>Parser</span><span style=color:#f92672>[</span><span style=color:#66d9ef>Expression</span><span style=color:#f92672>]</span> <span style=color:#66d9ef>=</span> value <span style=color:#f92672>|</span> parenExpr
+<span style=color:#66d9ef>private</span> <span style=color:#66d9ef>def</span> value<span style=color:#66d9ef>:</span> <span style=color:#66d9ef>Parser</span><span style=color:#f92672>[</span><span style=color:#66d9ef>Expression</span><span style=color:#f92672>]</span> <span style=color:#66d9ef>=</span> number <span style=color:#f92672>|</span> identifier
+<span style=color:#66d9ef>private</span> <span style=color:#66d9ef>def</span> identifier<span style=color:#66d9ef>:</span> <span style=color:#66d9ef>Parser</span><span style=color:#f92672>[</span><span style=color:#66d9ef>Identifier</span><span style=color:#f92672>]</span> <span style=color:#66d9ef>=</span> <span style=color:#e6db74>&#34;[a-zA-Z]\\w*&#34;</span><span style=color:#f92672>.</span>r <span style=color:#f92672>^^</span> <span style=color:#f92672>{</span>
+  s <span style=color:#66d9ef>=&gt;</span> <span style=color:#a6e22e>Identifier</span><span style=color:#f92672>(</span>s<span style=color:#f92672>)</span>
+<span style=color:#f92672>}</span>
+</code></pre></div><p>and I also added a new token type</p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-scala data-lang=scala><span style=color:#66d9ef>case</span> <span style=color:#66d9ef>class</span> <span style=color:#a6e22e>Identifier</span><span style=color:#f92672>(</span>id<span style=color:#66d9ef>:</span> <span style=color:#66d9ef>String</span><span style=color:#f92672>)</span> <span style=color:#66d9ef>extends</span> <span style=color:#a6e22e>Expression</span>
+</code></pre></div><p>and enabled this in evaluator\</p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-scala data-lang=scala><span style=color:#66d9ef>case</span> <span style=color:#a6e22e>Identifier</span><span style=color:#f92672>(</span>name<span style=color:#f92672>)</span> <span style=color:#66d9ef>=&gt;</span> <span style=color:#f92672>{</span>
+  <span style=color:#a6e22e>StdLib</span><span style=color:#f92672>(</span>name<span style=color:#f92672>)</span> <span style=color:#66d9ef>match</span> <span style=color:#f92672>{</span>
+    <span style=color:#66d9ef>case</span> <span style=color:#a6e22e>Some</span><span style=color:#f92672>(</span>v<span style=color:#66d9ef>:</span> <span style=color:#66d9ef>Double</span><span style=color:#f92672>)</span> <span style=color:#66d9ef>=&gt;</span> v
+    <span style=color:#66d9ef>case</span> <span style=color:#66d9ef>_</span> <span style=color:#66d9ef>=&gt;</span> <span style=color:#66d9ef>throw</span> <span style=color:#66d9ef>new</span> <span style=color:#a6e22e>SemanticError</span><span style=color:#f92672>(</span>name <span style=color:#f92672>+</span> <span style=color:#e6db74>&#34; not found&#34;</span><span style=color:#f92672>)</span>
+  <span style=color:#f92672>}</span>
+<span style=color:#f92672>}</span>
 </code></pre></div><p>StdLib is just a map object. I went the python way - variables(and
 constants) are entries in a global dictionary. Just a decision I made
 while implementing this. As I said, I don't have a plan, I don't know
 what I'm doing and I don't know how stuff is done. How hard can it be?!
-(<a href="http://www.bbc.co.uk/topgear/" title="Top Gear (2002 TV series)">Top Gear</a>
-anyone?)</p>
-<h3 id="exponentiation">Exponentiation</h3>
-<p>Another math feature. It's more of a test for myself to see if I
+(<a href=http://www.bbc.co.uk/topgear/ title="Top Gear (2002 TV series)">Top Gear</a>
+anyone?)</p><h3 id=exponentiation>Exponentiation</h3><p>Another math feature. It's more of a test for myself to see if I
 understand grammars. Especially how to make a grammar not
-<a href="http://en.wikipedia.org/wiki/Left_recursion" title="Left recursion">left-recursive</a>.
+<a href=http://en.wikipedia.org/wiki/Left_recursion title="Left recursion">left-recursive</a>.
 Because apparently such grammars don't work with
-<a href="http://en.wikipedia.org/wiki/Recursive_descent_parser" title="Recursive descent parser">RDP</a>.
-I turned out I don't understand grammars.</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-scala" data-lang="scala"><span style="color:#66d9ef">private</span> <span style="color:#66d9ef">def</span> exponent<span style="color:#66d9ef">:</span> <span style="color:#66d9ef">Parser</span><span style="color:#f92672">[</span><span style="color:#66d9ef">Expression</span><span style="color:#f92672">]</span> <span style="color:#66d9ef">=</span>
-  <span style="color:#f92672">(</span>value <span style="color:#f92672">|</span> parenExpr<span style="color:#f92672">)</span> <span style="color:#f92672">~</span> <span style="color:#e6db74">&#34;^&#34;</span> <span style="color:#f92672">~</span> <span style="color:#f92672">(</span>value <span style="color:#f92672">|</span> parenExpr<span style="color:#f92672">)</span> <span style="color:#f92672">^^</span> <span style="color:#f92672">{</span>
-    <span style="color:#66d9ef">case</span> a <span style="color:#f92672">~</span> <span style="color:#e6db74">&#34;^&#34;</span> <span style="color:#f92672">~</span> b <span style="color:#66d9ef">=&gt;</span> <span style="color:#a6e22e">Exponent</span><span style="color:#f92672">(</span>a<span style="color:#f92672">,</span>b<span style="color:#f92672">)</span>
-  <span style="color:#f92672">}</span>
+<a href=http://en.wikipedia.org/wiki/Recursive_descent_parser title="Recursive descent parser">RDP</a>.
+I turned out I don't understand grammars.</p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-scala data-lang=scala><span style=color:#66d9ef>private</span> <span style=color:#66d9ef>def</span> exponent<span style=color:#66d9ef>:</span> <span style=color:#66d9ef>Parser</span><span style=color:#f92672>[</span><span style=color:#66d9ef>Expression</span><span style=color:#f92672>]</span> <span style=color:#66d9ef>=</span>
+  <span style=color:#f92672>(</span>value <span style=color:#f92672>|</span> parenExpr<span style=color:#f92672>)</span> <span style=color:#f92672>~</span> <span style=color:#e6db74>&#34;^&#34;</span> <span style=color:#f92672>~</span> <span style=color:#f92672>(</span>value <span style=color:#f92672>|</span> parenExpr<span style=color:#f92672>)</span> <span style=color:#f92672>^^</span> <span style=color:#f92672>{</span>
+    <span style=color:#66d9ef>case</span> a <span style=color:#f92672>~</span> <span style=color:#e6db74>&#34;^&#34;</span> <span style=color:#f92672>~</span> b <span style=color:#66d9ef>=&gt;</span> <span style=color:#a6e22e>Exponent</span><span style=color:#f92672>(</span>a<span style=color:#f92672>,</span>b<span style=color:#f92672>)</span>
+  <span style=color:#f92672>}</span>
 
-<span style="color:#66d9ef">private</span> <span style="color:#66d9ef">def</span> factor<span style="color:#66d9ef">:</span> <span style="color:#66d9ef">Parser</span><span style="color:#f92672">[</span><span style="color:#66d9ef">Expression</span><span style="color:#f92672">]</span> <span style="color:#66d9ef">=</span> <span style="color:#f92672">(</span>value <span style="color:#f92672">|||</span> exponent<span style="color:#f92672">)</span> <span style="color:#f92672">|</span> parenExpr
+<span style=color:#66d9ef>private</span> <span style=color:#66d9ef>def</span> factor<span style=color:#66d9ef>:</span> <span style=color:#66d9ef>Parser</span><span style=color:#f92672>[</span><span style=color:#66d9ef>Expression</span><span style=color:#f92672>]</span> <span style=color:#66d9ef>=</span> <span style=color:#f92672>(</span>value <span style=color:#f92672>|||</span> exponent<span style=color:#f92672>)</span> <span style=color:#f92672>|</span> parenExpr
 </code></pre></div><p>The <code>|||</code> operator is an ugly hack. It tries both sides and returns the
 longer match. By the time I was writing this I didn't know that order is
 importat. If I just wrote <code>exponent | value</code> it would have worked, because
-expoenent would match a value anyway and then failed on missing <code>^</code>.</p>
-<p>Token and evaluation(uses <code>math.pow</code>) for this are quite trivial.</p>
-<h3 id="function-calls">Function calls</h3>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-scala" data-lang="scala"><span style="color:#66d9ef">case</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">ExpList</span><span style="color:#f92672">(</span>lst<span style="color:#66d9ef">:</span> <span style="color:#66d9ef">List</span><span style="color:#f92672">[</span><span style="color:#66d9ef">Expression</span><span style="color:#f92672">]</span><span style="color:#f92672">)</span> <span style="color:#66d9ef">extends</span> <span style="color:#a6e22e">Expression</span>
-<span style="color:#66d9ef">case</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">FunctionCall</span><span style="color:#f92672">(</span>name<span style="color:#66d9ef">:</span> <span style="color:#66d9ef">Identifier</span><span style="color:#f92672">,</span> args<span style="color:#66d9ef">:</span> <span style="color:#66d9ef">ExpList</span><span style="color:#f92672">)</span> <span style="color:#66d9ef">extends</span> <span style="color:#a6e22e">Expression</span>
+expoenent would match a value anyway and then failed on missing <code>^</code>.</p><p>Token and evaluation(uses <code>math.pow</code>) for this are quite trivial.</p><h3 id=function-calls>Function calls</h3><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-scala data-lang=scala><span style=color:#66d9ef>case</span> <span style=color:#66d9ef>class</span> <span style=color:#a6e22e>ExpList</span><span style=color:#f92672>(</span>lst<span style=color:#66d9ef>:</span> <span style=color:#66d9ef>List</span><span style=color:#f92672>[</span><span style=color:#66d9ef>Expression</span><span style=color:#f92672>]</span><span style=color:#f92672>)</span> <span style=color:#66d9ef>extends</span> <span style=color:#a6e22e>Expression</span>
+<span style=color:#66d9ef>case</span> <span style=color:#66d9ef>class</span> <span style=color:#a6e22e>FunctionCall</span><span style=color:#f92672>(</span>name<span style=color:#66d9ef>:</span> <span style=color:#66d9ef>Identifier</span><span style=color:#f92672>,</span> args<span style=color:#66d9ef>:</span> <span style=color:#66d9ef>ExpList</span><span style=color:#f92672>)</span> <span style=color:#66d9ef>extends</span> <span style=color:#a6e22e>Expression</span>
 </code></pre></div><p>Simple: function call is a name and list of expressions to evaluate for
-arguments(wrapped because even an expression list is an expression)</p>
-<p>Parser:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-scala" data-lang="scala">  <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">def</span> arglist<span style="color:#66d9ef">:</span> <span style="color:#66d9ef">Parser</span><span style="color:#f92672">[</span><span style="color:#66d9ef">ExpList</span><span style="color:#f92672">]</span> <span style="color:#66d9ef">=</span> <span style="color:#e6db74">&#34;(&#34;</span> <span style="color:#f92672">~&gt;</span> list <span style="color:#f92672">&lt;~</span> <span style="color:#e6db74">&#34;)&#34;</span>
-  <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">def</span> functionCall<span style="color:#66d9ef">:</span> <span style="color:#66d9ef">Parser</span><span style="color:#f92672">[</span><span style="color:#66d9ef">FunctionCall</span><span style="color:#f92672">]</span> <span style="color:#66d9ef">=</span> identifier <span style="color:#f92672">~</span> arglist <span style="color:#f92672">^^</span> <span style="color:#f92672">{</span>
-    <span style="color:#66d9ef">case</span> id <span style="color:#f92672">~</span> args <span style="color:#66d9ef">=&gt;</span> <span style="color:#a6e22e">FunctionCall</span><span style="color:#f92672">(</span>id<span style="color:#f92672">,</span> args<span style="color:#f92672">)</span>
-  <span style="color:#f92672">}</span>
-  <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">def</span> value<span style="color:#66d9ef">:</span> <span style="color:#66d9ef">Parser</span><span style="color:#f92672">[</span><span style="color:#66d9ef">Expression</span><span style="color:#f92672">]</span> <span style="color:#66d9ef">=</span> number <span style="color:#f92672">|</span> <span style="color:#f92672">(</span>identifier <span style="color:#f92672">|||</span> functionCall<span style="color:#f92672">)</span>
+arguments(wrapped because even an expression list is an expression)</p><p>Parser:</p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-scala data-lang=scala>  <span style=color:#66d9ef>private</span> <span style=color:#66d9ef>def</span> arglist<span style=color:#66d9ef>:</span> <span style=color:#66d9ef>Parser</span><span style=color:#f92672>[</span><span style=color:#66d9ef>ExpList</span><span style=color:#f92672>]</span> <span style=color:#66d9ef>=</span> <span style=color:#e6db74>&#34;(&#34;</span> <span style=color:#f92672>~&gt;</span> list <span style=color:#f92672>&lt;~</span> <span style=color:#e6db74>&#34;)&#34;</span>
+  <span style=color:#66d9ef>private</span> <span style=color:#66d9ef>def</span> functionCall<span style=color:#66d9ef>:</span> <span style=color:#66d9ef>Parser</span><span style=color:#f92672>[</span><span style=color:#66d9ef>FunctionCall</span><span style=color:#f92672>]</span> <span style=color:#66d9ef>=</span> identifier <span style=color:#f92672>~</span> arglist <span style=color:#f92672>^^</span> <span style=color:#f92672>{</span>
+    <span style=color:#66d9ef>case</span> id <span style=color:#f92672>~</span> args <span style=color:#66d9ef>=&gt;</span> <span style=color:#a6e22e>FunctionCall</span><span style=color:#f92672>(</span>id<span style=color:#f92672>,</span> args<span style=color:#f92672>)</span>
+  <span style=color:#f92672>}</span>
+  <span style=color:#66d9ef>private</span> <span style=color:#66d9ef>def</span> value<span style=color:#66d9ef>:</span> <span style=color:#66d9ef>Parser</span><span style=color:#f92672>[</span><span style=color:#66d9ef>Expression</span><span style=color:#f92672>]</span> <span style=color:#66d9ef>=</span> number <span style=color:#f92672>|</span> <span style=color:#f92672>(</span>identifier <span style=color:#f92672>|||</span> functionCall<span style=color:#f92672>)</span>
 </code></pre></div><p>Again, I was having trouble - parser just didn't work and resorted to <code>|||</code>.
-<code>functionCall</code> should come before identifier.</p>
-<p>Evaluating this is more interesting. I decided to make functions be
-values too for obvious reasons -&gt; <a href="http://en.wikipedia.org/wiki/Higher-order_function" title="Higher-order function">higher order
+<code>functionCall</code> should come before identifier.</p><p>Evaluating this is more interesting. I decided to make functions be
+values too for obvious reasons -> <a href=http://en.wikipedia.org/wiki/Higher-order_function title="Higher-order function">higher order
 functions</a>(I'm
 into functional programming, remember?). So function values must be
 stored in same &ldquo;namespace&rdquo;. <code>StdLib</code>(the only &ldquo;namespace&rdquo;) required to
 become of type <code>Map[String,Any]</code>. I will have to do pattern matching
 anyway since this will be dynamic-typed language. (Yes this is a plan, I
-think it's easier to implement. <a href="http://en.wikipedia.org/wiki/Type_system">Static
+think it's easier to implement. <a href=http://en.wikipedia.org/wiki/Type_system>Static
 typing</a> ftw, but
 that's next project). And I needed a type for function values to pattern
-match on - I went with <code>Any=&gt;Any</code> and sending in List(arg0,arg1,&hellip;)
+match on - I went with <code>Any=>Any</code> and sending in List(arg0,arg1,&mldr;)
 doing more pattern matching inside the function. Will be slow but
-hey&hellip;dynamic typing!</p>
-<p>from evaluator</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-scala" data-lang="scala"><span style="color:#66d9ef">case</span> <span style="color:#a6e22e">FunctionCall</span><span style="color:#f92672">(</span>name<span style="color:#f92672">,</span> args<span style="color:#f92672">)</span> <span style="color:#66d9ef">=&gt;</span> <span style="color:#f92672">{</span>
-  <span style="color:#a6e22e">StdLib</span><span style="color:#f92672">(</span>name<span style="color:#f92672">.</span>id<span style="color:#f92672">)</span> <span style="color:#66d9ef">match</span> <span style="color:#f92672">{</span>
-    <span style="color:#66d9ef">case</span> <span style="color:#a6e22e">Some</span><span style="color:#f92672">(</span>f<span style="color:#66d9ef">:</span> <span style="color:#66d9ef">FunctionVarArg</span><span style="color:#f92672">)</span> <span style="color:#66d9ef">=&gt;</span> f<span style="color:#f92672">.</span>apply<span style="color:#f92672">(</span>apply<span style="color:#f92672">(</span>args<span style="color:#f92672">)</span><span style="color:#f92672">)</span>
-    <span style="color:#66d9ef">case</span> <span style="color:#a6e22e">None</span> <span style="color:#66d9ef">=&gt;</span> <span style="color:#66d9ef">throw</span> <span style="color:#66d9ef">new</span> <span style="color:#a6e22e">ScratSemanticError</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;function &#34;</span> <span style="color:#f92672">+</span> name <span style="color:#f92672">+</span> <span style="color:#e6db74">&#34;not found&#34;</span><span style="color:#f92672">)</span>
-  <span style="color:#f92672">}</span>
-<span style="color:#f92672">}</span>
-</code></pre></div><p>and and example function in StdLib\</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-scala" data-lang="scala"><span style="color:#66d9ef">type</span> <span style="color:#66d9ef">FunctionVarArg</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">Any</span> <span style="color:#66d9ef">=&gt;</span> <span style="color:#a6e22e">Any</span>
-<span style="color:#66d9ef">lazy</span> <span style="color:#66d9ef">val</span> ln<span style="color:#66d9ef">:</span> <span style="color:#66d9ef">FunctionVarArg</span> <span style="color:#f92672">=</span> <span style="color:#f92672">{</span>
-  <span style="color:#66d9ef">case</span> <span style="color:#f92672">(</span>d<span style="color:#66d9ef">:</span> <span style="color:#66d9ef">Double</span><span style="color:#f92672">)</span> <span style="color:#66d9ef">:</span><span style="color:#66d9ef">:</span> <span style="color:#66d9ef">Nil</span> <span style="color:#f92672">=&gt;</span> math<span style="color:#f92672">.</span>log<span style="color:#f92672">(</span>d<span style="color:#f92672">)</span>
-  <span style="color:#66d9ef">case</span> other <span style="color:#66d9ef">=&gt;</span> <span style="color:#66d9ef">throw</span> <span style="color:#a6e22e">ScratInvalidTypeError</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;expected single double but got &#34;</span> <span style="color:#f92672">+</span> other<span style="color:#f92672">)</span>
-<span style="color:#f92672">}</span>
-</code></pre></div><h3 id="conclusion">Conclusion</h3>
-<p>As clearly illustrated above, not planning your grammar results in
+hey&mldr;dynamic typing!</p><p>from evaluator</p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-scala data-lang=scala><span style=color:#66d9ef>case</span> <span style=color:#a6e22e>FunctionCall</span><span style=color:#f92672>(</span>name<span style=color:#f92672>,</span> args<span style=color:#f92672>)</span> <span style=color:#66d9ef>=&gt;</span> <span style=color:#f92672>{</span>
+  <span style=color:#a6e22e>StdLib</span><span style=color:#f92672>(</span>name<span style=color:#f92672>.</span>id<span style=color:#f92672>)</span> <span style=color:#66d9ef>match</span> <span style=color:#f92672>{</span>
+    <span style=color:#66d9ef>case</span> <span style=color:#a6e22e>Some</span><span style=color:#f92672>(</span>f<span style=color:#66d9ef>:</span> <span style=color:#66d9ef>FunctionVarArg</span><span style=color:#f92672>)</span> <span style=color:#66d9ef>=&gt;</span> f<span style=color:#f92672>.</span>apply<span style=color:#f92672>(</span>apply<span style=color:#f92672>(</span>args<span style=color:#f92672>)</span><span style=color:#f92672>)</span>
+    <span style=color:#66d9ef>case</span> <span style=color:#a6e22e>None</span> <span style=color:#66d9ef>=&gt;</span> <span style=color:#66d9ef>throw</span> <span style=color:#66d9ef>new</span> <span style=color:#a6e22e>ScratSemanticError</span><span style=color:#f92672>(</span><span style=color:#e6db74>&#34;function &#34;</span> <span style=color:#f92672>+</span> name <span style=color:#f92672>+</span> <span style=color:#e6db74>&#34;not found&#34;</span><span style=color:#f92672>)</span>
+  <span style=color:#f92672>}</span>
+<span style=color:#f92672>}</span>
+</code></pre></div><p>and and example function in StdLib\</p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-scala data-lang=scala><span style=color:#66d9ef>type</span> <span style=color:#66d9ef>FunctionVarArg</span> <span style=color:#f92672>=</span> <span style=color:#a6e22e>Any</span> <span style=color:#66d9ef>=&gt;</span> <span style=color:#a6e22e>Any</span>
+<span style=color:#66d9ef>lazy</span> <span style=color:#66d9ef>val</span> ln<span style=color:#66d9ef>:</span> <span style=color:#66d9ef>FunctionVarArg</span> <span style=color:#f92672>=</span> <span style=color:#f92672>{</span>
+  <span style=color:#66d9ef>case</span> <span style=color:#f92672>(</span>d<span style=color:#66d9ef>:</span> <span style=color:#66d9ef>Double</span><span style=color:#f92672>)</span> <span style=color:#66d9ef>:</span><span style=color:#66d9ef>:</span> <span style=color:#66d9ef>Nil</span> <span style=color:#f92672>=&gt;</span> math<span style=color:#f92672>.</span>log<span style=color:#f92672>(</span>d<span style=color:#f92672>)</span>
+  <span style=color:#66d9ef>case</span> other <span style=color:#66d9ef>=&gt;</span> <span style=color:#66d9ef>throw</span> <span style=color:#a6e22e>ScratInvalidTypeError</span><span style=color:#f92672>(</span><span style=color:#e6db74>&#34;expected single double but got &#34;</span> <span style=color:#f92672>+</span> other<span style=color:#f92672>)</span>
+<span style=color:#f92672>}</span>
+</code></pre></div><h3 id=conclusion>Conclusion</h3><p>As clearly illustrated above, not planning your grammar results in
 constant changes in many places. So if you're doing something serious
 just make the whole fricking grammar on a whiteboard beforehand.
-Seriously. </p>
-<p>Anyway..now I still only have a calculator, but a much more powerful
-one. I can write expressions like \</p>
-<pre><code>e^piln(10+2)1+2*3/4^5-log(e)
-</code></pre>
-<p>But that's nearly not enough. I want to be Touring-complete an ideally
-to be able to compile/interpret itself.\</p>
-<p><strong>next: <a href="/posts/2012-09-01-creating-a-language4">Hello World(strings, printing and interpreter)</a></strong></p>
-
-                    <HR width="100%">
-                    
-                    <p style="color:#777;">Last modified on 2012-08-31</p>
-                    
-                </div>
-
-            </div>
-
-
-            <nav class="post-pagination">
-
-                
-                <a class="newer-posts" href="/posts/2012-09-01-creating-a-language4/">
-                    Next<br>Making a programming language Part 4 - Hello World
-                </a>
-                
-
-                
-                <a class="older-posts" href="/posts/2012-08-30-creating-a-language-2/">
-                    Previous<br>Making a programming language Part 2 - something that kinda works
-                </a>
-                
-            </nav>
-            <div class="post-comment-wrapper">
-                
-
-
-
-            </div>
-        </div>
-    </div>
-</div>
-
-            </div><div id="single-column-footer">&copy;
-    2020
-	
-	Andraz Bajt
-	
-</div>
-    	</div>
-    <script src="//js/journal.js"></script>
-    </body>
-</html>
+Seriously. </p><p>Anyway..now I still only have a calculator, but a much more powerful
+one. I can write expressions like \</p><pre><code>e^piln(10+2)1+2*3/4^5-log(e)
+</code></pre><p>But that's nearly not enough. I want to be Touring-complete an ideally
+to be able to compile/interpret itself.\</p><p><strong>next: <a href=/posts/2012-09-01-creating-a-language4>Hello World(strings, printing and interpreter)</a></strong></p><hr width=100%><p style=color:#777>Last modified on 2012-08-31</p></div></div><nav class=post-pagination><a class=newer-posts href=/posts/2012-09-01-creating-a-language4/>Next<br>Making a programming language Part 4 - Hello World</a>
+<a class=older-posts href=/posts/2012-08-30-creating-a-language-2/>Previous<br>Making a programming language Part 2 - something that kinda works</a></nav><div class=post-comment-wrapper></div></div></div></div></div><div id=single-column-footer>&copy;
+2020
+Andraz Bajt</div></div><script src=//js/journal.js></script></body></html>

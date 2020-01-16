@@ -1,312 +1,72 @@
-<!DOCTYPE html>
-<html><head>
-<title>Practical Future[Option[A]] in Scala</title>
-
-<meta charset="utf-8">
-<meta name="X-UA-Compatible" content="IE=edge">
-<meta name="google-site-verification" content="">
-<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
-<meta content="telephone=no" name="format-detection">
-<meta name="renderer" content="webkit">
-<meta name="theme-color" content="#ffffff">
-
-
-
-
-<script src="/vendor/js/jquery.min.js" ></script>
-<script src="/vendor/js/popper.min.js" ></script>
-<script src="/vendor/js/bootstrap.min.js" ></script>
-<script src="/vendor/js/smooth-scroll.polyfills.min.js" ></script>
-<link type="text/css" rel="stylesheet" href="/vendor/css/bootstrap.min.css">
-<script src="/vendor/js/vue.min.js" ></script>
-
-
-
-<link rel="stylesheet" href="/scss/journal.min.9d1b3d6c4f3ff1773fff9bdca1bc24452f33129e12f67f2ab14f2ddaf1603468.css" media="screen">
-
-<script src="/js/loadCSS.js"></script>
-<script>
-    loadCSS("https://fonts.googleapis.com/css?family=Lora|Montserrat|Fira+Mono|Noto+Serif+SC|Material+Icons");
-</script>
-
-</head>
-<body>
-    	<div id="app"><div ref="sideContainer" class="side-container">
-    <div class="a-block nav-head false">
-        <div class="nav-title">
-            My Programming Escapades
-        </div>
-        <div class="nav-subtitle">
-            
-                Andraz Bajt
-            
-        </div>
-            
-                <a href="https://github.com/edofic"><img src="/icons/github.svg" width="20"/></a>
-            
-            
-                <a href="https://www.linkedin.com/in/edofic"><img src="/icons/linkedin.svg" width="20"/></a>
-            
-            
-                <a href="https://twitter.com/edofic"><img src="/icons/twitter.svg" width="20"/></a>
-            
-            <a href="/index.xml"><img src="/icons/rss.svg" width="20"/></a>
-            
-                <a href="mailto:edofic@edofic.com"><img src="/icons/email.svg" width="20"/></a>
-            
-    </div>
-
-
-    <div class="nav-link-list">
-        
-        
-            
-            
-            <a class="a-block nav-link-item" href="/about">
-                About Me
-            </a>
-        
-            
-            
-            <a class="a-block nav-link-item" href="/">
-                Archive
-            </a>
-        
-    </div>
-
-    <div class="nav-footer">
-        &copy;
-    2020
-	
-	Andraz Bajt
-	
-
-    </div>
-
-</div>
-<div ref="extraContainer" class="extra-container">
-    
-    <div class="pagination">
-        <a id="globalBackToTop" class="pagination-action animated-visibility" href="#top" :class="{ invisible: scrollY == 0 }">
-            <i class="material-icons pagination-action-icon">
-                keyboard_arrow_up
-            </i>
-        </a>
-        
-    </div>
-</div><div class="single-column-drawer-container" ref="drawer"
-     v-bind:class="{ 'single-column-drawer-container-active': isDrawerOpen }">
-    <div class="drawer-content">
-        <div class="drawer-menu">
-        
-        
-            
-                
-                
-                <a class="a-block drawer-menu-item" href="/about">
-                    About Me
-                </a>
-        
-            
-                
-                
-                    
-                
-                <a class="a-block drawer-menu-item" href="/">
-                    Archive
-                </a>
-        
-        </div>
-    </div>
-</div>
-<transition name="fade">
-    <div v-bind:class="{ 'single-column-drawer-mask': mounted }" v-if="isDrawerOpen" v-on:click="toggleDrawer"></div>
-</transition>
-<nav ref="navBar" class="navbar sticky-top navbar-light single-column-nav-container">
-    <div ref="navBackground" class="nav-background"></div>
-    <div class="container container-narrow nav-content">
-        <button id="nav_dropdown_btn" class="nav-dropdown-toggle" type="button" v-on:click="toggleDrawer">
-            <i class="material-icons">
-                menu
-            </i>
-        </button>
-        <a ref="navTitle" class="navbar-brand" href="/">
-            My Programming Escapades
-        </a>
-    </div>
-</nav>
-<div class="single-column-header-container" ref="pageHead"
-     v-bind:style="{ transform: 'translateZ(0px) translateY('+.3*scrollY+'px)', opacity: 1-navOpacity }">
-        <a href="/">
-            <div class="single-column-header-title">My Programming Escapades</div>
-            
-            <div class="single-column-header-subtitle">Andraz Bajt</div>
-            
-        </a>
-
-        
-            <a href="https://github.com/edofic"><img src="/icons/github.svg" width="20"/></a>
-        
-        
-            <a href="https://www.linkedin.com/in/edofic"><img src="/icons/linkedin.svg" width="20"/></a>
-        
-        
-            <a href="https://twitter.com/edofic"><img src="/icons/twitter.svg" width="20"/></a>
-        
-        <a href="/index.xml"><img src="/icons/rss.svg" width="20"/></a>
-        
-            <a href="mailto:edofic@edofic.com"><img src="/icons/email.svg" width="20"/></a>
-        
-
-</div>
-
-            <div id="content">
-<div ref="streamContainer" class="stream-container">
-    <div class="post-list-container post-list-container-shadow">
-        <div class="post">
-            
-            
-            
-
-            <div class="post-head-wrapper-text-only"
-                 style="background-image: url('/')">
-                <div class="post-title">
-                    Practical Future[Option[A]] in Scala
-                    <div class="post-meta">
-                        
-                            <time itemprop="datePublished">
-                                2014-03-07
-                            </time>
-                        
-
-                        
-
-                        
-                    </div>
-                </div>
-            </div>
-
-            <div class="post-body-wrapper">
-                <div class="post-body">
-                    <h3 id="motivation">Motivation</h3>
-<p>In real world concurrent code you often come across the <code>Future[Option[A]]</code> type(where <code>A</code> is usually some concrete type). And then you need to compose these things. This is not straightforward in Scala.</p>
-<p>If you've done some Haskell just <code>import scalaz._</code> and you can skip the rest of this article. Scalaz library defines a monad typeclass(and many others) that formally specifies what it means to be a monad(not &ldquo;has a flatMap-ish thingy&rdquo;). Then it's easy to build abstractions upon this.</p>
-<p>But what if you don't want to add another dependency and just want to make this tiny bit more practical? I can be done and is not that complicated. You will also learn something and maybe even become motivated to bite the bullet and start using Scalaz.</p>
-<h3 id="meaning">Meaning</h3>
-<p>The <code>Future[Option[A]]</code> type combines the notion of concurrency(from <code>Future</code>) and the notion of failure(from <code>Option</code>) giving you a <em>concurrent computation that might fail</em>. What we want is a monad instance for this. With only standard library code you probably would use <code>Future#flatMap</code> in combination with <code>Option#map</code> and <code>Option#getOrElse</code>(or just <code>Option#fold</code>). This gets messy and unreadable quite quickly due to loads of boilerplate. Let's fix this!</p>
-<h3 id="newtyping">Newtyping</h3>
-<p>A monad in scala means a <code>flatMap</code> method, so it's safe to assume we need to define a <code>flatMap</code> with this special semantics somewhere.
+<!doctype html><html><head><title>Practical Future[Option[A]] in Scala</title><meta charset=utf-8><meta name=X-UA-Compatible content="IE=edge"><meta name=google-site-verification content><meta content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=0" name=viewport><meta content="telephone=no" name=format-detection><meta name=renderer content="webkit"><meta name=theme-color content="#ffffff"><script src=/vendor/js/jquery.min.js></script><script src=/vendor/js/popper.min.js></script><script src=/vendor/js/bootstrap.min.js></script><script src=/vendor/js/smooth-scroll.polyfills.min.js></script><link type=text/css rel=stylesheet href=/vendor/css/bootstrap.min.css><script src=/vendor/js/vue.min.js></script><link rel=stylesheet href=/scss/journal.min.3bdd3e0bba961aa48fdce1402e6f01783c435b4dfb0025c8d0022ddaea0f3d19.css media=screen><script src=/js/loadCSS.js></script><script>loadCSS("https://fonts.googleapis.com/css?family=Lora|Montserrat|Fira+Mono|Noto+Serif+SC|Material+Icons");</script></head><body><div id=app><div ref=sideContainer class=side-container><div class="a-block nav-head false"><div class=nav-title>My Programming Escapades</div><div class=nav-subtitle>Andraz Bajt</div><a href=https://github.com/edofic><img src=/icons/github.svg width=20></a>
+<a href=https://www.linkedin.com/in/edofic><img src=/icons/linkedin.svg width=20></a>
+<a href=https://twitter.com/edofic><img src=/icons/twitter.svg width=20></a>
+<a href=/index.xml><img src=/icons/rss.svg width=20></a>
+<a href=mailto:edofic@edofic.com><img src=/icons/email.svg width=20></a></div><div class=nav-link-list><a class="a-block nav-link-item" href=/about>About Me</a>
+<a class="a-block nav-link-item" href=/>Archive</a></div><div class=nav-footer>&copy;
+2020
+Andraz Bajt</div></div><div ref=extraContainer class=extra-container><div class=pagination><a id=globalBackToTop class="pagination-action animated-visibility" href=#top :class="{ invisible: scrollY == 0 }"><i class="material-icons pagination-action-icon">keyboard_arrow_up</i></a></div></div><div class=single-column-drawer-container ref=drawer v-bind:class="{ 'single-column-drawer-container-active': isDrawerOpen }"><div class=drawer-content><div class=drawer-menu><a class="a-block drawer-menu-item" href=/about>About Me</a>
+<a class="a-block drawer-menu-item" href=/>Archive</a></div></div></div><transition name=fade><div v-bind:class="{ 'single-column-drawer-mask': mounted }" v-if=isDrawerOpen v-on:click=toggleDrawer></div></transition><nav ref=navBar class="navbar sticky-top navbar-light single-column-nav-container"><div ref=navBackground class=nav-background></div><div class="container container-narrow nav-content"><button id=nav_dropdown_btn class=nav-dropdown-toggle type=button v-on:click=toggleDrawer>
+<i class=material-icons>menu</i></button>
+<a ref=navTitle class=navbar-brand href=/>My Programming Escapades</a></div></nav><div class=single-column-header-container ref=pageHead v-bind:style="{ transform: 'translateZ(0px) translateY('+.3*scrollY+'px)', opacity: 1-navOpacity }"><a href=/><div class=single-column-header-title>My Programming Escapades</div><div class=single-column-header-subtitle>Andraz Bajt</div></a><a href=https://github.com/edofic><img src=/icons/github.svg width=20></a>
+<a href=https://www.linkedin.com/in/edofic><img src=/icons/linkedin.svg width=20></a>
+<a href=https://twitter.com/edofic><img src=/icons/twitter.svg width=20></a>
+<a href=/index.xml><img src=/icons/rss.svg width=20></a>
+<a href=mailto:edofic@edofic.com><img src=/icons/email.svg width=20></a></div><div id=content><div ref=streamContainer class=stream-container><div class="post-list-container post-list-container-shadow"><div class=post><div class=post-head-wrapper-text-only style="background-image:url('/')"><div class=post-title>Practical Future[Option[A]] in Scala<div class=post-meta><time itemprop=datePublished>2014-03-07</time></div></div></div><div class=post-body-wrapper><div class=post-body><h3 id=motivation>Motivation</h3><p>In real world concurrent code you often come across the <code>Future[Option[A]]</code> type(where <code>A</code> is usually some concrete type). And then you need to compose these things. This is not straightforward in Scala.</p><p>If you've done some Haskell just <code>import scalaz._</code> and you can skip the rest of this article. Scalaz library defines a monad typeclass(and many others) that formally specifies what it means to be a monad(not &ldquo;has a flatMap-ish thingy&rdquo;). Then it's easy to build abstractions upon this.</p><p>But what if you don't want to add another dependency and just want to make this tiny bit more practical? I can be done and is not that complicated. You will also learn something and maybe even become motivated to bite the bullet and start using Scalaz.</p><h3 id=meaning>Meaning</h3><p>The <code>Future[Option[A]]</code> type combines the notion of concurrency(from <code>Future</code>) and the notion of failure(from <code>Option</code>) giving you a <em>concurrent computation that might fail</em>. What we want is a monad instance for this. With only standard library code you probably would use <code>Future#flatMap</code> in combination with <code>Option#map</code> and <code>Option#getOrElse</code>(or just <code>Option#fold</code>). This gets messy and unreadable quite quickly due to loads of boilerplate. Let's fix this!</p><h3 id=newtyping>Newtyping</h3><p>A monad in scala means a <code>flatMap</code> method, so it's safe to assume we need to define a <code>flatMap</code> with this special semantics somewhere.
 You might want to define an implicit class that has the new method <em>but</em> it wouldn't work as <code>Future</code> already has a <code>flatMap</code> method.
-I took a page from Haskell's book. When you want to override semantics there you wrap up the type into a <em>newtype</em>. This is just compile-time type information that is completely free at runtime. Luckily Scala has this in form of <code>AnyVal</code>.</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-scala" data-lang="scala"><span style="color:#66d9ef">import</span> concurrent.Future
+I took a page from Haskell's book. When you want to override semantics there you wrap up the type into a <em>newtype</em>. This is just compile-time type information that is completely free at runtime. Luckily Scala has this in form of <code>AnyVal</code>.</p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-scala data-lang=scala><span style=color:#66d9ef>import</span> concurrent.Future
 
-<span style="color:#66d9ef">case</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">FutureO</span><span style="color:#f92672">[</span><span style="color:#66d9ef">+</span><span style="color:#66d9ef">A</span><span style="color:#f92672">]</span><span style="color:#f92672">(</span>future<span style="color:#66d9ef">:</span> <span style="color:#66d9ef">Future</span><span style="color:#f92672">[</span><span style="color:#66d9ef">Option</span><span style="color:#f92672">[</span><span style="color:#66d9ef">A</span><span style="color:#f92672">]</span><span style="color:#f92672">]</span><span style="color:#f92672">)</span> <span style="color:#66d9ef">extends</span> <span style="color:#a6e22e">AnyVal</span>
-</code></pre></div><p>I've also made it covariant for ease of use.</p>
-<h3 id="the-monad">The Monad</h3>
-<p>It's actually quite easy to implement</p>
-<p>import concurrent.{Future, ExecutionContext}</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-scala" data-lang="scala"><span style="color:#66d9ef">case</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">FutureO</span><span style="color:#f92672">[</span><span style="color:#66d9ef">+</span><span style="color:#66d9ef">A</span><span style="color:#f92672">]</span><span style="color:#f92672">(</span>future<span style="color:#66d9ef">:</span> <span style="color:#66d9ef">Future</span><span style="color:#f92672">[</span><span style="color:#66d9ef">Option</span><span style="color:#f92672">[</span><span style="color:#66d9ef">A</span><span style="color:#f92672">]</span><span style="color:#f92672">]</span><span style="color:#f92672">)</span> <span style="color:#66d9ef">extends</span> <span style="color:#a6e22e">AnyVal</span> <span style="color:#f92672">{</span>
-    <span style="color:#66d9ef">def</span> flatMap<span style="color:#f92672">[</span><span style="color:#66d9ef">B</span><span style="color:#f92672">]</span><span style="color:#f92672">(</span>f<span style="color:#66d9ef">:</span> <span style="color:#66d9ef">A</span> <span style="color:#f92672">=&gt;</span> <span style="color:#a6e22e">FutureO</span><span style="color:#f92672">[</span><span style="color:#66d9ef">B</span><span style="color:#f92672">]</span><span style="color:#f92672">)</span>
-                  <span style="color:#f92672">(</span><span style="color:#66d9ef">implicit</span> ec<span style="color:#66d9ef">:</span> <span style="color:#66d9ef">ExecutionContext</span><span style="color:#f92672">)</span><span style="color:#66d9ef">:</span> <span style="color:#66d9ef">FutureO</span><span style="color:#f92672">[</span><span style="color:#66d9ef">B</span><span style="color:#f92672">]</span> <span style="color:#66d9ef">=</span> <span style="color:#f92672">{</span>
-        <span style="color:#a6e22e">FutureO</span> <span style="color:#f92672">{</span>
-                future<span style="color:#f92672">.</span>flatMap <span style="color:#f92672">{</span> optA <span style="color:#66d9ef">=&gt;</span>
-                optA<span style="color:#f92672">.</span>map <span style="color:#f92672">{</span> a <span style="color:#66d9ef">=&gt;</span>
-                    f<span style="color:#f92672">(</span>a<span style="color:#f92672">)</span><span style="color:#f92672">.</span>future
-                <span style="color:#f92672">}</span> getOrElse <span style="color:#a6e22e">Future</span><span style="color:#f92672">.</span>successful<span style="color:#f92672">(</span><span style="color:#a6e22e">None</span><span style="color:#f92672">)</span>
-            <span style="color:#f92672">}</span>
-        <span style="color:#f92672">}</span>
-    <span style="color:#f92672">}</span>
+<span style=color:#66d9ef>case</span> <span style=color:#66d9ef>class</span> <span style=color:#a6e22e>FutureO</span><span style=color:#f92672>[</span><span style=color:#66d9ef>+</span><span style=color:#66d9ef>A</span><span style=color:#f92672>]</span><span style=color:#f92672>(</span>future<span style=color:#66d9ef>:</span> <span style=color:#66d9ef>Future</span><span style=color:#f92672>[</span><span style=color:#66d9ef>Option</span><span style=color:#f92672>[</span><span style=color:#66d9ef>A</span><span style=color:#f92672>]</span><span style=color:#f92672>]</span><span style=color:#f92672>)</span> <span style=color:#66d9ef>extends</span> <span style=color:#a6e22e>AnyVal</span>
+</code></pre></div><p>I've also made it covariant for ease of use.</p><h3 id=the-monad>The Monad</h3><p>It's actually quite easy to implement</p><p>import concurrent.{Future, ExecutionContext}</p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-scala data-lang=scala><span style=color:#66d9ef>case</span> <span style=color:#66d9ef>class</span> <span style=color:#a6e22e>FutureO</span><span style=color:#f92672>[</span><span style=color:#66d9ef>+</span><span style=color:#66d9ef>A</span><span style=color:#f92672>]</span><span style=color:#f92672>(</span>future<span style=color:#66d9ef>:</span> <span style=color:#66d9ef>Future</span><span style=color:#f92672>[</span><span style=color:#66d9ef>Option</span><span style=color:#f92672>[</span><span style=color:#66d9ef>A</span><span style=color:#f92672>]</span><span style=color:#f92672>]</span><span style=color:#f92672>)</span> <span style=color:#66d9ef>extends</span> <span style=color:#a6e22e>AnyVal</span> <span style=color:#f92672>{</span>
+    <span style=color:#66d9ef>def</span> flatMap<span style=color:#f92672>[</span><span style=color:#66d9ef>B</span><span style=color:#f92672>]</span><span style=color:#f92672>(</span>f<span style=color:#66d9ef>:</span> <span style=color:#66d9ef>A</span> <span style=color:#f92672>=&gt;</span> <span style=color:#a6e22e>FutureO</span><span style=color:#f92672>[</span><span style=color:#66d9ef>B</span><span style=color:#f92672>]</span><span style=color:#f92672>)</span>
+                  <span style=color:#f92672>(</span><span style=color:#66d9ef>implicit</span> ec<span style=color:#66d9ef>:</span> <span style=color:#66d9ef>ExecutionContext</span><span style=color:#f92672>)</span><span style=color:#66d9ef>:</span> <span style=color:#66d9ef>FutureO</span><span style=color:#f92672>[</span><span style=color:#66d9ef>B</span><span style=color:#f92672>]</span> <span style=color:#66d9ef>=</span> <span style=color:#f92672>{</span>
+        <span style=color:#a6e22e>FutureO</span> <span style=color:#f92672>{</span>
+                future<span style=color:#f92672>.</span>flatMap <span style=color:#f92672>{</span> optA <span style=color:#66d9ef>=&gt;</span>
+                optA<span style=color:#f92672>.</span>map <span style=color:#f92672>{</span> a <span style=color:#66d9ef>=&gt;</span>
+                    f<span style=color:#f92672>(</span>a<span style=color:#f92672>)</span><span style=color:#f92672>.</span>future
+                <span style=color:#f92672>}</span> getOrElse <span style=color:#a6e22e>Future</span><span style=color:#f92672>.</span>successful<span style=color:#f92672>(</span><span style=color:#a6e22e>None</span><span style=color:#f92672>)</span>
+            <span style=color:#f92672>}</span>
+        <span style=color:#f92672>}</span>
+    <span style=color:#f92672>}</span>
 
-    <span style="color:#66d9ef">def</span> map<span style="color:#f92672">[</span><span style="color:#66d9ef">B</span><span style="color:#f92672">]</span><span style="color:#f92672">(</span>f<span style="color:#66d9ef">:</span> <span style="color:#66d9ef">A</span> <span style="color:#f92672">=&gt;</span> B<span style="color:#f92672">)</span>
-              <span style="color:#f92672">(</span><span style="color:#66d9ef">implicit</span> ec<span style="color:#66d9ef">:</span> <span style="color:#66d9ef">ExecutionContext</span><span style="color:#f92672">)</span><span style="color:#66d9ef">:</span> <span style="color:#66d9ef">FutureO</span><span style="color:#f92672">[</span><span style="color:#66d9ef">B</span><span style="color:#f92672">]</span> <span style="color:#66d9ef">=</span> <span style="color:#f92672">{</span>
-        <span style="color:#a6e22e">FutureO</span><span style="color:#f92672">(</span>future<span style="color:#f92672">.</span>map<span style="color:#f92672">(</span><span style="color:#66d9ef">_</span> map f<span style="color:#f92672">)</span><span style="color:#f92672">)</span>
-    <span style="color:#f92672">}</span>
-<span style="color:#f92672">}</span>
-</code></pre></div><p>You need to pull in an execution context and then do the usual boilerplate thing ending up with a wrap again. I've also added <code>map</code> method which is trivial but we need it because in Scala for comprehensions are desugared into <code>flatMap</code> and <code>map</code> to avoid using <code>point</code>(abstract constructor) since it's harder to express OO-style..</p>
-<h3 id="usage">Usage</h3>
-<p>What good is this <code>FutureO</code>? Let's do a contrived example. We need a function that might fail - <code>divideEven</code> that only divides even numbers. And we need concurrency - we'll divide two numbers concurrently.</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-scala" data-lang="scala"><span style="color:#66d9ef">def</span> divideEven<span style="color:#f92672">(</span>n<span style="color:#66d9ef">:</span> <span style="color:#66d9ef">Int</span><span style="color:#f92672">)</span><span style="color:#66d9ef">:</span> <span style="color:#66d9ef">Option</span><span style="color:#f92672">[</span><span style="color:#66d9ef">Int</span><span style="color:#f92672">]</span> <span style="color:#66d9ef">=</span>
-    <span style="color:#66d9ef">if</span> <span style="color:#f92672">(</span>n <span style="color:#f92672">%</span> <span style="color:#ae81ff">2</span> <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span><span style="color:#f92672">)</span> <span style="color:#a6e22e">Some</span><span style="color:#f92672">(</span>n<span style="color:#f92672">/</span><span style="color:#ae81ff">2</span><span style="color:#f92672">)</span> <span style="color:#66d9ef">else</span> <span style="color:#a6e22e">None</span>
+    <span style=color:#66d9ef>def</span> map<span style=color:#f92672>[</span><span style=color:#66d9ef>B</span><span style=color:#f92672>]</span><span style=color:#f92672>(</span>f<span style=color:#66d9ef>:</span> <span style=color:#66d9ef>A</span> <span style=color:#f92672>=&gt;</span> B<span style=color:#f92672>)</span>
+              <span style=color:#f92672>(</span><span style=color:#66d9ef>implicit</span> ec<span style=color:#66d9ef>:</span> <span style=color:#66d9ef>ExecutionContext</span><span style=color:#f92672>)</span><span style=color:#66d9ef>:</span> <span style=color:#66d9ef>FutureO</span><span style=color:#f92672>[</span><span style=color:#66d9ef>B</span><span style=color:#f92672>]</span> <span style=color:#66d9ef>=</span> <span style=color:#f92672>{</span>
+        <span style=color:#a6e22e>FutureO</span><span style=color:#f92672>(</span>future<span style=color:#f92672>.</span>map<span style=color:#f92672>(</span><span style=color:#66d9ef>_</span> map f<span style=color:#f92672>)</span><span style=color:#f92672>)</span>
+    <span style=color:#f92672>}</span>
+<span style=color:#f92672>}</span>
+</code></pre></div><p>You need to pull in an execution context and then do the usual boilerplate thing ending up with a wrap again. I've also added <code>map</code> method which is trivial but we need it because in Scala for comprehensions are desugared into <code>flatMap</code> and <code>map</code> to avoid using <code>point</code>(abstract constructor) since it's harder to express OO-style..</p><h3 id=usage>Usage</h3><p>What good is this <code>FutureO</code>? Let's do a contrived example. We need a function that might fail - <code>divideEven</code> that only divides even numbers. And we need concurrency - we'll divide two numbers concurrently.</p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-scala data-lang=scala><span style=color:#66d9ef>def</span> divideEven<span style=color:#f92672>(</span>n<span style=color:#66d9ef>:</span> <span style=color:#66d9ef>Int</span><span style=color:#f92672>)</span><span style=color:#66d9ef>:</span> <span style=color:#66d9ef>Option</span><span style=color:#f92672>[</span><span style=color:#66d9ef>Int</span><span style=color:#f92672>]</span> <span style=color:#66d9ef>=</span>
+    <span style=color:#66d9ef>if</span> <span style=color:#f92672>(</span>n <span style=color:#f92672>%</span> <span style=color:#ae81ff>2</span> <span style=color:#f92672>==</span> <span style=color:#ae81ff>0</span><span style=color:#f92672>)</span> <span style=color:#a6e22e>Some</span><span style=color:#f92672>(</span>n<span style=color:#f92672>/</span><span style=color:#ae81ff>2</span><span style=color:#f92672>)</span> <span style=color:#66d9ef>else</span> <span style=color:#a6e22e>None</span>
 
-<span style="color:#75715e">//first spawn both computations
-</span><span style="color:#75715e"></span><span style="color:#66d9ef">val</span> f1 <span style="color:#66d9ef">=</span> <span style="color:#a6e22e">Future</span><span style="color:#f92672">(</span>divideEven<span style="color:#f92672">(</span><span style="color:#ae81ff">14</span><span style="color:#f92672">)</span><span style="color:#f92672">)</span>
-<span style="color:#66d9ef">val</span> f2 <span style="color:#66d9ef">=</span> <span style="color:#a6e22e">Future</span><span style="color:#f92672">(</span>divideEven<span style="color:#f92672">(</span><span style="color:#ae81ff">16</span><span style="color:#f92672">)</span><span style="color:#f92672">)</span>
+<span style=color:#75715e>//first spawn both computations
+</span><span style=color:#75715e></span><span style=color:#66d9ef>val</span> f1 <span style=color:#66d9ef>=</span> <span style=color:#a6e22e>Future</span><span style=color:#f92672>(</span>divideEven<span style=color:#f92672>(</span><span style=color:#ae81ff>14</span><span style=color:#f92672>)</span><span style=color:#f92672>)</span>
+<span style=color:#66d9ef>val</span> f2 <span style=color:#66d9ef>=</span> <span style=color:#a6e22e>Future</span><span style=color:#f92672>(</span>divideEven<span style=color:#f92672>(</span><span style=color:#ae81ff>16</span><span style=color:#f92672>)</span><span style=color:#f92672>)</span>
 
-<span style="color:#75715e">//and combine them
-</span><span style="color:#75715e"></span><span style="color:#66d9ef">val</span> fc <span style="color:#66d9ef">=</span> <span style="color:#66d9ef">for</span> <span style="color:#f92672">{</span>
-    a <span style="color:#66d9ef">&lt;-</span> <span style="color:#a6e22e">FutureO</span><span style="color:#f92672">(</span>f1<span style="color:#f92672">)</span>
-    b <span style="color:#66d9ef">&lt;-</span> <span style="color:#a6e22e">FutureO</span><span style="color:#f92672">(</span>f2<span style="color:#f92672">)</span>
-<span style="color:#f92672">}</span> <span style="color:#66d9ef">yield</span> a <span style="color:#f92672">+</span> b
+<span style=color:#75715e>//and combine them
+</span><span style=color:#75715e></span><span style=color:#66d9ef>val</span> fc <span style=color:#66d9ef>=</span> <span style=color:#66d9ef>for</span> <span style=color:#f92672>{</span>
+    a <span style=color:#66d9ef>&lt;-</span> <span style=color:#a6e22e>FutureO</span><span style=color:#f92672>(</span>f1<span style=color:#f92672>)</span>
+    b <span style=color:#66d9ef>&lt;-</span> <span style=color:#a6e22e>FutureO</span><span style=color:#f92672>(</span>f2<span style=color:#f92672>)</span>
+<span style=color:#f92672>}</span> <span style=color:#66d9ef>yield</span> a <span style=color:#f92672>+</span> b
 
-<span style="color:#75715e">//prints out Success(Some(15))
-</span><span style="color:#75715e"></span>fc<span style="color:#f92672">.</span>future onComplete println
-</code></pre></div><p>It works. How would this look without <code>FutureO</code>?</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-scala" data-lang="scala"><span style="color:#66d9ef">val</span> fc <span style="color:#66d9ef">=</span> <span style="color:#66d9ef">for</span> <span style="color:#f92672">{</span>
-    oa <span style="color:#66d9ef">&lt;-</span> f1
-    ob <span style="color:#66d9ef">&lt;-</span> f2
-<span style="color:#f92672">}</span> <span style="color:#66d9ef">yield</span> <span style="color:#66d9ef">for</span> <span style="color:#f92672">{</span>
-    a <span style="color:#66d9ef">&lt;-</span> oa
-    b <span style="color:#66d9ef">&lt;-</span> ob
-<span style="color:#f92672">}</span> <span style="color:#66d9ef">yield</span> a <span style="color:#f92672">+</span> b
+<span style=color:#75715e>//prints out Success(Some(15))
+</span><span style=color:#75715e></span>fc<span style=color:#f92672>.</span>future onComplete println
+</code></pre></div><p>It works. How would this look without <code>FutureO</code>?</p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-scala data-lang=scala><span style=color:#66d9ef>val</span> fc <span style=color:#66d9ef>=</span> <span style=color:#66d9ef>for</span> <span style=color:#f92672>{</span>
+    oa <span style=color:#66d9ef>&lt;-</span> f1
+    ob <span style=color:#66d9ef>&lt;-</span> f2
+<span style=color:#f92672>}</span> <span style=color:#66d9ef>yield</span> <span style=color:#66d9ef>for</span> <span style=color:#f92672>{</span>
+    a <span style=color:#66d9ef>&lt;-</span> oa
+    b <span style=color:#66d9ef>&lt;-</span> ob
+<span style=color:#f92672>}</span> <span style=color:#66d9ef>yield</span> a <span style=color:#f92672>+</span> b
 
 fc onComplete println
-</code></pre></div><p>Two layers of for comprehensions. It gets even hairier if you have data dependencies between your futures. Consider <code>divideEven</code> again but this time we want to divide a number twice in a row. And we'll be keeping the futures around just to prove a point. Let's imagine that <code>divideEven</code> does some blocking IO and we want to push it into another tread-pool.</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-scala" data-lang="scala"><span style="color:#66d9ef">def</span> divideTwiceF<span style="color:#f92672">(</span>n<span style="color:#66d9ef">:</span> <span style="color:#66d9ef">Int</span><span style="color:#f92672">)</span><span style="color:#66d9ef">:</span> <span style="color:#66d9ef">Future</span><span style="color:#f92672">[</span><span style="color:#66d9ef">Option</span><span style="color:#f92672">[</span><span style="color:#66d9ef">Int</span><span style="color:#f92672">]</span><span style="color:#f92672">]</span> <span style="color:#66d9ef">=</span> <span style="color:#f92672">{</span>
-    <span style="color:#66d9ef">val</span> fo <span style="color:#66d9ef">=</span> <span style="color:#66d9ef">for</span> <span style="color:#f92672">{</span>
-        n1 <span style="color:#66d9ef">&lt;-</span> <span style="color:#a6e22e">FutureO</span><span style="color:#f92672">(</span><span style="color:#a6e22e">Future</span><span style="color:#f92672">(</span>divideEven<span style="color:#f92672">(</span>n<span style="color:#f92672">)</span><span style="color:#f92672">)</span><span style="color:#f92672">)</span>
-        n2 <span style="color:#66d9ef">&lt;-</span> <span style="color:#a6e22e">FutureO</span><span style="color:#f92672">(</span><span style="color:#a6e22e">Future</span><span style="color:#f92672">(</span>divideEven<span style="color:#f92672">(</span>n1<span style="color:#f92672">)</span><span style="color:#f92672">)</span><span style="color:#f92672">)</span>
-    <span style="color:#f92672">}</span> <span style="color:#66d9ef">yield</span> n2
-    fo<span style="color:#f92672">.</span>future
-<span style="color:#f92672">}</span>
-</code></pre></div><p>And it works as expected. The <code>FutureO</code> part there is just to alter the monadic semantics. As an exercise try to rewrite this without <code>FutureO</code> and squirm in disgust.</p>
-<h3 id="usability">Usability</h3>
-<p>Inside for comprehension(or manual flatMaps) you can still construct failed futures, throw or return <code>None</code>(in a future). However putting in a default value(getOrElse) is a bit trickier and going back to regular <code>Future</code> inside same comprehension is impossible. But you can fix this. You can define methods like <code>orElse</code> on the <code>FutureO</code>. You can also overload the <code>flatMap</code> to enable interop with regular futures. However this screws up type inference and I would advise against it as it could introduce some nasty bugs.</p>
-<p>Try to implement combinators you need and leave some comments. Especially if you come across something nice or find a case where <code>FutureO</code> is more awkward to use than regular futures.</p>
-<h3 id="theory">Theory</h3>
-<p>What we defined is actually a specialized monad transformer. Monads(such as <code>Future</code> and <code>Option</code>) have this nasty property that they don't compose. You cannot write a function that takes a two monads and outputs a composed one.</p>
-<p>However you can write such a function if you fix one of the monads and only take one as a parameter. This is called a monad transformer. In this case I fixed <code>Option</code>. Take a closer look, we are only using <code>flatMap</code> and a constructor(<code>point</code>) from <code>Future</code>. This means we could abstract over the whole monad class. And this is what Scalaz does with <code>OptionT</code>. But to do this it needs to define a monad typeclass and instances for each and every monad they find.
-What I did is fix the other monad too and this produces a concrete instance you can use without any typeclasses. There is a downside of course. This is a one-off hack. If you want other transformers you'll have to write them as well. At that point I think would be a good idea to start using Scalaz.</p>
-
-                    <HR width="100%">
-                    
-                    <p style="color:#777;">Last modified on 2014-03-07</p>
-                    
-                </div>
-
-            </div>
-
-
-            <nav class="post-pagination">
-
-                
-                <a class="newer-posts" href="/posts/2014-04-14-free-coroutines/">
-                    Next<br>Coroutines for free
-                </a>
-                
-
-                
-                <a class="older-posts" href="/posts/2014-02-23-haskell-web/">
-                    Previous<br>Comparing Haskell Web Frameworks
-                </a>
-                
-            </nav>
-            <div class="post-comment-wrapper">
-                
-
-
-
-            </div>
-        </div>
-    </div>
-</div>
-
-            </div><div id="single-column-footer">&copy;
-    2020
-	
-	Andraz Bajt
-	
-</div>
-    	</div>
-    <script src="//js/journal.js"></script>
-    </body>
-</html>
+</code></pre></div><p>Two layers of for comprehensions. It gets even hairier if you have data dependencies between your futures. Consider <code>divideEven</code> again but this time we want to divide a number twice in a row. And we'll be keeping the futures around just to prove a point. Let's imagine that <code>divideEven</code> does some blocking IO and we want to push it into another tread-pool.</p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-scala data-lang=scala><span style=color:#66d9ef>def</span> divideTwiceF<span style=color:#f92672>(</span>n<span style=color:#66d9ef>:</span> <span style=color:#66d9ef>Int</span><span style=color:#f92672>)</span><span style=color:#66d9ef>:</span> <span style=color:#66d9ef>Future</span><span style=color:#f92672>[</span><span style=color:#66d9ef>Option</span><span style=color:#f92672>[</span><span style=color:#66d9ef>Int</span><span style=color:#f92672>]</span><span style=color:#f92672>]</span> <span style=color:#66d9ef>=</span> <span style=color:#f92672>{</span>
+    <span style=color:#66d9ef>val</span> fo <span style=color:#66d9ef>=</span> <span style=color:#66d9ef>for</span> <span style=color:#f92672>{</span>
+        n1 <span style=color:#66d9ef>&lt;-</span> <span style=color:#a6e22e>FutureO</span><span style=color:#f92672>(</span><span style=color:#a6e22e>Future</span><span style=color:#f92672>(</span>divideEven<span style=color:#f92672>(</span>n<span style=color:#f92672>)</span><span style=color:#f92672>)</span><span style=color:#f92672>)</span>
+        n2 <span style=color:#66d9ef>&lt;-</span> <span style=color:#a6e22e>FutureO</span><span style=color:#f92672>(</span><span style=color:#a6e22e>Future</span><span style=color:#f92672>(</span>divideEven<span style=color:#f92672>(</span>n1<span style=color:#f92672>)</span><span style=color:#f92672>)</span><span style=color:#f92672>)</span>
+    <span style=color:#f92672>}</span> <span style=color:#66d9ef>yield</span> n2
+    fo<span style=color:#f92672>.</span>future
+<span style=color:#f92672>}</span>
+</code></pre></div><p>And it works as expected. The <code>FutureO</code> part there is just to alter the monadic semantics. As an exercise try to rewrite this without <code>FutureO</code> and squirm in disgust.</p><h3 id=usability>Usability</h3><p>Inside for comprehension(or manual flatMaps) you can still construct failed futures, throw or return <code>None</code>(in a future). However putting in a default value(getOrElse) is a bit trickier and going back to regular <code>Future</code> inside same comprehension is impossible. But you can fix this. You can define methods like <code>orElse</code> on the <code>FutureO</code>. You can also overload the <code>flatMap</code> to enable interop with regular futures. However this screws up type inference and I would advise against it as it could introduce some nasty bugs.</p><p>Try to implement combinators you need and leave some comments. Especially if you come across something nice or find a case where <code>FutureO</code> is more awkward to use than regular futures.</p><h3 id=theory>Theory</h3><p>What we defined is actually a specialized monad transformer. Monads(such as <code>Future</code> and <code>Option</code>) have this nasty property that they don't compose. You cannot write a function that takes a two monads and outputs a composed one.</p><p>However you can write such a function if you fix one of the monads and only take one as a parameter. This is called a monad transformer. In this case I fixed <code>Option</code>. Take a closer look, we are only using <code>flatMap</code> and a constructor(<code>point</code>) from <code>Future</code>. This means we could abstract over the whole monad class. And this is what Scalaz does with <code>OptionT</code>. But to do this it needs to define a monad typeclass and instances for each and every monad they find.
+What I did is fix the other monad too and this produces a concrete instance you can use without any typeclasses. There is a downside of course. This is a one-off hack. If you want other transformers you'll have to write them as well. At that point I think would be a good idea to start using Scalaz.</p><hr width=100%><p style=color:#777>Last modified on 2014-03-07</p></div></div><nav class=post-pagination><a class=newer-posts href=/posts/2014-04-14-free-coroutines/>Next<br>Coroutines for free</a>
+<a class=older-posts href=/posts/2014-02-23-haskell-web/>Previous<br>Comparing Haskell Web Frameworks</a></nav><div class=post-comment-wrapper></div></div></div></div></div><div id=single-column-footer>&copy;
+2020
+Andraz Bajt</div></div><script src=//js/journal.js></script></body></html>

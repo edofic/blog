@@ -1,283 +1,86 @@
-<!DOCTYPE html>
-<html><head>
-<title>Javascript faster than light! (well C actually)</title>
-
-<meta charset="utf-8">
-<meta name="X-UA-Compatible" content="IE=edge">
-<meta name="google-site-verification" content="">
-<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
-<meta content="telephone=no" name="format-detection">
-<meta name="renderer" content="webkit">
-<meta name="theme-color" content="#ffffff">
-
-
-
-
-<script src="/vendor/js/jquery.min.js" ></script>
-<script src="/vendor/js/popper.min.js" ></script>
-<script src="/vendor/js/bootstrap.min.js" ></script>
-<script src="/vendor/js/smooth-scroll.polyfills.min.js" ></script>
-<link type="text/css" rel="stylesheet" href="/vendor/css/bootstrap.min.css">
-<script src="/vendor/js/vue.min.js" ></script>
-
-
-
-<link rel="stylesheet" href="/scss/journal.min.9d1b3d6c4f3ff1773fff9bdca1bc24452f33129e12f67f2ab14f2ddaf1603468.css" media="screen">
-
-<script src="/js/loadCSS.js"></script>
-<script>
-    loadCSS("https://fonts.googleapis.com/css?family=Lora|Montserrat|Fira+Mono|Noto+Serif+SC|Material+Icons");
-</script>
-
-</head>
-<body>
-    	<div id="app"><div ref="sideContainer" class="side-container">
-    <div class="a-block nav-head false">
-        <div class="nav-title">
-            My Programming Escapades
-        </div>
-        <div class="nav-subtitle">
-            
-                Andraz Bajt
-            
-        </div>
-            
-                <a href="https://github.com/edofic"><img src="/icons/github.svg" width="20"/></a>
-            
-            
-                <a href="https://www.linkedin.com/in/edofic"><img src="/icons/linkedin.svg" width="20"/></a>
-            
-            
-                <a href="https://twitter.com/edofic"><img src="/icons/twitter.svg" width="20"/></a>
-            
-            <a href="/index.xml"><img src="/icons/rss.svg" width="20"/></a>
-            
-                <a href="mailto:edofic@edofic.com"><img src="/icons/email.svg" width="20"/></a>
-            
-    </div>
-
-
-    <div class="nav-link-list">
-        
-        
-            
-            
-            <a class="a-block nav-link-item" href="/about">
-                About Me
-            </a>
-        
-            
-            
-            <a class="a-block nav-link-item" href="/">
-                Archive
-            </a>
-        
-    </div>
-
-    <div class="nav-footer">
-        &copy;
-    2020
-	
-	Andraz Bajt
-	
-
-    </div>
-
-</div>
-<div ref="extraContainer" class="extra-container">
-    
-    <div class="pagination">
-        <a id="globalBackToTop" class="pagination-action animated-visibility" href="#top" :class="{ invisible: scrollY == 0 }">
-            <i class="material-icons pagination-action-icon">
-                keyboard_arrow_up
-            </i>
-        </a>
-        
-    </div>
-</div><div class="single-column-drawer-container" ref="drawer"
-     v-bind:class="{ 'single-column-drawer-container-active': isDrawerOpen }">
-    <div class="drawer-content">
-        <div class="drawer-menu">
-        
-        
-            
-                
-                
-                <a class="a-block drawer-menu-item" href="/about">
-                    About Me
-                </a>
-        
-            
-                
-                
-                    
-                
-                <a class="a-block drawer-menu-item" href="/">
-                    Archive
-                </a>
-        
-        </div>
-    </div>
-</div>
-<transition name="fade">
-    <div v-bind:class="{ 'single-column-drawer-mask': mounted }" v-if="isDrawerOpen" v-on:click="toggleDrawer"></div>
-</transition>
-<nav ref="navBar" class="navbar sticky-top navbar-light single-column-nav-container">
-    <div ref="navBackground" class="nav-background"></div>
-    <div class="container container-narrow nav-content">
-        <button id="nav_dropdown_btn" class="nav-dropdown-toggle" type="button" v-on:click="toggleDrawer">
-            <i class="material-icons">
-                menu
-            </i>
-        </button>
-        <a ref="navTitle" class="navbar-brand" href="/">
-            My Programming Escapades
-        </a>
-    </div>
-</nav>
-<div class="single-column-header-container" ref="pageHead"
-     v-bind:style="{ transform: 'translateZ(0px) translateY('+.3*scrollY+'px)', opacity: 1-navOpacity }">
-        <a href="/">
-            <div class="single-column-header-title">My Programming Escapades</div>
-            
-            <div class="single-column-header-subtitle">Andraz Bajt</div>
-            
-        </a>
-
-        
-            <a href="https://github.com/edofic"><img src="/icons/github.svg" width="20"/></a>
-        
-        
-            <a href="https://www.linkedin.com/in/edofic"><img src="/icons/linkedin.svg" width="20"/></a>
-        
-        
-            <a href="https://twitter.com/edofic"><img src="/icons/twitter.svg" width="20"/></a>
-        
-        <a href="/index.xml"><img src="/icons/rss.svg" width="20"/></a>
-        
-            <a href="mailto:edofic@edofic.com"><img src="/icons/email.svg" width="20"/></a>
-        
-
-</div>
-
-            <div id="content">
-<div ref="streamContainer" class="stream-container">
-    <div class="post-list-container post-list-container-shadow">
-        <div class="post">
-            
-            
-            
-
-            <div class="post-head-wrapper-text-only"
-                 style="background-image: url('/')">
-                <div class="post-title">
-                    Javascript faster than light! (well C actually)
-                    <div class="post-meta">
-                        
-                            <time itemprop="datePublished">
-                                2012-10-21
-                            </time>
-                        
-
-                        
-
-                        
-                    </div>
-                </div>
-            </div>
-
-            <div class="post-body-wrapper">
-                <div class="post-body">
-                    <p><a href="http://www.flickr.com/photos/42149364@N03/6772086623"><img src="http://farm8.static.flickr.com/7156/6772086623_646ee6ab31_m.jpg" alt="157/365. Acorn - Oak Nut - The Scrat Problem."></a></p>
-<p>Disclaimer: I never was a fan of js, but I've come to think it's quite
-AWESOME!</p>
-<p>Anyway I <a href="/posts/2012-08-29-creating-a-language-1">invented my own toy language
+<!doctype html><html><head><title>Javascript faster than light! (well C actually)</title><meta charset=utf-8><meta name=X-UA-Compatible content="IE=edge"><meta name=google-site-verification content><meta content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=0" name=viewport><meta content="telephone=no" name=format-detection><meta name=renderer content="webkit"><meta name=theme-color content="#ffffff"><script src=/vendor/js/jquery.min.js></script><script src=/vendor/js/popper.min.js></script><script src=/vendor/js/bootstrap.min.js></script><script src=/vendor/js/smooth-scroll.polyfills.min.js></script><link type=text/css rel=stylesheet href=/vendor/css/bootstrap.min.css><script src=/vendor/js/vue.min.js></script><link rel=stylesheet href=/scss/journal.min.3bdd3e0bba961aa48fdce1402e6f01783c435b4dfb0025c8d0022ddaea0f3d19.css media=screen><script src=/js/loadCSS.js></script><script>loadCSS("https://fonts.googleapis.com/css?family=Lora|Montserrat|Fira+Mono|Noto+Serif+SC|Material+Icons");</script></head><body><div id=app><div ref=sideContainer class=side-container><div class="a-block nav-head false"><div class=nav-title>My Programming Escapades</div><div class=nav-subtitle>Andraz Bajt</div><a href=https://github.com/edofic><img src=/icons/github.svg width=20></a>
+<a href=https://www.linkedin.com/in/edofic><img src=/icons/linkedin.svg width=20></a>
+<a href=https://twitter.com/edofic><img src=/icons/twitter.svg width=20></a>
+<a href=/index.xml><img src=/icons/rss.svg width=20></a>
+<a href=mailto:edofic@edofic.com><img src=/icons/email.svg width=20></a></div><div class=nav-link-list><a class="a-block nav-link-item" href=/about>About Me</a>
+<a class="a-block nav-link-item" href=/>Archive</a></div><div class=nav-footer>&copy;
+2020
+Andraz Bajt</div></div><div ref=extraContainer class=extra-container><div class=pagination><a id=globalBackToTop class="pagination-action animated-visibility" href=#top :class="{ invisible: scrollY == 0 }"><i class="material-icons pagination-action-icon">keyboard_arrow_up</i></a></div></div><div class=single-column-drawer-container ref=drawer v-bind:class="{ 'single-column-drawer-container-active': isDrawerOpen }"><div class=drawer-content><div class=drawer-menu><a class="a-block drawer-menu-item" href=/about>About Me</a>
+<a class="a-block drawer-menu-item" href=/>Archive</a></div></div></div><transition name=fade><div v-bind:class="{ 'single-column-drawer-mask': mounted }" v-if=isDrawerOpen v-on:click=toggleDrawer></div></transition><nav ref=navBar class="navbar sticky-top navbar-light single-column-nav-container"><div ref=navBackground class=nav-background></div><div class="container container-narrow nav-content"><button id=nav_dropdown_btn class=nav-dropdown-toggle type=button v-on:click=toggleDrawer>
+<i class=material-icons>menu</i></button>
+<a ref=navTitle class=navbar-brand href=/>My Programming Escapades</a></div></nav><div class=single-column-header-container ref=pageHead v-bind:style="{ transform: 'translateZ(0px) translateY('+.3*scrollY+'px)', opacity: 1-navOpacity }"><a href=/><div class=single-column-header-title>My Programming Escapades</div><div class=single-column-header-subtitle>Andraz Bajt</div></a><a href=https://github.com/edofic><img src=/icons/github.svg width=20></a>
+<a href=https://www.linkedin.com/in/edofic><img src=/icons/linkedin.svg width=20></a>
+<a href=https://twitter.com/edofic><img src=/icons/twitter.svg width=20></a>
+<a href=/index.xml><img src=/icons/rss.svg width=20></a>
+<a href=mailto:edofic@edofic.com><img src=/icons/email.svg width=20></a></div><div id=content><div ref=streamContainer class=stream-container><div class="post-list-container post-list-container-shadow"><div class=post><div class=post-head-wrapper-text-only style="background-image:url('/')"><div class=post-title>Javascript faster than light! (well C actually)<div class=post-meta><time itemprop=datePublished>2012-10-21</time></div></div></div><div class=post-body-wrapper><div class=post-body><p><a href=http://www.flickr.com/photos/42149364@N03/6772086623><img src=http://farm8.static.flickr.com/7156/6772086623_646ee6ab31_m.jpg alt="157/365. Acorn - Oak Nut - The Scrat Problem."></a></p><p>Disclaimer: I never was a fan of js, but I've come to think it's quite
+AWESOME!</p><p>Anyway I <a href=/posts/2012-08-29-creating-a-language-1>invented my own toy language
 scrat</a>
 recently. And I now I want it to go fast and do cool stuff. So I went on
 to compile it. Well more appropriate term would be
-&ldquo;<a href="http://en.wikipedia.org/wiki/Translation" title="Translation">translate</a>&quot;(as
-<a href="https://twitter.com/zidarsk8">zidarsk8</a> pointed out) since my target is
-<a href="http://en.wikipedia.org/wiki/JavaScript" title="JavaScript">JavaScript</a>. And
+&ldquo;<a href=http://en.wikipedia.org/wiki/Translation title=Translation>translate</a>"(as
+<a href=https://twitter.com/zidarsk8>zidarsk8</a> pointed out) since my target is
+<a href=http://en.wikipedia.org/wiki/JavaScript title=JavaScript>JavaScript</a>. And
 then I use node.js to run it - browser test sometime in the future.
 Enough about that, I'll be doing a post when I get everything to run
-under js.</p>
-<p>My original purpuse for translation was speed as node uses V8 and that's
+under js.</p><p>My original purpuse for translation was speed as node uses V8 and that's
 quite speedy. So I did a quick test. I wrote a simple
-recursive <a href="http://en.wikipedia.org/wiki/Fibonacci_number" title="Fibonacci number">Fibonacci sequence</a>
+recursive <a href=http://en.wikipedia.org/wiki/Fibonacci_number title="Fibonacci number">Fibonacci sequence</a>
 generator. The cool thing about this is that it takes <code>fib(n)</code> steps to
 calculate <code>fib(n)</code> but call-stack depth is just n - I don't have loops and
-I haven't implemented <a href="http://en.wikipedia.org/wiki/Tail_call" title="Tail call">tail call optimization</a> yet.
+I haven't implemented <a href=http://en.wikipedia.org/wiki/Tail_call title="Tail call">tail call optimization</a> yet.
 And then I wrote same thing in js an noticed it's quite a bit faster.
 Great. Now halfway through
-<a href="http://en.wikipedia.org/wiki/Implementation" title="Implementation">implementation</a>(more
-like 80%) I decided to do a real benchmark.</p>
-<h3 id="scrat">Scrat</h3>
-<p>Here's the source</p>
-<pre><code>func fib(n) if n&lt;2 then 1 else fib(n-1) + fib(n-2)
+<a href=http://en.wikipedia.org/wiki/Implementation title=Implementation>implementation</a>(more
+like 80%) I decided to do a real benchmark.</p><h3 id=scrat>Scrat</h3><p>Here's the source</p><pre><code>func fib(n) if n&lt;2 then 1 else fib(n-1) + fib(n-2)
 println(fib(30))
-</code></pre>
-<p>Neat huh?</p>
-<p>And then I timed this repeatedly and all results were about the same:</p>
-<pre><code>time scrat fib.scrat
+</code></pre><p>Neat huh?</p><p>And then I timed this repeatedly and all results were about the same:</p><pre><code>time scrat fib.scrat
 1346269.0
 real 0m3.254s
 user 0m3.652s
 sys 0m0.096s
-</code></pre>
-<p>Of course there is some startup overhead that must be taken into account
-so I ran an empty file</p>
-<pre><code>time scrat empty
+</code></pre><p>Of course there is some startup overhead that must be taken into account
+so I ran an empty file</p><pre><code>time scrat empty
 real 0m0.420s
 user 0m0.448s
 sys 0m0.032s
-</code></pre>
-<p>To obtain total <a href="http://en.wikipedia.org/wiki/Time_complexity" title="Time complexity">running
+</code></pre><p>To obtain total <a href=http://en.wikipedia.org/wiki/Time_complexity title="Time complexity">running
 time</a> of
-3254 - 420 = 2830ms</p>
-<h3 id="javascript">Javascript</h3>
-<p>Then I translated my source into js. Below is the untouched(apart from
-whitespace) result</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#66d9ef">function</span> <span style="color:#a6e22e">fib</span>(<span style="color:#a6e22e">n</span>){
-  <span style="color:#66d9ef">return</span> (<span style="color:#66d9ef">function</span>(){
-    <span style="color:#66d9ef">if</span>(<span style="color:#a6e22e">n</span><span style="color:#f92672">&lt;</span><span style="color:#ae81ff">2.0</span>){
-      <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">1.0</span>;
-    } <span style="color:#66d9ef">else</span> {
-      <span style="color:#66d9ef">return</span> (<span style="color:#a6e22e">fib</span>((<span style="color:#a6e22e">n</span>)<span style="color:#f92672">-</span>(<span style="color:#ae81ff">1.0</span>)))<span style="color:#f92672">+</span>(<span style="color:#a6e22e">fib</span>((<span style="color:#a6e22e">n</span>)<span style="color:#f92672">-</span>(<span style="color:#ae81ff">2.0</span>)));
+3254 - 420 = 2830ms</p><h3 id=javascript>Javascript</h3><p>Then I translated my source into js. Below is the untouched(apart from
+whitespace) result</p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-javascript data-lang=javascript><span style=color:#66d9ef>function</span> <span style=color:#a6e22e>fib</span>(<span style=color:#a6e22e>n</span>){
+  <span style=color:#66d9ef>return</span> (<span style=color:#66d9ef>function</span>(){
+    <span style=color:#66d9ef>if</span>(<span style=color:#a6e22e>n</span><span style=color:#f92672>&lt;</span><span style=color:#ae81ff>2.0</span>){
+      <span style=color:#66d9ef>return</span> <span style=color:#ae81ff>1.0</span>;
+    } <span style=color:#66d9ef>else</span> {
+      <span style=color:#66d9ef>return</span> (<span style=color:#a6e22e>fib</span>((<span style=color:#a6e22e>n</span>)<span style=color:#f92672>-</span>(<span style=color:#ae81ff>1.0</span>)))<span style=color:#f92672>+</span>(<span style=color:#a6e22e>fib</span>((<span style=color:#a6e22e>n</span>)<span style=color:#f92672>-</span>(<span style=color:#ae81ff>2.0</span>)));
     }
   }());
 }
-</code></pre></div><p>In scrat ifs are expressions too, so the if is wrapped in an <a href="http://en.wikipedia.org/wiki/Anonymous_function" title="Anonymous function">anonymous
+</code></pre></div><p>In scrat ifs are expressions too, so the if is wrapped in an <a href=http://en.wikipedia.org/wiki/Anonymous_function title="Anonymous function">anonymous
 function</a>.
 In spite of additional invocations, running time decreased dramaticaly:
-128ms.</p>
-<p>Real reason for this test was my wory of if overhead so I did a by-hand
-implementation</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#66d9ef">function</span> <span style="color:#a6e22e">fib</span>(<span style="color:#a6e22e">n</span>){
-  <span style="color:#66d9ef">if</span>(<span style="color:#a6e22e">n</span><span style="color:#f92672">&lt;</span><span style="color:#ae81ff">2</span>){
-    <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">1</span>;
-  } <span style="color:#66d9ef">else</span> {
-    <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">fib</span>(<span style="color:#a6e22e">n</span><span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>)<span style="color:#f92672">+</span><span style="color:#a6e22e">fib</span>(<span style="color:#a6e22e">n</span><span style="color:#f92672">-</span><span style="color:#ae81ff">2</span>);
+128ms.</p><p>Real reason for this test was my wory of if overhead so I did a by-hand
+implementation</p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-javascript data-lang=javascript><span style=color:#66d9ef>function</span> <span style=color:#a6e22e>fib</span>(<span style=color:#a6e22e>n</span>){
+  <span style=color:#66d9ef>if</span>(<span style=color:#a6e22e>n</span><span style=color:#f92672>&lt;</span><span style=color:#ae81ff>2</span>){
+    <span style=color:#66d9ef>return</span> <span style=color:#ae81ff>1</span>;
+  } <span style=color:#66d9ef>else</span> {
+    <span style=color:#66d9ef>return</span> <span style=color:#a6e22e>fib</span>(<span style=color:#a6e22e>n</span><span style=color:#f92672>-</span><span style=color:#ae81ff>1</span>)<span style=color:#f92672>+</span><span style=color:#a6e22e>fib</span>(<span style=color:#a6e22e>n</span><span style=color:#f92672>-</span><span style=color:#ae81ff>2</span>);
   }
 }
 </code></pre></div><p>Running time: 35ms.
 Auch! Wrapping the if statement into an if expression multiplies running
 time by almost 4!! But it's still 22 times faster than my interpreter.
-(My code sucks I guess)</p>
-<h3 id="c">C</h3>
-<p>At this point you should be wondering what does this has to do with C.
+(My code sucks I guess)</p><h3 id=c>C</h3><p>At this point you should be wondering what does this has to do with C.
 Not much. I tried to do an implementation in C just for kicks. To see
 how much overhead my by-head function still has. I was assuming C
-program will go in something like 10ms.</p>
-<p>My best attempt(in the same style: recursion, if expression)</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c"><span style="color:#75715e">#</span><span style="color:#75715e">include</span>
+program will go in something like 10ms.</p><p>My best attempt(in the same style: recursion, if expression)</p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c><span style=color:#75715e>#</span><span style=color:#75715e>include</span>
 
-<span style="color:#75715e">int fib(int n){</span><span style="color:#75715e">
-</span><span style="color:#75715e"></span>  <span style="color:#66d9ef">return</span> (n<span style="color:#f92672">&lt;</span><span style="color:#ae81ff">2</span>)<span style="color:#f92672">?</span><span style="color:#ae81ff">1</span><span style="color:#f92672">:</span>fib(n<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>)<span style="color:#f92672">+</span>fib(n<span style="color:#f92672">-</span><span style="color:#ae81ff">2</span>);
+<span style=color:#75715e>int fib(int n){</span><span style=color:#75715e>
+</span><span style=color:#75715e></span>  <span style=color:#66d9ef>return</span> (n<span style=color:#f92672>&lt;</span><span style=color:#ae81ff>2</span>)<span style=color:#f92672>?</span><span style=color:#ae81ff>1</span><span style=color:#f92672>:</span>fib(n<span style=color:#f92672>-</span><span style=color:#ae81ff>1</span>)<span style=color:#f92672>+</span>fib(n<span style=color:#f92672>-</span><span style=color:#ae81ff>2</span>);
 }
 
-<span style="color:#66d9ef">int</span> main(){
-  printf(<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">%d</span><span style="color:#e6db74">&#34;</span>, fib(<span style="color:#ae81ff">39</span>));
-  <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0</span>;
+<span style=color:#66d9ef>int</span> main(){
+  printf(<span style=color:#e6db74></span><span style=color:#e6db74>&#34;</span><span style=color:#e6db74>%d</span><span style=color:#e6db74>&#34;</span>, fib(<span style=color:#ae81ff>39</span>));
+  <span style=color:#66d9ef>return</span> <span style=color:#ae81ff>0</span>;
 }
 </code></pre></div><p>Startup time is neglectible here, since it doesn't load an interpreter
 or a framework. So here's the full running time..ready?
@@ -285,56 +88,11 @@ or a framework. So here's the full running time..ready?
 That's only 4 times faster than my interpreted code. And 18 times slower
 than javascript. I'm not sure how is this even possible. It's probably
 just my bad implementation. But rules were: keep the style.
-So I hereby declare: js is faster than C. (in this microbenchmark)</p>
-<h1 id="update">UPDATE</h1>
-<p>I did something terribly wrong. Look at the C code closely. Its <code>fib(39)</code>
+So I hereby declare: js is faster than C. (in this microbenchmark)</p><h1 id=update>UPDATE</h1><p>I did something terribly wrong. Look at the C code closely. Its <code>fib(39)</code>
 where in scrat and js I called <code>fib(30)</code>. I just compared apples and
-oranges. </p>
-<p>Fixing the C code I got average 20ms. A bit faster than node. So it
+oranges. </p><p>Fixing the C code I got average 20ms. A bit faster than node. So it
 turns out javascript isn't faster than light(c) but it's pretty damn
-close. </p>
-<p>I guess this whole post is now wrong, but it was fun to do nonetheless. </p>
-
-                    <HR width="100%">
-                    
-                    <p style="color:#777;">Last modified on 2012-10-21</p>
-                    
-                </div>
-
-            </div>
-
-
-            <nav class="post-pagination">
-
-                
-                <a class="newer-posts" href="/posts/2012-10-22-scala-android/">
-                    Next<br>Setting up for scala development on Android
-                </a>
-                
-
-                
-                <a class="older-posts" href="/posts/2012-10-08-creating-a-language-7b/">
-                    Previous<br>Making a programming language Part 7b - using objects
-                </a>
-                
-            </nav>
-            <div class="post-comment-wrapper">
-                
-
-
-
-            </div>
-        </div>
-    </div>
-</div>
-
-            </div><div id="single-column-footer">&copy;
-    2020
-	
-	Andraz Bajt
-	
-</div>
-    	</div>
-    <script src="//js/journal.js"></script>
-    </body>
-</html>
+close. </p><p>I guess this whole post is now wrong, but it was fun to do nonetheless. </p><hr width=100%><p style=color:#777>Last modified on 2012-10-21</p></div></div><nav class=post-pagination><a class=newer-posts href=/posts/2012-10-22-scala-android/>Next<br>Setting up for scala development on Android</a>
+<a class=older-posts href=/posts/2012-10-08-creating-a-language-7b/>Previous<br>Making a programming language Part 7b - using objects</a></nav><div class=post-comment-wrapper></div></div></div></div></div><div id=single-column-footer>&copy;
+2020
+Andraz Bajt</div></div><script src=//js/journal.js></script></body></html>

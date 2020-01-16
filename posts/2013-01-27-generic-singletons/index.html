@@ -1,334 +1,105 @@
-<!DOCTYPE html>
-<html><head>
-<title>Generic singletons through dependent method types</title>
-
-<meta charset="utf-8">
-<meta name="X-UA-Compatible" content="IE=edge">
-<meta name="google-site-verification" content="">
-<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
-<meta content="telephone=no" name="format-detection">
-<meta name="renderer" content="webkit">
-<meta name="theme-color" content="#ffffff">
-
-
-
-
-<script src="/vendor/js/jquery.min.js" ></script>
-<script src="/vendor/js/popper.min.js" ></script>
-<script src="/vendor/js/bootstrap.min.js" ></script>
-<script src="/vendor/js/smooth-scroll.polyfills.min.js" ></script>
-<link type="text/css" rel="stylesheet" href="/vendor/css/bootstrap.min.css">
-<script src="/vendor/js/vue.min.js" ></script>
-
-
-
-<link rel="stylesheet" href="/scss/journal.min.9d1b3d6c4f3ff1773fff9bdca1bc24452f33129e12f67f2ab14f2ddaf1603468.css" media="screen">
-
-<script src="/js/loadCSS.js"></script>
-<script>
-    loadCSS("https://fonts.googleapis.com/css?family=Lora|Montserrat|Fira+Mono|Noto+Serif+SC|Material+Icons");
-</script>
-
-</head>
-<body>
-    	<div id="app"><div ref="sideContainer" class="side-container">
-    <div class="a-block nav-head false">
-        <div class="nav-title">
-            My Programming Escapades
-        </div>
-        <div class="nav-subtitle">
-            
-                Andraz Bajt
-            
-        </div>
-            
-                <a href="https://github.com/edofic"><img src="/icons/github.svg" width="20"/></a>
-            
-            
-                <a href="https://www.linkedin.com/in/edofic"><img src="/icons/linkedin.svg" width="20"/></a>
-            
-            
-                <a href="https://twitter.com/edofic"><img src="/icons/twitter.svg" width="20"/></a>
-            
-            <a href="/index.xml"><img src="/icons/rss.svg" width="20"/></a>
-            
-                <a href="mailto:edofic@edofic.com"><img src="/icons/email.svg" width="20"/></a>
-            
-    </div>
-
-
-    <div class="nav-link-list">
-        
-        
-            
-            
-            <a class="a-block nav-link-item" href="/about">
-                About Me
-            </a>
-        
-            
-            
-            <a class="a-block nav-link-item" href="/">
-                Archive
-            </a>
-        
-    </div>
-
-    <div class="nav-footer">
-        &copy;
-    2020
-	
-	Andraz Bajt
-	
-
-    </div>
-
-</div>
-<div ref="extraContainer" class="extra-container">
-    
-    <div class="pagination">
-        <a id="globalBackToTop" class="pagination-action animated-visibility" href="#top" :class="{ invisible: scrollY == 0 }">
-            <i class="material-icons pagination-action-icon">
-                keyboard_arrow_up
-            </i>
-        </a>
-        
-    </div>
-</div><div class="single-column-drawer-container" ref="drawer"
-     v-bind:class="{ 'single-column-drawer-container-active': isDrawerOpen }">
-    <div class="drawer-content">
-        <div class="drawer-menu">
-        
-        
-            
-                
-                
-                <a class="a-block drawer-menu-item" href="/about">
-                    About Me
-                </a>
-        
-            
-                
-                
-                    
-                
-                <a class="a-block drawer-menu-item" href="/">
-                    Archive
-                </a>
-        
-        </div>
-    </div>
-</div>
-<transition name="fade">
-    <div v-bind:class="{ 'single-column-drawer-mask': mounted }" v-if="isDrawerOpen" v-on:click="toggleDrawer"></div>
-</transition>
-<nav ref="navBar" class="navbar sticky-top navbar-light single-column-nav-container">
-    <div ref="navBackground" class="nav-background"></div>
-    <div class="container container-narrow nav-content">
-        <button id="nav_dropdown_btn" class="nav-dropdown-toggle" type="button" v-on:click="toggleDrawer">
-            <i class="material-icons">
-                menu
-            </i>
-        </button>
-        <a ref="navTitle" class="navbar-brand" href="/">
-            My Programming Escapades
-        </a>
-    </div>
-</nav>
-<div class="single-column-header-container" ref="pageHead"
-     v-bind:style="{ transform: 'translateZ(0px) translateY('+.3*scrollY+'px)', opacity: 1-navOpacity }">
-        <a href="/">
-            <div class="single-column-header-title">My Programming Escapades</div>
-            
-            <div class="single-column-header-subtitle">Andraz Bajt</div>
-            
-        </a>
-
-        
-            <a href="https://github.com/edofic"><img src="/icons/github.svg" width="20"/></a>
-        
-        
-            <a href="https://www.linkedin.com/in/edofic"><img src="/icons/linkedin.svg" width="20"/></a>
-        
-        
-            <a href="https://twitter.com/edofic"><img src="/icons/twitter.svg" width="20"/></a>
-        
-        <a href="/index.xml"><img src="/icons/rss.svg" width="20"/></a>
-        
-            <a href="mailto:edofic@edofic.com"><img src="/icons/email.svg" width="20"/></a>
-        
-
-</div>
-
-            <div id="content">
-<div ref="streamContainer" class="stream-container">
-    <div class="post-list-container post-list-container-shadow">
-        <div class="post">
-            
-            
-            
-
-            <div class="post-head-wrapper-text-only"
-                 style="background-image: url('/')">
-                <div class="post-title">
-                    Generic singletons through dependent method types
-                    <div class="post-meta">
-                        
-                            <time itemprop="datePublished">
-                                2013-01-27
-                            </time>
-                        
-
-                        
-
-                        
-                    </div>
-                </div>
-            </div>
-
-            <div class="post-body-wrapper">
-                <div class="post-body">
-                    <p>Ever
+<!doctype html><html><head><title>Generic singletons through dependent method types</title><meta charset=utf-8><meta name=X-UA-Compatible content="IE=edge"><meta name=google-site-verification content><meta content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=0" name=viewport><meta content="telephone=no" name=format-detection><meta name=renderer content="webkit"><meta name=theme-color content="#ffffff"><script src=/vendor/js/jquery.min.js></script><script src=/vendor/js/popper.min.js></script><script src=/vendor/js/bootstrap.min.js></script><script src=/vendor/js/smooth-scroll.polyfills.min.js></script><link type=text/css rel=stylesheet href=/vendor/css/bootstrap.min.css><script src=/vendor/js/vue.min.js></script><link rel=stylesheet href=/scss/journal.min.3bdd3e0bba961aa48fdce1402e6f01783c435b4dfb0025c8d0022ddaea0f3d19.css media=screen><script src=/js/loadCSS.js></script><script>loadCSS("https://fonts.googleapis.com/css?family=Lora|Montserrat|Fira+Mono|Noto+Serif+SC|Material+Icons");</script></head><body><div id=app><div ref=sideContainer class=side-container><div class="a-block nav-head false"><div class=nav-title>My Programming Escapades</div><div class=nav-subtitle>Andraz Bajt</div><a href=https://github.com/edofic><img src=/icons/github.svg width=20></a>
+<a href=https://www.linkedin.com/in/edofic><img src=/icons/linkedin.svg width=20></a>
+<a href=https://twitter.com/edofic><img src=/icons/twitter.svg width=20></a>
+<a href=/index.xml><img src=/icons/rss.svg width=20></a>
+<a href=mailto:edofic@edofic.com><img src=/icons/email.svg width=20></a></div><div class=nav-link-list><a class="a-block nav-link-item" href=/about>About Me</a>
+<a class="a-block nav-link-item" href=/>Archive</a></div><div class=nav-footer>&copy;
+2020
+Andraz Bajt</div></div><div ref=extraContainer class=extra-container><div class=pagination><a id=globalBackToTop class="pagination-action animated-visibility" href=#top :class="{ invisible: scrollY == 0 }"><i class="material-icons pagination-action-icon">keyboard_arrow_up</i></a></div></div><div class=single-column-drawer-container ref=drawer v-bind:class="{ 'single-column-drawer-container-active': isDrawerOpen }"><div class=drawer-content><div class=drawer-menu><a class="a-block drawer-menu-item" href=/about>About Me</a>
+<a class="a-block drawer-menu-item" href=/>Archive</a></div></div></div><transition name=fade><div v-bind:class="{ 'single-column-drawer-mask': mounted }" v-if=isDrawerOpen v-on:click=toggleDrawer></div></transition><nav ref=navBar class="navbar sticky-top navbar-light single-column-nav-container"><div ref=navBackground class=nav-background></div><div class="container container-narrow nav-content"><button id=nav_dropdown_btn class=nav-dropdown-toggle type=button v-on:click=toggleDrawer>
+<i class=material-icons>menu</i></button>
+<a ref=navTitle class=navbar-brand href=/>My Programming Escapades</a></div></nav><div class=single-column-header-container ref=pageHead v-bind:style="{ transform: 'translateZ(0px) translateY('+.3*scrollY+'px)', opacity: 1-navOpacity }"><a href=/><div class=single-column-header-title>My Programming Escapades</div><div class=single-column-header-subtitle>Andraz Bajt</div></a><a href=https://github.com/edofic><img src=/icons/github.svg width=20></a>
+<a href=https://www.linkedin.com/in/edofic><img src=/icons/linkedin.svg width=20></a>
+<a href=https://twitter.com/edofic><img src=/icons/twitter.svg width=20></a>
+<a href=/index.xml><img src=/icons/rss.svg width=20></a>
+<a href=mailto:edofic@edofic.com><img src=/icons/email.svg width=20></a></div><div id=content><div ref=streamContainer class=stream-container><div class="post-list-container post-list-container-shadow"><div class=post><div class=post-head-wrapper-text-only style="background-image:url('/')"><div class=post-title>Generic singletons through dependent method types<div class=post-meta><time itemprop=datePublished>2013-01-27</time></div></div></div><div class=post-body-wrapper><div class=post-body><p>Ever
 tried to write a
-<a href="http://en.wikipedia.org/wiki/Generic_programming" title="Generic programming">generic</a>
+<a href=http://en.wikipedia.org/wiki/Generic_programming title="Generic programming">generic</a>
 singleton? It's an oxymoron of a sort. But sometimes my brain dreams up
 funny concepts to solve the problem at hand. Sadly I cannot remember
 what I wanted to use them for. Anyway I think I just made all the
-<a href="http://en.wikipedia.org/wiki/Method_%28computer_programming%29" title="Method (computer programming)">methods</a>
+<a href=http://en.wikipedia.org/wiki/Method_%28computer_programming%29 title="Method (computer programming)">methods</a>
 generic and solved it this way. But this doesn't really express the
 notion of one entity that's agnostic to type of the parameters. With
 generic methods you get a bunch of disconnected units - at least that's
-the picture in my head.</p>
-<h3 id="general">General</h3>
-<p><img src="http://farm8.static.flickr.com/7192/6857158741_a4e3d23649_m.jpg" alt="Challenge Accepted!" title="Challenge Accepted!"></p>
-<p>So we've
+the picture in my head.</p><h3 id=general>General</h3><p><img src=http://farm8.static.flickr.com/7192/6857158741_a4e3d23649_m.jpg alt="Challenge Accepted!" title="Challenge Accepted!"></p><p>So we've
 established that generic singletons are just a silly idea, now let's try
-to implement it - you know &ldquo;Challenge accepted!&rdquo; style.</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-scala" data-lang="scala"><span style="color:#66d9ef">object</span> <span style="color:#a6e22e">Singleton</span><span style="color:#f92672">[</span><span style="color:#66d9ef">A</span><span style="color:#f92672">]</span> <span style="color:#f92672">{</span> <span style="color:#75715e">//error: &#39;;&#39; expected but &#39;[&#39; found.
-</span><span style="color:#75715e"></span>  <span style="color:#66d9ef">def</span> id<span style="color:#f92672">(</span>a<span style="color:#66d9ef">:</span><span style="color:#66d9ef">A</span><span style="color:#f92672">)</span> <span style="color:#66d9ef">=</span> a
-<span style="color:#f92672">}</span>
-</code></pre></div><p>Luckily this naive approach does not compile. Try it.</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-scala" data-lang="scala"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Singleton</span><span style="color:#f92672">[</span><span style="color:#66d9ef">A</span><span style="color:#f92672">]</span><span style="color:#f92672">{</span>
-  <span style="color:#66d9ef">def</span> id<span style="color:#f92672">(</span>a<span style="color:#66d9ef">:</span> <span style="color:#66d9ef">A</span><span style="color:#f92672">)</span> <span style="color:#66d9ef">=</span> a
-<span style="color:#f92672">}</span>
+to implement it - you know &ldquo;Challenge accepted!&rdquo; style.</p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-scala data-lang=scala><span style=color:#66d9ef>object</span> <span style=color:#a6e22e>Singleton</span><span style=color:#f92672>[</span><span style=color:#66d9ef>A</span><span style=color:#f92672>]</span> <span style=color:#f92672>{</span> <span style=color:#75715e>//error: &#39;;&#39; expected but &#39;[&#39; found.
+</span><span style=color:#75715e></span>  <span style=color:#66d9ef>def</span> id<span style=color:#f92672>(</span>a<span style=color:#66d9ef>:</span><span style=color:#66d9ef>A</span><span style=color:#f92672>)</span> <span style=color:#66d9ef>=</span> a
+<span style=color:#f92672>}</span>
+</code></pre></div><p>Luckily this naive approach does not compile. Try it.</p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-scala data-lang=scala><span style=color:#66d9ef>class</span> <span style=color:#a6e22e>Singleton</span><span style=color:#f92672>[</span><span style=color:#66d9ef>A</span><span style=color:#f92672>]</span><span style=color:#f92672>{</span>
+  <span style=color:#66d9ef>def</span> id<span style=color:#f92672>(</span>a<span style=color:#66d9ef>:</span> <span style=color:#66d9ef>A</span><span style=color:#f92672>)</span> <span style=color:#66d9ef>=</span> a
+<span style=color:#f92672>}</span>
 
-<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">Singleton</span><span style="color:#f92672">[</span><span style="color:#66d9ef">A</span><span style="color:#f92672">]</span> <span style="color:#66d9ef">=</span> <span style="color:#66d9ef">new</span> <span style="color:#a6e22e">Singleton</span><span style="color:#f92672">[</span><span style="color:#66d9ef">A</span><span style="color:#f92672">]</span>
+<span style=color:#66d9ef>def</span> <span style=color:#a6e22e>Singleton</span><span style=color:#f92672>[</span><span style=color:#66d9ef>A</span><span style=color:#f92672>]</span> <span style=color:#66d9ef>=</span> <span style=color:#66d9ef>new</span> <span style=color:#a6e22e>Singleton</span><span style=color:#f92672>[</span><span style=color:#66d9ef>A</span><span style=color:#f92672>]</span>
 </code></pre></div><p>But this is not a singleton anymore as there is a new instance created
-everytime.</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-scala" data-lang="scala"><span style="color:#66d9ef">object</span> <span style="color:#a6e22e">Singleton</span><span style="color:#f92672">{</span>
-  <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Instance</span><span style="color:#f92672">[</span><span style="color:#66d9ef">A</span><span style="color:#f92672">]</span> <span style="color:#a6e22e">private</span><span style="color:#f92672">[</span><span style="color:#66d9ef">Singleton</span><span style="color:#f92672">]</span> <span style="color:#f92672">(</span><span style="color:#f92672">)</span><span style="color:#f92672">{</span>
-    <span style="color:#66d9ef">def</span> id<span style="color:#f92672">(</span>a<span style="color:#66d9ef">:</span> <span style="color:#66d9ef">A</span><span style="color:#f92672">)</span> <span style="color:#66d9ef">=</span> a
-  <span style="color:#f92672">}</span>
+everytime.</p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-scala data-lang=scala><span style=color:#66d9ef>object</span> <span style=color:#a6e22e>Singleton</span><span style=color:#f92672>{</span>
+  <span style=color:#66d9ef>class</span> <span style=color:#a6e22e>Instance</span><span style=color:#f92672>[</span><span style=color:#66d9ef>A</span><span style=color:#f92672>]</span> <span style=color:#a6e22e>private</span><span style=color:#f92672>[</span><span style=color:#66d9ef>Singleton</span><span style=color:#f92672>]</span> <span style=color:#f92672>(</span><span style=color:#f92672>)</span><span style=color:#f92672>{</span>
+    <span style=color:#66d9ef>def</span> id<span style=color:#f92672>(</span>a<span style=color:#66d9ef>:</span> <span style=color:#66d9ef>A</span><span style=color:#f92672>)</span> <span style=color:#66d9ef>=</span> a
+  <span style=color:#f92672>}</span>
 
-  <span style="color:#66d9ef">private</span><span style="color:#f92672">[</span><span style="color:#66d9ef">Singleton</span><span style="color:#f92672">]</span> <span style="color:#66d9ef">val</span> cache <span style="color:#66d9ef">=</span>
-    collection<span style="color:#f92672">.</span>mutable<span style="color:#f92672">.</span><span style="color:#a6e22e">HashMap</span><span style="color:#f92672">[</span><span style="color:#66d9ef">Class</span><span style="color:#f92672">[</span><span style="color:#66d9ef">_</span><span style="color:#f92672">]</span>,<span style="color:#66d9ef">Instance</span><span style="color:#f92672">[</span><span style="color:#66d9ef">_</span><span style="color:#f92672">]</span><span style="color:#f92672">]</span><span style="color:#f92672">(</span><span style="color:#f92672">)</span>
-  <span style="color:#66d9ef">def</span> apply<span style="color:#f92672">[</span><span style="color:#66d9ef">A</span><span style="color:#f92672">]</span><span style="color:#f92672">(</span><span style="color:#f92672">)</span><span style="color:#f92672">(</span><span style="color:#66d9ef">implicit</span> m<span style="color:#66d9ef">:</span> <span style="color:#66d9ef">Manifest</span><span style="color:#f92672">[</span><span style="color:#66d9ef">A</span><span style="color:#f92672">]</span><span style="color:#f92672">)</span> <span style="color:#66d9ef">=</span>
-    cache<span style="color:#f92672">.</span>getOrElseUpdate<span style="color:#f92672">(</span>m<span style="color:#f92672">.</span>erasure<span style="color:#f92672">,</span> <span style="color:#66d9ef">new</span> <span style="color:#a6e22e">Instance</span><span style="color:#f92672">[</span><span style="color:#66d9ef">A</span><span style="color:#f92672">]</span><span style="color:#f92672">)</span><span style="color:#f92672">.</span>asInstanceOf<span style="color:#f92672">[</span><span style="color:#66d9ef">Instance</span><span style="color:#f92672">[</span><span style="color:#66d9ef">A</span><span style="color:#f92672">]</span><span style="color:#f92672">]</span>
-<span style="color:#f92672">}</span>
+  <span style=color:#66d9ef>private</span><span style=color:#f92672>[</span><span style=color:#66d9ef>Singleton</span><span style=color:#f92672>]</span> <span style=color:#66d9ef>val</span> cache <span style=color:#66d9ef>=</span>
+    collection<span style=color:#f92672>.</span>mutable<span style=color:#f92672>.</span><span style=color:#a6e22e>HashMap</span><span style=color:#f92672>[</span><span style=color:#66d9ef>Class</span><span style=color:#f92672>[</span><span style=color:#66d9ef>_</span><span style=color:#f92672>]</span>,<span style=color:#66d9ef>Instance</span><span style=color:#f92672>[</span><span style=color:#66d9ef>_</span><span style=color:#f92672>]</span><span style=color:#f92672>]</span><span style=color:#f92672>(</span><span style=color:#f92672>)</span>
+  <span style=color:#66d9ef>def</span> apply<span style=color:#f92672>[</span><span style=color:#66d9ef>A</span><span style=color:#f92672>]</span><span style=color:#f92672>(</span><span style=color:#f92672>)</span><span style=color:#f92672>(</span><span style=color:#66d9ef>implicit</span> m<span style=color:#66d9ef>:</span> <span style=color:#66d9ef>Manifest</span><span style=color:#f92672>[</span><span style=color:#66d9ef>A</span><span style=color:#f92672>]</span><span style=color:#f92672>)</span> <span style=color:#66d9ef>=</span>
+    cache<span style=color:#f92672>.</span>getOrElseUpdate<span style=color:#f92672>(</span>m<span style=color:#f92672>.</span>erasure<span style=color:#f92672>,</span> <span style=color:#66d9ef>new</span> <span style=color:#a6e22e>Instance</span><span style=color:#f92672>[</span><span style=color:#66d9ef>A</span><span style=color:#f92672>]</span><span style=color:#f92672>)</span><span style=color:#f92672>.</span>asInstanceOf<span style=color:#f92672>[</span><span style=color:#66d9ef>Instance</span><span style=color:#f92672>[</span><span style=color:#66d9ef>A</span><span style=color:#f92672>]</span><span style=color:#f92672>]</span>
+<span style=color:#f92672>}</span>
 
-<span style="color:#75715e">//use as
-</span><span style="color:#75715e"></span><span style="color:#a6e22e">Singleton</span><span style="color:#f92672">[</span><span style="color:#66d9ef">Int</span><span style="color:#f92672">]</span><span style="color:#f92672">.</span>id<span style="color:#f92672">(</span><span style="color:#ae81ff">1</span><span style="color:#f92672">)</span>
+<span style=color:#75715e>//use as
+</span><span style=color:#75715e></span><span style=color:#a6e22e>Singleton</span><span style=color:#f92672>[</span><span style=color:#66d9ef>Int</span><span style=color:#f92672>]</span><span style=color:#f92672>.</span>id<span style=color:#f92672>(</span><span style=color:#ae81ff>1</span><span style=color:#f92672>)</span>
 
-<span style="color:#75715e">//and some sugar
-</span><span style="color:#75715e"></span><span style="color:#66d9ef">def</span> singleton<span style="color:#f92672">[</span><span style="color:#66d9ef">A</span><span style="color:#66d9ef">:</span><span style="color:#66d9ef">Manifest</span><span style="color:#f92672">]</span> <span style="color:#66d9ef">=</span> <span style="color:#a6e22e">Singleton</span><span style="color:#f92672">[</span><span style="color:#66d9ef">A</span><span style="color:#f92672">]</span><span style="color:#f92672">(</span><span style="color:#f92672">)</span>
+<span style=color:#75715e>//and some sugar
+</span><span style=color:#75715e></span><span style=color:#66d9ef>def</span> singleton<span style=color:#f92672>[</span><span style=color:#66d9ef>A</span><span style=color:#66d9ef>:</span><span style=color:#66d9ef>Manifest</span><span style=color:#f92672>]</span> <span style=color:#66d9ef>=</span> <span style=color:#a6e22e>Singleton</span><span style=color:#f92672>[</span><span style=color:#66d9ef>A</span><span style=color:#f92672>]</span><span style=color:#f92672>(</span><span style=color:#f92672>)</span>
 
-<span style="color:#75715e">//now use like
-</span><span style="color:#75715e"></span>singleton<span style="color:#f92672">[</span><span style="color:#66d9ef">String</span><span style="color:#f92672">]</span><span style="color:#f92672">.</span>id<span style="color:#f92672">(</span><span style="color:#e6db74">&#34;hi&#34;</span><span style="color:#f92672">)</span>
-</code></pre></div><p>Didn't bother with <a href="http://en.wikipedia.org/wiki/Thread_safety" title="Thread safety">thread
+<span style=color:#75715e>//now use like
+</span><span style=color:#75715e></span>singleton<span style=color:#f92672>[</span><span style=color:#66d9ef>String</span><span style=color:#f92672>]</span><span style=color:#f92672>.</span>id<span style=color:#f92672>(</span><span style=color:#e6db74>&#34;hi&#34;</span><span style=color:#f92672>)</span>
+</code></pre></div><p>Didn't bother with <a href=http://en.wikipedia.org/wiki/Thread_safety title="Thread safety">thread
 safety</a>. And
 dragging around Manifest just for caching is a bit of a pain, luckily
-elevated by context bounds.</p>
-<h3 id="type-specific">Type specific</h3>
-<p>That worked for classes that don't bother about the generic types&hellip;what
-if we want specific behavior per type? <a href="http://en.wikipedia.org/wiki/Type_class" title="Type class">Type
+elevated by context bounds.</p><h3 id=type-specific>Type specific</h3><p>That worked for classes that don't bother about the generic types&mldr;what
+if we want specific behavior per type? <a href=http://en.wikipedia.org/wiki/Type_class title="Type class">Type
 classes</a>.
 A trait for general interface and objects for specific types. Magic lies
 in making these objects implicit and having a method that gives you the
-right one!</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-scala" data-lang="scala"><span style="color:#66d9ef">trait</span> <span style="color:#a6e22e">Singleton</span><span style="color:#f92672">[</span><span style="color:#66d9ef">A</span><span style="color:#f92672">]</span><span style="color:#f92672">{</span>
-  <span style="color:#66d9ef">def</span> f<span style="color:#f92672">(</span>a<span style="color:#66d9ef">:</span> <span style="color:#66d9ef">A</span><span style="color:#f92672">)</span><span style="color:#66d9ef">:</span> <span style="color:#66d9ef">A</span>
-<span style="color:#f92672">}</span>
+right one!</p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-scala data-lang=scala><span style=color:#66d9ef>trait</span> <span style=color:#a6e22e>Singleton</span><span style=color:#f92672>[</span><span style=color:#66d9ef>A</span><span style=color:#f92672>]</span><span style=color:#f92672>{</span>
+  <span style=color:#66d9ef>def</span> f<span style=color:#f92672>(</span>a<span style=color:#66d9ef>:</span> <span style=color:#66d9ef>A</span><span style=color:#f92672>)</span><span style=color:#66d9ef>:</span> <span style=color:#66d9ef>A</span>
+<span style=color:#f92672>}</span>
 
-<span style="color:#66d9ef">implicit</span> <span style="color:#66d9ef">object</span> <span style="color:#a6e22e">IntSingleton</span> <span style="color:#66d9ef">extends</span> <span style="color:#a6e22e">Singleton</span><span style="color:#f92672">[</span><span style="color:#66d9ef">Int</span><span style="color:#f92672">]</span><span style="color:#f92672">{</span>
-  <span style="color:#66d9ef">def</span> f<span style="color:#f92672">(</span>n<span style="color:#66d9ef">:</span> <span style="color:#66d9ef">Int</span><span style="color:#f92672">)</span> <span style="color:#66d9ef">=</span> n <span style="color:#f92672">+</span> <span style="color:#ae81ff">1</span>
-<span style="color:#f92672">}</span>
+<span style=color:#66d9ef>implicit</span> <span style=color:#66d9ef>object</span> <span style=color:#a6e22e>IntSingleton</span> <span style=color:#66d9ef>extends</span> <span style=color:#a6e22e>Singleton</span><span style=color:#f92672>[</span><span style=color:#66d9ef>Int</span><span style=color:#f92672>]</span><span style=color:#f92672>{</span>
+  <span style=color:#66d9ef>def</span> f<span style=color:#f92672>(</span>n<span style=color:#66d9ef>:</span> <span style=color:#66d9ef>Int</span><span style=color:#f92672>)</span> <span style=color:#66d9ef>=</span> n <span style=color:#f92672>+</span> <span style=color:#ae81ff>1</span>
+<span style=color:#f92672>}</span>
 
-<span style="color:#66d9ef">implicit</span> <span style="color:#66d9ef">object</span> <span style="color:#a6e22e">StringSingleton</span> <span style="color:#66d9ef">extends</span> <span style="color:#a6e22e">Singleton</span><span style="color:#f92672">[</span><span style="color:#66d9ef">String</span><span style="color:#f92672">]</span><span style="color:#f92672">{</span>
-  <span style="color:#66d9ef">def</span> f<span style="color:#f92672">(</span>s<span style="color:#66d9ef">:</span> <span style="color:#66d9ef">String</span><span style="color:#f92672">)</span> <span style="color:#66d9ef">=</span> <span style="color:#e6db74">&#34;Hello &#34;</span> <span style="color:#f92672">+</span> s
-<span style="color:#f92672">}</span>
+<span style=color:#66d9ef>implicit</span> <span style=color:#66d9ef>object</span> <span style=color:#a6e22e>StringSingleton</span> <span style=color:#66d9ef>extends</span> <span style=color:#a6e22e>Singleton</span><span style=color:#f92672>[</span><span style=color:#66d9ef>String</span><span style=color:#f92672>]</span><span style=color:#f92672>{</span>
+  <span style=color:#66d9ef>def</span> f<span style=color:#f92672>(</span>s<span style=color:#66d9ef>:</span> <span style=color:#66d9ef>String</span><span style=color:#f92672>)</span> <span style=color:#66d9ef>=</span> <span style=color:#e6db74>&#34;Hello &#34;</span> <span style=color:#f92672>+</span> s
+<span style=color:#f92672>}</span>
 
-<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">Singleton</span><span style="color:#f92672">[</span><span style="color:#66d9ef">A</span><span style="color:#f92672">]</span><span style="color:#f92672">(</span><span style="color:#66d9ef">implicit</span> s<span style="color:#66d9ef">:</span> <span style="color:#66d9ef">Singleton</span><span style="color:#f92672">[</span><span style="color:#66d9ef">A</span><span style="color:#f92672">]</span><span style="color:#f92672">)</span> <span style="color:#66d9ef">=</span> s
+<span style=color:#66d9ef>def</span> <span style=color:#a6e22e>Singleton</span><span style=color:#f92672>[</span><span style=color:#66d9ef>A</span><span style=color:#f92672>]</span><span style=color:#f92672>(</span><span style=color:#66d9ef>implicit</span> s<span style=color:#66d9ef>:</span> <span style=color:#66d9ef>Singleton</span><span style=color:#f92672>[</span><span style=color:#66d9ef>A</span><span style=color:#f92672>]</span><span style=color:#f92672>)</span> <span style=color:#66d9ef>=</span> s
 
-<span style="color:#a6e22e">Singleton</span><span style="color:#f92672">[</span><span style="color:#66d9ef">Int</span><span style="color:#f92672">]</span><span style="color:#f92672">.</span>f<span style="color:#f92672">(</span><span style="color:#ae81ff">1</span><span style="color:#f92672">)</span> <span style="color:#75715e">// == 2
-</span></code></pre></div><h3 id="specific-functionality">Specific functionality</h3>
-<p>Now let's add a little twist.</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-scala" data-lang="scala"><span style="color:#66d9ef">implicit</span> <span style="color:#66d9ef">object</span> <span style="color:#a6e22e">IntSingleton</span> <span style="color:#66d9ef">extends</span> <span style="color:#a6e22e">Singleton</span><span style="color:#f92672">[</span><span style="color:#66d9ef">Int</span><span style="color:#f92672">]</span><span style="color:#f92672">{</span>
-  <span style="color:#66d9ef">def</span> f<span style="color:#f92672">(</span>n<span style="color:#66d9ef">:</span> <span style="color:#66d9ef">Int</span><span style="color:#f92672">)</span> <span style="color:#66d9ef">=</span> n <span style="color:#f92672">+</span> <span style="color:#ae81ff">1</span>
-  <span style="color:#66d9ef">def</span> g<span style="color:#f92672">(</span>n<span style="color:#66d9ef">:</span> <span style="color:#66d9ef">Int</span><span style="color:#f92672">)</span> <span style="color:#66d9ef">=</span> n <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>
-<span style="color:#f92672">}</span>
+<span style=color:#a6e22e>Singleton</span><span style=color:#f92672>[</span><span style=color:#66d9ef>Int</span><span style=color:#f92672>]</span><span style=color:#f92672>.</span>f<span style=color:#f92672>(</span><span style=color:#ae81ff>1</span><span style=color:#f92672>)</span> <span style=color:#75715e>// == 2
+</span></code></pre></div><h3 id=specific-functionality>Specific functionality</h3><p>Now let's add a little twist.</p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-scala data-lang=scala><span style=color:#66d9ef>implicit</span> <span style=color:#66d9ef>object</span> <span style=color:#a6e22e>IntSingleton</span> <span style=color:#66d9ef>extends</span> <span style=color:#a6e22e>Singleton</span><span style=color:#f92672>[</span><span style=color:#66d9ef>Int</span><span style=color:#f92672>]</span><span style=color:#f92672>{</span>
+  <span style=color:#66d9ef>def</span> f<span style=color:#f92672>(</span>n<span style=color:#66d9ef>:</span> <span style=color:#66d9ef>Int</span><span style=color:#f92672>)</span> <span style=color:#66d9ef>=</span> n <span style=color:#f92672>+</span> <span style=color:#ae81ff>1</span>
+  <span style=color:#66d9ef>def</span> g<span style=color:#f92672>(</span>n<span style=color:#66d9ef>:</span> <span style=color:#66d9ef>Int</span><span style=color:#f92672>)</span> <span style=color:#66d9ef>=</span> n <span style=color:#f92672>-</span> <span style=color:#ae81ff>1</span>
+<span style=color:#f92672>}</span>
 
-<span style="color:#75715e">//this line doesn&#39;t compile
-</span><span style="color:#75715e"></span><span style="color:#a6e22e">Singleton</span><span style="color:#f92672">[</span><span style="color:#66d9ef">Int</span><span style="color:#f92672">]</span><span style="color:#f92672">.</span>g<span style="color:#f92672">(</span><span style="color:#ae81ff">1</span><span style="color:#f92672">)</span>
-</code></pre></div><p>and it doesn't compile for a reason. <a href="http://en.wikipedia.org/wiki/Type_system" title="Type system">Static
+<span style=color:#75715e>//this line doesn&#39;t compile
+</span><span style=color:#75715e></span><span style=color:#a6e22e>Singleton</span><span style=color:#f92672>[</span><span style=color:#66d9ef>Int</span><span style=color:#f92672>]</span><span style=color:#f92672>.</span>g<span style=color:#f92672>(</span><span style=color:#ae81ff>1</span><span style=color:#f92672>)</span>
+</code></pre></div><p>and it doesn't compile for a reason. <a href=http://en.wikipedia.org/wiki/Type_system title="Type system">Static
 type</a> of
 returned from Singleton[Int] is Singleton[Int]. And there is no method g
 defined in trait Singleton. But we are sure it exists. We could call
 IntSingleton directly but this makes whole Singleton abstraction
 worthless. Luckily for us scala 2.10 has a feature called method
-<a href="http://en.wikipedia.org/wiki/Dependent_type" title="Dependent type">dependent
+<a href=http://en.wikipedia.org/wiki/Dependent_type title="Dependent type">dependent
 types</a>. To
 my best understanding this means support for return types that depend on
 the type of parameters. And here we want the type to reflect which
 instance is being returned. Nothing suits the job better as singleton
 types. Singleton type is a type that has only one value. So an object A
 will be of type A.type. This type is worthless for inference but great
-when you're doing the type tags. We just need a little fix</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-scala" data-lang="scala"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">Singleton</span><span style="color:#f92672">[</span><span style="color:#66d9ef">A</span><span style="color:#f92672">]</span><span style="color:#f92672">(</span><span style="color:#66d9ef">implicit</span> s<span style="color:#66d9ef">:</span> <span style="color:#66d9ef">Singleton</span><span style="color:#f92672">[</span><span style="color:#66d9ef">A</span><span style="color:#f92672">]</span><span style="color:#f92672">)</span><span style="color:#66d9ef">:</span> <span style="color:#66d9ef">s</span><span style="color:#66d9ef">.</span><span style="color:#66d9ef">type</span> <span style="color:#f92672">=</span> s
+when you're doing the type tags. We just need a little fix</p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-scala data-lang=scala><span style=color:#66d9ef>def</span> <span style=color:#a6e22e>Singleton</span><span style=color:#f92672>[</span><span style=color:#66d9ef>A</span><span style=color:#f92672>]</span><span style=color:#f92672>(</span><span style=color:#66d9ef>implicit</span> s<span style=color:#66d9ef>:</span> <span style=color:#66d9ef>Singleton</span><span style=color:#f92672>[</span><span style=color:#66d9ef>A</span><span style=color:#f92672>]</span><span style=color:#f92672>)</span><span style=color:#66d9ef>:</span> <span style=color:#66d9ef>s</span><span style=color:#66d9ef>.</span><span style=color:#66d9ef>type</span> <span style=color:#f92672>=</span> s
 </code></pre></div><p>This method will return the correct instance along with it's type while
-giving you a nice abstraction of <a href="http://en.wikipedia.org/wiki/Type_constructor" title="Type constructor">type
+giving you a nice abstraction of <a href=http://en.wikipedia.org/wiki/Type_constructor title="Type constructor">type
 constructor</a>.
- </p>
-
-                    <HR width="100%">
-                    
-                    <p style="color:#777;">Last modified on 2013-01-27</p>
-                    
-                </div>
-
-            </div>
-
-
-            <nav class="post-pagination">
-
-                
-                <a class="newer-posts" href="/posts/2013-01-27-chaining-implicits/">
-                    Next<br>Chaining implicit conversion in scala
-                </a>
-                
-
-                
-                <a class="older-posts" href="/posts/2013-01-27-monadic-io/">
-                    Previous<br>Monadic IO with ScalaZ
-                </a>
-                
-            </nav>
-            <div class="post-comment-wrapper">
-                
-
-
-
-            </div>
-        </div>
-    </div>
-</div>
-
-            </div><div id="single-column-footer">&copy;
-    2020
-	
-	Andraz Bajt
-	
-</div>
-    	</div>
-    <script src="//js/journal.js"></script>
-    </body>
-</html>
+ </p><hr width=100%><p style=color:#777>Last modified on 2013-01-27</p></div></div><nav class=post-pagination><a class=newer-posts href=/posts/2013-01-27-chaining-implicits/>Next<br>Chaining implicit conversion in scala</a>
+<a class=older-posts href=/posts/2013-01-27-monadic-io/>Previous<br>Monadic IO with ScalaZ</a></nav><div class=post-comment-wrapper></div></div></div></div></div><div id=single-column-footer>&copy;
+2020
+Andraz Bajt</div></div><script src=//js/journal.js></script></body></html>

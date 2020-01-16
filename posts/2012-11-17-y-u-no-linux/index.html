@@ -1,194 +1,18 @@
-<!DOCTYPE html>
-<html><head>
-<title>Why Linux will never win the desktop</title>
-
-<meta charset="utf-8">
-<meta name="X-UA-Compatible" content="IE=edge">
-<meta name="google-site-verification" content="">
-<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
-<meta content="telephone=no" name="format-detection">
-<meta name="renderer" content="webkit">
-<meta name="theme-color" content="#ffffff">
-
-
-
-
-<script src="/vendor/js/jquery.min.js" ></script>
-<script src="/vendor/js/popper.min.js" ></script>
-<script src="/vendor/js/bootstrap.min.js" ></script>
-<script src="/vendor/js/smooth-scroll.polyfills.min.js" ></script>
-<link type="text/css" rel="stylesheet" href="/vendor/css/bootstrap.min.css">
-<script src="/vendor/js/vue.min.js" ></script>
-
-
-
-<link rel="stylesheet" href="/scss/journal.min.9d1b3d6c4f3ff1773fff9bdca1bc24452f33129e12f67f2ab14f2ddaf1603468.css" media="screen">
-
-<script src="/js/loadCSS.js"></script>
-<script>
-    loadCSS("https://fonts.googleapis.com/css?family=Lora|Montserrat|Fira+Mono|Noto+Serif+SC|Material+Icons");
-</script>
-
-</head>
-<body>
-    	<div id="app"><div ref="sideContainer" class="side-container">
-    <div class="a-block nav-head false">
-        <div class="nav-title">
-            My Programming Escapades
-        </div>
-        <div class="nav-subtitle">
-            
-                Andraz Bajt
-            
-        </div>
-            
-                <a href="https://github.com/edofic"><img src="/icons/github.svg" width="20"/></a>
-            
-            
-                <a href="https://www.linkedin.com/in/edofic"><img src="/icons/linkedin.svg" width="20"/></a>
-            
-            
-                <a href="https://twitter.com/edofic"><img src="/icons/twitter.svg" width="20"/></a>
-            
-            <a href="/index.xml"><img src="/icons/rss.svg" width="20"/></a>
-            
-                <a href="mailto:edofic@edofic.com"><img src="/icons/email.svg" width="20"/></a>
-            
-    </div>
-
-
-    <div class="nav-link-list">
-        
-        
-            
-            
-            <a class="a-block nav-link-item" href="/about">
-                About Me
-            </a>
-        
-            
-            
-            <a class="a-block nav-link-item" href="/">
-                Archive
-            </a>
-        
-    </div>
-
-    <div class="nav-footer">
-        &copy;
-    2020
-	
-	Andraz Bajt
-	
-
-    </div>
-
-</div>
-<div ref="extraContainer" class="extra-container">
-    
-    <div class="pagination">
-        <a id="globalBackToTop" class="pagination-action animated-visibility" href="#top" :class="{ invisible: scrollY == 0 }">
-            <i class="material-icons pagination-action-icon">
-                keyboard_arrow_up
-            </i>
-        </a>
-        
-    </div>
-</div><div class="single-column-drawer-container" ref="drawer"
-     v-bind:class="{ 'single-column-drawer-container-active': isDrawerOpen }">
-    <div class="drawer-content">
-        <div class="drawer-menu">
-        
-        
-            
-                
-                
-                <a class="a-block drawer-menu-item" href="/about">
-                    About Me
-                </a>
-        
-            
-                
-                
-                    
-                
-                <a class="a-block drawer-menu-item" href="/">
-                    Archive
-                </a>
-        
-        </div>
-    </div>
-</div>
-<transition name="fade">
-    <div v-bind:class="{ 'single-column-drawer-mask': mounted }" v-if="isDrawerOpen" v-on:click="toggleDrawer"></div>
-</transition>
-<nav ref="navBar" class="navbar sticky-top navbar-light single-column-nav-container">
-    <div ref="navBackground" class="nav-background"></div>
-    <div class="container container-narrow nav-content">
-        <button id="nav_dropdown_btn" class="nav-dropdown-toggle" type="button" v-on:click="toggleDrawer">
-            <i class="material-icons">
-                menu
-            </i>
-        </button>
-        <a ref="navTitle" class="navbar-brand" href="/">
-            My Programming Escapades
-        </a>
-    </div>
-</nav>
-<div class="single-column-header-container" ref="pageHead"
-     v-bind:style="{ transform: 'translateZ(0px) translateY('+.3*scrollY+'px)', opacity: 1-navOpacity }">
-        <a href="/">
-            <div class="single-column-header-title">My Programming Escapades</div>
-            
-            <div class="single-column-header-subtitle">Andraz Bajt</div>
-            
-        </a>
-
-        
-            <a href="https://github.com/edofic"><img src="/icons/github.svg" width="20"/></a>
-        
-        
-            <a href="https://www.linkedin.com/in/edofic"><img src="/icons/linkedin.svg" width="20"/></a>
-        
-        
-            <a href="https://twitter.com/edofic"><img src="/icons/twitter.svg" width="20"/></a>
-        
-        <a href="/index.xml"><img src="/icons/rss.svg" width="20"/></a>
-        
-            <a href="mailto:edofic@edofic.com"><img src="/icons/email.svg" width="20"/></a>
-        
-
-</div>
-
-            <div id="content">
-<div ref="streamContainer" class="stream-container">
-    <div class="post-list-container post-list-container-shadow">
-        <div class="post">
-            
-            
-            
-
-            <div class="post-head-wrapper-text-only"
-                 style="background-image: url('/')">
-                <div class="post-title">
-                    Why Linux will never win the desktop
-                    <div class="post-meta">
-                        
-                            <time itemprop="datePublished">
-                                2012-11-17
-                            </time>
-                        
-
-                        
-
-                        
-                    </div>
-                </div>
-            </div>
-
-            <div class="post-body-wrapper">
-                <div class="post-body">
-                    <p>Don't get me wrong, I'm a huge linux fan. I use it on all my
+<!doctype html><html><head><title>Why Linux will never win the desktop</title><meta charset=utf-8><meta name=X-UA-Compatible content="IE=edge"><meta name=google-site-verification content><meta content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=0" name=viewport><meta content="telephone=no" name=format-detection><meta name=renderer content="webkit"><meta name=theme-color content="#ffffff"><script src=/vendor/js/jquery.min.js></script><script src=/vendor/js/popper.min.js></script><script src=/vendor/js/bootstrap.min.js></script><script src=/vendor/js/smooth-scroll.polyfills.min.js></script><link type=text/css rel=stylesheet href=/vendor/css/bootstrap.min.css><script src=/vendor/js/vue.min.js></script><link rel=stylesheet href=/scss/journal.min.3bdd3e0bba961aa48fdce1402e6f01783c435b4dfb0025c8d0022ddaea0f3d19.css media=screen><script src=/js/loadCSS.js></script><script>loadCSS("https://fonts.googleapis.com/css?family=Lora|Montserrat|Fira+Mono|Noto+Serif+SC|Material+Icons");</script></head><body><div id=app><div ref=sideContainer class=side-container><div class="a-block nav-head false"><div class=nav-title>My Programming Escapades</div><div class=nav-subtitle>Andraz Bajt</div><a href=https://github.com/edofic><img src=/icons/github.svg width=20></a>
+<a href=https://www.linkedin.com/in/edofic><img src=/icons/linkedin.svg width=20></a>
+<a href=https://twitter.com/edofic><img src=/icons/twitter.svg width=20></a>
+<a href=/index.xml><img src=/icons/rss.svg width=20></a>
+<a href=mailto:edofic@edofic.com><img src=/icons/email.svg width=20></a></div><div class=nav-link-list><a class="a-block nav-link-item" href=/about>About Me</a>
+<a class="a-block nav-link-item" href=/>Archive</a></div><div class=nav-footer>&copy;
+2020
+Andraz Bajt</div></div><div ref=extraContainer class=extra-container><div class=pagination><a id=globalBackToTop class="pagination-action animated-visibility" href=#top :class="{ invisible: scrollY == 0 }"><i class="material-icons pagination-action-icon">keyboard_arrow_up</i></a></div></div><div class=single-column-drawer-container ref=drawer v-bind:class="{ 'single-column-drawer-container-active': isDrawerOpen }"><div class=drawer-content><div class=drawer-menu><a class="a-block drawer-menu-item" href=/about>About Me</a>
+<a class="a-block drawer-menu-item" href=/>Archive</a></div></div></div><transition name=fade><div v-bind:class="{ 'single-column-drawer-mask': mounted }" v-if=isDrawerOpen v-on:click=toggleDrawer></div></transition><nav ref=navBar class="navbar sticky-top navbar-light single-column-nav-container"><div ref=navBackground class=nav-background></div><div class="container container-narrow nav-content"><button id=nav_dropdown_btn class=nav-dropdown-toggle type=button v-on:click=toggleDrawer>
+<i class=material-icons>menu</i></button>
+<a ref=navTitle class=navbar-brand href=/>My Programming Escapades</a></div></nav><div class=single-column-header-container ref=pageHead v-bind:style="{ transform: 'translateZ(0px) translateY('+.3*scrollY+'px)', opacity: 1-navOpacity }"><a href=/><div class=single-column-header-title>My Programming Escapades</div><div class=single-column-header-subtitle>Andraz Bajt</div></a><a href=https://github.com/edofic><img src=/icons/github.svg width=20></a>
+<a href=https://www.linkedin.com/in/edofic><img src=/icons/linkedin.svg width=20></a>
+<a href=https://twitter.com/edofic><img src=/icons/twitter.svg width=20></a>
+<a href=/index.xml><img src=/icons/rss.svg width=20></a>
+<a href=mailto:edofic@edofic.com><img src=/icons/email.svg width=20></a></div><div id=content><div ref=streamContainer class=stream-container><div class="post-list-container post-list-container-shadow"><div class=post><div class=post-head-wrapper-text-only style="background-image:url('/')"><div class=post-title>Why Linux will never win the desktop<div class=post-meta><time itemprop=datePublished>2012-11-17</time></div></div></div><div class=post-body-wrapper><div class=post-body><p>Don't get me wrong, I'm a huge linux fan. I use it on all my
 machines(even my phone,
 <a href="http://www.t-mobile.com/shop/phones/?capcode=AGE" title="Android phones">Android</a>
 is basically linux) and even converted my sister and a few friends. But
@@ -198,13 +22,11 @@ software just to try it.
 But the major problem lies somewhere else. <strong>People hate making
 choices.</strong> And linux is all about cohice. It gives you power and you
 choose what you'll do with it. And it starts with selecting selecting
-distribution.</p>
-<p><a href="http://cdn.memegenerator.net/instances/400x/30362832.jpg"><img src="http://cdn.memegenerator.net/instances/400x/30362832.jpg" alt=""></a></p>
-<p><strong>You don't install linux.</strong> You install a distribution. You install
-<a href="http://www.debian.org/" title="Debian">Debian</a>,
-<a href="http://www.ubuntu.com/" title="Ubuntu (operating system)">Ubuntu</a>,
-<a href="http://www.slackware.com/" title="Slackware">Slackware</a>,
-<a href="http://www.fedoraproject.org/" title="Fedora (operating system)">Fedora</a>&hellip;
+distribution.</p><p><a href=http://cdn.memegenerator.net/instances/400x/30362832.jpg><img src=http://cdn.memegenerator.net/instances/400x/30362832.jpg alt></a></p><p><strong>You don't install linux.</strong> You install a distribution. You install
+<a href=http://www.debian.org/ title=Debian>Debian</a>,
+<a href=http://www.ubuntu.com/ title="Ubuntu (operating system)">Ubuntu</a>,
+<a href=http://www.slackware.com/ title=Slackware>Slackware</a>,
+<a href=http://www.fedoraproject.org/ title="Fedora (operating system)">Fedora</a>&mldr;
 There's a sea of different versions what to choose! I would even argue
 that all this fragmentation hurts development. Sure it's great to have
 different implementations and approaches and let time what's the best.
@@ -216,83 +38,38 @@ looking at pros and cons, reading reviews, testing stuff, or just
 surfing the ebay and hunt for good prices. I like to do this for fun.
 But I hate doing it when I need to get something done. And most people
 just need software to get stuff done. They don't care about open source
-spirit or ability to hack around&hellip;they just need something that solves
+spirit or ability to hack around&mldr;they just need something that solves
 their problem. And when you have a solution, why change? Why fix
-something that isn't broken?</p>
-<p>I attended a great talk on future of web search(by @dusano) and somebody
-addressed this problem&hellip;”Why fix search if it ain't broken?”. Answer
+something that isn't broken?</p><p>I attended a great talk on future of web search(by @dusano) and somebody
+addressed this problem&mldr;”Why fix search if it ain't broken?”. Answer
 was along the lines of “Because if you don't somebody else will. And he
 will dominate the industry”. I'm not quite sure this is so true in the
 short run. It's like with promotions in the supermarket. People are used
 to buying one brand of product and consciously selecting another is
 equivalent to mental <strong>work</strong>. And people are lazy. So they'll avoid
 thinking about possibilities because frankly they don't care enough
-about value/price ratio of their coffee to invest their time into it.</p>
-<p>And it's similar when it comes to software and computers in general. A
+about value/price ratio of their coffee to invest their time into it.</p><p>And it's similar when it comes to software and computers in general. A
 colleague once said that people who don't understand how computers work
 shouldn't be allowed to use them(he's linux sysadmin), but I strongly
 disagree. People want to use computers as tools and they should be able
 to. Not everybody is a developer! And that's why
-<a href="http://www.apple.com/macosx/" title="Mac OS">MacOS</a> is popular. See
-<a href="http://www.microsoft.com/WINDOWS" title="Windows">Windows</a> is here from the
+<a href=http://www.apple.com/macosx/ title="Mac OS">MacOS</a> is popular. See
+<a href=http://www.microsoft.com/WINDOWS title=Windows>Windows</a> is here from the
 dawn of time. At least from youngster like me who used computer for the
 first time in this millenia.
 MacOS might be a
-<a href="http://en.wikipedia.org/wiki/Berkeley_Software_Distribution" title="Berkeley Software Distribution">BSD</a>
+<a href=http://en.wikipedia.org/wiki/Berkeley_Software_Distribution title="Berkeley Software Distribution">BSD</a>
 but it's only one and it's locked down. It doesn't give you options but
-everything works. Perfect for most people.</p>
-<p>Luckily things are changing for the better. Ubuntu broke the “easy
-linux” taboo and make things friendlier. And on my laptop I have <a href="http://www.linuxmint.com/" title="Linux Mint">Linux
+everything works. Perfect for most people.</p><p>Luckily things are changing for the better. Ubuntu broke the “easy
+linux” taboo and make things friendlier. And on my laptop I have <a href=http://www.linuxmint.com/ title="Linux Mint">Linux
 Mint</a> which is even better.
 Installation is super easy and everything works out of the box. And I'm
 writing this post because a friend posted a video about ElementaryOS
-which is another Ubuntu fork that looks very much Mac-esque.</p>
-<p>So things like Ubuntu, Mint or Elementary might have a fighting chance
+which is another Ubuntu fork that looks very much Mac-esque.</p><p>So things like Ubuntu, Mint or Elementary might have a fighting chance
 on the desktop if they try real hard. But most of the converted users
 won't know they're actually running linux under the hood. Anyway I
 should stop blabbering about desktop and focus on post-pc era. But
-that's a whole other story.</p>
-
-                    <HR width="100%">
-                    
-                    <p style="color:#777;">Last modified on 2012-11-17</p>
-                    
-                </div>
-
-            </div>
-
-
-            <nav class="post-pagination">
-
-                
-                <a class="newer-posts" href="/posts/2012-11-19-cerc/">
-                    Next<br>Cool Monday - CERC and my trip to Krakow
-                </a>
-                
-
-                
-                <a class="older-posts" href="/posts/2012-11-12-scala-macros/">
-                    Previous<br>Cool Monday - Scala Macros
-                </a>
-                
-            </nav>
-            <div class="post-comment-wrapper">
-                
-
-
-
-            </div>
-        </div>
-    </div>
-</div>
-
-            </div><div id="single-column-footer">&copy;
-    2020
-	
-	Andraz Bajt
-	
-</div>
-    	</div>
-    <script src="//js/journal.js"></script>
-    </body>
-</html>
+that's a whole other story.</p><hr width=100%><p style=color:#777>Last modified on 2012-11-17</p></div></div><nav class=post-pagination><a class=newer-posts href=/posts/2012-11-19-cerc/>Next<br>Cool Monday - CERC and my trip to Krakow</a>
+<a class=older-posts href=/posts/2012-11-12-scala-macros/>Previous<br>Cool Monday - Scala Macros</a></nav><div class=post-comment-wrapper></div></div></div></div></div><div id=single-column-footer>&copy;
+2020
+Andraz Bajt</div></div><script src=//js/journal.js></script></body></html>
