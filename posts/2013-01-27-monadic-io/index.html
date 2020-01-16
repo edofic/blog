@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html><head>
+<title>Monadic IO with ScalaZ</title>
+
+<meta charset="utf-8">
+<meta name="X-UA-Compatible" content="IE=edge">
+<meta name="google-site-verification" content="">
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+<meta content="telephone=no" name="format-detection">
+<meta name="renderer" content="webkit">
+<meta name="theme-color" content="#ffffff">
+
+
+
+
+<script src="/vendor/js/jquery.min.js" ></script>
+<script src="/vendor/js/popper.min.js" ></script>
+<script src="/vendor/js/bootstrap.min.js" ></script>
+<script src="/vendor/js/smooth-scroll.polyfills.min.js" ></script>
+<link type="text/css" rel="stylesheet" href="/vendor/css/bootstrap.min.css">
+<script src="/vendor/js/vue.min.js" ></script>
+
+
+
+<link rel="stylesheet" href="/scss/journal.min.9d1b3d6c4f3ff1773fff9bdca1bc24452f33129e12f67f2ab14f2ddaf1603468.css" media="screen">
+
+<script src="/js/loadCSS.js"></script>
+<script>
+    loadCSS("https://fonts.googleapis.com/css?family=Lora|Montserrat|Fira+Mono|Noto+Serif+SC|Material+Icons");
+</script>
+
+</head>
+<body>
+    	<div id="app"><div ref="sideContainer" class="side-container">
+    <div class="a-block nav-head false">
+        <div class="nav-title">
+            My Programming Escapades
+        </div>
+        <div class="nav-subtitle">
+            
+                Andraz Bajt
+            
+        </div>
+            
+                <a href="https://github.com/edofic"><img src="/icons/github.svg" width="20"/></a>
+            
+            
+                <a href="https://www.linkedin.com/in/edofic"><img src="/icons/linkedin.svg" width="20"/></a>
+            
+            
+                <a href="https://twitter.com/edofic"><img src="/icons/twitter.svg" width="20"/></a>
+            
+            
+            
+                <a href="mailto:edofic@edofic.com"><img src="/icons/email.svg" width="20"/></a>
+            
+    </div>
+
+
+    <div class="nav-link-list">
+        
+        
+            
+            
+            <a class="a-block nav-link-item" href="/about">
+                About Me
+            </a>
+        
+            
+            
+            <a class="a-block nav-link-item" href="/">
+                Archive
+            </a>
+        
+    </div>
+
+    <div class="nav-footer">
+        &copy;
+    2020
+	
+	Andraz Bajt
+	
+
+    </div>
+
+</div>
+<div ref="extraContainer" class="extra-container">
+    
+    <div class="pagination">
+        <a id="globalBackToTop" class="pagination-action animated-visibility" href="#top" :class="{ invisible: scrollY == 0 }">
+            <i class="material-icons pagination-action-icon">
+                keyboard_arrow_up
+            </i>
+        </a>
+        
+    </div>
+</div><div class="single-column-drawer-container" ref="drawer"
+     v-bind:class="{ 'single-column-drawer-container-active': isDrawerOpen }">
+    <div class="drawer-content">
+        <div class="drawer-menu">
+        
+        
+            
+                
+                
+                <a class="a-block drawer-menu-item" href="/about">
+                    About Me
+                </a>
+        
+            
+                
+                
+                    
+                
+                <a class="a-block drawer-menu-item" href="/">
+                    Archive
+                </a>
+        
+        </div>
+    </div>
+</div>
+<transition name="fade">
+    <div v-bind:class="{ 'single-column-drawer-mask': mounted }" v-if="isDrawerOpen" v-on:click="toggleDrawer"></div>
+</transition>
+<nav ref="navBar" class="navbar sticky-top navbar-light single-column-nav-container">
+    <div ref="navBackground" class="nav-background"></div>
+    <div class="container container-narrow nav-content">
+        <button id="nav_dropdown_btn" class="nav-dropdown-toggle" type="button" v-on:click="toggleDrawer">
+            <i class="material-icons">
+                menu
+            </i>
+        </button>
+        <a ref="navTitle" class="navbar-brand" href="/">
+            My Programming Escapades
+        </a>
+    </div>
+</nav>
+<div class="single-column-header-container" ref="pageHead"
+     v-bind:style="{ transform: 'translateZ(0px) translateY('+.3*scrollY+'px)', opacity: 1-navOpacity }">
+        <a href="/">
+            <div class="single-column-header-title">My Programming Escapades</div>
+            
+            <div class="single-column-header-subtitle">Andraz Bajt</div>
+            
+        </a>
+
+        
+            <a href="https://github.com/edofic"><img src="/icons/github.svg" width="20"/></a>
+        
+        
+            <a href="https://www.linkedin.com/in/edofic"><img src="/icons/linkedin.svg" width="20"/></a>
+        
+        
+            <a href="https://twitter.com/edofic"><img src="/icons/twitter.svg" width="20"/></a>
+        
+        
+        
+            <a href="mailto:edofic@edofic.com"><img src="/icons/email.svg" width="20"/></a>
+        
+
+</div>
+
+            <div id="content">
+<div ref="streamContainer" class="stream-container">
+    <div class="post-list-container post-list-container-shadow">
+        <div class="post">
+            
+            
+            
+
+            <div class="post-head-wrapper-text-only"
+                 style="background-image: url('/')">
+                <div class="post-title">
+                    Monadic IO with ScalaZ
+                    <div class="post-meta">
+                        
+                            <time itemprop="datePublished">
+                                2013-01-27
+                            </time>
+                        
+
+                        
+
+                        
+                    </div>
+                </div>
+            </div>
+
+            <div class="post-body-wrapper">
+                <div class="post-body">
+                    <p>I just recently scratched the
+surface with <a href="http://code.google.com/p/scalaz/">scalaz</a>. Think of it as
+an additional standard library for scala that's
+<a href="http://en.wikipedia.org/wiki/Functional_programming" title="Functional programming">FP</a>
+oriented. It provides a bunch of <a href="http://en.wikipedia.org/wiki/Type_class" title="Type class">type
+classes</a>,
+instances for pretty much everything, some fancy data types, pimps(Pimp
+My Library) for standard library collections, actor implementation and
+probably some stuff I'm not aware of. I could really use a &ldquo;map of
+scalaz&rdquo; - but I'll probably dive into source and scaladoc anyway. One
+fancy feature that's not noted on their<a href="http://code.google.com/p/scalaz/">Google Code
+page</a> is
+<a href="http://en.wikipedia.org/wiki/Io_%28programming_language%29" title="Io (programming language)">IO</a>
+monad implementation.</p>
+<p><img src="http://farm7.static.flickr.com/6157/6183470322_cbbf4881d2_m.jpg" alt="Denali Landscape" title="Denali Landscape"></p>
+<p>I've written a bit about monadic IO but let's recap. IO monad is a data structure that represents a tiny
+language which let's you describe and compose IO actions without
+actually performing them - allowing you to keep your functions pure and
+compose/reuse better.</p>
+<h3 id="monadic-helloworldhttpenwikipediaorgwikihello_world_program-hello-world-program-with-scalaz">Monadic <a href="http://en.wikipedia.org/wiki/Hello_world_program" title="Hello world program">HelloWorld</a> with scalaz</h3>
+<p>I'll be using SBT to manage dependencies(scala and scalaz) so let's
+create a project. We just need build.sbt file with this content(or use
+my template: g8 edofic/scalaz-empty)</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-scala" data-lang="scala">scalaVersion <span style="color:#66d9ef">:</span><span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;2.9.2&#34;</span>
+
+resolvers <span style="color:#f92672">+=</span> <span style="color:#e6db74">&#34;Scala Tools Snapshots&#34;</span> at <span style="color:#e6db74">&#34;http://scala-tools.org/repo-snapshots/&#34;</span>
+
+libraryDependencies <span style="color:#f92672">+=</span> <span style="color:#e6db74">&#34;org.scalaz&#34;</span> <span style="color:#f92672">%%</span> <span style="color:#e6db74">&#34;scalaz-core&#34;</span> <span style="color:#f92672">%</span> <span style="color:#e6db74">&#34;6.0.4&#34;</span>
+</code></pre></div><p>and then run &ldquo;sbt console&rdquo; to get a
+<a href="http://en.wikipedia.org/wiki/Read%E2%80%93eval%E2%80%93print_loop" title="Read–eval–print loop">REPL</a>
+with scala 2.9.2 and scalaz 6.0.4. Pretty useful. Let's get to code now.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-scala" data-lang="scala"><span style="color:#66d9ef">import</span> scalaz._
+<span style="color:#66d9ef">import</span> Scalaz._
+<span style="color:#66d9ef">import</span> scalaz.effects._
+
+<span style="color:#66d9ef">val</span> greeter <span style="color:#66d9ef">=</span> println<span style="color:#f92672">(</span><span style="color:#e6db74">&#34;hello world&#34;</span><span style="color:#f92672">)</span><span style="color:#f92672">.</span>pure<span style="color:#f92672">[</span><span style="color:#66d9ef">IO</span><span style="color:#f92672">]</span>
+
+<span style="color:#75715e">//scalaz provides a helper for that so we can write
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">val</span> greeter2 <span style="color:#66d9ef">=</span> putStrLn<span style="color:#f92672">(</span><span style="color:#e6db74">&#34;hello from scalaz&#34;</span><span style="color:#f92672">)</span>
+
+greeter<span style="color:#f92672">.</span>unsafePerformIO
+</code></pre></div><p>First a bunch of imports to get scalaz magic and then the crucial line.
+Scalaz provides an implicit conversion which allows us to call .pure[A]
+on every value. This gets
+<a href="http://en.wikipedia.org/wiki/Monad_%28functional_programming%29" title="Monad (functional programming)">Monad</a>[A]
+instance from implicit scope and lifts the value into the monad. It's a
+type class way (think dependency injection) to invoke monad
+&ldquo;constructor&rdquo;, a simple sample</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-scala" data-lang="scala">scala<span style="color:#f92672">&gt;</span> <span style="color:#e6db74">&#34;hi&#34;</span><span style="color:#f92672">.</span>pure<span style="color:#f92672">[</span><span style="color:#66d9ef">Option</span><span style="color:#f92672">]</span>
+res0<span style="color:#66d9ef">:</span> <span style="color:#66d9ef">Option</span><span style="color:#f92672">[</span><span style="color:#66d9ef">java</span><span style="color:#66d9ef">.</span><span style="color:#66d9ef">lang</span><span style="color:#66d9ef">.</span><span style="color:#66d9ef">String</span><span style="color:#f92672">]</span> <span style="color:#66d9ef">=</span> <span style="color:#a6e22e">Some</span><span style="color:#f92672">(</span>hi<span style="color:#f92672">)</span>
+</code></pre></div><p>Scalaz also provides a helper putStrLn(and many more, including readLn)
+for more succinct code. Note that lifting our println(by hand) does call
+by name(<a href="http://en.wikipedia.org/wiki/Lazy_evaluation" title="Lazy evaluation">lazy
+evaluation</a>)
+so println is not actually invoked yet! To perform the IO action you
+need to explicitly call unsafePerformIO. Intentionally verbose and scary
+name to make you think twice where you perform your side effects. But
+printline is not that interesting. Let't take a look at input. Type of
+readLn is IO[String] and it's perform method returns a String. Notice
+that IO is a monad so you can do map and flatMap on it. For example
+readLn.map(_.toInt) gives you and action that will read and parse an
+integer returning you something of type Int. FlatMap is more interesting
+because it gives you composition. FlatMapping another IO action will
+execute actions in sequence giving last action access to previous
+actions&rsquo; return values via closures. That's referred to as monadic
+style. It's basically a pure way of doing imperative programming. A bit
+more involved example</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-scala" data-lang="scala"><span style="color:#66d9ef">for</span><span style="color:#f92672">{</span>
+  <span style="color:#66d9ef">_</span>    <span style="color:#66d9ef">&lt;-</span> putStrLn<span style="color:#f92672">(</span><span style="color:#e6db74">&#34;who are you?&#34;</span><span style="color:#f92672">)</span>
+  name <span style="color:#66d9ef">&lt;-</span> readLn
+  <span style="color:#66d9ef">_</span>    <span style="color:#66d9ef">&lt;-</span> putStrLn<span style="color:#f92672">(</span><span style="color:#e6db74">&#34;hello &#34;</span> <span style="color:#f92672">+</span> name<span style="color:#f92672">)</span>
+<span style="color:#f92672">}</span> <span style="color:#66d9ef">yield</span> <span style="color:#f92672">(</span><span style="color:#f92672">)</span>
+</code></pre></div><p>And a tiny calculator showing off composition</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-scala" data-lang="scala"><span style="color:#66d9ef">val</span> inputInt <span style="color:#66d9ef">=</span> <span style="color:#66d9ef">for</span><span style="color:#f92672">{</span>
+  <span style="color:#66d9ef">_</span> <span style="color:#66d9ef">&lt;-</span> putStrLn<span style="color:#f92672">(</span><span style="color:#e6db74">&#34;enter an integer&#34;</span><span style="color:#f92672">)</span>
+  raw <span style="color:#66d9ef">&lt;-</span> readLn
+<span style="color:#f92672">}</span> <span style="color:#66d9ef">yield</span> raw<span style="color:#f92672">.</span>toInt
+
+<span style="color:#66d9ef">val</span> adderIO <span style="color:#66d9ef">=</span> <span style="color:#66d9ef">for</span> <span style="color:#f92672">{</span>
+  a <span style="color:#66d9ef">&lt;-</span> inputInt
+  b <span style="color:#66d9ef">&lt;-</span> inputInt
+  <span style="color:#66d9ef">_</span> <span style="color:#66d9ef">&lt;-</span> putStrLn<span style="color:#f92672">(</span><span style="color:#f92672">(</span>a<span style="color:#f92672">+</span>b<span style="color:#f92672">)</span><span style="color:#f92672">.</span>toString<span style="color:#f92672">)</span>
+<span style="color:#f92672">}</span> <span style="color:#66d9ef">yield</span> <span style="color:#f92672">(</span><span style="color:#f92672">)</span>
+
+<span style="color:#75715e">//and to run it
+</span><span style="color:#75715e"></span>adderIO<span style="color:#f92672">.</span>unsafePerformIO
+</code></pre></div>
+                    <HR width="100%">
+                    
+                    <p style="color:#777;">Last modified on 2013-01-27</p>
+                    
+                </div>
+
+            </div>
+
+
+            <nav class="post-pagination">
+
+                
+                <a class="newer-posts" href="/posts/2013-01-27-generic-singletons/">
+                    Next<br>Generic singletons through dependent method types
+                </a>
+                
+
+                
+                <a class="older-posts" href="/posts/2013-01-27-null-coalescing/">
+                    Previous<br>Null-coalescing(??) in scala
+                </a>
+                
+            </nav>
+            <div class="post-comment-wrapper">
+                
+
+
+
+            </div>
+        </div>
+    </div>
+</div>
+
+            </div><div id="single-column-footer">&copy;
+    2020
+	
+	Andraz Bajt
+	
+</div>
+    	</div>
+    <script src="//js/journal.js"></script>
+    </body>
+</html>

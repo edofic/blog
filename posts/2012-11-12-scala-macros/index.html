@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html><head>
+<title>Cool Monday - Scala Macros</title>
+
+<meta charset="utf-8">
+<meta name="X-UA-Compatible" content="IE=edge">
+<meta name="google-site-verification" content="">
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+<meta content="telephone=no" name="format-detection">
+<meta name="renderer" content="webkit">
+<meta name="theme-color" content="#ffffff">
+
+
+
+
+<script src="/vendor/js/jquery.min.js" ></script>
+<script src="/vendor/js/popper.min.js" ></script>
+<script src="/vendor/js/bootstrap.min.js" ></script>
+<script src="/vendor/js/smooth-scroll.polyfills.min.js" ></script>
+<link type="text/css" rel="stylesheet" href="/vendor/css/bootstrap.min.css">
+<script src="/vendor/js/vue.min.js" ></script>
+
+
+
+<link rel="stylesheet" href="/scss/journal.min.9d1b3d6c4f3ff1773fff9bdca1bc24452f33129e12f67f2ab14f2ddaf1603468.css" media="screen">
+
+<script src="/js/loadCSS.js"></script>
+<script>
+    loadCSS("https://fonts.googleapis.com/css?family=Lora|Montserrat|Fira+Mono|Noto+Serif+SC|Material+Icons");
+</script>
+
+</head>
+<body>
+    	<div id="app"><div ref="sideContainer" class="side-container">
+    <div class="a-block nav-head false">
+        <div class="nav-title">
+            My Programming Escapades
+        </div>
+        <div class="nav-subtitle">
+            
+                Andraz Bajt
+            
+        </div>
+            
+                <a href="https://github.com/edofic"><img src="/icons/github.svg" width="20"/></a>
+            
+            
+                <a href="https://www.linkedin.com/in/edofic"><img src="/icons/linkedin.svg" width="20"/></a>
+            
+            
+                <a href="https://twitter.com/edofic"><img src="/icons/twitter.svg" width="20"/></a>
+            
+            
+            
+                <a href="mailto:edofic@edofic.com"><img src="/icons/email.svg" width="20"/></a>
+            
+    </div>
+
+
+    <div class="nav-link-list">
+        
+        
+            
+            
+            <a class="a-block nav-link-item" href="/about">
+                About Me
+            </a>
+        
+            
+            
+            <a class="a-block nav-link-item" href="/">
+                Archive
+            </a>
+        
+    </div>
+
+    <div class="nav-footer">
+        &copy;
+    2020
+	
+	Andraz Bajt
+	
+
+    </div>
+
+</div>
+<div ref="extraContainer" class="extra-container">
+    
+    <div class="pagination">
+        <a id="globalBackToTop" class="pagination-action animated-visibility" href="#top" :class="{ invisible: scrollY == 0 }">
+            <i class="material-icons pagination-action-icon">
+                keyboard_arrow_up
+            </i>
+        </a>
+        
+    </div>
+</div><div class="single-column-drawer-container" ref="drawer"
+     v-bind:class="{ 'single-column-drawer-container-active': isDrawerOpen }">
+    <div class="drawer-content">
+        <div class="drawer-menu">
+        
+        
+            
+                
+                
+                <a class="a-block drawer-menu-item" href="/about">
+                    About Me
+                </a>
+        
+            
+                
+                
+                    
+                
+                <a class="a-block drawer-menu-item" href="/">
+                    Archive
+                </a>
+        
+        </div>
+    </div>
+</div>
+<transition name="fade">
+    <div v-bind:class="{ 'single-column-drawer-mask': mounted }" v-if="isDrawerOpen" v-on:click="toggleDrawer"></div>
+</transition>
+<nav ref="navBar" class="navbar sticky-top navbar-light single-column-nav-container">
+    <div ref="navBackground" class="nav-background"></div>
+    <div class="container container-narrow nav-content">
+        <button id="nav_dropdown_btn" class="nav-dropdown-toggle" type="button" v-on:click="toggleDrawer">
+            <i class="material-icons">
+                menu
+            </i>
+        </button>
+        <a ref="navTitle" class="navbar-brand" href="/">
+            My Programming Escapades
+        </a>
+    </div>
+</nav>
+<div class="single-column-header-container" ref="pageHead"
+     v-bind:style="{ transform: 'translateZ(0px) translateY('+.3*scrollY+'px)', opacity: 1-navOpacity }">
+        <a href="/">
+            <div class="single-column-header-title">My Programming Escapades</div>
+            
+            <div class="single-column-header-subtitle">Andraz Bajt</div>
+            
+        </a>
+
+        
+            <a href="https://github.com/edofic"><img src="/icons/github.svg" width="20"/></a>
+        
+        
+            <a href="https://www.linkedin.com/in/edofic"><img src="/icons/linkedin.svg" width="20"/></a>
+        
+        
+            <a href="https://twitter.com/edofic"><img src="/icons/twitter.svg" width="20"/></a>
+        
+        
+        
+            <a href="mailto:edofic@edofic.com"><img src="/icons/email.svg" width="20"/></a>
+        
+
+</div>
+
+            <div id="content">
+<div ref="streamContainer" class="stream-container">
+    <div class="post-list-container post-list-container-shadow">
+        <div class="post">
+            
+            
+            
+
+            <div class="post-head-wrapper-text-only"
+                 style="background-image: url('/')">
+                <div class="post-title">
+                    Cool Monday - Scala Macros
+                    <div class="post-meta">
+                        
+                            <time itemprop="datePublished">
+                                2012-11-12
+                            </time>
+                        
+
+                        
+
+                        
+                    </div>
+                </div>
+            </div>
+
+            <div class="post-body-wrapper">
+                <div class="post-body">
+                    <p><a href="http://commons.wikipedia.org/wiki/File%3AGarden_flower_.jpg"><img src="http://upload.wikimedia.org/wikipedia/commons/thumb/b/b6/Garden_flower_.jpg/300px-Garden_flower_.jpg" alt="Garden flower"></a></p>
+<p>For me the highlight of this week was discovering Bootstrap. I heard of
+it before but never looked into it. Probably because I wasn't doing web
+stuff. The thing is bloody awesome. Back on topic.</p>
+<p><a href="http://www.scala-lang.org/" title="Scala (programming language)">Scala</a> 2.10
+RC2 was released this Friday. Considering 2.9 had 3 RC releases, 2.10
+final is probably quite near. And it brings some awesome features. One2
+of them are
+<a href="http://en.wikipedia.org/wiki/Macro_%28computer_science%29" title="Macro (computer science)">macros</a></p>
+<h3 id="macros">Macros</h3>
+<p>So what are macros basically? Code executed at <a href="http://en.wikipedia.org/wiki/Compile_time" title="Compile time">compile
+time</a>. And
+that's about it. </p>
+<p>So what is so great about that? Well you can do AST modifications and
+stuff that gets quite into
+<a href="http://en.wikipedia.org/wiki/Compiler" title="Compiler">compiler</a>-plugin
+territory in your regular code. That means you can do pretty advanced
+stuff and do abstraction with performance. Oh yeah, you can also do
+<a href="http://en.wikipedia.org/wiki/Type_system" title="Type system">type checking</a>
+and emit compile-time errors. Safety first kids!</p>
+<h3 id="usages">Usages</h3>
+<p>SLICK uses macros(in the experimental
+<a href="http://en.wikipedia.org/wiki/Application_programming_interface" title="Application programming interface">API</a>)
+to transform scala expressions into
+<a href="http://www.iso.org/iso/catalogue_detail.htm?csnumber=45498" title="SQL">SQL</a>.
+At compile time! ScalaMock uses it to provide more natural API for
+testing. As said, you can use it for <a href="http://en.wikipedia.org/wiki/Code_generation_%28compiler%29" title="Code generation (compiler)">code
+generation</a>
+or validation at compile time. Good library design will be able to
+minimize <a href="http://en.wikipedia.org/wiki/Boilerplate_code" title="Boilerplate code">boilerplate
+code</a>
+even further now. And some people will argue that macros make scala even
+harder language.</p>
+<h3 id="type-macros">Type Macros</h3>
+<p>This is the best part for me. But unfortuntely it's not implemented yet.
+Or at least not dcumented. There are some methods with suspisious names
+in the API but no useful documentation. In all presentations this is
+referred to as &ldquo;future work&rdquo; but I still have my fingers crossed it
+makes it into final release.</p>
+<p>So what's the fuss? Automatically generated types. Large scale code-gen. </p>
+<p>As in ability to programatically create types at compile time. As a
+consequence you can create whole classes with bunch of methods. And I
+already have a <a href="http://en.wikipedia.org/wiki/Use_case" title="Use case">use
+case</a> of my own. I
+want to make a typesafe ORM for Android that's super fast. I did
+<a href="https://github.com/edofic/YodaLib">YodaLib</a> ORM while back. It uses
+reflection(although it's fast enough usually) and provides a Cursor that
+lazily wraps rows into classes. And you need to make sure by hand that
+your class coresponds to columns of your result set. Not very safe. I
+had an idea to make static-typed safe inferface for the database when I
+first heard about HList. You would do projection as a
+<a href="/posts/2012-10-29-hlist-shapeless">HList</a> and
+result rows would be lazily wrapped into HLists. But using them for
+wrapping every row(possibly filling data in with reflection) would be a
+performance penalty. Not to mention a mess to implement. Now consider
+using a macro to generate code for wrapping. It would be no slower than
+accessing columns by hand. And a type macro would automatically create a
+case class for given projection. Heavens. I'm just waiting for official
+documentation on macros&hellip;this is a tempting project.</p>
+<h3 id="documentation">Documentation</h3>
+<p>Here's <a href="http://scalamacros.org/">scalamacros.org</a> which gives some
+information. Also s<a href="http://scalamacros.org/talks/2012-04-28-MetaprogrammingInScala210.pdf">ome quite useful
+slides</a>.
+I hope now that 2.10 is in RC things stabilize, because in the milestone
+releases api was changing constantly. <a href="http://www.scala-lang.org/archives/downloads/distrib/files/nightly/docs/library/index.html">Nightly API
+scaladoc</a>&hellip;.
+Proper documentation is apparently <a href="http://docs.scala-lang.org/sips/pending/self-cleaning-macros.html">coming
+soon</a>,</p>
+<h3 id="le-code">Le Code</h3>
+<p>A use case for macros, loop unrolling.</p>
+<p>Below is a trivial sample of repetitive code.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-scala" data-lang="scala"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Manual</span><span style="color:#f92672">{</span>
+  <span style="color:#66d9ef">def</span> show<span style="color:#f92672">(</span>n<span style="color:#66d9ef">:</span> <span style="color:#66d9ef">Int</span><span style="color:#f92672">)</span><span style="color:#f92672">{</span>
+    println<span style="color:#f92672">(</span><span style="color:#e6db74">&#34;number &#34;</span><span style="color:#f92672">+</span>n<span style="color:#f92672">)</span>
+  <span style="color:#f92672">}</span>
+
+  <span style="color:#66d9ef">def</span> code<span style="color:#f92672">(</span><span style="color:#f92672">)</span><span style="color:#f92672">{</span>
+    show<span style="color:#f92672">(</span><span style="color:#ae81ff">1</span><span style="color:#f92672">)</span>
+    show<span style="color:#f92672">(</span><span style="color:#ae81ff">2</span><span style="color:#f92672">)</span>
+    show<span style="color:#f92672">(</span><span style="color:#ae81ff">3</span><span style="color:#f92672">)</span>
+    show<span style="color:#f92672">(</span><span style="color:#ae81ff">4</span><span style="color:#f92672">)</span>
+    show<span style="color:#f92672">(</span><span style="color:#ae81ff">5</span><span style="color:#f92672">)</span>
+  <span style="color:#f92672">}</span>
+<span style="color:#f92672">}</span>
+</code></pre></div><p>We can deal with repetition writing a loop. (<a href="http://en.wikipedia.org/wiki/Higher-order_function" title="Higher-order function">Higher order
+function</a>
+really)</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-scala" data-lang="scala"><span style="color:#66d9ef">for</span><span style="color:#f92672">(</span> i <span style="color:#66d9ef">&lt;-</span> <span style="color:#ae81ff">1</span> to <span style="color:#ae81ff">5</span> <span style="color:#f92672">)</span> show<span style="color:#f92672">(</span>i<span style="color:#f92672">)</span>
+</code></pre></div><p>But this doesnt generate the same AST(and bytecode)!
+Protip: use</p>
+<pre><code>scalac -Xprint:parser -Yshow-trees Manual.scala
+</code></pre>
+<p>to see AST after parsing.
+Sometimes(rarely!) you want to unroll the loop to produce same <a href="http://en.wikipedia.org/wiki/Bytecode" title="Bytecode">byte
+code</a> as typing all
+the iterations by hand.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-scala" data-lang="scala"><span style="color:#a6e22e">Macros</span><span style="color:#f92672">.</span>unroll<span style="color:#f92672">(</span><span style="color:#ae81ff">1</span><span style="color:#f92672">,</span><span style="color:#ae81ff">5</span><span style="color:#f92672">,</span><span style="color:#ae81ff">1</span><span style="color:#f92672">)</span><span style="color:#f92672">(</span>show<span style="color:#f92672">)</span>
+</code></pre></div><p>With a proper unroll macro defined. I spent an hour to come up with this
+implementation&hellip;and then scalac started crashing on me&hellip; Is there
+something terrible in my code?
+I gave up and went on to do useful stuff&hellip;But macros hear me! I'll be
+back.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-scala" data-lang="scala"><span style="color:#66d9ef">import</span> reflect.macros.Context
+<span style="color:#66d9ef">import</span> scala.language.experimental.macros
+
+<span style="color:#66d9ef">object</span> <span style="color:#a6e22e">Macros</span> <span style="color:#f92672">{</span>
+  <span style="color:#66d9ef">def</span> unroll<span style="color:#f92672">(</span>start<span style="color:#66d9ef">:</span> <span style="color:#66d9ef">Int</span><span style="color:#f92672">,</span> end<span style="color:#66d9ef">:</span> <span style="color:#66d9ef">Int</span><span style="color:#f92672">,</span> step<span style="color:#66d9ef">:</span> <span style="color:#66d9ef">Int</span><span style="color:#f92672">)</span><span style="color:#f92672">(</span>body<span style="color:#66d9ef">:</span> <span style="color:#66d9ef">Int</span> <span style="color:#f92672">=&gt;</span> <span style="color:#a6e22e">Unit</span><span style="color:#f92672">)</span> <span style="color:#66d9ef">=</span> macro unrollImpl
+  <span style="color:#66d9ef">def</span> unrollImpl<span style="color:#f92672">(</span>c<span style="color:#66d9ef">:</span> <span style="color:#66d9ef">Context</span><span style="color:#f92672">)</span><span style="color:#f92672">(</span>start<span style="color:#66d9ef">:</span> <span style="color:#66d9ef">c.Expr</span><span style="color:#f92672">[</span><span style="color:#66d9ef">Int</span><span style="color:#f92672">]</span><span style="color:#f92672">,</span> end<span style="color:#66d9ef">:</span> <span style="color:#66d9ef">c.Expr</span><span style="color:#f92672">[</span><span style="color:#66d9ef">Int</span><span style="color:#f92672">]</span><span style="color:#f92672">,</span> step<span style="color:#66d9ef">:</span> <span style="color:#66d9ef">c.Expr</span><span style="color:#f92672">[</span><span style="color:#66d9ef">Int</span><span style="color:#f92672">]</span><span style="color:#f92672">)</span>
+                <span style="color:#f92672">(</span>body<span style="color:#66d9ef">:</span> <span style="color:#66d9ef">c.Expr</span><span style="color:#f92672">[</span><span style="color:#66d9ef">Int</span> <span style="color:#66d9ef">=&gt;</span> <span style="color:#66d9ef">Unit</span><span style="color:#f92672">]</span><span style="color:#f92672">)</span><span style="color:#66d9ef">:</span> <span style="color:#66d9ef">c.Expr</span><span style="color:#f92672">[</span><span style="color:#66d9ef">Any</span><span style="color:#f92672">]</span> <span style="color:#66d9ef">=</span> <span style="color:#f92672">{</span>
+    <span style="color:#66d9ef">import</span> c.universe._
+    <span style="color:#66d9ef">val</span> <span style="color:#a6e22e">Literal</span><span style="color:#f92672">(</span><span style="color:#a6e22e">Constant</span><span style="color:#f92672">(</span>start_value<span style="color:#66d9ef">:</span> <span style="color:#66d9ef">Int</span><span style="color:#f92672">)</span><span style="color:#f92672">)</span> <span style="color:#66d9ef">=</span> start<span style="color:#f92672">.</span>tree
+    <span style="color:#66d9ef">val</span> <span style="color:#a6e22e">Literal</span><span style="color:#f92672">(</span><span style="color:#a6e22e">Constant</span><span style="color:#f92672">(</span>end_value<span style="color:#66d9ef">:</span> <span style="color:#66d9ef">Int</span><span style="color:#f92672">)</span><span style="color:#f92672">)</span> <span style="color:#66d9ef">=</span> end<span style="color:#f92672">.</span>tree
+    <span style="color:#66d9ef">val</span> <span style="color:#a6e22e">Literal</span><span style="color:#f92672">(</span><span style="color:#a6e22e">Constant</span><span style="color:#f92672">(</span>step_value<span style="color:#66d9ef">:</span> <span style="color:#66d9ef">Int</span><span style="color:#f92672">)</span><span style="color:#f92672">)</span> <span style="color:#66d9ef">=</span> step<span style="color:#f92672">.</span>tree
+    <span style="color:#66d9ef">val</span> invocations <span style="color:#66d9ef">=</span> <span style="color:#a6e22e">Range</span><span style="color:#f92672">(</span>start_value<span style="color:#f92672">,</span> end_value<span style="color:#f92672">,</span> step_value<span style="color:#f92672">)</span> map <span style="color:#f92672">{</span> n <span style="color:#66d9ef">=&gt;</span>
+      <span style="color:#66d9ef">val</span> n_exp <span style="color:#66d9ef">=</span> c<span style="color:#f92672">.</span><span style="color:#a6e22e">Expr</span><span style="color:#f92672">(</span><span style="color:#a6e22e">Literal</span><span style="color:#f92672">(</span><span style="color:#a6e22e">Constant</span><span style="color:#f92672">(</span>n<span style="color:#f92672">)</span><span style="color:#f92672">)</span><span style="color:#f92672">)</span>
+      reify<span style="color:#f92672">{</span><span style="color:#f92672">(</span><span style="color:#f92672">(</span>body<span style="color:#f92672">.</span>splice<span style="color:#f92672">)</span><span style="color:#f92672">(</span>n_exp<span style="color:#f92672">.</span>splice<span style="color:#f92672">)</span><span style="color:#f92672">)</span><span style="color:#f92672">}</span><span style="color:#f92672">.</span>tree
+    <span style="color:#f92672">}</span>
+    c<span style="color:#f92672">.</span><span style="color:#a6e22e">Expr</span><span style="color:#f92672">(</span><span style="color:#a6e22e">Block</span><span style="color:#f92672">(</span>invocations<span style="color:#66d9ef">:</span><span style="color:#66d9ef">_</span><span style="color:#66d9ef">*</span><span style="color:#f92672">)</span><span style="color:#f92672">)</span>
+  <span style="color:#f92672">}</span>
+<span style="color:#f92672">}</span>
+</code></pre></div>
+                    <HR width="100%">
+                    
+                    <p style="color:#777;">Last modified on 2012-11-12</p>
+                    
+                </div>
+
+            </div>
+
+
+            <nav class="post-pagination">
+
+                
+                <a class="newer-posts" href="/posts/2012-11-17-y-u-no-linux/">
+                    Next<br>Why Linux will never win the desktop
+                </a>
+                
+
+                
+                <a class="older-posts" href="/posts/2012-11-05-hindley-milner/">
+                    Previous<br>Cool Monday - Hindley-Milner on a dynamic language
+                </a>
+                
+            </nav>
+            <div class="post-comment-wrapper">
+                
+
+
+
+            </div>
+        </div>
+    </div>
+</div>
+
+            </div><div id="single-column-footer">&copy;
+    2020
+	
+	Andraz Bajt
+	
+</div>
+    	</div>
+    <script src="//js/journal.js"></script>
+    </body>
+</html>

@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html><head>
+<title>Pretty function composition in scala and asynchronous function composition on android</title>
+
+<meta charset="utf-8">
+<meta name="X-UA-Compatible" content="IE=edge">
+<meta name="google-site-verification" content="">
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+<meta content="telephone=no" name="format-detection">
+<meta name="renderer" content="webkit">
+<meta name="theme-color" content="#ffffff">
+
+
+
+
+<script src="/vendor/js/jquery.min.js" ></script>
+<script src="/vendor/js/popper.min.js" ></script>
+<script src="/vendor/js/bootstrap.min.js" ></script>
+<script src="/vendor/js/smooth-scroll.polyfills.min.js" ></script>
+<link type="text/css" rel="stylesheet" href="/vendor/css/bootstrap.min.css">
+<script src="/vendor/js/vue.min.js" ></script>
+
+
+
+<link rel="stylesheet" href="/scss/journal.min.9d1b3d6c4f3ff1773fff9bdca1bc24452f33129e12f67f2ab14f2ddaf1603468.css" media="screen">
+
+<script src="/js/loadCSS.js"></script>
+<script>
+    loadCSS("https://fonts.googleapis.com/css?family=Lora|Montserrat|Fira+Mono|Noto+Serif+SC|Material+Icons");
+</script>
+
+</head>
+<body>
+    	<div id="app"><div ref="sideContainer" class="side-container">
+    <div class="a-block nav-head false">
+        <div class="nav-title">
+            My Programming Escapades
+        </div>
+        <div class="nav-subtitle">
+            
+                Andraz Bajt
+            
+        </div>
+            
+                <a href="https://github.com/edofic"><img src="/icons/github.svg" width="20"/></a>
+            
+            
+                <a href="https://www.linkedin.com/in/edofic"><img src="/icons/linkedin.svg" width="20"/></a>
+            
+            
+                <a href="https://twitter.com/edofic"><img src="/icons/twitter.svg" width="20"/></a>
+            
+            
+            
+                <a href="mailto:edofic@edofic.com"><img src="/icons/email.svg" width="20"/></a>
+            
+    </div>
+
+
+    <div class="nav-link-list">
+        
+        
+            
+            
+            <a class="a-block nav-link-item" href="/about">
+                About Me
+            </a>
+        
+            
+            
+            <a class="a-block nav-link-item" href="/">
+                Archive
+            </a>
+        
+    </div>
+
+    <div class="nav-footer">
+        &copy;
+    2020
+	
+	Andraz Bajt
+	
+
+    </div>
+
+</div>
+<div ref="extraContainer" class="extra-container">
+    
+    <div class="pagination">
+        <a id="globalBackToTop" class="pagination-action animated-visibility" href="#top" :class="{ invisible: scrollY == 0 }">
+            <i class="material-icons pagination-action-icon">
+                keyboard_arrow_up
+            </i>
+        </a>
+        
+    </div>
+</div><div class="single-column-drawer-container" ref="drawer"
+     v-bind:class="{ 'single-column-drawer-container-active': isDrawerOpen }">
+    <div class="drawer-content">
+        <div class="drawer-menu">
+        
+        
+            
+                
+                
+                <a class="a-block drawer-menu-item" href="/about">
+                    About Me
+                </a>
+        
+            
+                
+                
+                    
+                
+                <a class="a-block drawer-menu-item" href="/">
+                    Archive
+                </a>
+        
+        </div>
+    </div>
+</div>
+<transition name="fade">
+    <div v-bind:class="{ 'single-column-drawer-mask': mounted }" v-if="isDrawerOpen" v-on:click="toggleDrawer"></div>
+</transition>
+<nav ref="navBar" class="navbar sticky-top navbar-light single-column-nav-container">
+    <div ref="navBackground" class="nav-background"></div>
+    <div class="container container-narrow nav-content">
+        <button id="nav_dropdown_btn" class="nav-dropdown-toggle" type="button" v-on:click="toggleDrawer">
+            <i class="material-icons">
+                menu
+            </i>
+        </button>
+        <a ref="navTitle" class="navbar-brand" href="/">
+            My Programming Escapades
+        </a>
+    </div>
+</nav>
+<div class="single-column-header-container" ref="pageHead"
+     v-bind:style="{ transform: 'translateZ(0px) translateY('+.3*scrollY+'px)', opacity: 1-navOpacity }">
+        <a href="/">
+            <div class="single-column-header-title">My Programming Escapades</div>
+            
+            <div class="single-column-header-subtitle">Andraz Bajt</div>
+            
+        </a>
+
+        
+            <a href="https://github.com/edofic"><img src="/icons/github.svg" width="20"/></a>
+        
+        
+            <a href="https://www.linkedin.com/in/edofic"><img src="/icons/linkedin.svg" width="20"/></a>
+        
+        
+            <a href="https://twitter.com/edofic"><img src="/icons/twitter.svg" width="20"/></a>
+        
+        
+        
+            <a href="mailto:edofic@edofic.com"><img src="/icons/email.svg" width="20"/></a>
+        
+
+</div>
+
+            <div id="content">
+<div ref="streamContainer" class="stream-container">
+    <div class="post-list-container post-list-container-shadow">
+        <div class="post">
+            
+            
+            
+
+            <div class="post-head-wrapper-text-only"
+                 style="background-image: url('/')">
+                <div class="post-title">
+                    Pretty function composition in scala and asynchronous function composition on android
+                    <div class="post-meta">
+                        
+                            <time itemprop="datePublished">
+                                2012-09-17
+                            </time>
+                        
+
+                        
+
+                        
+                    </div>
+                </div>
+            </div>
+
+            <div class="post-body-wrapper">
+                <div class="post-body">
+                    <p><a href="http://commons.wikipedia.org/wiki/File%3ASurjective_composition.svg"><img src="http://upload.wikimedia.org/wikipedia/commons/thumb/a/a2/Surjective_composition.svg/300px-Surjective_composition.svg.png" alt="Surjective composition: the first function nee&hellip;"></a>
+Surjective composition: the first function need not be surjective. (Photo credit: <a href="http://commons.wikipedia.org/wiki/File%3ASurjective_composition.svg">Wikipedia</a>)</p>
+<p>Function composition is a nice way to sequence transformations on data.
+For example in a
+<a href="http://en.wikipedia.org/wiki/Compiler" title="Compiler">compiler</a> you take
+your source, <a href="http://en.wikipedia.org/wiki/Parsing" title="Parsing">parse</a>,
+check, optimize and generate code(in a nutshell). It's a linear series
+of transformations -&gt; perfect for <a href="http://en.wikipedia.org/wiki/Function_composition" title="Function composition">function
+composition</a>
+In <a href="http://haskell.org/" title="Haskell (programming language)">Haskell</a> you
+can use this beautiful
+<a href="http://en.wikipedia.org/wiki/Syntax" title="Syntax">syntax</a></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-haskell" data-lang="haskell"><span style="color:#a6e22e">compile</span> <span style="color:#f92672">=</span> codegen <span style="color:#f92672">.</span> optimize <span style="color:#f92672">.</span>check <span style="color:#f92672">.</span> parse
+</code></pre></div><p>leaving out the parameters and noting composition
+as &ldquo;.&rdquo; which kinda looks like ° used in math(if you squint a bit). In
+scala you could do something like</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-scala" data-lang="scala"><span style="color:#66d9ef">val</span> compile <span style="color:#66d9ef">=</span> codegen compose optimize compose check compose parse
+</code></pre></div><p>Nearly there, I just want it to look a bit prettier. (Compose is a
+method defined on Function1 trait) So I define an <a href="http://en.wikipedia.org/wiki/Type_conversion" title="Type conversion">implicit
+conversion</a>
+from function to &ldquo;composable&rdquo;</p>
+<pre><code>implicit def function2composable[A,B](f: A=&gt;B) = new AnyRef{
+  def --&gt;[C](g: B=&gt;C) = v =&gt; g(f(c))
+}
+</code></pre>
+<p>This creates an object and reimplements &ldquo;compose&rdquo; but I really like the
+syntax:</p>
+<pre><code>compile = parse --&gt; check --&gt; optimize --&gt; codegen
+</code></pre>
+<p><a href="http://en.wikipedia.org/wiki/Functional_programming" title="Functional programming">Functional programming</a>
+can be imagined as a <a href="http://swizec.com/blog/my-brain-cant-handle-oop-anymore/swizec/4320">waterfall of data</a>,
+flowing from one function into the next, and the <code>--&gt;</code> operator
+represents this nicely. Let's go a step further. If the composition is
+one-off, and this is a waterfall of
+<a href="http://en.wikipedia.org/wiki/Data" title="Data">DATA</a> it could be nice to
+represent that. Something like</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-scala" data-lang="scala"><span style="color:#66d9ef">val</span> result <span style="color:#66d9ef">=</span> source <span style="color:#f92672">--&gt;</span> parse <span style="color:#f92672">--&gt;</span> check <span style="color:#f92672">--&gt;</span> optimize <span style="color:#f92672">--&gt;</span> codegen
+</code></pre></div><p>So now I'm taking a value and sending it through black boxes. Very nice.
+Apart from the fact it doesn't work(yet!).</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-scala" data-lang="scala"><span style="color:#66d9ef">implicit</span> <span style="color:#66d9ef">def</span> any2waterfall<span style="color:#f92672">[</span><span style="color:#66d9ef">A</span><span style="color:#f92672">]</span><span style="color:#f92672">(</span>a<span style="color:#66d9ef">:</span> <span style="color:#66d9ef">A</span><span style="color:#f92672">)</span> <span style="color:#66d9ef">=</span> <span style="color:#66d9ef">new</span> <span style="color:#a6e22e">AnyRef</span><span style="color:#f92672">{</span>
+  <span style="color:#66d9ef">def</span> <span style="color:#f92672">--&gt;</span><span style="color:#f92672">[</span><span style="color:#66d9ef">B</span><span style="color:#f92672">]</span><span style="color:#f92672">(</span>f<span style="color:#66d9ef">:</span> <span style="color:#66d9ef">A</span><span style="color:#f92672">=&gt;</span>B<span style="color:#f92672">)</span> <span style="color:#66d9ef">=</span> f<span style="color:#f92672">(</span>a<span style="color:#f92672">)</span>
+<span style="color:#f92672">}</span>
+</code></pre></div><p><a href="http://www.scala-lang.org/" title="Scala (programming language)">Scala</a>&lsquo;s
+awesome compiler can handle two implicit conversions with same method
+names. Nice. You can even mix and match</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-scala" data-lang="scala"><span style="color:#66d9ef">val</span> result <span style="color:#66d9ef">=</span> source <span style="color:#f92672">--&gt;</span> <span style="color:#f92672">(</span>parse <span style="color:#f92672">--&gt;</span> check <span style="color:#f92672">--&gt;</span> optimize<span style="color:#f92672">)</span> <span style="color:#f92672">--&gt;</span> codegen
+</code></pre></div><p>This does the composition of parse, check and optimize into an anonymous
+function, applies it to the source and then applies codegen to it's
+result.</p>
+<h3 id="goin-async">Goin async</h3>
+<p>What about asynchronous calls? Can I compose those too? I think it's
+possible with Lift actors(or with scalaz's?), but I needed to integrate
+that into <a href="http://code.google.com/android/" title="Android">Android</a>&lsquo;s
+activities quite recently. Well I did not <em>need</em> to do it, but it was
+quite a nice solution.</p>
+<p>The usual way of doing things async in Android is with
+the conveniently named AsyncTask. The problem is - you can't subclass it
+in scala because of some compiler bug regarding varargs parameters.
+Silly.</p>
+<p>So let's do a lightweight(in terms of code) substitution. We can &ldquo;spawn
+a thread&rdquo; using scala's actors. And activity can receive messages
+through a Handler.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-scala" data-lang="scala"><span style="color:#66d9ef">import</span> android.os.<span style="color:#f92672">{</span><span style="color:#a6e22e">Message</span><span style="color:#f92672">,</span> <span style="color:#a6e22e">Handler</span><span style="color:#f92672">}</span>
+
+<span style="color:#66d9ef">trait</span> <span style="color:#a6e22e">MessageHandler</span> <span style="color:#f92672">{</span>
+  <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">val</span> handler <span style="color:#66d9ef">=</span> <span style="color:#66d9ef">new</span> <span style="color:#a6e22e">Handler</span> <span style="color:#f92672">{</span>
+   <span style="color:#66d9ef">override</span> <span style="color:#66d9ef">def</span> handleMessage<span style="color:#f92672">(</span>msg<span style="color:#66d9ef">:</span> <span style="color:#66d9ef">Message</span><span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+     react<span style="color:#f92672">(</span>msg<span style="color:#f92672">.</span>obj<span style="color:#f92672">)</span>
+   <span style="color:#f92672">}</span>
+  <span style="color:#f92672">}</span>
+
+  <span style="color:#66d9ef">def</span> react<span style="color:#f92672">(</span>msg<span style="color:#66d9ef">:</span> <span style="color:#66d9ef">AnyRef</span><span style="color:#f92672">)</span>
+
+  <span style="color:#66d9ef">def</span> <span style="color:#f92672">!</span><span style="color:#f92672">(</span>message<span style="color:#66d9ef">:</span> <span style="color:#66d9ef">AnyRef</span><span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+   <span style="color:#66d9ef">val</span> msg <span style="color:#66d9ef">=</span> <span style="color:#66d9ef">new</span> <span style="color:#a6e22e">Message</span>
+   msg<span style="color:#f92672">.</span>obj <span style="color:#66d9ef">=</span> message
+   handler<span style="color:#f92672">.</span>sendMessage<span style="color:#f92672">(</span>msg<span style="color:#f92672">)</span>
+  <span style="color:#f92672">}</span>
+<span style="color:#f92672">}</span>
+</code></pre></div><p>So in an activity that mixes in MessageHandler I can post messages to my
+self. And I can do it async since Handler is thread safe</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-scala" data-lang="scala"><span style="color:#66d9ef">def</span> react<span style="color:#f92672">(</span>msg<span style="color:#66d9ef">:</span> <span style="color:#66d9ef">AnyRef</span><span style="color:#f92672">)</span> <span style="color:#66d9ef">=</span> msg <span style="color:#66d9ef">match</span> <span style="color:#f92672">{</span>
+  <span style="color:#66d9ef">case</span> s<span style="color:#66d9ef">:</span> <span style="color:#66d9ef">String</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">Toast</span><span style="color:#f92672">(</span><span style="color:#66d9ef">this</span><span style="color:#f92672">,</span> s<span style="color:#f92672">,</span> <span style="color:#a6e22e">Toast</span><span style="color:#f92672">.</span><span style="color:#a6e22e">LENGTH_LONG</span><span style="color:#f92672">)</span><span style="color:#f92672">.</span>makeText<span style="color:#f92672">(</span><span style="color:#f92672">)</span>
+  <span style="color:#66d9ef">case</span> <span style="color:#66d9ef">_</span> <span style="color:#66d9ef">=&gt;</span> <span style="color:#f92672">(</span><span style="color:#f92672">)</span>
+<span style="color:#f92672">}</span>
+
+<span style="color:#f92672">.</span><span style="color:#f92672">.</span><span style="color:#f92672">.</span>
+<span style="color:#75715e">//somewhere inside UI thread
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">import</span> actors.Actor.actor
+<span style="color:#66d9ef">val</span> that <span style="color:#66d9ef">=</span> <span style="color:#66d9ef">this</span>
+actor<span style="color:#f92672">{</span>
+  <span style="color:#66d9ef">val</span> msg <span style="color:#66d9ef">=</span> doExpensiveWork<span style="color:#f92672">(</span><span style="color:#f92672">)</span>
+  that <span style="color:#f92672">!</span> msg
+<span style="color:#f92672">}</span>
+<span style="color:#f92672">.</span><span style="color:#f92672">.</span><span style="color:#f92672">.</span>
+</code></pre></div><p>Not the most concise way to write it, but I believe the most clear one.
+Method doExpensiveWork is done in the background so it doesn't block UI
+and it posts the result back as a message.</p>
+<h4 id="asynchttpenwikipediaorgwikiasynchrony-asynchrony-composition---finally"><a href="http://en.wikipedia.org/wiki/Asynchrony" title="Asynchrony">Async</a> composition - finally</h4>
+<p>What I want to do now is use function composition to do something like</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-scala" data-lang="scala"><span style="color:#f92672">(</span>input <span style="color:#f92672">--&gt;</span> expensiveOne <span style="color:#f92672">--&gt;</span> expensiveTwo<span style="color:#f92672">)</span> <span style="color:#f92672">-!&gt;</span> displayResults
+</code></pre></div><p>In other words, do &ldquo;waterfall composition&rdquo; in background using some
+input I have now and post the result back into the UI thread to method
+displayResults. That should be the magic of the -!&gt; operator. Do the
+left side in bg and post it to the right side async. I need a new trait
+for that</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-scala" data-lang="scala"><span style="color:#66d9ef">trait</span> <span style="color:#a6e22e">MessageHandlerExec</span> <span style="color:#66d9ef">extends</span> <span style="color:#a6e22e">MessageHandler</span> <span style="color:#f92672">{</span> outer <span style="color:#66d9ef">=&gt;</span>
+  <span style="color:#66d9ef">override</span> <span style="color:#66d9ef">protected</span> <span style="color:#66d9ef">val</span> handler <span style="color:#66d9ef">=</span> <span style="color:#66d9ef">new</span> <span style="color:#a6e22e">Handler</span> <span style="color:#f92672">{</span>
+    <span style="color:#66d9ef">override</span> <span style="color:#66d9ef">def</span> handleMessage<span style="color:#f92672">(</span>msg<span style="color:#66d9ef">:</span> <span style="color:#66d9ef">Message</span><span style="color:#f92672">)</span> <span style="color:#66d9ef">=</span> msg<span style="color:#f92672">.</span>obj <span style="color:#66d9ef">match</span> <span style="color:#f92672">{</span>
+      <span style="color:#66d9ef">case</span> r<span style="color:#66d9ef">:</span> <span style="color:#66d9ef">Runnable</span> <span style="color:#f92672">=&gt;</span> r<span style="color:#f92672">.</span>run<span style="color:#f92672">(</span><span style="color:#f92672">)</span>
+      <span style="color:#66d9ef">case</span> other<span style="color:#66d9ef">:</span> <span style="color:#66d9ef">AnyRef</span> <span style="color:#f92672">=&gt;</span> react<span style="color:#f92672">(</span>other<span style="color:#f92672">)</span>
+    <span style="color:#f92672">}</span>
+  <span style="color:#f92672">}</span>
+
+  <span style="color:#66d9ef">implicit</span> <span style="color:#66d9ef">def</span> any2asyncComposable<span style="color:#f92672">[</span><span style="color:#66d9ef">A</span><span style="color:#f92672">]</span><span style="color:#f92672">(</span>a<span style="color:#66d9ef">:</span> <span style="color:#f92672">=&gt;</span> A<span style="color:#f92672">)</span> <span style="color:#66d9ef">=</span> <span style="color:#66d9ef">new</span> <span style="color:#a6e22e">AnyRef</span><span style="color:#f92672">{</span>
+    <span style="color:#66d9ef">def</span> <span style="color:#f92672">-!&gt;</span><span style="color:#f92672">[</span><span style="color:#66d9ef">B</span><span style="color:#f92672">]</span><span style="color:#f92672">(</span>f<span style="color:#66d9ef">:</span> <span style="color:#66d9ef">A</span><span style="color:#f92672">=&gt;</span>B<span style="color:#f92672">)</span> <span style="color:#66d9ef">=</span> outer <span style="color:#f92672">!</span> <span style="color:#66d9ef">new</span> <span style="color:#a6e22e">Runnable</span><span style="color:#f92672">{</span>
+      <span style="color:#66d9ef">def</span> run<span style="color:#f92672">(</span><span style="color:#f92672">)</span> <span style="color:#66d9ef">=</span> f<span style="color:#f92672">(</span>a<span style="color:#f92672">)</span>
+    <span style="color:#f92672">}</span>
+  <span style="color:#f92672">}</span>
+<span style="color:#f92672">}</span>
+</code></pre></div><p>The trick here is using by-name parameters in the implicit conversion.
+This delays the execution of a(which in example above would be a
+waterfall and moves it into a worker thread.</p>
+
+                    <HR width="100%">
+                    
+                    <p style="color:#777;">Last modified on 2012-09-17</p>
+                    
+                </div>
+
+            </div>
+
+
+            <nav class="post-pagination">
+
+                
+                <a class="newer-posts" href="/posts/2012-09-21-power-sets/">
+                    Next<br>Power sets
+                </a>
+                
+
+                
+                <a class="older-posts" href="/posts/2012-09-02-creating-a-language-5/">
+                    Previous<br>Making a programming language Part 5 - variables and decisions
+                </a>
+                
+            </nav>
+            <div class="post-comment-wrapper">
+                
+
+
+
+            </div>
+        </div>
+    </div>
+</div>
+
+            </div><div id="single-column-footer">&copy;
+    2020
+	
+	Andraz Bajt
+	
+</div>
+    	</div>
+    <script src="//js/journal.js"></script>
+    </body>
+</html>

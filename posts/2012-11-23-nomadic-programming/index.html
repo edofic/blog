@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html><head>
+<title>Nomadic programming</title>
+
+<meta charset="utf-8">
+<meta name="X-UA-Compatible" content="IE=edge">
+<meta name="google-site-verification" content="">
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+<meta content="telephone=no" name="format-detection">
+<meta name="renderer" content="webkit">
+<meta name="theme-color" content="#ffffff">
+
+
+
+
+<script src="/vendor/js/jquery.min.js" ></script>
+<script src="/vendor/js/popper.min.js" ></script>
+<script src="/vendor/js/bootstrap.min.js" ></script>
+<script src="/vendor/js/smooth-scroll.polyfills.min.js" ></script>
+<link type="text/css" rel="stylesheet" href="/vendor/css/bootstrap.min.css">
+<script src="/vendor/js/vue.min.js" ></script>
+
+
+
+<link rel="stylesheet" href="/scss/journal.min.9d1b3d6c4f3ff1773fff9bdca1bc24452f33129e12f67f2ab14f2ddaf1603468.css" media="screen">
+
+<script src="/js/loadCSS.js"></script>
+<script>
+    loadCSS("https://fonts.googleapis.com/css?family=Lora|Montserrat|Fira+Mono|Noto+Serif+SC|Material+Icons");
+</script>
+
+</head>
+<body>
+    	<div id="app"><div ref="sideContainer" class="side-container">
+    <div class="a-block nav-head false">
+        <div class="nav-title">
+            My Programming Escapades
+        </div>
+        <div class="nav-subtitle">
+            
+                Andraz Bajt
+            
+        </div>
+            
+                <a href="https://github.com/edofic"><img src="/icons/github.svg" width="20"/></a>
+            
+            
+                <a href="https://www.linkedin.com/in/edofic"><img src="/icons/linkedin.svg" width="20"/></a>
+            
+            
+                <a href="https://twitter.com/edofic"><img src="/icons/twitter.svg" width="20"/></a>
+            
+            
+            
+                <a href="mailto:edofic@edofic.com"><img src="/icons/email.svg" width="20"/></a>
+            
+    </div>
+
+
+    <div class="nav-link-list">
+        
+        
+            
+            
+            <a class="a-block nav-link-item" href="/about">
+                About Me
+            </a>
+        
+            
+            
+            <a class="a-block nav-link-item" href="/">
+                Archive
+            </a>
+        
+    </div>
+
+    <div class="nav-footer">
+        &copy;
+    2020
+	
+	Andraz Bajt
+	
+
+    </div>
+
+</div>
+<div ref="extraContainer" class="extra-container">
+    
+    <div class="pagination">
+        <a id="globalBackToTop" class="pagination-action animated-visibility" href="#top" :class="{ invisible: scrollY == 0 }">
+            <i class="material-icons pagination-action-icon">
+                keyboard_arrow_up
+            </i>
+        </a>
+        
+    </div>
+</div><div class="single-column-drawer-container" ref="drawer"
+     v-bind:class="{ 'single-column-drawer-container-active': isDrawerOpen }">
+    <div class="drawer-content">
+        <div class="drawer-menu">
+        
+        
+            
+                
+                
+                <a class="a-block drawer-menu-item" href="/about">
+                    About Me
+                </a>
+        
+            
+                
+                
+                    
+                
+                <a class="a-block drawer-menu-item" href="/">
+                    Archive
+                </a>
+        
+        </div>
+    </div>
+</div>
+<transition name="fade">
+    <div v-bind:class="{ 'single-column-drawer-mask': mounted }" v-if="isDrawerOpen" v-on:click="toggleDrawer"></div>
+</transition>
+<nav ref="navBar" class="navbar sticky-top navbar-light single-column-nav-container">
+    <div ref="navBackground" class="nav-background"></div>
+    <div class="container container-narrow nav-content">
+        <button id="nav_dropdown_btn" class="nav-dropdown-toggle" type="button" v-on:click="toggleDrawer">
+            <i class="material-icons">
+                menu
+            </i>
+        </button>
+        <a ref="navTitle" class="navbar-brand" href="/">
+            My Programming Escapades
+        </a>
+    </div>
+</nav>
+<div class="single-column-header-container" ref="pageHead"
+     v-bind:style="{ transform: 'translateZ(0px) translateY('+.3*scrollY+'px)', opacity: 1-navOpacity }">
+        <a href="/">
+            <div class="single-column-header-title">My Programming Escapades</div>
+            
+            <div class="single-column-header-subtitle">Andraz Bajt</div>
+            
+        </a>
+
+        
+            <a href="https://github.com/edofic"><img src="/icons/github.svg" width="20"/></a>
+        
+        
+            <a href="https://www.linkedin.com/in/edofic"><img src="/icons/linkedin.svg" width="20"/></a>
+        
+        
+            <a href="https://twitter.com/edofic"><img src="/icons/twitter.svg" width="20"/></a>
+        
+        
+        
+            <a href="mailto:edofic@edofic.com"><img src="/icons/email.svg" width="20"/></a>
+        
+
+</div>
+
+            <div id="content">
+<div ref="streamContainer" class="stream-container">
+    <div class="post-list-container post-list-container-shadow">
+        <div class="post">
+            
+            
+            
+
+            <div class="post-head-wrapper-text-only"
+                 style="background-image: url('/')">
+                <div class="post-title">
+                    Nomadic programming
+                    <div class="post-meta">
+                        
+                            <time itemprop="datePublished">
+                                2012-11-23
+                            </time>
+                        
+
+                        
+
+                        
+                    </div>
+                </div>
+            </div>
+
+            <div class="post-body-wrapper">
+                <div class="post-body">
+                    <p>DISCLAIMER: This is about my opinion.
+And may or may not contain some boasting. And is also a bit of a brain
+dump.</p>
+<p>Yep, this is not a typo. Not monadic but
+<a href="http://en.wikipedia.org/wiki/Nomad" title="Nomad">nomadic</a>. Although monads
+are cool too.
+A few days ago the
+<a href="http://en.wikipedia.org/wiki/Chief_technology_officer" title="Chief technology officer">CTO</a>
+of a company I work for said it's time to specialize. He was talking
+about my career. Offering me a few things to try and then pick one. But
+this got me thinking.
+Today another CTO told me that I'm &ldquo;essentially a good dev&rdquo; and that
+chosen
+<a href="http://en.wikipedia.org/wiki/Computer_software" title="Computer software">software</a>
+stack doesn't matter. And I agree. (<a href="http://www.kalzumeus.com/2011/10/28/dont-call-yourself-a-programmer/">Patrick does
+too</a>).</p>
+<p><a href="http://www.thatericalper.com/wp-content/uploads/2012/11/years.jpg"><img src="http://www.thatericalper.com/wp-content/uploads/2012/11/years.jpg" alt=""></a></p>
+<p>I'm an <a href="http://en.wikipedia.org/wiki/Engineer" title="Engineer">engineer</a> not
+a programmer(or god forbid, a
+<a href="http://en.wikipedia.org/wiki/Programmer" title="Programmer">coder</a>). I solve
+problems not just write code. It just happens that code is
+<a href="http://en.wikipedia.org/wiki/Solution" title="Solution">solution</a> to most
+problems I try to solve. World is increasingly more computer orientated.
+Now everything(literally!) has a processor inside. But processors are
+dumb. So you need people to program them. These people are the
+equivalent of the <a href="http://en.wikipedia.org/wiki/Factory" title="Factory">factory
+workers</a> before robots
+started taking over. So now people need to migrate one level up on the
+abstraction ladder. Labor is now mental. Not everything is the same(like
+in a traditional factory) but it is the same concept. And you are
+pumping out slightly different versions.  Welcome to a modern software
+shop.
+But all this &ldquo;computerization&rdquo; also pushes up the upper bound of
+complexity. And this is where engineers kick in. If you have complex
+solution you require (hopefully less) complex solutions. And you need
+people who can manage this complexion. Not by being machines but by
+understanding, inventing concepts and structuring them. Big software has
+millions if not billions of moving parts. Imagine a machine of such
+complexity. There probably isn't a human out there who could manage this
+in it's entirety. But software engineers are expected to do this. You
+need the ability to see something and relate it to known concepts or
+invent a new concept and relate it to oter stuff. Connect things
+together. And to do this well you need broad knowledge. Yes you need
+specialization - depth - to do something very well but this is a lesser
+problem. See a good engineer can go from zero to awesome in a new field
+<strong>very quickly</strong>. Learning a new language can be done in a week and a
+software stack in a bit more. I'm not saying you become an expert or the
+very best in the field but if you have the urge to learn you are not far
+behind. So a good engineer is the one who has the ability to learn and
+to produce real solutions with this knowledge.</p>
+<h3 id="nomads">Nomads</h3>
+<p>So where does nomadic programming fit into this philosophy? Going from
+language to language, from framework to framwork and changing software
+stacks. Not settling down. This (in my opinion) teaches you what can be
+done and haw can stuff be done. In all possible ways. So you can figure
+out the best solution. Learning all the time also keeps you on the
+bleeding edge and this is fun and engaging. Having new toys all the
+time! I can't image myself working with just one thing for the rest of
+my life. Meeting new languages and new framework is what I do in my
+<a href="http://en.wikipedia.org/wiki/Leisure" title="Leisure">free time</a>. So when a
+customer says they need <a href="http://rubyonrails.org/" title="Ruby on Rails">Ruby on
+Rails</a> and I never used it
+before&hellip;.it's not a problem. I've seen ruby, I know python and I know
+how MVC is supposed to work. Putting it all together is not that hard.
+You can even hit the ground running and start working right away. Of
+course you'll be a bit slower in the start but you can catch up.  So no,
+I don't want to specialize. I want to know everything that is there to
+know! And I believe this will make me a better engineer. Or developer.
+Or person. And I believe that quality of their employees shoud matter to
+the employer. It is developers who create their products. </p>
+<p><strong>You should always strive to become better!</strong></p>
+
+                    <HR width="100%">
+                    
+                    <p style="color:#777;">Last modified on 2012-11-23</p>
+                    
+                </div>
+
+            </div>
+
+
+            <nav class="post-pagination">
+
+                
+                <a class="newer-posts" href="/posts/2012-11-26-functional-compilers/">
+                    Next<br>Cool Monday - Functional compilers and atoms
+                </a>
+                
+
+                
+                <a class="older-posts" href="/posts/2012-11-19-cerc/">
+                    Previous<br>Cool Monday - CERC and my trip to Krakow
+                </a>
+                
+            </nav>
+            <div class="post-comment-wrapper">
+                
+
+
+
+            </div>
+        </div>
+    </div>
+</div>
+
+            </div><div id="single-column-footer">&copy;
+    2020
+	
+	Andraz Bajt
+	
+</div>
+    	</div>
+    <script src="//js/journal.js"></script>
+    </body>
+</html>

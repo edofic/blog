@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html><head>
+<title>Cool Monday - Functional compilers and atoms</title>
+
+<meta charset="utf-8">
+<meta name="X-UA-Compatible" content="IE=edge">
+<meta name="google-site-verification" content="">
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+<meta content="telephone=no" name="format-detection">
+<meta name="renderer" content="webkit">
+<meta name="theme-color" content="#ffffff">
+
+
+
+
+<script src="/vendor/js/jquery.min.js" ></script>
+<script src="/vendor/js/popper.min.js" ></script>
+<script src="/vendor/js/bootstrap.min.js" ></script>
+<script src="/vendor/js/smooth-scroll.polyfills.min.js" ></script>
+<link type="text/css" rel="stylesheet" href="/vendor/css/bootstrap.min.css">
+<script src="/vendor/js/vue.min.js" ></script>
+
+
+
+<link rel="stylesheet" href="/scss/journal.min.9d1b3d6c4f3ff1773fff9bdca1bc24452f33129e12f67f2ab14f2ddaf1603468.css" media="screen">
+
+<script src="/js/loadCSS.js"></script>
+<script>
+    loadCSS("https://fonts.googleapis.com/css?family=Lora|Montserrat|Fira+Mono|Noto+Serif+SC|Material+Icons");
+</script>
+
+</head>
+<body>
+    	<div id="app"><div ref="sideContainer" class="side-container">
+    <div class="a-block nav-head false">
+        <div class="nav-title">
+            My Programming Escapades
+        </div>
+        <div class="nav-subtitle">
+            
+                Andraz Bajt
+            
+        </div>
+            
+                <a href="https://github.com/edofic"><img src="/icons/github.svg" width="20"/></a>
+            
+            
+                <a href="https://www.linkedin.com/in/edofic"><img src="/icons/linkedin.svg" width="20"/></a>
+            
+            
+                <a href="https://twitter.com/edofic"><img src="/icons/twitter.svg" width="20"/></a>
+            
+            
+            
+                <a href="mailto:edofic@edofic.com"><img src="/icons/email.svg" width="20"/></a>
+            
+    </div>
+
+
+    <div class="nav-link-list">
+        
+        
+            
+            
+            <a class="a-block nav-link-item" href="/about">
+                About Me
+            </a>
+        
+            
+            
+            <a class="a-block nav-link-item" href="/">
+                Archive
+            </a>
+        
+    </div>
+
+    <div class="nav-footer">
+        &copy;
+    2020
+	
+	Andraz Bajt
+	
+
+    </div>
+
+</div>
+<div ref="extraContainer" class="extra-container">
+    
+    <div class="pagination">
+        <a id="globalBackToTop" class="pagination-action animated-visibility" href="#top" :class="{ invisible: scrollY == 0 }">
+            <i class="material-icons pagination-action-icon">
+                keyboard_arrow_up
+            </i>
+        </a>
+        
+    </div>
+</div><div class="single-column-drawer-container" ref="drawer"
+     v-bind:class="{ 'single-column-drawer-container-active': isDrawerOpen }">
+    <div class="drawer-content">
+        <div class="drawer-menu">
+        
+        
+            
+                
+                
+                <a class="a-block drawer-menu-item" href="/about">
+                    About Me
+                </a>
+        
+            
+                
+                
+                    
+                
+                <a class="a-block drawer-menu-item" href="/">
+                    Archive
+                </a>
+        
+        </div>
+    </div>
+</div>
+<transition name="fade">
+    <div v-bind:class="{ 'single-column-drawer-mask': mounted }" v-if="isDrawerOpen" v-on:click="toggleDrawer"></div>
+</transition>
+<nav ref="navBar" class="navbar sticky-top navbar-light single-column-nav-container">
+    <div ref="navBackground" class="nav-background"></div>
+    <div class="container container-narrow nav-content">
+        <button id="nav_dropdown_btn" class="nav-dropdown-toggle" type="button" v-on:click="toggleDrawer">
+            <i class="material-icons">
+                menu
+            </i>
+        </button>
+        <a ref="navTitle" class="navbar-brand" href="/">
+            My Programming Escapades
+        </a>
+    </div>
+</nav>
+<div class="single-column-header-container" ref="pageHead"
+     v-bind:style="{ transform: 'translateZ(0px) translateY('+.3*scrollY+'px)', opacity: 1-navOpacity }">
+        <a href="/">
+            <div class="single-column-header-title">My Programming Escapades</div>
+            
+            <div class="single-column-header-subtitle">Andraz Bajt</div>
+            
+        </a>
+
+        
+            <a href="https://github.com/edofic"><img src="/icons/github.svg" width="20"/></a>
+        
+        
+            <a href="https://www.linkedin.com/in/edofic"><img src="/icons/linkedin.svg" width="20"/></a>
+        
+        
+            <a href="https://twitter.com/edofic"><img src="/icons/twitter.svg" width="20"/></a>
+        
+        
+        
+            <a href="mailto:edofic@edofic.com"><img src="/icons/email.svg" width="20"/></a>
+        
+
+</div>
+
+            <div id="content">
+<div ref="streamContainer" class="stream-container">
+    <div class="post-list-container post-list-container-shadow">
+        <div class="post">
+            
+            
+            
+
+            <div class="post-head-wrapper-text-only"
+                 style="background-image: url('/')">
+                <div class="post-title">
+                    Cool Monday - Functional compilers and atoms
+                    <div class="post-meta">
+                        
+                            <time itemprop="datePublished">
+                                2012-11-26
+                            </time>
+                        
+
+                        
+
+                        
+                    </div>
+                </div>
+            </div>
+
+            <div class="post-body-wrapper">
+                <div class="post-body">
+                    <p>I've seen
+<a href="http://skillsmatter.com/podcast/scala/functional-compilers-from-cfg-to-exe/ac-5896">this great
+talk</a>
+by Daniel Spiewak on Functional
+<a href="http://en.wikipedia.org/wiki/Compiler" title="Compiler">Compilers</a>. He talks
+about lexical and <a href="http://en.wikipedia.org/wiki/Compiler" title="Compiler">semantic
+analysis</a>
+in particular.
+First, problems with traditional
+<a href="http://en.wikipedia.org/wiki/Lexical_analysis" title="Lexical analysis">lexing</a>
+with scanner. You can only have regular tokens or you have do do some
+dirty hacking and
+<a href="http://en.wikipedia.org/wiki/Stack_trace" title="Stack trace">backtrace</a> the
+scanner therefore losing linearity. And you can solve this with
+<a href="http://en.wikipedia.org/wiki/Scannerless_parsing" title="Scannerless parsing">scannerless
+parsing</a></p>
+<ul>
+<li>putting <a href="http://en.wikipedia.org/wiki/Regular_expression" title="Regular expression">regular
+expressions</a>
+into your grammar. In fact this approach seems simpler to me, as the
+<a href="/posts/2012-08-29-creating-a-language-1">only proper parser I've
+done</a>
+works this way. But this is not the interesting part.</li>
+</ul>
+<h3 id="semantic-analysis">Semantic analysis</h3>
+<p>This is where fun kicks in. After you parse the <a href="http://en.wikipedia.org/wiki/Source_code" title="Source code">source
+code</a> into an
+<a href="http://en.wikipedia.org/wiki/Abstract_syntax_tree" title="Abstract syntax tree">AST</a>
+you need to do a bunch of operations on it. Naming, typing(even
+optimization in later phases). If I want to stay functional(which
+usually I do) my instinct tells me to do recursive traversal and rewrite
+the tree. And that's exactly what my language does. But there is one
+huge problem. AST is not a tree. It's huge misnomer. AST is just a
+<a href="http://en.wikipedia.org/wiki/Spanning_tree" title="Spanning tree">spanning
+tree</a> in the
+program graph. See, when you add stuff like let expressions, or
+types(what I'm doing currently) you get problems</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-haskell" data-lang="haskell"><span style="color:#66d9ef">let</span> a <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span>in f a
+</code></pre></div><p>There are edges between the siblings. Or going back up. Or skipping
+levels. Definitely not trees. These edges may be implicit but you still
+have to store the information. Traditional solution to this is to
+compute look-up tables(maps) and carry them along with the tree. So the
+AST remains a tree but it has some additional stuff that implicitly
+makes it into a graph. Problem is this gets nasty when you carry along a
+lot of information and you have to be careful with you updates.
+There is one more solution. Vars. Works like a charm. Except that it's
+terrible to reason about quite the opposite of functional. But there
+exists a fix.</p>
+<h3 id="atoms">Atoms</h3>
+<p>Think write-once vars. But not quite. The idea is to have containers
+that can be written to but are only ever seen in a one state. Problem
+with vars is that they can be seen  in multiple states and you have to
+keep track of these states. Vals solve this by not letting you mutate
+state. And lazy vals provide machinery to delay initialization(great for
+solving circular dependencies). But they don't let you escape the scope.
+Or deal with a situation when you need to init them when you have data
+not when you need to read them. And this is the problem in a compiler.
+You compute data coming from out of the scope and you need to store it.
+And some time later you need to read it. And you use atoms.  First some
+code, then explanation.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-scala" data-lang="scala"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Atom</span><span style="color:#f92672">[</span><span style="color:#66d9ef">A</span><span style="color:#f92672">]</span> <span style="color:#f92672">{</span>
+  <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">var</span> value<span style="color:#66d9ef">:</span> <span style="color:#66d9ef">A</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">_</span>
+  <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">var</span> isSet <span style="color:#66d9ef">=</span> <span style="color:#66d9ef">false</span>
+  <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">var</span> isForced <span style="color:#66d9ef">=</span> <span style="color:#66d9ef">false</span>
+  <span style="color:#66d9ef">protected</span> <span style="color:#66d9ef">def</span> populate<span style="color:#f92672">(</span><span style="color:#f92672">)</span><span style="color:#f92672">{</span>
+    sys<span style="color:#f92672">.</span>error<span style="color:#f92672">(</span><span style="color:#e6db74">&#34;cannont self-populate atom&#34;</span><span style="color:#f92672">)</span>
+  <span style="color:#f92672">}</span>
+
+  <span style="color:#66d9ef">def</span> update<span style="color:#f92672">(</span>a<span style="color:#66d9ef">:</span> <span style="color:#66d9ef">A</span><span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+    <span style="color:#66d9ef">if</span> <span style="color:#f92672">(</span><span style="color:#f92672">!</span>isSet <span style="color:#f92672">||</span> <span style="color:#f92672">!</span>isForced<span style="color:#f92672">)</span><span style="color:#f92672">{</span>
+      value <span style="color:#66d9ef">=</span> a
+      isSet <span style="color:#66d9ef">=</span> <span style="color:#66d9ef">true</span>
+    <span style="color:#f92672">}</span>
+  <span style="color:#f92672">}</span>
+
+  <span style="color:#66d9ef">def</span> apply<span style="color:#f92672">(</span><span style="color:#f92672">)</span><span style="color:#66d9ef">:</span> <span style="color:#66d9ef">A</span> <span style="color:#f92672">{</span>
+    <span style="color:#66d9ef">isForced</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">true</span>
+    <span style="color:#66d9ef">if</span> <span style="color:#f92672">(</span>isSet<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+      value
+    <span style="color:#f92672">}</span> <span style="color:#66d9ef">else</span> <span style="color:#f92672">{</span>
+      populate<span style="color:#f92672">(</span><span style="color:#f92672">)</span>
+      <span style="color:#66d9ef">if</span> <span style="color:#f92672">(</span><span style="color:#f92672">!</span>isSet<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+        sys<span style="color:#f92672">.</span>error<span style="color:#f92672">(</span><span style="color:#e6db74">&#34;value not set&#34;</span><span style="color:#f92672">)</span>
+      <span style="color:#f92672">}</span>
+      value
+    <span style="color:#f92672">}</span>
+  <span style="color:#f92672">}</span>
+<span style="color:#f92672">}</span>
+</code></pre></div><p>Here is the workflow&hellip; you create an atom, you can write(update) to
+it-in fact writes are indempotent and you can do many successive writes
+as long as you don't read the value. Once written to isSet flag is set
+and atom can be read(apply method) setting the isForced flag. If the
+atom isn't set when you try to read it it will try to populate itself.
+Populate method is intended to be overwritten and may contain data in
+it's closure or even perform some side-effects. And you can safely
+assume it will only execute once. And if everything fails and atom isn't
+set you get an error. Yay no bothering with nulls any more.
+You can quickly see how atoms are great containers for storing computed
+information in the AST for passing it on to the later stages.</p>
+
+                    <HR width="100%">
+                    
+                    <p style="color:#777;">Last modified on 2012-11-26</p>
+                    
+                </div>
+
+            </div>
+
+
+            <nav class="post-pagination">
+
+                
+                <a class="newer-posts" href="/posts/2012-12-04-hw-functional/">
+                    Next<br>Homework - functional style (outer sorting)
+                </a>
+                
+
+                
+                <a class="older-posts" href="/posts/2012-11-23-nomadic-programming/">
+                    Previous<br>Nomadic programming
+                </a>
+                
+            </nav>
+            <div class="post-comment-wrapper">
+                
+
+
+
+            </div>
+        </div>
+    </div>
+</div>
+
+            </div><div id="single-column-footer">&copy;
+    2020
+	
+	Andraz Bajt
+	
+</div>
+    	</div>
+    <script src="//js/journal.js"></script>
+    </body>
+</html>
