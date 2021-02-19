@@ -20,19 +20,19 @@ channel</a>
 and somebody came along(forgot the nick, sorry) and asked about some
 <a href=http://en.wikipedia.org/wiki/Compilation_error title="Compilation error">compilation
 error</a>.
-I deduced he was trying to chain implicit conversions. And this doesn't
+I deduced he was trying to chain implicit conversions. And this doesn&rsquo;t
 work. Else compilation would take forever and would also compile some
 wrong code by inserting long strings of implicits. But then somebody
 else responded(I think nick started with d) and gave a solution to
-implicit chaining. But I'm not giving it away yet, you'll have to read a
-bit more.</p><h3 id=the-problem>The problem</h3><p>Let's say I have some
+implicit chaining. But I&rsquo;m not giving it away yet, you&rsquo;ll have to read a
+bit more.</p><h3 id=the-problem>The problem</h3><p>Let&rsquo;s say I have some
 <a href=http://en.wikipedia.org/wiki/Class_%28computer_programming%29 title="Class (computer programming)">classes</a>
 that just add semantics to values(think labeled boxes)</p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-scala data-lang=scala><span style=color:#66d9ef>case</span> <span style=color:#66d9ef>class</span> <span style=color:#a6e22e>Foo</span><span style=color:#f92672>(</span>a<span style=color:#66d9ef>:</span> <span style=color:#66d9ef>Int</span><span style=color:#f92672>)</span>
 <span style=color:#66d9ef>case</span> <span style=color:#66d9ef>class</span> <span style=color:#a6e22e>Bar</span><span style=color:#f92672>(</span>b<span style=color:#66d9ef>:</span> <span style=color:#66d9ef>Int</span><span style=color:#f92672>)</span>
 <span style=color:#66d9ef>case</span> <span style=color:#66d9ef>class</span> <span style=color:#a6e22e>Baz</span><span style=color:#f92672>(</span>c<span style=color:#66d9ef>:</span> <span style=color:#66d9ef>Int</span><span style=color:#f92672>)</span>
 </code></pre></div><p>And because they look similar we may want to do some <a href=http://en.wikipedia.org/wiki/Type_conversion title="Type conversion">implicit
 conversion</a>.
-Let's say that that's needed is conversion from Bar to Foo and from Baz
+Let&rsquo;s say that that&rsquo;s needed is conversion from Bar to Foo and from Baz
 to Bar.</p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-scala data-lang=scala><span style=color:#66d9ef>implicit</span> <span style=color:#66d9ef>def</span> bar2foo<span style=color:#f92672>(</span>bar<span style=color:#66d9ef>:</span> <span style=color:#66d9ef>Bar</span><span style=color:#f92672>)</span> <span style=color:#66d9ef>=</span> <span style=color:#a6e22e>Foo</span><span style=color:#f92672>(</span>bar<span style=color:#f92672>.</span>b<span style=color:#f92672>)</span>
 <span style=color:#66d9ef>implicit</span> <span style=color:#66d9ef>def</span> baz2bar<span style=color:#f92672>(</span>baz<span style=color:#66d9ef>:</span> <span style=color:#66d9ef>Baz</span><span style=color:#f92672>)</span> <span style=color:#66d9ef>=</span> <span style=color:#a6e22e>Bar</span><span style=color:#f92672>(</span>baz<span style=color:#f92672>.</span>c<span style=color:#f92672>)</span>
 </code></pre></div><p>On a level this also implies that Baz can be seen as Foo. But when you
@@ -44,24 +44,24 @@ println(baz.a)
 ^
 one error found
 </code></pre><h3 id=the-solution>The solution</h3><p>As said, scala
-<a href=http://en.wikipedia.org/wiki/Compiler title=Compiler>compiler</a> doesn't try
-to traverse the graph of implicit conversions and therefore doesn't
+<a href=http://en.wikipedia.org/wiki/Compiler title=Compiler>compiler</a> doesn&rsquo;t try
+to traverse the graph of implicit conversions and therefore doesn&rsquo;t
 figure out how to insert needed conversions here. But here lies a handy
-catch. What if the conversion wasn't from Bar to Foo but from something
+catch. What if the conversion wasn&rsquo;t from Bar to Foo but from something
 Bar-like to Foo. Then the compiler would know that this chaining is
 intended and is (probably) not a dead end. Good news: scala lets you
-express that. It's called a view bound. You make the method generic and
+express that. It&rsquo;s called a view bound. You make the method generic and
 limit input type to something that can be seen(implicitly converted to)
-as a Bar. Here's the code.</p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-scala data-lang=scala><span style=color:#66d9ef>implicit</span> <span style=color:#66d9ef>def</span> bar2foo<span style=color:#f92672>[</span><span style=color:#66d9ef>T</span> <span style=color:#66d9ef>&lt;%</span> <span style=color:#66d9ef>Bar</span><span style=color:#f92672>]</span><span style=color:#f92672>(</span>bar<span style=color:#66d9ef>:</span> <span style=color:#66d9ef>T</span><span style=color:#f92672>)</span> <span style=color:#66d9ef>=</span> <span style=color:#a6e22e>Foo</span><span style=color:#f92672>(</span>bar<span style=color:#f92672>.</span>b<span style=color:#f92672>)</span>
-</code></pre></div><p>All the magic lies in the <code>&lt;%</code> operator. That's the view bound. When you
+as a Bar. Here&rsquo;s the code.</p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-scala data-lang=scala><span style=color:#66d9ef>implicit</span> <span style=color:#66d9ef>def</span> bar2foo<span style=color:#f92672>[</span><span style=color:#66d9ef>T</span> <span style=color:#66d9ef>&lt;%</span> <span style=color:#66d9ef>Bar</span><span style=color:#f92672>](</span>bar<span style=color:#66d9ef>:</span> <span style=color:#66d9ef>T</span><span style=color:#f92672>)</span> <span style=color:#66d9ef>=</span> <span style=color:#a6e22e>Foo</span><span style=color:#f92672>(</span>bar<span style=color:#f92672>.</span>b<span style=color:#f92672>)</span>
+</code></pre></div><p>All the magic lies in the <code>&lt;%</code> operator. That&rsquo;s the view bound. When you
 type <code>baz.a</code> the compiler sees that a property is available on the Foo
-class and that there's an implicit conversion to Foo from something
-Bar-like. Fortunately there's a conversion from Baz to Bar in scope so
+class and that there&rsquo;s an implicit conversion to Foo from something
+Bar-like. Fortunately there&rsquo;s a conversion from Baz to Bar in scope so
 it can invoke the method. Inside the method it tries to get the b
-property from baz but it's not available. So it checks the conversions
+property from baz but it&rsquo;s not available. So it checks the conversions
 and sees that a conversion from Baz to Bar exists in the scope and it
 satisfies the need for b. It inserts this conversions and compilation
-happily chucks along.</p><p><img src=/images/chaining-implicits/all_the.jpg alt="Nest all the implicit conversions!"></p><p>Please don't do that.
+happily chucks along.</p><p><img src=/images/chaining-implicits/all_the.jpg alt="Nest all the implicit conversions!"></p><p>Please don&rsquo;t do that.
 Implicits can make code hard to read even without nesting. So use with
 care. Scala is a very powerful language but great power comes with great
 responsibility.</p><hr width=100%><p style=color:#777>Last modified on 2013-01-27</p></div></div><nav class=post-pagination><a class=newer-posts href=/posts/2013-01-27-750-words/>Next<br>750 words</a>

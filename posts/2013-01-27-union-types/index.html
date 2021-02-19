@@ -12,7 +12,7 @@ Andraz Bajt</div></div><div ref=extraContainer class=extra-container><div class=
 <a href=https://www.linkedin.com/in/edofic><img src=/icons/linkedin.svg width=20></a>
 <a href=https://twitter.com/edofic><img src=/icons/twitter.svg width=20></a>
 <a href=/index.xml><img src=/icons/rss.svg width=20></a>
-<a href=mailto:edofic@edofic.com><img src=/icons/email.svg width=20></a></div><div id=content><div ref=streamContainer class=stream-container><div class="post-list-container post-list-container-shadow"><div class=post><div class=post-head-wrapper-text-only style="background-image:url('/')"><div class=post-title>Union types in scala<div class=post-meta><time itemprop=datePublished>2013-01-27</time></div></div></div><div class=post-body-wrapper><div class=post-body><p>I've done some research  a while
+<a href=mailto:edofic@edofic.com><img src=/icons/email.svg width=20></a></div><div id=content><div ref=streamContainer class=stream-container><div class="post-list-container post-list-container-shadow"><div class=post><div class=post-head-wrapper-text-only style="background-image:url('/')"><div class=post-title>Union types in scala<div class=post-meta><time itemprop=datePublished>2013-01-27</time></div></div></div><div class=post-body-wrapper><div class=post-body><p>I&rsquo;ve done some research  a while
 ago on union types and found a nice <a href=http://www.chuusai.com/2011/06/09/scala-union-types-curry-howard/>implementation by Miles
 Sabin</a> but
 it only works for declaring types of function parameters. And you can
@@ -20,34 +20,34 @@ also do this with with <a href=http://en.wikipedia.org/wiki/Type_class title="Ty
 classes</a>. What do
 I mean with &ldquo;only function parameters&rdquo;? In &ldquo;everything is a function&rdquo;
 kind of view there are three places to put types</p><ol><li>function parameters</li><li>value(val or let binding in haskell and the like)</li><li>function <a href=http://en.wikipedia.org/wiki/Return_type title="Return type">return
-type</a></li></ol><p>Even though Miles&rsquo; encoding with <a href=http://en.wikipedia.org/wiki/Curry%E2%80%93Howard_correspondence title="Curry–Howard correspondence">Curry-Howard
+type</a></li></ol><p>Even though Miles' encoding with <a href=http://en.wikipedia.org/wiki/Curry%E2%80%93Howard_correspondence title="Curry–Howard correspondence">Curry-Howard
 isomorphism</a>
-is ingenious it only applies to point 1. Let's fix that! Oh yeah you
+is ingenious it only applies to point 1. Let&rsquo;s fix that! Oh yeah you
 could also use Either but that adds up boilerplate(even with implicits!)
 and packing. And I want my union types unboxed.</p><h3 id=enter-type-tags>Enter type tags</h3><p>I first saw this idea in Scalaz and immediately clicked with me. The
-idea is to combine structural types with existing types. You don't touch
+idea is to combine structural types with existing types. You don&rsquo;t touch
 the value, just enhance the compile-time type with a tag. Structural
 types are, well types that care about structure not name(JVM has nominal
 type system) and (sadly) use reflection to do stuff at runtime. You can
-even use it do do clean-ish method invocation with reflection.</p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-scala data-lang=scala><span style=color:#66d9ef>type</span> <span style=color:#66d9ef>HasFoo</span> <span style=color:#f92672>=</span> <span style=color:#f92672>{</span> <span style=color:#66d9ef>def</span> foo<span style=color:#f92672>(</span><span style=color:#f92672>)</span><span style=color:#66d9ef>:</span> <span style=color:#66d9ef>Bar</span> <span style=color:#f92672>}</span>
-<span style=color:#f92672>(</span>a<span style=color:#66d9ef>:</span><span style=color:#66d9ef>Any</span><span style=color:#f92672>)</span><span style=color:#f92672>.</span>asInstanceOf<span style=color:#f92672>[</span><span style=color:#66d9ef>HasFoo</span><span style=color:#f92672>]</span><span style=color:#f92672>.</span>foo<span style=color:#f92672>(</span><span style=color:#f92672>)</span>
+even use it do do clean-ish method invocation with reflection.</p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-scala data-lang=scala><span style=color:#66d9ef>type</span> <span style=color:#66d9ef>HasFoo</span> <span style=color:#f92672>=</span> <span style=color:#f92672>{</span> <span style=color:#66d9ef>def</span> foo<span style=color:#f92672>()</span><span style=color:#66d9ef>:</span> <span style=color:#66d9ef>Bar</span> <span style=color:#f92672>}</span>
+<span style=color:#f92672>(</span>a<span style=color:#66d9ef>:</span><span style=color:#66d9ef>Any</span><span style=color:#f92672>).</span>asInstanceOf<span style=color:#f92672>[</span><span style=color:#66d9ef>HasFoo</span><span style=color:#f92672>].</span>foo<span style=color:#f92672>()</span>
 <span style=color:#75715e>//or even
-</span><span style=color:#75715e></span><span style=color:#f92672>(</span>a<span style=color:#66d9ef>:</span><span style=color:#66d9ef>Any</span><span style=color:#f92672>)</span><span style=color:#f92672>.</span>asInstanceOf<span style=color:#f92672>[</span><span style=color:#f92672>{</span><span style=color:#66d9ef>def</span> <span style=color:#66d9ef>bar</span><span style=color:#66d9ef>:</span> <span style=color:#66d9ef>Int</span><span style=color:#f92672>}</span><span style=color:#f92672>]</span><span style=color:#f92672>.</span>bar
+</span><span style=color:#75715e></span><span style=color:#f92672>(</span>a<span style=color:#66d9ef>:</span><span style=color:#66d9ef>Any</span><span style=color:#f92672>).</span>asInstanceOf<span style=color:#f92672>[{</span><span style=color:#66d9ef>def</span> <span style=color:#66d9ef>bar:</span> <span style=color:#66d9ef>Int</span><span style=color:#f92672>}].</span>bar
 </code></pre></div><p>But at compile-time they play along very nicely. Only concern if you
-don't want reflection is not to use anything at runtime. But you can use
+don&rsquo;t want reflection is not to use anything at runtime. But you can use
 type members! They only appear at compilation so this works out perfect.
 From scalaz</p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-scala data-lang=scala><span style=color:#66d9ef>type</span> <span style=color:#66d9ef>Tagged</span><span style=color:#f92672>[</span><span style=color:#66d9ef>U</span><span style=color:#f92672>]</span> <span style=color:#66d9ef>=</span> <span style=color:#f92672>{</span><span style=color:#66d9ef>type</span> <span style=color:#66d9ef>Tag</span><span style=color:#f92672>=</span>U<span style=color:#f92672>}</span>
 <span style=color:#66d9ef>type</span> <span style=color:#66d9ef>@@</span><span style=color:#f92672>[</span><span style=color:#66d9ef>V</span>,<span style=color:#66d9ef>T</span><span style=color:#f92672>]</span> <span style=color:#66d9ef>=</span> V <span style=color:#66d9ef>with</span> <span style=color:#a6e22e>Tagged</span><span style=color:#f92672>[</span><span style=color:#66d9ef>T</span><span style=color:#f92672>]</span>
 
 <span style=color:#66d9ef>type</span> <span style=color:#66d9ef>ExampleTaggedType</span> <span style=color:#f92672>=</span> <span style=color:#a6e22e>Foo</span> <span style=color:#f92672>@@</span> <span style=color:#a6e22e>Bar</span>
 
-<span style=color:#66d9ef>implicit</span> <span style=color:#66d9ef>class</span> <span style=color:#a6e22e>Taggable</span><span style=color:#f92672>[</span><span style=color:#66d9ef>A</span><span style=color:#f92672>]</span><span style=color:#f92672>(</span>value<span style=color:#66d9ef>:</span> <span style=color:#66d9ef>A</span><span style=color:#f92672>)</span><span style=color:#f92672>{</span>
+<span style=color:#66d9ef>implicit</span> <span style=color:#66d9ef>class</span> <span style=color:#a6e22e>Taggable</span><span style=color:#f92672>[</span><span style=color:#66d9ef>A</span><span style=color:#f92672>](</span>value<span style=color:#66d9ef>:</span> <span style=color:#66d9ef>A</span><span style=color:#f92672>){</span>
   <span style=color:#66d9ef>def</span> tag<span style=color:#f92672>[</span><span style=color:#66d9ef>T</span><span style=color:#f92672>]</span> <span style=color:#66d9ef>=</span> value<span style=color:#f92672>.</span>asInstanceOf<span style=color:#f92672>[</span><span style=color:#66d9ef>A</span> <span style=color:#66d9ef>@@</span> <span style=color:#66d9ef>T</span><span style=color:#f92672>]</span>
 <span style=color:#f92672>}</span>
 
 <span style=color:#66d9ef>val</span> a <span style=color:#66d9ef>=</span> <span style=color:#a6e22e>SomeType</span> <span style=color:#f92672>@@</span> <span style=color:#a6e22e>Baz</span> <span style=color:#66d9ef>=</span> someValue<span style=color:#f92672>.</span>tag<span style=color:#f92672>[</span><span style=color:#66d9ef>Baz</span><span style=color:#f92672>]</span>
 </code></pre></div><p>Tagged is just a conversion between a regular generic and a structural
-type with Tag member Type. This allows you to define @@ - that's simple
+type with Tag member Type. This allows you to define @@ - that&rsquo;s simple
 too: it takes the type and mixes in the structural tag. Foo @@ Bar now
 means type Foo but with tag Bar, the only difference between them is
 that values of type Foo @@ Bar now have a member type Tag that will
@@ -56,7 +56,7 @@ subtyping as in &ldquo;if A is subtype of B and C is subtype of D then A @@ C
 is also subtype of B @@ D&rdquo;. Technical term for this is covariance. And
 with classes is done by simply adding pluses to <a href=http://en.wikipedia.org/wiki/Type_signature title="Type signature">type
 signature</a>
-like type @@[+V,+T]=&mldr; but this doesn't work for types. You get a
+like type @@[+V,+T]=&mldr; but this doesn&rsquo;t work for types. You get a
 compile error as type parameters are used in non-covariant positions.
 Luckily we can work around this with use-site subtyping. Instead of
 using type A @@ B you can use X @@ Y for some types X and Y. Quite
@@ -64,36 +64,36 @@ literaly with this syntax</p><div class=highlight><pre style=color:#f8f8f2;backg
 </code></pre></div><p>And these are <a href=http://en.wikipedia.org/wiki/Type_system title="Type system">existential
 types</a>. Because
 X and Y have to exist. Simple. There is some sugar with _(as usual) but
-it doesn't work at all places; let's not get into detail.</p><h3 id=either-or-should-i-say-union>Either, or should I say Union</h3><p>Now that we have the necessary foundation lets take a look at making
+it doesn&rsquo;t work at all places; let&rsquo;s not get into detail.</p><h3 id=either-or-should-i-say-union>Either, or should I say Union</h3><p>Now that we have the necessary foundation lets take a look at making
 unboxed version of Either from scala standard library. Conversion is
 pretty simple: instead of boxing into Left and Right, tag with Left and
 Right. And instead of being of type Either a value will be some type
 tagged with Either. I first implemented this with my type hierarchy only
-to realize I reimplemented(without real functionality) Either.</p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-scala data-lang=scala><span style=color:#66d9ef>type</span> <span style=color:#66d9ef>Or</span><span style=color:#f92672>[</span><span style=color:#66d9ef>A</span>,<span style=color:#66d9ef>B</span><span style=color:#f92672>]</span> <span style=color:#66d9ef>=</span> <span style=color:#f92672>@@</span><span style=color:#f92672>[</span><span style=color:#66d9ef>_</span>, <span style=color:#66d9ef>_</span> <span style=color:#66d9ef>&lt;:</span> <span style=color:#66d9ef>Either</span><span style=color:#f92672>[</span><span style=color:#66d9ef>A</span>,<span style=color:#66d9ef>B</span><span style=color:#f92672>]</span><span style=color:#f92672>]</span>
+to realize I reimplemented(without real functionality) Either.</p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-scala data-lang=scala><span style=color:#66d9ef>type</span> <span style=color:#66d9ef>Or</span><span style=color:#f92672>[</span><span style=color:#66d9ef>A</span>,<span style=color:#66d9ef>B</span><span style=color:#f92672>]</span> <span style=color:#66d9ef>=</span> <span style=color:#f92672>@@[</span><span style=color:#66d9ef>_</span>, <span style=color:#66d9ef>_</span> <span style=color:#66d9ef>&lt;:</span> <span style=color:#66d9ef>Either</span><span style=color:#f92672>[</span><span style=color:#66d9ef>A</span>,<span style=color:#66d9ef>B</span><span style=color:#f92672>]]</span>
 
-<span style=color:#66d9ef>implicit</span> <span style=color:#66d9ef>def</span> any2taggedLeft<span style=color:#f92672>[</span><span style=color:#66d9ef>A</span><span style=color:#f92672>]</span><span style=color:#f92672>(</span>a<span style=color:#66d9ef>:</span><span style=color:#66d9ef>A</span><span style=color:#f92672>)</span><span style=color:#66d9ef>:</span> <span style=color:#66d9ef>A</span> <span style=color:#66d9ef>Or</span> <span style=color:#66d9ef>Nothing</span> <span style=color:#f92672>=</span> a<span style=color:#f92672>.</span>tag<span style=color:#f92672>[</span><span style=color:#66d9ef>Left</span><span style=color:#f92672>[</span><span style=color:#66d9ef>A</span>,<span style=color:#66d9ef>Nothing</span><span style=color:#f92672>]</span><span style=color:#f92672>]</span>
+<span style=color:#66d9ef>implicit</span> <span style=color:#66d9ef>def</span> any2taggedLeft<span style=color:#f92672>[</span><span style=color:#66d9ef>A</span><span style=color:#f92672>](</span>a<span style=color:#66d9ef>:</span><span style=color:#66d9ef>A</span><span style=color:#f92672>)</span><span style=color:#66d9ef>:</span> <span style=color:#66d9ef>A</span> <span style=color:#66d9ef>Or</span> <span style=color:#66d9ef>Nothing</span> <span style=color:#f92672>=</span> a<span style=color:#f92672>.</span>tag<span style=color:#f92672>[</span><span style=color:#66d9ef>Left</span><span style=color:#f92672>[</span><span style=color:#66d9ef>A</span>,<span style=color:#66d9ef>Nothing</span><span style=color:#f92672>]]</span>
 
-<span style=color:#66d9ef>implicit</span> <span style=color:#66d9ef>def</span> any2taggedRight<span style=color:#f92672>[</span><span style=color:#66d9ef>A</span><span style=color:#f92672>]</span><span style=color:#f92672>(</span>a<span style=color:#66d9ef>:</span><span style=color:#66d9ef>A</span><span style=color:#f92672>)</span><span style=color:#66d9ef>:</span> <span style=color:#66d9ef>Nothing</span> <span style=color:#66d9ef>Or</span> <span style=color:#66d9ef>A</span><span style=color:#f92672>=</span> a<span style=color:#f92672>.</span>tag<span style=color:#f92672>[</span><span style=color:#66d9ef>Right</span><span style=color:#f92672>[</span><span style=color:#66d9ef>Nothing</span>,<span style=color:#66d9ef>A</span><span style=color:#f92672>]</span><span style=color:#f92672>]</span>
+<span style=color:#66d9ef>implicit</span> <span style=color:#66d9ef>def</span> any2taggedRight<span style=color:#f92672>[</span><span style=color:#66d9ef>A</span><span style=color:#f92672>](</span>a<span style=color:#66d9ef>:</span><span style=color:#66d9ef>A</span><span style=color:#f92672>)</span><span style=color:#66d9ef>:</span> <span style=color:#66d9ef>Nothing</span> <span style=color:#66d9ef>Or</span> <span style=color:#66d9ef>A</span><span style=color:#f92672>=</span> a<span style=color:#f92672>.</span>tag<span style=color:#f92672>[</span><span style=color:#66d9ef>Right</span><span style=color:#f92672>[</span><span style=color:#66d9ef>Nothing</span>,<span style=color:#66d9ef>A</span><span style=color:#f92672>]]</span>
 </code></pre></div><p>There is Or type(intended for inline use) that equals something tagged
-with something that's a subtype of Either[A,B] - this is anonymous use
+with something that&rsquo;s a subtype of Either[A,B] - this is anonymous use
 site subtyping, a workaround for not being able to make tags covariant.
-And that's pretty much all there is to it. The two implicits are just
+And that&rsquo;s pretty much all there is to it. The two implicits are just
 for automatic tagging so you can use regular types and compiler will tag
 them for you to type check union types. And when this code compiled and
 worked I started cheering. Let me replace my current lack of enthusiasm
-by use examples to let you fully gasp the implications on your own.</p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-scala data-lang=scala><span style=color:#66d9ef>def</span> id<span style=color:#f92672>[</span><span style=color:#66d9ef>A</span><span style=color:#f92672>]</span><span style=color:#f92672>(</span>a<span style=color:#66d9ef>:</span><span style=color:#66d9ef>A</span><span style=color:#f92672>)</span><span style=color:#66d9ef>:</span><span style=color:#66d9ef>A</span><span style=color:#f92672>=</span>a <span style=color:#75715e>//a helper for testing parameter types
+by use examples to let you fully gasp the implications on your own.</p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-scala data-lang=scala><span style=color:#66d9ef>def</span> id<span style=color:#f92672>[</span><span style=color:#66d9ef>A</span><span style=color:#f92672>](</span>a<span style=color:#66d9ef>:</span><span style=color:#66d9ef>A</span><span style=color:#f92672>)</span><span style=color:#66d9ef>:</span><span style=color:#66d9ef>A</span><span style=color:#f92672>=</span>a <span style=color:#75715e>//a helper for testing parameter types
 </span><span style=color:#75715e></span>
 <span style=color:#66d9ef>val</span> a<span style=color:#66d9ef>:</span> <span style=color:#66d9ef>Int</span> <span style=color:#66d9ef>Or</span> <span style=color:#66d9ef>String</span> <span style=color:#f92672>=</span> <span style=color:#ae81ff>1</span>
 <span style=color:#66d9ef>val</span> b<span style=color:#66d9ef>:</span> <span style=color:#66d9ef>Int</span> <span style=color:#66d9ef>Or</span> <span style=color:#66d9ef>String</span> <span style=color:#f92672>=</span> <span style=color:#e6db74>&#34;hi&#34;</span>
 <span style=color:#66d9ef>val</span> c<span style=color:#66d9ef>:</span> <span style=color:#66d9ef>Int</span> <span style=color:#66d9ef>Or</span> <span style=color:#66d9ef>String</span> <span style=color:#f92672>=</span> <span style=color:#ae81ff>1.2</span> <span style=color:#75715e>//does not compile
 </span><span style=color:#75715e></span>
-id<span style=color:#f92672>[</span><span style=color:#66d9ef>Int</span> <span style=color:#66d9ef>Or</span> <span style=color:#66d9ef>String</span><span style=color:#f92672>]</span><span style=color:#f92672>(</span><span style=color:#ae81ff>1</span><span style=color:#f92672>)</span>
-id<span style=color:#f92672>[</span><span style=color:#66d9ef>Int</span> <span style=color:#66d9ef>Or</span> <span style=color:#66d9ef>String</span><span style=color:#f92672>]</span><span style=color:#f92672>(</span><span style=color:#e6db74>&#34;hi&#34;</span><span style=color:#f92672>)</span>
-id<span style=color:#f92672>[</span><span style=color:#66d9ef>Int</span> <span style=color:#66d9ef>Or</span> <span style=color:#66d9ef>String</span><span style=color:#f92672>[</span><span style=color:#f92672>(</span><span style=color:#960050;background-color:#1e0010>1</span><span style=color:#66d9ef>.</span><span style=color:#960050;background-color:#1e0010>2</span><span style=color:#f92672>)</span> <span style=color:#66d9ef>//</span><span style=color:#66d9ef>does</span> <span style=color:#66d9ef>not</span> <span style=color:#66d9ef>compile</span>
+id<span style=color:#f92672>[</span><span style=color:#66d9ef>Int</span> <span style=color:#66d9ef>Or</span> <span style=color:#66d9ef>String</span><span style=color:#f92672>](</span><span style=color:#ae81ff>1</span><span style=color:#f92672>)</span>
+id<span style=color:#f92672>[</span><span style=color:#66d9ef>Int</span> <span style=color:#66d9ef>Or</span> <span style=color:#66d9ef>String</span><span style=color:#f92672>](</span><span style=color:#e6db74>&#34;hi&#34;</span><span style=color:#f92672>)</span>
+id<span style=color:#f92672>[</span><span style=color:#66d9ef>Int</span> <span style=color:#66d9ef>Or</span> <span style=color:#66d9ef>String</span><span style=color:#f92672>[(</span><span style=color:#960050;background-color:#1e0010>1</span><span style=color:#66d9ef>.</span><span style=color:#960050;background-color:#1e0010>2</span><span style=color:#f92672>)</span> <span style=color:#66d9ef>//does</span> <span style=color:#66d9ef>not</span> <span style=color:#66d9ef>compile</span>
 
-<span style=color:#66d9ef>def</span> <span style=color:#66d9ef>f</span><span style=color:#f92672>(</span><span style=color:#66d9ef>n</span><span style=color:#66d9ef>:</span> <span style=color:#66d9ef>Int</span><span style=color:#f92672>)</span><span style=color:#66d9ef>:</span> <span style=color:#66d9ef>Int</span> <span style=color:#66d9ef>Or</span> <span style=color:#66d9ef>String</span> <span style=color:#66d9ef>=</span>
-  <span style=color:#66d9ef>if</span><span style=color:#f92672>(</span><span style=color:#66d9ef>n</span><span style=color:#66d9ef>&gt;</span><span style=color:#960050;background-color:#1e0010>0</span><span style=color:#f92672>)</span>
-    <span style=color:#66d9ef>n</span><span style=color:#66d9ef>:</span> <span style=color:#66d9ef>Int</span> <span style=color:#66d9ef>Or</span> <span style=color:#66d9ef>String</span>
+<span style=color:#66d9ef>def</span> <span style=color:#66d9ef>f</span><span style=color:#f92672>(</span><span style=color:#66d9ef>n:</span> <span style=color:#66d9ef>Int</span><span style=color:#f92672>)</span><span style=color:#66d9ef>:</span> <span style=color:#66d9ef>Int</span> <span style=color:#66d9ef>Or</span> <span style=color:#66d9ef>String</span> <span style=color:#66d9ef>=</span>
+  <span style=color:#66d9ef>if</span><span style=color:#f92672>(</span><span style=color:#66d9ef>n&gt;</span><span style=color:#960050;background-color:#1e0010>0</span><span style=color:#f92672>)</span>
+    <span style=color:#66d9ef>n:</span> <span style=color:#66d9ef>Int</span> <span style=color:#66d9ef>Or</span> <span style=color:#66d9ef>String</span>
   <span style=color:#66d9ef>else</span>
     <span style=color:#960050;background-color:#1e0010>&#34;</span><span style=color:#66d9ef>n</span> <span style=color:#66d9ef>is</span> <span style=color:#66d9ef>negative</span><span style=color:#960050;background-color:#1e0010>&#34;</span><span style=color:#66d9ef>:</span> <span style=color:#66d9ef>Int</span> <span style=color:#66d9ef>Or</span> <span style=color:#66d9ef>String</span>
 </code></pre></div><p>As you can see all three requirements from the intro are satisfied while
@@ -101,12 +101,12 @@ keeping values unboxed. There are some rough edges unfortunately.
 Compiler refuses to insert tags without explicit type annotations that
 inform it to insert implicit conversions. Which is kinda weird because
 it work for regular Either. Still looking into that. And the real
-letdown is pattern matching. You can't match against types&mldr;compiler
-just complains about these types not being possible. And it's kinda
-right since String isn't in fact a subtype of Or[String,Int]. Luckily
-there's a workaround that's not too ugly.</p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-scala data-lang=scala><span style=color:#f92672>(</span>a<span style=color:#66d9ef>:</span><span style=color:#66d9ef>Any</span><span style=color:#f92672>)</span> <span style=color:#66d9ef>match</span> <span style=color:#f92672>{</span>
-  <span style=color:#66d9ef>case</span> <span style=color:#66d9ef>_</span><span style=color:#66d9ef>:</span><span style=color:#66d9ef>String</span> <span style=color:#f92672>=&gt;</span> <span style=color:#e6db74>&#34;string&#34;</span>
-  <span style=color:#66d9ef>case</span> <span style=color:#66d9ef>_</span><span style=color:#66d9ef>:</span><span style=color:#66d9ef>Int</span> <span style=color:#f92672>=&gt;</span> <span style=color:#e6db74>&#34;int&#34;</span>
+letdown is pattern matching. You can&rsquo;t match against types&mldr;compiler
+just complains about these types not being possible. And it&rsquo;s kinda
+right since String isn&rsquo;t in fact a subtype of Or[String,Int]. Luckily
+there&rsquo;s a workaround that&rsquo;s not too ugly.</p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-scala data-lang=scala><span style=color:#f92672>(</span>a<span style=color:#66d9ef>:</span><span style=color:#66d9ef>Any</span><span style=color:#f92672>)</span> <span style=color:#66d9ef>match</span> <span style=color:#f92672>{</span>
+  <span style=color:#66d9ef>case</span> <span style=color:#66d9ef>_:</span><span style=color:#66d9ef>String</span> <span style=color:#f92672>=&gt;</span> <span style=color:#e6db74>&#34;string&#34;</span>
+  <span style=color:#66d9ef>case</span> <span style=color:#66d9ef>_:</span><span style=color:#66d9ef>Int</span> <span style=color:#f92672>=&gt;</span> <span style=color:#e6db74>&#34;int&#34;</span>
 <span style=color:#f92672>}</span>
 </code></pre></div><p>I have an idea how to solve both issues but it involves forking scala
 standard library and is thus (much) less portable. Of course if anyone

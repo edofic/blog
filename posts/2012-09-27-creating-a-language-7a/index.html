@@ -27,23 +27,23 @@ before implementing any of them. Considering my implementation of
 scopes(which I like) and shadowing I got this great idea that functions,
 scopes and objects are just many faces of the same thing. Or &ldquo;could be&rdquo;
 many faces of the same thing. Something a bit more powerful than a
-function being the &ldquo;thing&rdquo;. Let's see how that works. A function in this
+function being the &ldquo;thing&rdquo;. Let&rsquo;s see how that works. A function in this
 language needs a new <a href=http://en.wikipedia.org/wiki/Local_variable title="Local variable">local
 scope</a> for
 every execution(not all functions, but this is a simplification because
-I don't care about performance, see <a href=/posts/2012-09-25-creating-a-language-6>previous
+I don&rsquo;t care about performance, see <a href=/posts/2012-09-25-creating-a-language-6>previous
 post</a>
 for details). New scope. New something. New. Bells should be ringing
-right now. I'm creating objects. I could just as well pass the reference
-to that object. I even have the reference. It's current scope - &ldquo;this&rdquo;
+right now. I&rsquo;m creating objects. I could just as well pass the reference
+to that object. I even have the reference. It&rsquo;s current scope - &ldquo;this&rdquo;
 in scala code. So I just need a <a href=http://en.wikipedia.org/wiki/Language_construct title="Language construct">language
 construct</a>
 to access that. How about &ldquo;this&rdquo;.</p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-scala data-lang=scala><span style=color:#75715e>//in SScope body
 </span><span style=color:#75715e></span>map<span style=color:#f92672>.</span>put<span style=color:#f92672>(</span><span style=color:#e6db74>&#34;this&#34;</span><span style=color:#f92672>,</span> <span style=color:#66d9ef>this</span><span style=color:#f92672>)</span>
 </code></pre></div><p>Not even a language construct, just a magic variable. You can even
 shadow it. Anticlimactic? I hope so. The whole point of object is that
-it's just another view on function. I could end the post here but I want
-to show why this is awesome(and therefore why I'm proud of it)</p><h3 id=privates>Privates</h3><p>You don't even need access modifiers, you can use shadowing and nesting</p><pre><code>func private(n) {
+it&rsquo;s just another view on function. I could end the post here but I want
+to show why this is awesome(and therefore why I&rsquo;m proud of it)</p><h3 id=privates>Privates</h3><p>You don&rsquo;t even need access modifiers, you can use shadowing and nesting</p><pre><code>func private(n) {
     that = this
     func (){
         func get() { that.n }

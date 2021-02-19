@@ -17,7 +17,7 @@ Surjective composition: the first function need not be surjective. (Photo credit
 For example in a
 <a href=http://en.wikipedia.org/wiki/Compiler title=Compiler>compiler</a> you take
 your source, <a href=http://en.wikipedia.org/wiki/Parsing title=Parsing>parse</a>,
-check, optimize and generate code(in a nutshell). It's a linear series
+check, optimize and generate code(in a nutshell). It&rsquo;s a linear series
 of transformations -> perfect for <a href=http://en.wikipedia.org/wiki/Function_composition title="Function composition">function
 composition</a>
 In <a href=http://haskell.org/ title="Haskell (programming language)">Haskell</a> you
@@ -37,28 +37,28 @@ syntax:</p><pre><code>compile = parse --&gt; check --&gt; optimize --&gt; codege
 </code></pre><p><a href=http://en.wikipedia.org/wiki/Functional_programming title="Functional programming">Functional programming</a>
 can be imagined as a <a href=http://swizec.com/blog/my-brain-cant-handle-oop-anymore/swizec/4320>waterfall of data</a>,
 flowing from one function into the next, and the <code>--></code> operator
-represents this nicely. Let's go a step further. If the composition is
+represents this nicely. Let&rsquo;s go a step further. If the composition is
 one-off, and this is a waterfall of
 <a href=http://en.wikipedia.org/wiki/Data title=Data>DATA</a> it could be nice to
 represent that. Something like</p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-scala data-lang=scala><span style=color:#66d9ef>val</span> result <span style=color:#66d9ef>=</span> source <span style=color:#f92672>--&gt;</span> parse <span style=color:#f92672>--&gt;</span> check <span style=color:#f92672>--&gt;</span> optimize <span style=color:#f92672>--&gt;</span> codegen
-</code></pre></div><p>So now I'm taking a value and sending it through black boxes. Very nice.
-Apart from the fact it doesn't work(yet!).</p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-scala data-lang=scala><span style=color:#66d9ef>implicit</span> <span style=color:#66d9ef>def</span> any2waterfall<span style=color:#f92672>[</span><span style=color:#66d9ef>A</span><span style=color:#f92672>]</span><span style=color:#f92672>(</span>a<span style=color:#66d9ef>:</span> <span style=color:#66d9ef>A</span><span style=color:#f92672>)</span> <span style=color:#66d9ef>=</span> <span style=color:#66d9ef>new</span> <span style=color:#a6e22e>AnyRef</span><span style=color:#f92672>{</span>
-  <span style=color:#66d9ef>def</span> <span style=color:#f92672>--&gt;</span><span style=color:#f92672>[</span><span style=color:#66d9ef>B</span><span style=color:#f92672>]</span><span style=color:#f92672>(</span>f<span style=color:#66d9ef>:</span> <span style=color:#66d9ef>A</span><span style=color:#f92672>=&gt;</span>B<span style=color:#f92672>)</span> <span style=color:#66d9ef>=</span> f<span style=color:#f92672>(</span>a<span style=color:#f92672>)</span>
+</code></pre></div><p>So now I&rsquo;m taking a value and sending it through black boxes. Very nice.
+Apart from the fact it doesn&rsquo;t work(yet!).</p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-scala data-lang=scala><span style=color:#66d9ef>implicit</span> <span style=color:#66d9ef>def</span> any2waterfall<span style=color:#f92672>[</span><span style=color:#66d9ef>A</span><span style=color:#f92672>](</span>a<span style=color:#66d9ef>:</span> <span style=color:#66d9ef>A</span><span style=color:#f92672>)</span> <span style=color:#66d9ef>=</span> <span style=color:#66d9ef>new</span> <span style=color:#a6e22e>AnyRef</span><span style=color:#f92672>{</span>
+  <span style=color:#66d9ef>def</span> <span style=color:#f92672>--&gt;[</span><span style=color:#66d9ef>B</span><span style=color:#f92672>](</span>f<span style=color:#66d9ef>:</span> <span style=color:#66d9ef>A</span><span style=color:#f92672>=&gt;</span>B<span style=color:#f92672>)</span> <span style=color:#66d9ef>=</span> f<span style=color:#f92672>(</span>a<span style=color:#f92672>)</span>
 <span style=color:#f92672>}</span>
-</code></pre></div><p><a href=http://www.scala-lang.org/ title="Scala (programming language)">Scala</a>&lsquo;s
+</code></pre></div><p><a href=http://www.scala-lang.org/ title="Scala (programming language)">Scala</a>&rsquo;s
 awesome compiler can handle two implicit conversions with same method
 names. Nice. You can even mix and match</p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-scala data-lang=scala><span style=color:#66d9ef>val</span> result <span style=color:#66d9ef>=</span> source <span style=color:#f92672>--&gt;</span> <span style=color:#f92672>(</span>parse <span style=color:#f92672>--&gt;</span> check <span style=color:#f92672>--&gt;</span> optimize<span style=color:#f92672>)</span> <span style=color:#f92672>--&gt;</span> codegen
 </code></pre></div><p>This does the composition of parse, check and optimize into an anonymous
-function, applies it to the source and then applies codegen to it's
-result.</p><h3 id=goin-async>Goin async</h3><p>What about asynchronous calls? Can I compose those too? I think it's
-possible with Lift actors(or with scalaz's?), but I needed to integrate
-that into <a href=http://code.google.com/android/ title=Android>Android</a>&lsquo;s
+function, applies it to the source and then applies codegen to it&rsquo;s
+result.</p><h3 id=goin-async>Goin async</h3><p>What about asynchronous calls? Can I compose those too? I think it&rsquo;s
+possible with Lift actors(or with scalaz&rsquo;s?), but I needed to integrate
+that into <a href=http://code.google.com/android/ title=Android>Android</a>&rsquo;s
 activities quite recently. Well I did not <em>need</em> to do it, but it was
 quite a nice solution.</p><p>The usual way of doing things async in Android is with
-the conveniently named AsyncTask. The problem is - you can't subclass it
+the conveniently named AsyncTask. The problem is - you can&rsquo;t subclass it
 in scala because of some compiler bug regarding varargs parameters.
-Silly.</p><p>So let's do a lightweight(in terms of code) substitution. We can &ldquo;spawn
-a thread&rdquo; using scala's actors. And activity can receive messages
+Silly.</p><p>So let&rsquo;s do a lightweight(in terms of code) substitution. We can &ldquo;spawn
+a thread&rdquo; using scala&rsquo;s actors. And activity can receive messages
 through a Handler.</p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-scala data-lang=scala><span style=color:#66d9ef>import</span> android.os.<span style=color:#f92672>{</span><span style=color:#a6e22e>Message</span><span style=color:#f92672>,</span> <span style=color:#a6e22e>Handler</span><span style=color:#f92672>}</span>
 
 <span style=color:#66d9ef>trait</span> <span style=color:#a6e22e>MessageHandler</span> <span style=color:#f92672>{</span>
@@ -70,7 +70,7 @@ through a Handler.</p><div class=highlight><pre style=color:#f8f8f2;background-c
 
   <span style=color:#66d9ef>def</span> react<span style=color:#f92672>(</span>msg<span style=color:#66d9ef>:</span> <span style=color:#66d9ef>AnyRef</span><span style=color:#f92672>)</span>
 
-  <span style=color:#66d9ef>def</span> <span style=color:#f92672>!</span><span style=color:#f92672>(</span>message<span style=color:#66d9ef>:</span> <span style=color:#66d9ef>AnyRef</span><span style=color:#f92672>)</span> <span style=color:#f92672>{</span>
+  <span style=color:#66d9ef>def</span> <span style=color:#f92672>!(</span>message<span style=color:#66d9ef>:</span> <span style=color:#66d9ef>AnyRef</span><span style=color:#f92672>)</span> <span style=color:#f92672>{</span>
    <span style=color:#66d9ef>val</span> msg <span style=color:#66d9ef>=</span> <span style=color:#66d9ef>new</span> <span style=color:#a6e22e>Message</span>
    msg<span style=color:#f92672>.</span>obj <span style=color:#66d9ef>=</span> message
    handler<span style=color:#f92672>.</span>sendMessage<span style=color:#f92672>(</span>msg<span style=color:#f92672>)</span>
@@ -78,21 +78,21 @@ through a Handler.</p><div class=highlight><pre style=color:#f8f8f2;background-c
 <span style=color:#f92672>}</span>
 </code></pre></div><p>So in an activity that mixes in MessageHandler I can post messages to my
 self. And I can do it async since Handler is thread safe</p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-scala data-lang=scala><span style=color:#66d9ef>def</span> react<span style=color:#f92672>(</span>msg<span style=color:#66d9ef>:</span> <span style=color:#66d9ef>AnyRef</span><span style=color:#f92672>)</span> <span style=color:#66d9ef>=</span> msg <span style=color:#66d9ef>match</span> <span style=color:#f92672>{</span>
-  <span style=color:#66d9ef>case</span> s<span style=color:#66d9ef>:</span> <span style=color:#66d9ef>String</span> <span style=color:#f92672>=</span> <span style=color:#a6e22e>Toast</span><span style=color:#f92672>(</span><span style=color:#66d9ef>this</span><span style=color:#f92672>,</span> s<span style=color:#f92672>,</span> <span style=color:#a6e22e>Toast</span><span style=color:#f92672>.</span><span style=color:#a6e22e>LENGTH_LONG</span><span style=color:#f92672>)</span><span style=color:#f92672>.</span>makeText<span style=color:#f92672>(</span><span style=color:#f92672>)</span>
-  <span style=color:#66d9ef>case</span> <span style=color:#66d9ef>_</span> <span style=color:#66d9ef>=&gt;</span> <span style=color:#f92672>(</span><span style=color:#f92672>)</span>
+  <span style=color:#66d9ef>case</span> s<span style=color:#66d9ef>:</span> <span style=color:#66d9ef>String</span> <span style=color:#f92672>=</span> <span style=color:#a6e22e>Toast</span><span style=color:#f92672>(</span><span style=color:#66d9ef>this</span><span style=color:#f92672>,</span> s<span style=color:#f92672>,</span> <span style=color:#a6e22e>Toast</span><span style=color:#f92672>.</span><span style=color:#a6e22e>LENGTH_LONG</span><span style=color:#f92672>).</span>makeText<span style=color:#f92672>()</span>
+  <span style=color:#66d9ef>case</span> <span style=color:#66d9ef>_</span> <span style=color:#66d9ef>=&gt;</span> <span style=color:#f92672>()</span>
 <span style=color:#f92672>}</span>
 
-<span style=color:#f92672>.</span><span style=color:#f92672>.</span><span style=color:#f92672>.</span>
+<span style=color:#f92672>...</span>
 <span style=color:#75715e>//somewhere inside UI thread
 </span><span style=color:#75715e></span><span style=color:#66d9ef>import</span> actors.Actor.actor
 <span style=color:#66d9ef>val</span> that <span style=color:#66d9ef>=</span> <span style=color:#66d9ef>this</span>
 actor<span style=color:#f92672>{</span>
-  <span style=color:#66d9ef>val</span> msg <span style=color:#66d9ef>=</span> doExpensiveWork<span style=color:#f92672>(</span><span style=color:#f92672>)</span>
+  <span style=color:#66d9ef>val</span> msg <span style=color:#66d9ef>=</span> doExpensiveWork<span style=color:#f92672>()</span>
   that <span style=color:#f92672>!</span> msg
 <span style=color:#f92672>}</span>
-<span style=color:#f92672>.</span><span style=color:#f92672>.</span><span style=color:#f92672>.</span>
+<span style=color:#f92672>...</span>
 </code></pre></div><p>Not the most concise way to write it, but I believe the most clear one.
-Method doExpensiveWork is done in the background so it doesn't block UI
+Method doExpensiveWork is done in the background so it doesn&rsquo;t block UI
 and it posts the result back as a message.</p><h4 id=asynchttpenwikipediaorgwikiasynchrony-asynchrony-composition---finally><a href=http://en.wikipedia.org/wiki/Asynchrony title=Asynchrony>Async</a> composition - finally</h4><p>What I want to do now is use function composition to do something like</p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-scala data-lang=scala><span style=color:#f92672>(</span>input <span style=color:#f92672>--&gt;</span> expensiveOne <span style=color:#f92672>--&gt;</span> expensiveTwo<span style=color:#f92672>)</span> <span style=color:#f92672>-!&gt;</span> displayResults
 </code></pre></div><p>In other words, do &ldquo;waterfall composition&rdquo; in background using some
 input I have now and post the result back into the UI thread to method
@@ -101,14 +101,14 @@ left side in bg and post it to the right side async. I need a new trait
 for that</p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-scala data-lang=scala><span style=color:#66d9ef>trait</span> <span style=color:#a6e22e>MessageHandlerExec</span> <span style=color:#66d9ef>extends</span> <span style=color:#a6e22e>MessageHandler</span> <span style=color:#f92672>{</span> outer <span style=color:#66d9ef>=&gt;</span>
   <span style=color:#66d9ef>override</span> <span style=color:#66d9ef>protected</span> <span style=color:#66d9ef>val</span> handler <span style=color:#66d9ef>=</span> <span style=color:#66d9ef>new</span> <span style=color:#a6e22e>Handler</span> <span style=color:#f92672>{</span>
     <span style=color:#66d9ef>override</span> <span style=color:#66d9ef>def</span> handleMessage<span style=color:#f92672>(</span>msg<span style=color:#66d9ef>:</span> <span style=color:#66d9ef>Message</span><span style=color:#f92672>)</span> <span style=color:#66d9ef>=</span> msg<span style=color:#f92672>.</span>obj <span style=color:#66d9ef>match</span> <span style=color:#f92672>{</span>
-      <span style=color:#66d9ef>case</span> r<span style=color:#66d9ef>:</span> <span style=color:#66d9ef>Runnable</span> <span style=color:#f92672>=&gt;</span> r<span style=color:#f92672>.</span>run<span style=color:#f92672>(</span><span style=color:#f92672>)</span>
+      <span style=color:#66d9ef>case</span> r<span style=color:#66d9ef>:</span> <span style=color:#66d9ef>Runnable</span> <span style=color:#f92672>=&gt;</span> r<span style=color:#f92672>.</span>run<span style=color:#f92672>()</span>
       <span style=color:#66d9ef>case</span> other<span style=color:#66d9ef>:</span> <span style=color:#66d9ef>AnyRef</span> <span style=color:#f92672>=&gt;</span> react<span style=color:#f92672>(</span>other<span style=color:#f92672>)</span>
     <span style=color:#f92672>}</span>
   <span style=color:#f92672>}</span>
 
-  <span style=color:#66d9ef>implicit</span> <span style=color:#66d9ef>def</span> any2asyncComposable<span style=color:#f92672>[</span><span style=color:#66d9ef>A</span><span style=color:#f92672>]</span><span style=color:#f92672>(</span>a<span style=color:#66d9ef>:</span> <span style=color:#f92672>=&gt;</span> A<span style=color:#f92672>)</span> <span style=color:#66d9ef>=</span> <span style=color:#66d9ef>new</span> <span style=color:#a6e22e>AnyRef</span><span style=color:#f92672>{</span>
-    <span style=color:#66d9ef>def</span> <span style=color:#f92672>-!&gt;</span><span style=color:#f92672>[</span><span style=color:#66d9ef>B</span><span style=color:#f92672>]</span><span style=color:#f92672>(</span>f<span style=color:#66d9ef>:</span> <span style=color:#66d9ef>A</span><span style=color:#f92672>=&gt;</span>B<span style=color:#f92672>)</span> <span style=color:#66d9ef>=</span> outer <span style=color:#f92672>!</span> <span style=color:#66d9ef>new</span> <span style=color:#a6e22e>Runnable</span><span style=color:#f92672>{</span>
-      <span style=color:#66d9ef>def</span> run<span style=color:#f92672>(</span><span style=color:#f92672>)</span> <span style=color:#66d9ef>=</span> f<span style=color:#f92672>(</span>a<span style=color:#f92672>)</span>
+  <span style=color:#66d9ef>implicit</span> <span style=color:#66d9ef>def</span> any2asyncComposable<span style=color:#f92672>[</span><span style=color:#66d9ef>A</span><span style=color:#f92672>](</span>a<span style=color:#66d9ef>:</span> <span style=color:#f92672>=&gt;</span> A<span style=color:#f92672>)</span> <span style=color:#66d9ef>=</span> <span style=color:#66d9ef>new</span> <span style=color:#a6e22e>AnyRef</span><span style=color:#f92672>{</span>
+    <span style=color:#66d9ef>def</span> <span style=color:#f92672>-!&gt;[</span><span style=color:#66d9ef>B</span><span style=color:#f92672>](</span>f<span style=color:#66d9ef>:</span> <span style=color:#66d9ef>A</span><span style=color:#f92672>=&gt;</span>B<span style=color:#f92672>)</span> <span style=color:#66d9ef>=</span> outer <span style=color:#f92672>!</span> <span style=color:#66d9ef>new</span> <span style=color:#a6e22e>Runnable</span><span style=color:#f92672>{</span>
+      <span style=color:#66d9ef>def</span> run<span style=color:#f92672>()</span> <span style=color:#66d9ef>=</span> f<span style=color:#f92672>(</span>a<span style=color:#f92672>)</span>
     <span style=color:#f92672>}</span>
   <span style=color:#f92672>}</span>
 <span style=color:#f92672>}</span>

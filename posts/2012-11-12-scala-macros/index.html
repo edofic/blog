@@ -13,14 +13,14 @@ Andraz Bajt</div></div><div ref=extraContainer class=extra-container><div class=
 <a href=https://twitter.com/edofic><img src=/icons/twitter.svg width=20></a>
 <a href=/index.xml><img src=/icons/rss.svg width=20></a>
 <a href=mailto:edofic@edofic.com><img src=/icons/email.svg width=20></a></div><div id=content><div ref=streamContainer class=stream-container><div class="post-list-container post-list-container-shadow"><div class=post><div class=post-head-wrapper-text-only style="background-image:url('/')"><div class=post-title>Cool Monday - Scala Macros<div class=post-meta><time itemprop=datePublished>2012-11-12</time></div></div></div><div class=post-body-wrapper><div class=post-body><p><a href=http://commons.wikipedia.org/wiki/File%3AGarden_flower_.jpg><img src=http://upload.wikimedia.org/wikipedia/commons/thumb/b/b6/Garden_flower_.jpg/300px-Garden_flower_.jpg alt="Garden flower"></a></p><p>For me the highlight of this week was discovering Bootstrap. I heard of
-it before but never looked into it. Probably because I wasn't doing web
+it before but never looked into it. Probably because I wasn&rsquo;t doing web
 stuff. The thing is bloody awesome. Back on topic.</p><p><a href=http://www.scala-lang.org/ title="Scala (programming language)">Scala</a> 2.10
 RC2 was released this Friday. Considering 2.9 had 3 RC releases, 2.10
 final is probably quite near. And it brings some awesome features. One2
 of them are
 <a href=http://en.wikipedia.org/wiki/Macro_%28computer_science%29 title="Macro (computer science)">macros</a></p><h3 id=macros>Macros</h3><p>So what are macros basically? Code executed at <a href=http://en.wikipedia.org/wiki/Compile_time title="Compile time">compile
 time</a>. And
-that's about it. </p><p>So what is so great about that? Well you can do AST modifications and
+that&rsquo;s about it. </p><p>So what is so great about that? Well you can do AST modifications and
 stuff that gets quite into
 <a href=http://en.wikipedia.org/wiki/Compiler title=Compiler>compiler</a>-plugin
 territory in your regular code. That means you can do pretty advanced
@@ -37,17 +37,17 @@ or validation at compile time. Good library design will be able to
 minimize <a href=http://en.wikipedia.org/wiki/Boilerplate_code title="Boilerplate code">boilerplate
 code</a>
 even further now. And some people will argue that macros make scala even
-harder language.</p><h3 id=type-macros>Type Macros</h3><p>This is the best part for me. But unfortuntely it's not implemented yet.
+harder language.</p><h3 id=type-macros>Type Macros</h3><p>This is the best part for me. But unfortuntely it&rsquo;s not implemented yet.
 Or at least not dcumented. There are some methods with suspisious names
 in the API but no useful documentation. In all presentations this is
 referred to as &ldquo;future work&rdquo; but I still have my fingers crossed it
-makes it into final release.</p><p>So what's the fuss? Automatically generated types. Large scale code-gen. </p><p>As in ability to programatically create types at compile time. As a
+makes it into final release.</p><p>So what&rsquo;s the fuss? Automatically generated types. Large scale code-gen. </p><p>As in ability to programatically create types at compile time. As a
 consequence you can create whole classes with bunch of methods. And I
 already have a <a href=http://en.wikipedia.org/wiki/Use_case title="Use case">use
 case</a> of my own. I
-want to make a typesafe ORM for Android that's super fast. I did
+want to make a typesafe ORM for Android that&rsquo;s super fast. I did
 <a href=https://github.com/edofic/YodaLib>YodaLib</a> ORM while back. It uses
-reflection(although it's fast enough usually) and provides a Cursor that
+reflection(although it&rsquo;s fast enough usually) and provides a Cursor that
 lazily wraps rows into classes. And you need to make sure by hand that
 your class coresponds to columns of your result set. Not very safe. I
 had an idea to make static-typed safe inferface for the database when I
@@ -58,8 +58,8 @@ wrapping every row(possibly filling data in with reflection) would be a
 performance penalty. Not to mention a mess to implement. Now consider
 using a macro to generate code for wrapping. It would be no slower than
 accessing columns by hand. And a type macro would automatically create a
-case class for given projection. Heavens. I'm just waiting for official
-documentation on macros&mldr;this is a tempting project.</p><h3 id=documentation>Documentation</h3><p>Here's <a href=http://scalamacros.org/>scalamacros.org</a> which gives some
+case class for given projection. Heavens. I&rsquo;m just waiting for official
+documentation on macros&mldr;this is a tempting project.</p><h3 id=documentation>Documentation</h3><p>Here&rsquo;s <a href=http://scalamacros.org/>scalamacros.org</a> which gives some
 information. Also s<a href=http://scalamacros.org/talks/2012-04-28-MetaprogrammingInScala210.pdf>ome quite useful
 slides</a>.
 I hope now that 2.10 is in RC things stabilize, because in the milestone
@@ -67,11 +67,11 @@ releases api was changing constantly. <a href=http://www.scala-lang.org/archives
 scaladoc</a>&mldr;.
 Proper documentation is apparently <a href=http://docs.scala-lang.org/sips/pending/self-cleaning-macros.html>coming
 soon</a>,</p><h3 id=le-code>Le Code</h3><p>A use case for macros, loop unrolling.</p><p>Below is a trivial sample of repetitive code.</p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-scala data-lang=scala><span style=color:#66d9ef>class</span> <span style=color:#a6e22e>Manual</span><span style=color:#f92672>{</span>
-  <span style=color:#66d9ef>def</span> show<span style=color:#f92672>(</span>n<span style=color:#66d9ef>:</span> <span style=color:#66d9ef>Int</span><span style=color:#f92672>)</span><span style=color:#f92672>{</span>
+  <span style=color:#66d9ef>def</span> show<span style=color:#f92672>(</span>n<span style=color:#66d9ef>:</span> <span style=color:#66d9ef>Int</span><span style=color:#f92672>){</span>
     println<span style=color:#f92672>(</span><span style=color:#e6db74>&#34;number &#34;</span><span style=color:#f92672>+</span>n<span style=color:#f92672>)</span>
   <span style=color:#f92672>}</span>
 
-  <span style=color:#66d9ef>def</span> code<span style=color:#f92672>(</span><span style=color:#f92672>)</span><span style=color:#f92672>{</span>
+  <span style=color:#66d9ef>def</span> code<span style=color:#f92672>(){</span>
     show<span style=color:#f92672>(</span><span style=color:#ae81ff>1</span><span style=color:#f92672>)</span>
     show<span style=color:#f92672>(</span><span style=color:#ae81ff>2</span><span style=color:#f92672>)</span>
     show<span style=color:#f92672>(</span><span style=color:#ae81ff>3</span><span style=color:#f92672>)</span>
@@ -87,27 +87,27 @@ Protip: use</p><pre><code>scalac -Xprint:parser -Yshow-trees Manual.scala
 </code></pre><p>to see AST after parsing.
 Sometimes(rarely!) you want to unroll the loop to produce same <a href=http://en.wikipedia.org/wiki/Bytecode title=Bytecode>byte
 code</a> as typing all
-the iterations by hand.</p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-scala data-lang=scala><span style=color:#a6e22e>Macros</span><span style=color:#f92672>.</span>unroll<span style=color:#f92672>(</span><span style=color:#ae81ff>1</span><span style=color:#f92672>,</span><span style=color:#ae81ff>5</span><span style=color:#f92672>,</span><span style=color:#ae81ff>1</span><span style=color:#f92672>)</span><span style=color:#f92672>(</span>show<span style=color:#f92672>)</span>
+the iterations by hand.</p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-scala data-lang=scala><span style=color:#a6e22e>Macros</span><span style=color:#f92672>.</span>unroll<span style=color:#f92672>(</span><span style=color:#ae81ff>1</span><span style=color:#f92672>,</span><span style=color:#ae81ff>5</span><span style=color:#f92672>,</span><span style=color:#ae81ff>1</span><span style=color:#f92672>)(</span>show<span style=color:#f92672>)</span>
 </code></pre></div><p>With a proper unroll macro defined. I spent an hour to come up with this
 implementation&mldr;and then scalac started crashing on me&mldr; Is there
 something terrible in my code?
-I gave up and went on to do useful stuff&mldr;But macros hear me! I'll be
+I gave up and went on to do useful stuff&mldr;But macros hear me! I&rsquo;ll be
 back.</p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-scala data-lang=scala><span style=color:#66d9ef>import</span> reflect.macros.Context
 <span style=color:#66d9ef>import</span> scala.language.experimental.macros
 
 <span style=color:#66d9ef>object</span> <span style=color:#a6e22e>Macros</span> <span style=color:#f92672>{</span>
-  <span style=color:#66d9ef>def</span> unroll<span style=color:#f92672>(</span>start<span style=color:#66d9ef>:</span> <span style=color:#66d9ef>Int</span><span style=color:#f92672>,</span> end<span style=color:#66d9ef>:</span> <span style=color:#66d9ef>Int</span><span style=color:#f92672>,</span> step<span style=color:#66d9ef>:</span> <span style=color:#66d9ef>Int</span><span style=color:#f92672>)</span><span style=color:#f92672>(</span>body<span style=color:#66d9ef>:</span> <span style=color:#66d9ef>Int</span> <span style=color:#f92672>=&gt;</span> <span style=color:#a6e22e>Unit</span><span style=color:#f92672>)</span> <span style=color:#66d9ef>=</span> macro unrollImpl
-  <span style=color:#66d9ef>def</span> unrollImpl<span style=color:#f92672>(</span>c<span style=color:#66d9ef>:</span> <span style=color:#66d9ef>Context</span><span style=color:#f92672>)</span><span style=color:#f92672>(</span>start<span style=color:#66d9ef>:</span> <span style=color:#66d9ef>c.Expr</span><span style=color:#f92672>[</span><span style=color:#66d9ef>Int</span><span style=color:#f92672>]</span><span style=color:#f92672>,</span> end<span style=color:#66d9ef>:</span> <span style=color:#66d9ef>c.Expr</span><span style=color:#f92672>[</span><span style=color:#66d9ef>Int</span><span style=color:#f92672>]</span><span style=color:#f92672>,</span> step<span style=color:#66d9ef>:</span> <span style=color:#66d9ef>c.Expr</span><span style=color:#f92672>[</span><span style=color:#66d9ef>Int</span><span style=color:#f92672>]</span><span style=color:#f92672>)</span>
-                <span style=color:#f92672>(</span>body<span style=color:#66d9ef>:</span> <span style=color:#66d9ef>c.Expr</span><span style=color:#f92672>[</span><span style=color:#66d9ef>Int</span> <span style=color:#66d9ef>=&gt;</span> <span style=color:#66d9ef>Unit</span><span style=color:#f92672>]</span><span style=color:#f92672>)</span><span style=color:#66d9ef>:</span> <span style=color:#66d9ef>c.Expr</span><span style=color:#f92672>[</span><span style=color:#66d9ef>Any</span><span style=color:#f92672>]</span> <span style=color:#66d9ef>=</span> <span style=color:#f92672>{</span>
+  <span style=color:#66d9ef>def</span> unroll<span style=color:#f92672>(</span>start<span style=color:#66d9ef>:</span> <span style=color:#66d9ef>Int</span><span style=color:#f92672>,</span> end<span style=color:#66d9ef>:</span> <span style=color:#66d9ef>Int</span><span style=color:#f92672>,</span> step<span style=color:#66d9ef>:</span> <span style=color:#66d9ef>Int</span><span style=color:#f92672>)(</span>body<span style=color:#66d9ef>:</span> <span style=color:#66d9ef>Int</span> <span style=color:#f92672>=&gt;</span> <span style=color:#a6e22e>Unit</span><span style=color:#f92672>)</span> <span style=color:#66d9ef>=</span> macro unrollImpl
+  <span style=color:#66d9ef>def</span> unrollImpl<span style=color:#f92672>(</span>c<span style=color:#66d9ef>:</span> <span style=color:#66d9ef>Context</span><span style=color:#f92672>)(</span>start<span style=color:#66d9ef>:</span> <span style=color:#66d9ef>c.Expr</span><span style=color:#f92672>[</span><span style=color:#66d9ef>Int</span><span style=color:#f92672>],</span> end<span style=color:#66d9ef>:</span> <span style=color:#66d9ef>c.Expr</span><span style=color:#f92672>[</span><span style=color:#66d9ef>Int</span><span style=color:#f92672>],</span> step<span style=color:#66d9ef>:</span> <span style=color:#66d9ef>c.Expr</span><span style=color:#f92672>[</span><span style=color:#66d9ef>Int</span><span style=color:#f92672>])</span>
+                <span style=color:#f92672>(</span>body<span style=color:#66d9ef>:</span> <span style=color:#66d9ef>c.Expr</span><span style=color:#f92672>[</span><span style=color:#66d9ef>Int</span> <span style=color:#66d9ef>=&gt;</span> <span style=color:#66d9ef>Unit</span><span style=color:#f92672>])</span><span style=color:#66d9ef>:</span> <span style=color:#66d9ef>c.Expr</span><span style=color:#f92672>[</span><span style=color:#66d9ef>Any</span><span style=color:#f92672>]</span> <span style=color:#66d9ef>=</span> <span style=color:#f92672>{</span>
     <span style=color:#66d9ef>import</span> c.universe._
-    <span style=color:#66d9ef>val</span> <span style=color:#a6e22e>Literal</span><span style=color:#f92672>(</span><span style=color:#a6e22e>Constant</span><span style=color:#f92672>(</span>start_value<span style=color:#66d9ef>:</span> <span style=color:#66d9ef>Int</span><span style=color:#f92672>)</span><span style=color:#f92672>)</span> <span style=color:#66d9ef>=</span> start<span style=color:#f92672>.</span>tree
-    <span style=color:#66d9ef>val</span> <span style=color:#a6e22e>Literal</span><span style=color:#f92672>(</span><span style=color:#a6e22e>Constant</span><span style=color:#f92672>(</span>end_value<span style=color:#66d9ef>:</span> <span style=color:#66d9ef>Int</span><span style=color:#f92672>)</span><span style=color:#f92672>)</span> <span style=color:#66d9ef>=</span> end<span style=color:#f92672>.</span>tree
-    <span style=color:#66d9ef>val</span> <span style=color:#a6e22e>Literal</span><span style=color:#f92672>(</span><span style=color:#a6e22e>Constant</span><span style=color:#f92672>(</span>step_value<span style=color:#66d9ef>:</span> <span style=color:#66d9ef>Int</span><span style=color:#f92672>)</span><span style=color:#f92672>)</span> <span style=color:#66d9ef>=</span> step<span style=color:#f92672>.</span>tree
+    <span style=color:#66d9ef>val</span> <span style=color:#a6e22e>Literal</span><span style=color:#f92672>(</span><span style=color:#a6e22e>Constant</span><span style=color:#f92672>(</span>start_value<span style=color:#66d9ef>:</span> <span style=color:#66d9ef>Int</span><span style=color:#f92672>))</span> <span style=color:#66d9ef>=</span> start<span style=color:#f92672>.</span>tree
+    <span style=color:#66d9ef>val</span> <span style=color:#a6e22e>Literal</span><span style=color:#f92672>(</span><span style=color:#a6e22e>Constant</span><span style=color:#f92672>(</span>end_value<span style=color:#66d9ef>:</span> <span style=color:#66d9ef>Int</span><span style=color:#f92672>))</span> <span style=color:#66d9ef>=</span> end<span style=color:#f92672>.</span>tree
+    <span style=color:#66d9ef>val</span> <span style=color:#a6e22e>Literal</span><span style=color:#f92672>(</span><span style=color:#a6e22e>Constant</span><span style=color:#f92672>(</span>step_value<span style=color:#66d9ef>:</span> <span style=color:#66d9ef>Int</span><span style=color:#f92672>))</span> <span style=color:#66d9ef>=</span> step<span style=color:#f92672>.</span>tree
     <span style=color:#66d9ef>val</span> invocations <span style=color:#66d9ef>=</span> <span style=color:#a6e22e>Range</span><span style=color:#f92672>(</span>start_value<span style=color:#f92672>,</span> end_value<span style=color:#f92672>,</span> step_value<span style=color:#f92672>)</span> map <span style=color:#f92672>{</span> n <span style=color:#66d9ef>=&gt;</span>
-      <span style=color:#66d9ef>val</span> n_exp <span style=color:#66d9ef>=</span> c<span style=color:#f92672>.</span><span style=color:#a6e22e>Expr</span><span style=color:#f92672>(</span><span style=color:#a6e22e>Literal</span><span style=color:#f92672>(</span><span style=color:#a6e22e>Constant</span><span style=color:#f92672>(</span>n<span style=color:#f92672>)</span><span style=color:#f92672>)</span><span style=color:#f92672>)</span>
-      reify<span style=color:#f92672>{</span><span style=color:#f92672>(</span><span style=color:#f92672>(</span>body<span style=color:#f92672>.</span>splice<span style=color:#f92672>)</span><span style=color:#f92672>(</span>n_exp<span style=color:#f92672>.</span>splice<span style=color:#f92672>)</span><span style=color:#f92672>)</span><span style=color:#f92672>}</span><span style=color:#f92672>.</span>tree
+      <span style=color:#66d9ef>val</span> n_exp <span style=color:#66d9ef>=</span> c<span style=color:#f92672>.</span><span style=color:#a6e22e>Expr</span><span style=color:#f92672>(</span><span style=color:#a6e22e>Literal</span><span style=color:#f92672>(</span><span style=color:#a6e22e>Constant</span><span style=color:#f92672>(</span>n<span style=color:#f92672>)))</span>
+      reify<span style=color:#f92672>{((</span>body<span style=color:#f92672>.</span>splice<span style=color:#f92672>)(</span>n_exp<span style=color:#f92672>.</span>splice<span style=color:#f92672>))}.</span>tree
     <span style=color:#f92672>}</span>
-    c<span style=color:#f92672>.</span><span style=color:#a6e22e>Expr</span><span style=color:#f92672>(</span><span style=color:#a6e22e>Block</span><span style=color:#f92672>(</span>invocations<span style=color:#66d9ef>:</span><span style=color:#66d9ef>_</span><span style=color:#66d9ef>*</span><span style=color:#f92672>)</span><span style=color:#f92672>)</span>
+    c<span style=color:#f92672>.</span><span style=color:#a6e22e>Expr</span><span style=color:#f92672>(</span><span style=color:#a6e22e>Block</span><span style=color:#f92672>(</span>invocations<span style=color:#66d9ef>:_</span><span style=color:#66d9ef>*</span><span style=color:#f92672>))</span>
   <span style=color:#f92672>}</span>
 <span style=color:#f92672>}</span>
 </code></pre></div><hr width=100%><p style=color:#777>Last modified on 2012-11-12</p></div></div><nav class=post-pagination><a class=newer-posts href=/posts/2012-11-17-y-u-no-linux/>Next<br>Why Linux will never win the desktop</a>

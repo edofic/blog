@@ -13,7 +13,7 @@ Andraz Bajt</div></div><div ref=extraContainer class=extra-container><div class=
 <a href=https://twitter.com/edofic><img src=/icons/twitter.svg width=20></a>
 <a href=/index.xml><img src=/icons/rss.svg width=20></a>
 <a href=mailto:edofic@edofic.com><img src=/icons/email.svg width=20></a></div><div id=content><div ref=streamContainer class=stream-container><div class="post-list-container post-list-container-shadow"><div class=post><div class=post-head-wrapper-text-only style="background-image:url('/')"><div class=post-title>NixOS install & labor pains<div class=post-meta><time itemprop=datePublished>2018-01-24</time></div></div></div><div class=post-body-wrapper><div class=post-body><h1 id=the-back-story>The Back Story</h1><p>My first foray into world of Linux happened with Red Hat Linux 6 (original, not
-the enterprise one). It was magical but it didn't stick. See, I was a kid who
+the enterprise one). It was magical but it didn&rsquo;t stick. See, I was a kid who
 liked video games. So it was back to Windows until I finally got serious about
 programming and discovered I the development environment on Linux. So I
 formatted my hard drive and installed Ubuntu. I quickly learned absorbed
@@ -25,26 +25,26 @@ documentation. And everything was great. Until I borked my system doing an
 upgrade or some other system package operation. A few times. Btrfs to the
 rescue! But there must be a better way. (I was doing manual snapshots of the
 root filesystem before any potentially destructive operation.</p><p>Then I heard my colleagues talking about this amazing package manager called
-Nix and the derived distribution - <a href=https://nixos.org>NixOS</a>. It's tag lines
+Nix and the derived distribution - <a href=https://nixos.org>NixOS</a>. It&rsquo;s tag lines
 are (respectively:</p><blockquote><p>The Purely Functional Package Manager</p></blockquote><p>and</p><blockquote><p>The Purely Functional Linux Distribution</p></blockquote><h1 id=the-install>The Install</h1><p>Being the Haskell geek I am, I needed to give it a spin. I tried the Virtual
-Box image but it was weird. It has KDE and I couldn't really figure out how to
-alter it. So I decided to just try to do a fresh install in Virtual Box.</p><p>Turns out the manual pretty much has you covered. It's not Arch Wiki level, but
+Box image but it was weird. It has KDE and I couldn&rsquo;t really figure out how to
+alter it. So I decided to just try to do a fresh install in Virtual Box.</p><p>Turns out the manual pretty much has you covered. It&rsquo;s not Arch Wiki level, but
 good enough to set up a minimal install without any major issues.</p><p>At this point I was so fascinated by the core concepts that I just bit the
 bullet - I decided to install it onto my physical machine. What could possibly
 go wrong?</p><p>So I just created a quick subvolume (Btrfs again!) and rebooted. About half an
 hour later I had a working NixOS install alongside my Arch. It was really
 minimal but I was happy and I built on it quickly. A few evenings of playing
 around later I just switched. I set up pretty much the same environment I had
-before so my work productivity didn't suffer a bit. If anything it was better -
+before so my work productivity didn&rsquo;t suffer a bit. If anything it was better -
 now I no longer feared system upgrades because rollback had my back.</p><h1 id=the-crash>The Crash</h1><p>And then it happened. My hard drive failed and there were issues with the
 external backup as well. I managed to recover data but not the system. No
 biggie - NixOS is trivial to rebuild from the config file. Or so I thought. I
 had to locally rebuild the world, starting from <code>glibc</code>. (I think it was my
-error for using an old boot image.) That took pretty much the whole day.</p><p>So I devised plan for re-installs which I tested out and I'm now documenting
-here for future usage:</p><ol><li>download fresh <code>nixos-unstable</code> image</li><li>boot it and install minimal system with network manager</li><li>boot into the new system</li><li>update channels</li><li>fetch personal config</li><li>rebuild</li></ol><p>With this approach I'm up and running an exact replica of the system in about
+error for using an old boot image.) That took pretty much the whole day.</p><p>So I devised plan for re-installs which I tested out and I&rsquo;m now documenting
+here for future usage:</p><ol><li>download fresh <code>nixos-unstable</code> image</li><li>boot it and install minimal system with network manager</li><li>boot into the new system</li><li>update channels</li><li>fetch personal config</li><li>rebuild</li></ol><p>With this approach I&rsquo;m up and running an exact replica of the system in about
 half an hour. Yup, my hard drive crashed again. This time my backup was fine but
 I decided to actually go this route to test out the procedure. Works like a
-charm. And I also did it when a bought a new computer. It's kind of creepy when
+charm. And I also did it when a bought a new computer. It&rsquo;s kind of creepy when
 after half an hour you are greeted by a familiar desktop on an unfamiliar
 hardware. Creepy but very cool.</p><hr width=100%><p style=color:#777>Last modified on 2018-01-24</p></div></div><nav class=post-pagination><a class=newer-posts href=/posts/2018-01-25-jira-gsheet/>Next<br>Integrating Jira into Google Sheets</a>
 <a class=older-posts href=/posts/2017-09-01-scala-tuple-apply/>Previous<br>Implementing apply on tuples in Scala</a></nav><div class=post-comment-wrapper></div></div></div></div></div><div id=single-column-footer>&copy;

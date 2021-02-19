@@ -17,26 +17,26 @@ everything using
 IntelliJ</a>
 a while ago. I still think <a href=http://www.jetbrains.com/idea/ title="IntelliJ IDEA">IntelliJ
 IDEA</a> is awesome and you
-should use it(it has a free and open version) but I've found a better
-way. No more clicking around in wizards&mldr;it's config file time. Relax -
-it's quite simple. I recommend installing the Typesafe-stack. It gives
+should use it(it has a free and open version) but I&rsquo;ve found a better
+way. No more clicking around in wizards&mldr;it&rsquo;s config file time. Relax -
+it&rsquo;s quite simple. I recommend installing the Typesafe-stack. It gives
 you the two tools listed below in nice packaged form with updates. And
-that's about it. I'm quite fond of package managers => one place to
+that&rsquo;s about it. I&rsquo;m quite fond of package managers => one place to
 update everything.</p><h3 id=sbt>SBT</h3><p><a href=https://github.com/harrah/xsbt/ title="Simple Build Tool">Simple Build
 Tool</a>. Exactly what
-the name says. Simple. But boy it's powerful. And it has <a href=https://github.com/jberkel/android-plugin>a
+the name says. Simple. But boy it&rsquo;s powerful. And it has <a href=https://github.com/jberkel/android-plugin>a
 plugin</a>for doing android
 development. Batteries included(managing emulator & packaging all from
 one place). And it prefers convention over configuration. Great. All
 this leads to quick results.</p><h3 id=giter8>Giter8</h3><p><a href=http://maven.apache.org/ title="Apache Maven">Maven</a> has archetypes and
-that's a great feature since it enables you to just start developing
+that&rsquo;s a great feature since it enables you to just start developing
 your application without messing with build settings to get the damn
-thing to compile. SBT doesn't have that. But there's a third-party tool
+thing to compile. SBT doesn&rsquo;t have that. But there&rsquo;s a third-party tool
 that does something possibly even better. Yes, giter8 or g8 for
-short(that's the command line too). A tool that fetches templates from
+short(that&rsquo;s the command line too). A tool that fetches templates from
 github(or any other git repo in recent versions) asks you for few
 parameters and creates a project for you. Super simple to use and not
-that hard to create your own templates.</p><h3 id=lets-get-cracking>Let's get cracking</h3><p>Use g8 to create an app and configure it</p><pre><code>g8 jberkel/android-app
+that hard to create your own templates.</p><h3 id=lets-get-cracking>Let&rsquo;s get cracking</h3><p>Use g8 to create an app and configure it</p><pre><code>g8 jberkel/android-app
 
 Template for Android apps in Scala
 
@@ -50,17 +50,17 @@ scalatest_version [1.8]:
 
 Applied jberkel/android-app.g8 in demoapp
 </code></pre><p>This is from interactive session. Stuff after colons is my input&mldr;eh I
-won't try to  explain. Just try it. Explanation on parameters is in
+won&rsquo;t try to  explain. Just try it. Explanation on parameters is in
 place though. Template is from the author of the plugin; I used default
-activity name because I don't care. Scala version is 2.9.1 because
-that's what's preinstalled on my phone(more on that later) and ProGuard
+activity name because I don&rsquo;t care. Scala version is 2.9.1 because
+that&rsquo;s what&rsquo;s preinstalled on my phone(more on that later) and ProGuard
 is off to exclude scala standard library from the dexing step. See SBT
-is know that scala standard library doesn't fit through dexing and
+is know that scala standard library doesn&rsquo;t fit through dexing and
 excludes it. But it does some magic too. Whole packaging process is 2-3x
 than ant/maven/eclipse/idea. And again twice faster if you use 2.10(RC5)
 instead of 2.9.x. It gets under 10s on a good machine. Sadly my laptop
 is not that fast so I use predexed scala library to get under that
-magical 10s. Essentially I'm telling the
+magical 10s. Essentially I&rsquo;m telling the
 <a href=http://en.wikipedia.org/wiki/Compiler title=Compiler>compiler</a> not to
 bother with the library and take care of it myself. There are two ways
 of doing that. Note that you only need to do this once per device.</p><h3 id=patching-the-deviceemulator>Patching the device/emulator</h3><p>Modify boot classpath and add libraries. Some nasty bootimage
@@ -69,14 +69,14 @@ for most development. See<a href=http://zegoggl.es/2011/07/how-to-preinstall-sca
 it</a>.</p><h3 id=shared-libraries>Shared libraries</h3><p>This is how <a href=http://google.com title=Google>Google</a> provides libraries for
 their maps
 <a href=http://en.wikipedia.org/wiki/Application_programming_interface title="Application programming interface">API</a>
-on android. There's even an<a href="https://play.google.com/store/apps/details?id=com.mobilemagic.scalainstaller&feature=search_result#?t=W251bGwsMSwxLDEsImNvbS5tb2JpbGVtYWdpYy5zY2FsYWluc3RhbGxlciJd">app on Play
+on android. There&rsquo;s even an<a href="https://play.google.com/store/apps/details?id=com.mobilemagic.scalainstaller&feature=search_result#?t=W251bGwsMSwxLDEsImNvbS5tb2JpbGVtYWdpYy5zY2FsYWluc3RhbGxlciJd">app on Play
 store</a>
 that does that for you(requires root). More info on their <a href=https://github.com/jbrechtel/Android-Scala-Installer>github
 page</a>. The
 downside is you need to include a few lines into your manifest(just
 development, you take it out for the release). I need to do more
 research on this - maybe gonna post a guide when I figure out how to
-install custom versions of scala like that.</p><h3 id=compiling-and-running>Compiling and running</h3><p>Here comes a quirk. Plugin doesn't play nice with latest version of sbt.
+install custom versions of scala like that.</p><h3 id=compiling-and-running>Compiling and running</h3><p>Here comes a quirk. Plugin doesn&rsquo;t play nice with latest version of sbt.
 Fortunately sbt is capable of  running different versions without any
 hassle. You can provide &ldquo;-sbt-version 0.12.0&rdquo; every time or create a
 project/build.properties with &ldquo;sbt.version=0.12.0&rdquo; in it(or use my
@@ -84,15 +84,15 @@ template - g8 edofic/android-app). This starts up sbt and does
 compile-deploy-start operation.</p><pre><code>sbt
 ....
 android:start-debug
-</code></pre><p>Checkout the plugin page for list of available commands.</p><h3 id=why-sbt>Why SBT?</h3><p>I've only been converted recently but I've already found a bunch of nice
-stuff I can do now. Firstly..dependency management. Now it's a breeze.
+</code></pre><p>Checkout the plugin page for list of available commands.</p><h3 id=why-sbt>Why SBT?</h3><p>I&rsquo;ve only been converted recently but I&rsquo;ve already found a bunch of nice
+stuff I can do now. Firstly..dependency management. Now it&rsquo;s a breeze.
 Typed resources via source generation - no more casting and exceptions
 on findViewByID(see plugin github page for more). You can easily plug in
-your own generation stuff too. And there's nifty feature I really
+your own generation stuff too. And there&rsquo;s nifty feature I really
 like: continuous compilation. In sbt console you write &ldquo;~ compile&rdquo; and
-sbt will run incremental compilation triggered by file changes.</p><h3 id=integrating-with-idea>Integrating with IDEA</h3><p>Some people prefer programming in a text editor. I don't. So I like
+sbt will run incremental compilation triggered by file changes.</p><h3 id=integrating-with-idea>Integrating with IDEA</h3><p>Some people prefer programming in a text editor. I don&rsquo;t. So I like
 <a href=http://en.wikipedia.org/wiki/Integrated_development_environment title="Integrated development environment">IDE</a>
-integration. Luckily there's an<a href=https://github.com/mpeltonen/sbt-idea>SBT plugin that generates IDEA
+integration. Luckily there&rsquo;s an<a href=https://github.com/mpeltonen/sbt-idea>SBT plugin that generates IDEA
 project</a> for seamless
 interaction. You can even run SBT console inside idea for minimal window
 switching. Usage(from plugin github page): Add the following line to
@@ -103,7 +103,7 @@ project files.</p><h3 id=integrating-with-eclipse>Integrating with Eclipse</h3><
 sbteclipse to your plugin definition file. You can use either the global
 one at ~/.sbt/plugins/plugins.sbt or the project-specific one at
 PROJECT_DIR/project/plugins.sbt:</p><pre><code>addSbtPlugin(&quot;com.typesafe.sbteclipse&quot; % &quot;sbteclipse-plugin&quot; % &quot;2.1.1&quot;)
-</code></pre><p>and to generate project file you use &ldquo;eclipse&rdquo; command in sbt console.</p><h3 id=links>Links</h3><p>Gathered for conveniance</p><ul><li>Typesafe stack <a href=http://typesafe.com/stack/download-agreed>http://typesafe.com/stack/download-agreed</a>[](<a href=http://typesafe.com/>http://typesafe.com/</a>)</li><li>SBT <a href=http://www.scala-sbt.org/>http://www.scala-sbt.org/</a></li><li>Giter8 <a href=https://github.com/n8han/giter8>https://github.com/n8han/giter8</a></li><li>SBT anroid plugin <a href=https://github.com/jberkel/android-plugin>https://github.com/jberkel/android-plugin</a></li><li>plugin author's template <a href=https://github.com/jberkel/android-app.g8>https://github.com/jberkel/android-app.g8</a></li><li>sbt eclipse plugin <a href=https://github.com/typesafehub/sbteclipse>https://github.com/typesafehub/sbteclipse</a></li><li>sbt idea plugin <a href=https://github.com/mpeltonen/sbt-idea>https://github.com/mpeltonen/sbt-idea</a></li><li>scala installer for android <a href="https://play.google.com/store/apps/details?id=com.mobilemagic.scalainstaller">https://play.google.com/store/apps/details?id=com.mobilemagic.scalainstaller</a></li></ul><hr width=100%><p style=color:#777>Last modified on 2013-09-04</p></div></div><nav class=post-pagination><a class=newer-posts href=/posts/2013-10-18-virtual-machine-cpp/>Next<br>Virtual machine in C++</a>
+</code></pre><p>and to generate project file you use &ldquo;eclipse&rdquo; command in sbt console.</p><h3 id=links>Links</h3><p>Gathered for conveniance</p><ul><li>Typesafe stack <a href=http://typesafe.com/stack/download-agreed>http://typesafe.com/stack/download-agreed</a><a href=http://typesafe.com/></a></li><li>SBT <a href=http://www.scala-sbt.org/>http://www.scala-sbt.org/</a></li><li>Giter8 <a href=https://github.com/n8han/giter8>https://github.com/n8han/giter8</a></li><li>SBT anroid plugin <a href=https://github.com/jberkel/android-plugin>https://github.com/jberkel/android-plugin</a></li><li>plugin author&rsquo;s template <a href=https://github.com/jberkel/android-app.g8>https://github.com/jberkel/android-app.g8</a></li><li>sbt eclipse plugin <a href=https://github.com/typesafehub/sbteclipse>https://github.com/typesafehub/sbteclipse</a></li><li>sbt idea plugin <a href=https://github.com/mpeltonen/sbt-idea>https://github.com/mpeltonen/sbt-idea</a></li><li>scala installer for android <a href="https://play.google.com/store/apps/details?id=com.mobilemagic.scalainstaller">https://play.google.com/store/apps/details?id=com.mobilemagic.scalainstaller</a></li></ul><hr width=100%><p style=color:#777>Last modified on 2013-09-04</p></div></div><nav class=post-pagination><a class=newer-posts href=/posts/2013-10-18-virtual-machine-cpp/>Next<br>Virtual machine in C++</a>
 <a class=older-posts href=/posts/2013-01-27-750-words/>Previous<br>750 words</a></nav><div class=post-comment-wrapper></div></div></div></div></div><div id=single-column-footer>&copy;
 2021
 Andraz Bajt</div></div><script src=//js/journal.js></script></body></html>

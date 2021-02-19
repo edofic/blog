@@ -12,8 +12,8 @@ Andraz Bajt</div></div><div ref=extraContainer class=extra-container><div class=
 <a href=https://www.linkedin.com/in/edofic><img src=/icons/linkedin.svg width=20></a>
 <a href=https://twitter.com/edofic><img src=/icons/twitter.svg width=20></a>
 <a href=/index.xml><img src=/icons/rss.svg width=20></a>
-<a href=mailto:edofic@edofic.com><img src=/icons/email.svg width=20></a></div><div id=content><div ref=streamContainer class=stream-container><div class="post-list-container post-list-container-shadow"><div class=post><div class=post-head-wrapper-text-only style="background-image:url('/')"><div class=post-title>Cool Monday - Hindley-Milner on a dynamic language<div class=post-meta><time itemprop=datePublished>2012-11-05</time></div></div></div><div class=post-body-wrapper><div class=post-body><p>So I'm getting into type theory. Slowly. Note to self: read a proper
-book on this topic. I'm getting familiar with it through some practical
+<a href=mailto:edofic@edofic.com><img src=/icons/email.svg width=20></a></div><div id=content><div ref=streamContainer class=stream-container><div class="post-list-container post-list-container-shadow"><div class=post><div class=post-head-wrapper-text-only style="background-image:url('/')"><div class=post-title>Cool Monday - Hindley-Milner on a dynamic language<div class=post-meta><time itemprop=datePublished>2012-11-05</time></div></div></div><div class=post-body-wrapper><div class=post-body><p>So I&rsquo;m getting into type theory. Slowly. Note to self: read a proper
+book on this topic. I&rsquo;m getting familiar with it through some practical
 applications. Namely scala and haskell. </p><p>That same <a href=/posts/2012-10-29-design-patterns-bullshit>discussion about design
 patterns</a> also
 included dynamic vs <a href=http://en.wikipedia.org/wiki/Type_system title="Type system">static
@@ -23,24 +23,24 @@ this <a href=http://screencasts.chariotsolutions.com/uncovering-the-unknown-prin
 inference</a>
 to me. Basically there are two conclusions to be drawn</p><ul><li>Every static typed language should have at least limited type
 <a href=http://en.wikipedia.org/wiki/Inference title=Inference>inference</a>.
-It's compiler's job to do so and quite trivial to implement.</li><li>Properly done static typed language provides all features the that
-dynamic typed languages can. Safely.</li></ul><p>As I'm (still) <a href=/posts/2012-08-29-creating-a-language-1>implementing a
+It&rsquo;s compiler&rsquo;s job to do so and quite trivial to implement.</li><li>Properly done static typed language provides all features the that
+dynamic typed languages can. Safely.</li></ul><p>As I&rsquo;m (still) <a href=/posts/2012-08-29-creating-a-language-1>implementing a
 language</a> that
 happens to be dynamic(because I was too lazy to look-up how to do type
 checking) second point interests me more. </p><p>Can I turn my language into a static one without changing syntax(adding
-type annotations) and losing features? That would be awesome!</p><p>After a day of thinking, answer seems to be <strong>YES!</strong></p><h3 id=global-type-inference-in-a-nutshell>Global type inference in a nutshell</h3><p>So I want a dynamic-like syntax(no types anywhere). Good news is I don't
+type annotations) and losing features? That would be awesome!</p><p>After a day of thinking, answer seems to be <strong>YES!</strong></p><h3 id=global-type-inference-in-a-nutshell>Global type inference in a nutshell</h3><p>So I want a dynamic-like syntax(no types anywhere). Good news is I don&rsquo;t
 have nominal types, so I can use inference to get structural types. </p><p>Java, C# and many other mainstream languages use <a href=http://en.wikipedia.org/wiki/Nominative_type_system title="Nominative type system">nominal
 typing</a>
 at the level of the vm. This means that type A is a subtype of type B
 precisely when name of A is a subtype of name ob B. For example </p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-java data-lang=java><span style=color:#66d9ef>interface</span> <span style=color:#a6e22e>Foo</span><span style=color:#f92672>{</span>
-    <span style=color:#66d9ef>void</span> <span style=color:#a6e22e>method</span><span style=color:#f92672>(</span><span style=color:#66d9ef>int</span> a<span style=color:#f92672>)</span><span style=color:#f92672>;</span>
+    <span style=color:#66d9ef>void</span> <span style=color:#a6e22e>method</span><span style=color:#f92672>(</span><span style=color:#66d9ef>int</span> a<span style=color:#f92672>);</span>
 <span style=color:#f92672>}</span>
 
 <span style=color:#66d9ef>interface</span> <span style=color:#a6e22e>Bar</span><span style=color:#f92672>{</span>
-    <span style=color:#66d9ef>void</span> <span style=color:#a6e22e>method</span><span style=color:#f92672>(</span><span style=color:#66d9ef>int</span> b<span style=color:#f92672>)</span><span style=color:#f92672>;</span>
+    <span style=color:#66d9ef>void</span> <span style=color:#a6e22e>method</span><span style=color:#f92672>(</span><span style=color:#66d9ef>int</span> b<span style=color:#f92672>);</span>
 <span style=color:#f92672>}</span>
 </code></pre></div><p>If you have a method that takes in an instance of Foo, you cannot pass
-an instance of Bar. Because Bar isn't subtype of Foo. Even though they
+an instance of Bar. Because Bar isn&rsquo;t subtype of Foo. Even though they
 are <a href=http://en.wikipedia.org/wiki/Structure title=Structure>structurally</a>
 the same. Fun fact: because
 <a href=http://en.wikipedia.org/wiki/Java_Virtual_Machine title="Java Virtual Machine">JVM</a>
@@ -50,40 +50,40 @@ reconstruction</a>")
 looks at usages and reconstructs properties and structure.  Another
 example</p><pre><code>a = b.c + 1
 </code></pre><p>That would be legal scrat code(or python, ruby or many other things).
-You take b's property named c, add one to it and assign the result to a.
-So b must have property c. That's the first structural requirement. From
+You take b&rsquo;s property named c, add one to it and assign the result to a.
+So b must have property c. That&rsquo;s the first structural requirement. From
 the + operator you can see that this c must be numeric. And from this
-follows that a is also numeric as it's the result of this computation.
-If this were a body of a method and b it's parameter, type requirement
+follows that a is also numeric as it&rsquo;s the result of this computation.
+If this were a body of a method and b it&rsquo;s parameter, type requirement
 for be would be(in made up syntax) <code>b: { c: Number }</code> - object with member
-of Number type. But that doesn't give you no class names.
+of Number type. But that doesn&rsquo;t give you no class names.
 So why is this <strong>global</strong>inference? It goes through the whole block of
-code(usually a function body) and puts in stub types where it doesn't
+code(usually a function body) and puts in stub types where it doesn&rsquo;t
 have enough info and then solves the system of
 <a href=http://en.wikipedia.org/wiki/Requirement title=Requirement>requirements</a>
 and substitutes back.</p><h3 id=possible-problems>Possible problems</h3><p>First of all, I have objects. This means I have to reconstruct object
-structure. This shouldn't be too bad. And you can quite easily figure
+structure. This shouldn&rsquo;t be too bad. And you can quite easily figure
 out that A is subtype of B if set of requirements for A is a superset of
-requirements for B. </p><p>Then there's &ldquo;mutable types&rdquo;. I concluded that following code should be
+requirements for B. </p><p>Then there&rsquo;s &ldquo;mutable types&rdquo;. I concluded that following code should be
 illegal</p><pre><code>a = 1
 a = &quot;two&quot;
 </code></pre><p>as type of a should remain the same as in first assignment. This lets
-you reason about the code much more. But there's a hidden mutability. I
+you reason about the code much more. But there&rsquo;s a hidden mutability. I
 use regular functions as object constructors returning a keyword &ldquo;this&rdquo;
 that evaluates to current scope. But throughout the body you still
-access this scope and it's type(it's an object after all) changes with
+access this scope and it&rsquo;s type(it&rsquo;s an object after all) changes with
 every new (first) assignment and function definition. But this should be
 tracked through all possible code paths. Only problem is an if
-expression. Type of an if(and it's side-effects) can only be common
+expression. Type of an if(and it&rsquo;s side-effects) can only be common
 super type of both then and else branch - an intersection of requirement
 sets. In a dynamic language you can reason about conditions and conclude
 when something should definitely be in scope and use it. Automatic
 reasoning about conditions? This could turn out tricky. Perhaps in later
 implementation.
-An there's third an final problem(that I can see). Infinite types. I
-have not seen a practical usage but it doesn't work and that bothers me.
+An there&rsquo;s third an final problem(that I can see). Infinite types. I
+have not seen a practical usage but it doesn&rsquo;t work and that bothers me.
 Dynamic code in scrat just works, but same code translated to haskell
-yields a compiler error - &ldquo;can't instantiate infinite type&rdquo;. But
+yields a compiler error - &ldquo;can&rsquo;t instantiate infinite type&rdquo;. But
 apparently infinite types can be detected, so maybe I can find a way to
 present them and it will compile.</p><h3 id=conclusion>Conclusion</h3><p>There are some problems but I believe I can make it work. It would be
 super awesome to have a language that feels dynamic but gives you all

@@ -31,24 +31,24 @@ features!</li></ul><h3 id=constants>Constants</h3><p>Like pi, e and such. I have
 <span style=color:#f92672>}</span>
 </code></pre></div><p>StdLib is just a map object. I went the python way - variables(and
 constants) are entries in a global dictionary. Just a decision I made
-while implementing this. As I said, I don't have a plan, I don't know
-what I'm doing and I don't know how stuff is done. How hard can it be?!
+while implementing this. As I said, I don&rsquo;t have a plan, I don&rsquo;t know
+what I&rsquo;m doing and I don&rsquo;t know how stuff is done. How hard can it be?!
 (<a href=http://www.bbc.co.uk/topgear/ title="Top Gear (2002 TV series)">Top Gear</a>
-anyone?)</p><h3 id=exponentiation>Exponentiation</h3><p>Another math feature. It's more of a test for myself to see if I
+anyone?)</p><h3 id=exponentiation>Exponentiation</h3><p>Another math feature. It&rsquo;s more of a test for myself to see if I
 understand grammars. Especially how to make a grammar not
 <a href=http://en.wikipedia.org/wiki/Left_recursion title="Left recursion">left-recursive</a>.
-Because apparently such grammars don't work with
+Because apparently such grammars don&rsquo;t work with
 <a href=http://en.wikipedia.org/wiki/Recursive_descent_parser title="Recursive descent parser">RDP</a>.
-I turned out I don't understand grammars.</p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-scala data-lang=scala><span style=color:#66d9ef>private</span> <span style=color:#66d9ef>def</span> exponent<span style=color:#66d9ef>:</span> <span style=color:#66d9ef>Parser</span><span style=color:#f92672>[</span><span style=color:#66d9ef>Expression</span><span style=color:#f92672>]</span> <span style=color:#66d9ef>=</span>
+I turned out I don&rsquo;t understand grammars.</p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-scala data-lang=scala><span style=color:#66d9ef>private</span> <span style=color:#66d9ef>def</span> exponent<span style=color:#66d9ef>:</span> <span style=color:#66d9ef>Parser</span><span style=color:#f92672>[</span><span style=color:#66d9ef>Expression</span><span style=color:#f92672>]</span> <span style=color:#66d9ef>=</span>
   <span style=color:#f92672>(</span>value <span style=color:#f92672>|</span> parenExpr<span style=color:#f92672>)</span> <span style=color:#f92672>~</span> <span style=color:#e6db74>&#34;^&#34;</span> <span style=color:#f92672>~</span> <span style=color:#f92672>(</span>value <span style=color:#f92672>|</span> parenExpr<span style=color:#f92672>)</span> <span style=color:#f92672>^^</span> <span style=color:#f92672>{</span>
     <span style=color:#66d9ef>case</span> a <span style=color:#f92672>~</span> <span style=color:#e6db74>&#34;^&#34;</span> <span style=color:#f92672>~</span> b <span style=color:#66d9ef>=&gt;</span> <span style=color:#a6e22e>Exponent</span><span style=color:#f92672>(</span>a<span style=color:#f92672>,</span>b<span style=color:#f92672>)</span>
   <span style=color:#f92672>}</span>
 
 <span style=color:#66d9ef>private</span> <span style=color:#66d9ef>def</span> factor<span style=color:#66d9ef>:</span> <span style=color:#66d9ef>Parser</span><span style=color:#f92672>[</span><span style=color:#66d9ef>Expression</span><span style=color:#f92672>]</span> <span style=color:#66d9ef>=</span> <span style=color:#f92672>(</span>value <span style=color:#f92672>|||</span> exponent<span style=color:#f92672>)</span> <span style=color:#f92672>|</span> parenExpr
 </code></pre></div><p>The <code>|||</code> operator is an ugly hack. It tries both sides and returns the
-longer match. By the time I was writing this I didn't know that order is
+longer match. By the time I was writing this I didn&rsquo;t know that order is
 importat. If I just wrote <code>exponent | value</code> it would have worked, because
-expoenent would match a value anyway and then failed on missing <code>^</code>.</p><p>Token and evaluation(uses <code>math.pow</code>) for this are quite trivial.</p><h3 id=function-calls>Function calls</h3><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-scala data-lang=scala><span style=color:#66d9ef>case</span> <span style=color:#66d9ef>class</span> <span style=color:#a6e22e>ExpList</span><span style=color:#f92672>(</span>lst<span style=color:#66d9ef>:</span> <span style=color:#66d9ef>List</span><span style=color:#f92672>[</span><span style=color:#66d9ef>Expression</span><span style=color:#f92672>]</span><span style=color:#f92672>)</span> <span style=color:#66d9ef>extends</span> <span style=color:#a6e22e>Expression</span>
+expoenent would match a value anyway and then failed on missing <code>^</code>.</p><p>Token and evaluation(uses <code>math.pow</code>) for this are quite trivial.</p><h3 id=function-calls>Function calls</h3><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-scala data-lang=scala><span style=color:#66d9ef>case</span> <span style=color:#66d9ef>class</span> <span style=color:#a6e22e>ExpList</span><span style=color:#f92672>(</span>lst<span style=color:#66d9ef>:</span> <span style=color:#66d9ef>List</span><span style=color:#f92672>[</span><span style=color:#66d9ef>Expression</span><span style=color:#f92672>])</span> <span style=color:#66d9ef>extends</span> <span style=color:#a6e22e>Expression</span>
 <span style=color:#66d9ef>case</span> <span style=color:#66d9ef>class</span> <span style=color:#a6e22e>FunctionCall</span><span style=color:#f92672>(</span>name<span style=color:#66d9ef>:</span> <span style=color:#66d9ef>Identifier</span><span style=color:#f92672>,</span> args<span style=color:#66d9ef>:</span> <span style=color:#66d9ef>ExpList</span><span style=color:#f92672>)</span> <span style=color:#66d9ef>extends</span> <span style=color:#a6e22e>Expression</span>
 </code></pre></div><p>Simple: function call is a name and list of expressions to evaluate for
 arguments(wrapped because even an expression list is an expression)</p><p>Parser:</p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-scala data-lang=scala>  <span style=color:#66d9ef>private</span> <span style=color:#66d9ef>def</span> arglist<span style=color:#66d9ef>:</span> <span style=color:#66d9ef>Parser</span><span style=color:#f92672>[</span><span style=color:#66d9ef>ExpList</span><span style=color:#f92672>]</span> <span style=color:#66d9ef>=</span> <span style=color:#e6db74>&#34;(&#34;</span> <span style=color:#f92672>~&gt;</span> list <span style=color:#f92672>&lt;~</span> <span style=color:#e6db74>&#34;)&#34;</span>
@@ -56,22 +56,22 @@ arguments(wrapped because even an expression list is an expression)</p><p>Parser
     <span style=color:#66d9ef>case</span> id <span style=color:#f92672>~</span> args <span style=color:#66d9ef>=&gt;</span> <span style=color:#a6e22e>FunctionCall</span><span style=color:#f92672>(</span>id<span style=color:#f92672>,</span> args<span style=color:#f92672>)</span>
   <span style=color:#f92672>}</span>
   <span style=color:#66d9ef>private</span> <span style=color:#66d9ef>def</span> value<span style=color:#66d9ef>:</span> <span style=color:#66d9ef>Parser</span><span style=color:#f92672>[</span><span style=color:#66d9ef>Expression</span><span style=color:#f92672>]</span> <span style=color:#66d9ef>=</span> number <span style=color:#f92672>|</span> <span style=color:#f92672>(</span>identifier <span style=color:#f92672>|||</span> functionCall<span style=color:#f92672>)</span>
-</code></pre></div><p>Again, I was having trouble - parser just didn't work and resorted to <code>|||</code>.
+</code></pre></div><p>Again, I was having trouble - parser just didn&rsquo;t work and resorted to <code>|||</code>.
 <code>functionCall</code> should come before identifier.</p><p>Evaluating this is more interesting. I decided to make functions be
 values too for obvious reasons -> <a href=http://en.wikipedia.org/wiki/Higher-order_function title="Higher-order function">higher order
-functions</a>(I'm
+functions</a>(I&rsquo;m
 into functional programming, remember?). So function values must be
 stored in same &ldquo;namespace&rdquo;. <code>StdLib</code>(the only &ldquo;namespace&rdquo;) required to
 become of type <code>Map[String,Any]</code>. I will have to do pattern matching
 anyway since this will be dynamic-typed language. (Yes this is a plan, I
-think it's easier to implement. <a href=http://en.wikipedia.org/wiki/Type_system>Static
+think it&rsquo;s easier to implement. <a href=http://en.wikipedia.org/wiki/Type_system>Static
 typing</a> ftw, but
-that's next project). And I needed a type for function values to pattern
+that&rsquo;s next project). And I needed a type for function values to pattern
 match on - I went with <code>Any=>Any</code> and sending in List(arg0,arg1,&mldr;)
 doing more pattern matching inside the function. Will be slow but
 hey&mldr;dynamic typing!</p><p>from evaluator</p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-scala data-lang=scala><span style=color:#66d9ef>case</span> <span style=color:#a6e22e>FunctionCall</span><span style=color:#f92672>(</span>name<span style=color:#f92672>,</span> args<span style=color:#f92672>)</span> <span style=color:#66d9ef>=&gt;</span> <span style=color:#f92672>{</span>
   <span style=color:#a6e22e>StdLib</span><span style=color:#f92672>(</span>name<span style=color:#f92672>.</span>id<span style=color:#f92672>)</span> <span style=color:#66d9ef>match</span> <span style=color:#f92672>{</span>
-    <span style=color:#66d9ef>case</span> <span style=color:#a6e22e>Some</span><span style=color:#f92672>(</span>f<span style=color:#66d9ef>:</span> <span style=color:#66d9ef>FunctionVarArg</span><span style=color:#f92672>)</span> <span style=color:#66d9ef>=&gt;</span> f<span style=color:#f92672>.</span>apply<span style=color:#f92672>(</span>apply<span style=color:#f92672>(</span>args<span style=color:#f92672>)</span><span style=color:#f92672>)</span>
+    <span style=color:#66d9ef>case</span> <span style=color:#a6e22e>Some</span><span style=color:#f92672>(</span>f<span style=color:#66d9ef>:</span> <span style=color:#66d9ef>FunctionVarArg</span><span style=color:#f92672>)</span> <span style=color:#66d9ef>=&gt;</span> f<span style=color:#f92672>.</span>apply<span style=color:#f92672>(</span>apply<span style=color:#f92672>(</span>args<span style=color:#f92672>))</span>
     <span style=color:#66d9ef>case</span> <span style=color:#a6e22e>None</span> <span style=color:#66d9ef>=&gt;</span> <span style=color:#66d9ef>throw</span> <span style=color:#66d9ef>new</span> <span style=color:#a6e22e>ScratSemanticError</span><span style=color:#f92672>(</span><span style=color:#e6db74>&#34;function &#34;</span> <span style=color:#f92672>+</span> name <span style=color:#f92672>+</span> <span style=color:#e6db74>&#34;not found&#34;</span><span style=color:#f92672>)</span>
   <span style=color:#f92672>}</span>
 <span style=color:#f92672>}</span>
@@ -81,11 +81,11 @@ hey&mldr;dynamic typing!</p><p>from evaluator</p><div class=highlight><pre style
   <span style=color:#66d9ef>case</span> other <span style=color:#66d9ef>=&gt;</span> <span style=color:#66d9ef>throw</span> <span style=color:#a6e22e>ScratInvalidTypeError</span><span style=color:#f92672>(</span><span style=color:#e6db74>&#34;expected single double but got &#34;</span> <span style=color:#f92672>+</span> other<span style=color:#f92672>)</span>
 <span style=color:#f92672>}</span>
 </code></pre></div><h3 id=conclusion>Conclusion</h3><p>As clearly illustrated above, not planning your grammar results in
-constant changes in many places. So if you're doing something serious
+constant changes in many places. So if you&rsquo;re doing something serious
 just make the whole fricking grammar on a whiteboard beforehand.
 Seriously. </p><p>Anyway..now I still only have a calculator, but a much more powerful
 one. I can write expressions like \</p><pre><code>e^piln(10+2)1+2*3/4^5-log(e)
-</code></pre><p>But that's nearly not enough. I want to be Touring-complete an ideally
+</code></pre><p>But that&rsquo;s nearly not enough. I want to be Touring-complete an ideally
 to be able to compile/interpret itself.\</p><p><strong>next: <a href=/posts/2012-09-01-creating-a-language4>Hello World(strings, printing and interpreter)</a></strong></p><hr width=100%><p style=color:#777>Last modified on 2012-08-31</p></div></div><nav class=post-pagination><a class=newer-posts href=/posts/2012-09-01-creating-a-language4/>Next<br>Making a programming language Part 4 - Hello World</a>
 <a class=older-posts href=/posts/2012-08-30-creating-a-language-2/>Previous<br>Making a programming language Part 2 - something that kinda works</a></nav><div class=post-comment-wrapper></div></div></div></div></div><div id=single-column-footer>&copy;
 2021

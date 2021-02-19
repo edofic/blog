@@ -17,8 +17,8 @@ Andraz Bajt</div></div><div ref=extraContainer class=extra-container><div class=
 to get started. How do you test a language? I decided to write a bunch
 of programs that exercise and combine different language features. And
 then stare into code until I was absolutely sure they are correct.
-That's the problem with implementing a new language, nobody can tell you
-if your code is correct but your software, but you don't even know if
+That&rsquo;s the problem with implementing a new language, nobody can tell you
+if your code is correct but your software, but you don&rsquo;t even know if
 software is correct.
 So I wrote some test programs and
 <a href=http://en.wikipedia.org/wiki/Parsing title=Parsing>parsed</a> and evaluated
@@ -41,18 +41,18 @@ and
 I suppose). 200ms for 67 <a href=http://en.wikipedia.org/wiki/Source_lines_of_code title="Source lines of code">lines of
 code</a>?
 That would mean about 3 seconds on a 1000 line file <strong>IF</strong> complexity is
-linear(which I later leart isn't!). And that's 3 seconds on fifth run
+linear(which I later leart isn&rsquo;t!). And that&rsquo;s 3 seconds on fifth run
 or so, first run(which is the only one when doing real stuff) would be
-10 seconds+, unacceptable. (evaluation takes a few ms)</p><h3 id=research>Research</h3><p>At first I just gave it some thought. Well it's a <strong>recursive</strong> descent
+10 seconds+, unacceptable. (evaluation takes a few ms)</p><h3 id=research>Research</h3><p>At first I just gave it some thought. Well it&rsquo;s a <strong>recursive</strong> descent
 parser, and from what I remember it back traces on failure. So
-efficiency has a lot to do with grammar structure. And it won't be
+efficiency has a lot to do with grammar structure. And it won&rsquo;t be
 linear because you have to do (usually) more back tracing when dealing
 with longer input.</p><p>Internets here I come. </p><p>My thoughts were confirmed. I found some guys on forums complaining over
 speed and then Mr. Odersky himself commented something like this(from
 memory):</p><blockquote><p>Well the parsers in scala standard library are more like an example
 how to do recusive descent, functional style. They are perfectly
 usable for parsing command lines but not for long files. You should
-use a parser generator for that.</p></blockquote><p>I was bummed. The reason I didn't use a parser generator was this close
+use a parser generator for that.</p></blockquote><p>I was bummed. The reason I didn&rsquo;t use a parser generator was this close
 integration that parser as a library could provide me. By the way
 implementation of
 <a href=http://en.wikipedia.org/wiki/Parsing title=Parsing>Parsers</a> is remarkably
@@ -64,27 +64,27 @@ combinator is an object too. This in itself is not a big deal, but no
 performed, so it becomes a big deal. Now many objects are created on
 each try, so when backtracing you have to
 <a href=http://www.techopedia.com/definition/27271/automatic-memory-management-amm title="Automatic Memory Management">GC</a>
-all these object and then recreate them. It's clean but it's no wonder
-it's slow.
+all these object and then recreate them. It&rsquo;s clean but it&rsquo;s no wonder
+it&rsquo;s slow.
 Some time passed by and I accidentally found out about <a href=http://en.wikipedia.org/wiki/Parsing_expression_grammar title="Parsing expression grammar">Packrat
 Parsing</a>.
 <a href=http://scala-programming-language.1934581.n4.nabble.com/attachment/1956909/0/packrat_parsers.pdf>This paper</a>
 provides details but the gist of it is to use <a href=http://en.wikipedia.org/wiki/Lazy_evaluation title="Lazy evaluation">lazy
 evaluation</a>
-and memoization to reduce object creation and speed things up.</p><h3 id=conversion-and-results>Conversion and results</h3><p>Conversion is dead easy. It's fully described in scala api
+and memoization to reduce object creation and speed things up.</p><h3 id=conversion-and-results>Conversion and results</h3><p>Conversion is dead easy. It&rsquo;s fully described in scala api
 documentation. Basically you mix in PackratParsers and change
-<code>def : Parser[] = ...</code> to <code>lazy val : PackratParser[] = ...</code> and that's it. Mixed
+<code>def : Parser[] = ...</code> to <code>lazy val : PackratParser[] = ...</code> and that&rsquo;s it. Mixed
 in trait provides the necessary implicit conversions, lazy makes sure
 the creation is only done once and new implementation of parseAll does
-some clever parsing. Oh and you needn't convert all parsers, the paper
+some clever parsing. Oh and you needn&rsquo;t convert all parsers, the paper
 says the optimal perfomance is achieved with the right mix of standard
 <a href=http://en.wikipedia.org/wiki/Recursive_descent_parser title="Recursive descent parser">recursive descent
 parsers</a>
 and packrat(packrat does include some overhead on specific grammars and
 inputs). But I just converted all and run the benchmark again. And
-behold&mldr;11ms. On the best run. More like 15 on average. But that's
+behold&mldr;11ms. On the best run. More like 15 on average. But that&rsquo;s
 still more than a whole order of magnitude faster. And it should scale
-better. </p><p><strong>next:</strong> don't know yet. I caught up with my implementation(finally!). I
+better. </p><p><strong>next:</strong> don&rsquo;t know yet. I caught up with my implementation(finally!). I
 thinking about making functions stronger by relaxing the rules of
 invocation and doing some syntax sugar for lambdas. That and java
 interop. Or possibly compiling to bytecode. </p><hr width=100%><p style=color:#777>Last modified on 2012-09-29</p></div></div><nav class=post-pagination><a class=newer-posts href=/posts/2012-10-08-creating-a-language-7b/>Next<br>Making a programming language Part 7b - using objects</a>

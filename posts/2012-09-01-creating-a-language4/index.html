@@ -17,72 +17,72 @@ contents</a>,
 <a href=https://github.com/edofic/scrat-lang>Whole project on github</a></p><p>What good is a language if you cannot do a <a href=http://en.wikipedia.org/wiki/Hello_world_program title="Hello world program">Hello World
 program</a>.
 Every tutorial on every language I ever read has a Hello World in it
-somewhere, even if it's a convoluted and sarcastic one.</p><p>So what do I need?</p><ul><li>a way to print stuff to console </li><li>strings</li></ul><p>In that order. Since this is more of a math lang for now my first hello
-world can just print 1 - arguably the simplest number.</p><h3 id=println>Println</h3><p>This one is super easy. Just wrap scala's println. Here's the whole
+somewhere, even if it&rsquo;s a convoluted and sarcastic one.</p><p>So what do I need?</p><ul><li>a way to print stuff to console </li><li>strings</li></ul><p>In that order. Since this is more of a math lang for now my first hello
+world can just print 1 - arguably the simplest number.</p><h3 id=println>Println</h3><p>This one is super easy. Just wrap scala&rsquo;s println. Here&rsquo;s the whole
 code</p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-scala data-lang=scala><span style=color:#66d9ef>lazy</span> <span style=color:#66d9ef>val</span> sprint<span style=color:#66d9ef>:</span> <span style=color:#66d9ef>FunctionVarArg</span> <span style=color:#f92672>=</span> <span style=color:#f92672>{</span>
   <span style=color:#66d9ef>case</span> lst<span style=color:#66d9ef>:</span> <span style=color:#66d9ef>List</span><span style=color:#f92672>[</span><span style=color:#66d9ef>_</span><span style=color:#f92672>]</span> <span style=color:#66d9ef>=&gt;</span>
     lst <span style=color:#f92672>--&gt;</span> mkString <span style=color:#f92672>--&gt;</span> println
   <span style=color:#66d9ef>case</span> other <span style=color:#66d9ef>=&gt;</span>
     <span style=color:#66d9ef>throw</span> <span style=color:#a6e22e>ScratInvalidTypeError</span><span style=color:#f92672>(</span><span style=color:#e6db74>&#34;expected a commaList but got &#34;</span> <span style=color:#f92672>+</span> other<span style=color:#f92672>)</span>
 <span style=color:#f92672>}</span>
-</code></pre></div><p>And then I put this as &ldquo;println&rdquo; into StdLib's map = global namespace.
+</code></pre></div><p>And then I put this as &ldquo;println&rdquo; into StdLib&rsquo;s map = global namespace.
 Since I already have support for functions I just allowed them to do
-side effects(semantics-no code).<br>The <code>--></code> operator might have confused you. It's in an <a href=http://en.wikipedia.org/wiki/Type_conversion title="Type conversion">implicit
+side effects(semantics-no code).<br>The <code>--></code> operator might have confused you. It&rsquo;s in an <a href=http://en.wikipedia.org/wiki/Type_conversion title="Type conversion">implicit
 conversion</a>
-I defined:</p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-scala data-lang=scala><span style=color:#66d9ef>implicit</span> <span style=color:#66d9ef>def</span> any2applyFunc<span style=color:#f92672>[</span><span style=color:#66d9ef>A</span><span style=color:#f92672>]</span><span style=color:#f92672>(</span>a<span style=color:#66d9ef>:</span> <span style=color:#66d9ef>A</span><span style=color:#f92672>)</span> <span style=color:#66d9ef>=</span> <span style=color:#66d9ef>new</span> <span style=color:#a6e22e>AnyRef</span> <span style=color:#f92672>{</span>
-  <span style=color:#66d9ef>def</span> <span style=color:#f92672>--&gt;</span><span style=color:#f92672>[</span><span style=color:#66d9ef>B</span><span style=color:#f92672>]</span><span style=color:#f92672>(</span>f<span style=color:#66d9ef>:</span> <span style=color:#66d9ef>A</span> <span style=color:#f92672>=&gt;</span> B<span style=color:#f92672>)</span><span style=color:#66d9ef>:</span> <span style=color:#66d9ef>B</span> <span style=color:#f92672>=</span> f<span style=color:#f92672>(</span>a<span style=color:#f92672>)</span>
+I defined:</p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-scala data-lang=scala><span style=color:#66d9ef>implicit</span> <span style=color:#66d9ef>def</span> any2applyFunc<span style=color:#f92672>[</span><span style=color:#66d9ef>A</span><span style=color:#f92672>](</span>a<span style=color:#66d9ef>:</span> <span style=color:#66d9ef>A</span><span style=color:#f92672>)</span> <span style=color:#66d9ef>=</span> <span style=color:#66d9ef>new</span> <span style=color:#a6e22e>AnyRef</span> <span style=color:#f92672>{</span>
+  <span style=color:#66d9ef>def</span> <span style=color:#f92672>--&gt;[</span><span style=color:#66d9ef>B</span><span style=color:#f92672>](</span>f<span style=color:#66d9ef>:</span> <span style=color:#66d9ef>A</span> <span style=color:#f92672>=&gt;</span> B<span style=color:#f92672>)</span><span style=color:#66d9ef>:</span> <span style=color:#66d9ef>B</span> <span style=color:#f92672>=</span> f<span style=color:#f92672>(</span>a<span style=color:#f92672>)</span>
 <span style=color:#f92672>}</span>
 </code></pre></div><p>This is the so called <a href="http://www.artima.com/weblogs/viewpost.jsp?thread=179766">pimp my library pattern in
 scala</a>. It
 adds the <code>--></code> operator to all objects. This operator takes another
 single argument function, applies it and returns the result.
 So I can have</p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-scala data-lang=scala>lst <span style=color:#f92672>--&gt;</span> mkString <span style=color:#f92672>--&gt;</span> println
-</code></pre></div><p>instead of</p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-scala data-lang=scala>println<span style=color:#f92672>(</span>mkString<span style=color:#f92672>(</span>lst<span style=color:#f92672>)</span><span style=color:#f92672>)</span>
+</code></pre></div><p>instead of</p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-scala data-lang=scala>println<span style=color:#f92672>(</span>mkString<span style=color:#f92672>(</span>lst<span style=color:#f92672>))</span>
 </code></pre></div><p>Think of it like
-<a href=http://haskell.org/ title="Haskell (programming language)">Haskell</a>&lsquo;s <code>$</code>
+<a href=http://haskell.org/ title="Haskell (programming language)">Haskell</a>&rsquo;s <code>$</code>
 operator even if it works in a different way. Oh yes, mkString is
 another function that I put into StdLib that takes a List(takes Any but
 does pattern matching) and returns <code>List.mkString</code></p><p>And now I have my Hello Math World</p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-scala data-lang=scala>println<span style=color:#f92672>(</span><span style=color:#ae81ff>1</span><span style=color:#f92672>)</span>
 </code></pre></div><h3 id=strings>Strings</h3><p>First I have to parse strings</p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-scala data-lang=scala><span style=color:#66d9ef>private</span> <span style=color:#66d9ef>def</span> string<span style=color:#66d9ef>:</span> <span style=color:#66d9ef>Parser</span><span style=color:#f92672>[</span><span style=color:#66d9ef>SString</span><span style=color:#f92672>]</span> <span style=color:#66d9ef>=</span> <span style=color:#e6db74>&#34;\&#34;.*?\&#34;&#34;</span><span style=color:#f92672>.</span>r <span style=color:#f92672>^^</span> <span style=color:#f92672>{</span> s <span style=color:#66d9ef>=&gt;</span>
-  <span style=color:#a6e22e>SString</span><span style=color:#f92672>(</span>s<span style=color:#f92672>.</span>substring<span style=color:#f92672>(</span><span style=color:#ae81ff>1</span><span style=color:#f92672>,</span> s<span style=color:#f92672>.</span>length <span style=color:#f92672>-</span> <span style=color:#ae81ff>1</span><span style=color:#f92672>)</span><span style=color:#f92672>)</span>
+  <span style=color:#a6e22e>SString</span><span style=color:#f92672>(</span>s<span style=color:#f92672>.</span>substring<span style=color:#f92672>(</span><span style=color:#ae81ff>1</span><span style=color:#f92672>,</span> s<span style=color:#f92672>.</span>length <span style=color:#f92672>-</span> <span style=color:#ae81ff>1</span><span style=color:#f92672>))</span>
 <span style=color:#f92672>}</span>
 <span style=color:#66d9ef>private</span> <span style=color:#66d9ef>def</span> value<span style=color:#66d9ef>:</span> <span style=color:#66d9ef>Parser</span><span style=color:#f92672>[</span><span style=color:#66d9ef>Expression</span><span style=color:#f92672>]</span> <span style=color:#66d9ef>=</span> number <span style=color:#f92672>|</span> string <span style=color:#f92672>|</span> identifier
 </code></pre></div><p>SString is just a case class wrapper for string that extends Expression
 so I can use it in other expressions.
 When I was first writing this I forgot to add the action combinator to
 strip of the quotes and was greatly mistified by all strings being
-wrapped in &ldquo;". I even spend half an hour debugging my evaluator before
+wrapped in &ldquo;&rdquo;. I even spend half an hour debugging my evaluator before
 it dawned on me.
 I believe the evaluation of this is trivial.</p><p>Now I have a REAL hello world:</p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-scala data-lang=scala>    println<span style=color:#f92672>(</span><span style=color:#e6db74>&#34;Hello world&#34;</span><span style=color:#f92672>)</span>
 </code></pre></div><p>Well&mldr;no. Hello world is a program you run. I need an interpreter to
-run files.</p><h3 id=interpreterhttpenwikipediaorgwikiinterpreter-28computing29-interpreter-computing><a href=http://en.wikipedia.org/wiki/Interpreter_%28computing%29 title="Interpreter (computing)">Interpreter</a></h3><p>Not quite that different from
+run files.</p><h3 id=interpreterhttpenwikipediaorgwikiinterpreter_28computing29-interpreter-computing><a href=http://en.wikipedia.org/wiki/Interpreter_%28computing%29 title="Interpreter (computing)">Interpreter</a></h3><p>Not quite that different from
 <a href=http://en.wikipedia.org/wiki/Read%E2%80%93eval%E2%80%93print_loop title="Read–eval–print loop">REPL</a>.
-In fact it's just REL: read, evaluate, loop. Printing is now only with
-explicit println calls. And I don't need to catch exceptions and return
+In fact it&rsquo;s just REL: read, evaluate, loop. Printing is now only with
+explicit println calls. And I don&rsquo;t need to catch exceptions and return
 into the loop.  Whole code for the interpreter</p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-scala data-lang=scala><span style=color:#66d9ef>object</span> <span style=color:#a6e22e>Interpreter</span> <span style=color:#f92672>{</span>
-  <span style=color:#66d9ef>def</span> main<span style=color:#f92672>(</span>args<span style=color:#66d9ef>:</span> <span style=color:#66d9ef>Array</span><span style=color:#f92672>[</span><span style=color:#66d9ef>String</span><span style=color:#f92672>]</span><span style=color:#f92672>)</span> <span style=color:#66d9ef>=</span> <span style=color:#f92672>{</span>
+  <span style=color:#66d9ef>def</span> main<span style=color:#f92672>(</span>args<span style=color:#66d9ef>:</span> <span style=color:#66d9ef>Array</span><span style=color:#f92672>[</span><span style=color:#66d9ef>String</span><span style=color:#f92672>])</span> <span style=color:#66d9ef>=</span> <span style=color:#f92672>{</span>
     <span style=color:#66d9ef>if</span> <span style=color:#f92672>(</span>args<span style=color:#f92672>.</span>length <span style=color:#f92672>!=</span> <span style=color:#ae81ff>1</span><span style=color:#f92672>)</span> <span style=color:#f92672>{</span>
       println<span style=color:#f92672>(</span><span style=color:#e6db74>&#34;parameters: filename to interpret&#34;</span><span style=color:#f92672>)</span>
     <span style=color:#f92672>}</span> <span style=color:#66d9ef>else</span> <span style=color:#f92672>{</span>
-      interpretFile<span style=color:#f92672>(</span><span style=color:#66d9ef>new</span> <span style=color:#a6e22e>File</span><span style=color:#f92672>(</span>args<span style=color:#f92672>(</span><span style=color:#ae81ff>0</span><span style=color:#f92672>)</span><span style=color:#f92672>)</span><span style=color:#f92672>)</span>
+      interpretFile<span style=color:#f92672>(</span><span style=color:#66d9ef>new</span> <span style=color:#a6e22e>File</span><span style=color:#f92672>(</span>args<span style=color:#f92672>(</span><span style=color:#ae81ff>0</span><span style=color:#f92672>)))</span>
     <span style=color:#f92672>}</span>
   <span style=color:#f92672>}</span>
   <span style=color:#66d9ef>val</span> runtime <span style=color:#66d9ef>=</span> <span style=color:#66d9ef>new</span> <span style=color:#a6e22e>ScratRuntime</span>
   <span style=color:#66d9ef>def</span> interpretFile<span style=color:#f92672>(</span>file<span style=color:#66d9ef>:</span> <span style=color:#66d9ef>File</span><span style=color:#f92672>)</span> <span style=color:#f92672>{</span>
     <span style=color:#66d9ef>if</span> <span style=color:#f92672>(</span>file<span style=color:#f92672>.</span>canRead<span style=color:#f92672>)</span> <span style=color:#f92672>{</span>
       <span style=color:#66d9ef>val</span> source <span style=color:#66d9ef>=</span> io<span style=color:#f92672>.</span><span style=color:#a6e22e>Source</span><span style=color:#f92672>.</span>fromFile<span style=color:#f92672>(</span>file<span style=color:#f92672>)</span>
-      source<span style=color:#f92672>.</span>getLines<span style=color:#f92672>(</span><span style=color:#f92672>)</span><span style=color:#f92672>.</span>foreach<span style=color:#f92672>(</span>runtime<span style=color:#f92672>.</span>eval<span style=color:#f92672>)</span>
-      source<span style=color:#f92672>.</span>close<span style=color:#f92672>(</span><span style=color:#f92672>)</span>
+      source<span style=color:#f92672>.</span>getLines<span style=color:#f92672>().</span>foreach<span style=color:#f92672>(</span>runtime<span style=color:#f92672>.</span>eval<span style=color:#f92672>)</span>
+      source<span style=color:#f92672>.</span>close<span style=color:#f92672>()</span>
     <span style=color:#f92672>}</span> <span style=color:#66d9ef>else</span> <span style=color:#f92672>{</span>
       println<span style=color:#f92672>(</span><span style=color:#e6db74>&#34;cannot open file &#34;</span> <span style=color:#f92672>+</span> file<span style=color:#f92672>.</span>getPath<span style=color:#f92672>)</span>
     <span style=color:#f92672>}</span>
   <span style=color:#f92672>}</span>
 <span style=color:#f92672>}</span>
-</code></pre></div><p><a href=http://cdn.memegenerator.net/instances/400x/26006910.jpg><img src=http://cdn.memegenerator.net/instances/400x/26006910.jpg alt></a><br>And now I can put my hello world in a file and run it.<br>But I needed to decide on the extension. I know it's silly but I didn't
+</code></pre></div><p><a href=http://cdn.memegenerator.net/instances/400x/26006910.jpg><img src=http://cdn.memegenerator.net/instances/400x/26006910.jpg alt></a><br>And now I can put my hello world in a file and run it.<br>But I needed to decide on the extension. I know it&rsquo;s silly but I didn&rsquo;t
 want to save the file until I had the extension in mind. And this mean
 naming the language. Being in &ldquo;logic mode&rdquo; I asked my awsome girlfriend
-who's more artsy type of a person and she immediately responded
-&ldquo;scrat&rdquo;(she's huge fan of
+who&rsquo;s more artsy type of a person and she immediately responded
+&ldquo;scrat&rdquo;(she&rsquo;s huge fan of
 <a href=http://en.wikipedia.org/wiki/List_of_Ice_Age_characters title="List of Ice Age characters">Scrat</a>
 the squirrel from <a href=http://en.wikipedia.org/wiki/Ice_age title="Ice age">Ice
 Age</a>). And them some

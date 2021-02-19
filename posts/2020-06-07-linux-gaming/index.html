@@ -12,36 +12,36 @@ Andraz Bajt</div></div><div ref=extraContainer class=extra-container><div class=
 <a href=https://www.linkedin.com/in/edofic><img src=/icons/linkedin.svg width=20></a>
 <a href=https://twitter.com/edofic><img src=/icons/twitter.svg width=20></a>
 <a href=/index.xml><img src=/icons/rss.svg width=20></a>
-<a href=mailto:edofic@edofic.com><img src=/icons/email.svg width=20></a></div><div id=content><div ref=streamContainer class=stream-container><div class="post-list-container post-list-container-shadow"><div class=post><div class=post-head-wrapper-text-only style="background-image:url('/')"><div class=post-title>Surprising ease of gaming on Linux in 2020<div class=post-meta><time itemprop=datePublished>2020-06-07</time></div></div></div><div class=post-body-wrapper><div class=post-body><p>During the quarantine my hobbies (and I imagine many others&rsquo;) shifted to more
+<a href=mailto:edofic@edofic.com><img src=/icons/email.svg width=20></a></div><div id=content><div ref=streamContainer class=stream-container><div class="post-list-container post-list-container-shadow"><div class=post><div class=post-head-wrapper-text-only style="background-image:url('/')"><div class=post-title>Surprising ease of gaming on Linux in 2020<div class=post-meta><time itemprop=datePublished>2020-06-07</time></div></div></div><div class=post-body-wrapper><div class=post-body><p>During the quarantine my hobbies (and I imagine many others') shifted to more
 indoors ones - possibly sedentary. Among other things I also started gaming
-after a hiatus of many years.</p><p>But as you can probably imagine gaming on a 13&rdquo; laptop with integrated graphics
+after a hiatus of many years.</p><p>But as you can probably imagine gaming on a 13" laptop with integrated graphics
 is not the most gratifying of experiences. So I got myself a desktop with a
 proper graphics card.</p><p>And now comes the interesting part: since all the games I originally planned on
 playing have Linux support I decided to skip buying a copy of Windows and copy
 my laptop <a href=https://nixos.org/>NixOS</a> config and extend it as needed. Basically
 I wanted to do some tinkering again.</p><h1 id=nvidia>NVidia</h1><p>The aforementioned graphics card is made by NVidia. And I braced for a world of
 pain to set it up - the image of Linus flipping off the GPU giant still fresh in
-my memory (actually it's been a while - that <a href="https://www.phoronix.com/scan.php?page=news_item&px=MTEyMTc">happened in
+my memory (actually it&rsquo;s been a while - that <a href="https://www.phoronix.com/scan.php?page=news_item&px=MTEyMTc">happened in
 2012</a>)</p><p><img src=/images/linus-nvidia.png alt="linus flipping off nvidia"></p><p>And I recently heard a friend rant about NVidia driver / Steam compatibility
 issues on Ubuntu. But the amazing Nix community had my back on this. Drives are
 nicely packaged - I just needed to <a href=https://github.com/edofic/dotfiles/commit/b06aaa734bcc45e07e5c1e450494241aa11a4109#diff-c82c2d31640fd1352de397c99bfcda0cR191>enable
-them</a></p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-nix data-lang=nix>services<span style=color:#f92672>.</span>xserver<span style=color:#f92672>.</span>videoDrivers <span style=color:#960050;background-color:#1e0010>=</span> [ <span style=color:#e6db74>&#34;</span><span style=color:#e6db74>n</span><span style=color:#e6db74>v</span><span style=color:#e6db74>i</span><span style=color:#e6db74>d</span><span style=color:#e6db74>i</span><span style=color:#e6db74>a</span><span style=color:#e6db74>&#34;</span> ];
+them</a></p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-nix data-lang=nix>services<span style=color:#f92672>.</span>xserver<span style=color:#f92672>.</span>videoDrivers <span style=color:#960050;background-color:#1e0010>=</span> [ <span style=color:#e6db74>&#34;nvidia&#34;</span> ];
 </code></pre></div><h1 id=steam>Steam</h1><p>Next up is my preferred distribution platform - Steam. Still have an account
 (and some games) from my previous gaming sting. The steam installed also does
 quite a bit of magic usually so this had me a bit worried as well. But
-apparently I'm not the first first person (by far!) to try gaming on NixOS as
-it's beautifully packaged. Just need to <a href=https://github.com/edofic/dotfiles/commit/b06aaa734bcc45e07e5c1e450494241aa11a4109#diff-c82c2d31640fd1352de397c99bfcda0cR112>add it to system
+apparently I&rsquo;m not the first first person (by far!) to try gaming on NixOS as
+it&rsquo;s beautifully packaged. Just need to <a href=https://github.com/edofic/dotfiles/commit/b06aaa734bcc45e07e5c1e450494241aa11a4109#diff-c82c2d31640fd1352de397c99bfcda0cR112>add it to system
 packages</a>
 and <em>everything</em> works out of the box.</p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-nix data-lang=nix>environment<span style=color:#f92672>.</span>systemPackages <span style=color:#960050;background-color:#1e0010>=</span> <span style=color:#66d9ef>with</span> pkgs; [
-  <span style=color:#f92672>.</span><span style=color:#f92672>.</span><span style=color:#f92672>.</span>
+  <span style=color:#f92672>...</span>
   steam
-  <span style=color:#f92672>.</span><span style=color:#f92672>.</span><span style=color:#f92672>.</span>
+  <span style=color:#f92672>...</span>
 ];
 </code></pre></div><p>Games install and play. I can get myself entertained, story over. Right?</p><h1 id=steam-play--proton--wine>Steam Play / Proton / Wine</h1><p>I incidentally learned about Steam Play (marketing name) / Proton (OSS name).
 Valve created <a href=https://github.com/ValveSoftware/Proton>a tool</a> to run
 Windows-only games on Linux - basically Wine + (a lot of) tricks. And apparently
 it works quite good. There is even <a href=https://www.protondb.com/>protondb.com</a> - a
-database of playability reports so you can tell what works and what doesn't
+database of playability reports so you can tell what works and what doesn&rsquo;t
 <em>before</em> buying games.</p><p>And the best surprise? This is seamlessly integrated into Steam client. So I
 picked I AAA (windows-only!) game I liked, clicked install, clicked play.</p><p>AND EVERYTHING WORKED!</p><p>I was running a AAA game via Wine on NixOS on a NVidia card. Butter smooth. I
 was&mldr;still am&mldr;very impressed by this.</p><p>Even a random controller-only early access game worked through this setup. Very
@@ -59,11 +59,11 @@ Linux on a funky distro. This will not end well. But I said I wanted tinkering.<
 and successfully paired. But it showed up as a generic device. And here comes
 the first bump on this journey: Steam drivers did not pick it up - and it was
 unusable.</p><p>Long story short - after about an hour of research and trying things I added
-<a href=https://github.com/edofic/dotfiles/blob/afc0e990dd65c80b9233944d2af8ac19d637ee8e/nixos/desktop.nix#L55-L57>this udev rules</a> to enable Steam to have permissions to use the device.</p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-nix data-lang=nix>services<span style=color:#f92672>.</span>udev<span style=color:#f92672>.</span>extraRules <span style=color:#960050;background-color:#1e0010>=</span> <span style=color:#e6db74>&#39;&#39;</span><span style=color:#e6db74>
-</span><span style=color:#e6db74></span><span style=color:#e6db74> </span><span style=color:#e6db74> </span><span style=color:#e6db74>#</span><span style=color:#e6db74> </span><span style=color:#e6db74>D</span><span style=color:#e6db74>u</span><span style=color:#e6db74>a</span><span style=color:#e6db74>l</span><span style=color:#e6db74>S</span><span style=color:#e6db74>h</span><span style=color:#e6db74>o</span><span style=color:#e6db74>c</span><span style=color:#e6db74>k</span><span style=color:#e6db74> </span><span style=color:#e6db74>4</span><span style=color:#e6db74> </span><span style=color:#e6db74>o</span><span style=color:#e6db74>v</span><span style=color:#e6db74>e</span><span style=color:#e6db74>r</span><span style=color:#e6db74> </span><span style=color:#e6db74>b</span><span style=color:#e6db74>l</span><span style=color:#e6db74>u</span><span style=color:#e6db74>e</span><span style=color:#e6db74>t</span><span style=color:#e6db74>o</span><span style=color:#e6db74>o</span><span style=color:#e6db74>t</span><span style=color:#e6db74>h</span><span style=color:#e6db74> </span><span style=color:#e6db74>h</span><span style=color:#e6db74>i</span><span style=color:#e6db74>d</span><span style=color:#e6db74>r</span><span style=color:#e6db74>a</span><span style=color:#e6db74>w</span><span style=color:#e6db74>
-</span><span style=color:#e6db74></span><span style=color:#e6db74> </span><span style=color:#e6db74> </span><span style=color:#e6db74>K</span><span style=color:#e6db74>E</span><span style=color:#e6db74>R</span><span style=color:#e6db74>N</span><span style=color:#e6db74>E</span><span style=color:#e6db74>L</span><span style=color:#e6db74>=</span><span style=color:#e6db74>=</span><span style=color:#e6db74>&#34;</span><span style=color:#e6db74>h</span><span style=color:#e6db74>i</span><span style=color:#e6db74>d</span><span style=color:#e6db74>r</span><span style=color:#e6db74>a</span><span style=color:#e6db74>w</span><span style=color:#e6db74>*</span><span style=color:#e6db74>&#34;</span><span style=color:#e6db74>,</span><span style=color:#e6db74> </span><span style=color:#e6db74>K</span><span style=color:#e6db74>E</span><span style=color:#e6db74>R</span><span style=color:#e6db74>N</span><span style=color:#e6db74>E</span><span style=color:#e6db74>L</span><span style=color:#e6db74>S</span><span style=color:#e6db74>=</span><span style=color:#e6db74>=</span><span style=color:#e6db74>&#34;</span><span style=color:#e6db74>*</span><span style=color:#e6db74>0</span><span style=color:#e6db74>5</span><span style=color:#e6db74>4</span><span style=color:#e6db74>C</span><span style=color:#e6db74>:</span><span style=color:#e6db74>0</span><span style=color:#e6db74>5</span><span style=color:#e6db74>C</span><span style=color:#e6db74>4</span><span style=color:#e6db74>*</span><span style=color:#e6db74>&#34;</span><span style=color:#e6db74>,</span><span style=color:#e6db74> </span><span style=color:#e6db74>M</span><span style=color:#e6db74>O</span><span style=color:#e6db74>D</span><span style=color:#e6db74>E</span><span style=color:#e6db74>=</span><span style=color:#e6db74>&#34;</span><span style=color:#e6db74>0</span><span style=color:#e6db74>6</span><span style=color:#e6db74>6</span><span style=color:#e6db74>6</span><span style=color:#e6db74>&#34;</span><span style=color:#e6db74>
-</span><span style=color:#e6db74></span><span style=color:#e6db74>&#39;&#39;</span>;
-</code></pre></div><p>And that's it. All the tinkering required. I can now use a DS4 over BT for AAA
+<a href=https://github.com/edofic/dotfiles/blob/afc0e990dd65c80b9233944d2af8ac19d637ee8e/nixos/desktop.nix#L55-L57>this udev rules</a> to enable Steam to have permissions to use the device.</p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-nix data-lang=nix>services<span style=color:#f92672>.</span>udev<span style=color:#f92672>.</span>extraRules <span style=color:#960050;background-color:#1e0010>=</span> <span style=color:#e6db74>&#39;&#39;
+</span><span style=color:#e6db74>  # DualShock 4 over bluetooth hidraw
+</span><span style=color:#e6db74>  KERNEL==&#34;hidraw*&#34;, KERNELS==&#34;*054C:05C4*&#34;, MODE=&#34;0666&#34;
+</span><span style=color:#e6db74>&#39;&#39;</span>;
+</code></pre></div><p>And that&rsquo;s it. All the tinkering required. I can now use a DS4 over BT for AAA
 Windows only games on NixOS. Based on my anecdotal evidence NixOS is now a
 better (easier) plafform for gaming than Windows. But my criteria might be a bit
 skewed ;)</p><hr width=100%><p style=color:#777>Last modified on 2020-06-07</p></div></div><nav class=post-pagination><a class=newer-posts href=/posts/2020-10-17-attach-to-k8s/>Next<br>Attaching your local machine to a Kubernetes cluster</a>

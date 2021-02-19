@@ -24,7 +24,7 @@ by Goran Bervar I was empowered by knowledge and tried to do all sorts
 of projects. Mostly in console. Stuff like subtitle format converter -
 <a href=http://en.wikipedia.org/wiki/Not_Invented_Here title="Not Invented Here">NIH
 syndrome</a>.
-I was a bit frustrated because I couldn't find any books about windows
+I was a bit frustrated because I couldn&rsquo;t find any books about windows
 programming in the library. Yes, library was may primary source of
 information, because
 my <a href=http://en.wikipedia.org/wiki/English_language title="English language">English</a> was
@@ -46,12 +46,12 @@ just enough instructions to do <a href=http://en.wikipedia.org/wiki/Hello_world_
 World</a>,
 that is PRINT and END.</p><h3 id=implementation>Implementation</h3><p>At first I thought about doing a monolithic structure - <a href=http://en.wikipedia.org/wiki/Switch_statement title="Switch statement">switch
 case</a>(in
-fact what I've <a href=/posts/2012-08-29-creating-a-language-1>done with scrat
+fact what I&rsquo;ve <a href=/posts/2012-08-29-creating-a-language-1>done with scrat
 recently</a>).
 But I had some considerations. What if number of of instruction rises a
-lot? I'll be left maintaining <a href=http://en.wikipedia.org/wiki/Spaghetti_code title="Spaghetti code">spaghetti
+lot? I&rsquo;ll be left maintaining <a href=http://en.wikipedia.org/wiki/Spaghetti_code title="Spaghetti code">spaghetti
 code</a>. Or
-at least I thought that's what spaghetti code looks like, but in
+at least I thought that&rsquo;s what spaghetti code looks like, but in
 retrospective I believe I had a good taste anyway. </p><p>But I tried that anyway. Just for kicks. Did whole machine as one class
 that had an array for memory and a single point of entry - boot. It run
 a loop a while loop with
@@ -60,36 +60,36 @@ fetched instruction from memory, switched on them, called appropriate
 method to implement that instruction and looped. Even had registers. I
 think my current professor of Computer Architecture(this course brought
 back the memory) might actually be proud if he heard what I did back
-then. </p><h3 id=pointers>Pointers</h3><p>I was always quite comfortable with pointers. I don't now, they're
+then. </p><h3 id=pointers>Pointers</h3><p>I was always quite comfortable with pointers. I don&rsquo;t now, they&rsquo;re
 mathematicky concept. I like such stuff. Or perhaps it was because I was
-young when I was introduced into the matter and wasn't spoiled with
+young when I was introduced into the matter and wasn&rsquo;t spoiled with
 automatic memory management(which I quite like nowadays). </p><p>So I tried with <a href=http://en.wikipedia.org/wiki/Function_pointer title="Function pointer">function
 pointers</a>.
 C is cool enough to let you have pointers to functions! And that means
 <a href=http://en.wikipedia.org/wiki/Higher-order_function title="Higher-order function">higher order
 functions</a>.
-But I didn't know about math enough to appreciate the concept as I do
-now. But still - I thought it's extremely cool. So I did a function that
+But I didn&rsquo;t know about math enough to appreciate the concept as I do
+now. But still - I thought it&rsquo;s extremely cool. So I did a function that
 halted execution and printed out &ldquo;no such instruction&rdquo;. Why you ask?
 Well I did a 256-cell table(8-bit instruction) of pointers to functions.
-Now I didn't have to switch - just a look-up and invocation. Great.
-Apart from the fact it doesn't work. </p><p>Compiler said something along the lines of &ldquo;You cannot make a table of
-pointers to functions!". I was puzzled. Skip 10 years into the future.
+Now I didn&rsquo;t have to switch - just a look-up and invocation. Great.
+Apart from the fact it doesn&rsquo;t work. </p><p>Compiler said something along the lines of &ldquo;You cannot make a table of
+pointers to functions!&rdquo;. I was puzzled. Skip 10 years into the future.
 Today I was rethinking this and thought about casting the pointer. All
 the functions would be void->void so I can cast back no problem. A
 table of <a href=http://en.wikipedia.org/wiki/Pointer_%28computing%29 title="Pointer (computing)">void
 pointers</a>
-and casting. Yay!</p><p>Now 10 years back. I didn't think about casting the pointer. Type info
+and casting. Yay!</p><p>Now 10 years back. I didn&rsquo;t think about casting the pointer. Type info
 was sacred to me!</p><p>So I &ldquo;invented&rdquo; <a href=http://en.wikipedia.org/wiki/Function_object title="Function object">function
 objects</a>.</p><h3 id=objects>Objects</h3><p>I swear to god I have not heard about function objects back then. It
-wasn't until this year reading Bloch's Efficient Java where he talks
+wasn&rsquo;t until this year reading Bloch&rsquo;s Efficient Java where he talks
 about strategy objects. I immediately recognized my idea. So now I had
 many classes, every one implementing execute method. And I had an array
 of these objects. Now I did a look-up and invocation on an object.
 Sweet. And it even worked. But sadly I dropped the project and went on
 to graphics. Learnt SDL and did Tic-Tac-Toe. And dreamed about doing a
-vector 3D engine(curves baby!). Which until this day I didn't try to
-implement. Maybe I'll try in near future. </p><hr width=100%><p style=color:#777>Last modified on 2013-10-18</p></div></div><nav class=post-pagination><a class=newer-posts href=/posts/2014-01-08-hakyll/>Next<br>Hakyll</a>
+vector 3D engine(curves baby!). Which until this day I didn&rsquo;t try to
+implement. Maybe I&rsquo;ll try in near future. </p><hr width=100%><p style=color:#777>Last modified on 2013-10-18</p></div></div><nav class=post-pagination><a class=newer-posts href=/posts/2014-01-08-hakyll/>Next<br>Hakyll</a>
 <a class=older-posts href=/posts/2013-09-04-better-scala-android/>Previous<br>Setting up for better Scala development on Android</a></nav><div class=post-comment-wrapper></div></div></div></div></div><div id=single-column-footer>&copy;
 2021
 Andraz Bajt</div></div><script src=//js/journal.js></script></body></html>

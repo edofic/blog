@@ -14,12 +14,12 @@ Andraz Bajt</div></div><div ref=extraContainer class=extra-container><div class=
 <a href=/index.xml><img src=/icons/rss.svg width=20></a>
 <a href=mailto:edofic@edofic.com><img src=/icons/email.svg width=20></a></div><div id=content><div ref=streamContainer class=stream-container><div class="post-list-container post-list-container-shadow"><div class=post><div class=post-head-wrapper-text-only style="background-image:url('/')"><div class=post-title>Integrating Jira into Google Sheets<div class=post-meta><time itemprop=datePublished>2018-01-25</time></div></div></div><div class=post-body-wrapper><div class=post-body><p>So I got a (recurring) task to compile some stats from Jira. You now, some
 filtering and agregation. Possibly a pivot table and a chart. Sounds like a
-perfect task for spreadsheets. But Jira doesn't have spreadsheets - at least
+perfect task for spreadsheets. But Jira doesn&rsquo;t have spreadsheets - at least
 without addons, but that is not an options for me.</p><p>So I decided to use Google Sheets. And figure out a way to automatically fetch
-data from Jira because there's no way in hell I'm doing that manually every
+data from Jira because there&rsquo;s no way in hell I&rsquo;m doing that manually every
 time. Turns out there are some scripts you are supposed to paste into sheets and
-give them all the permissions. But I don't trust that, not without properly
-reviewing the thousands of lines of code.</p><p>Obviously I decided to roll my own. I figured a way that's actually really easy.
+give them all the permissions. But I don&rsquo;t trust that, not without properly
+reviewing the thousands of lines of code.</p><p>Obviously I decided to roll my own. I figured a way that&rsquo;s actually really easy.
 Just create a filter in Jira and click <code>Export -> Printable</code>. This will give you
 an URL with all your tickets formatted nicely in a <code>&lt;table></code>.:</p><p>Why is this useful? Because Google Sheets knows how to scrape HTML tables. If
 you append your credentials to the url. The whole formula will look something
@@ -30,7 +30,7 @@ has a <code>QUERY</code> function which takes a data range and an SQL-like expre
 run over it.</p><p>Now we just need a way to simply refresh the data (remember, this is a recurring
 task). Sheet re-load the data when the URL changes and Jira ignores unknown
 parameters. We can use this to add a dummy counter which we increment!</p><pre><code>=IMPORTHTML(CONCATENATE(&quot;https://...my_passoword&amp;dummy=&quot;, B1), &quot;table&quot;, 1)
-</code></pre><p>But this means we now need to edit a number. No fun. Let's write a script to do
+</code></pre><p>But this means we now need to edit a number. No fun. Let&rsquo;s write a script to do
 it.</p><p>In <code>Tools</code> -> <code>Script Editor</code></p><pre><code>function increment() {
   SpreadsheetApp.getActiveSheet().getRange('B1').setValue(SpreadsheetApp.getActiveSheet().getRange('B1').getValue() + 1);
 }

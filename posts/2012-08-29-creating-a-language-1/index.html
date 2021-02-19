@@ -19,11 +19,11 @@ seem like quite some daunting monsters - just consider the amount of
 different features and more importantly, the vast infinity of possible
 programs.So where to start? I have a course about compilers at my
 college, but I have to wait another year to enroll into that. So welcome
-<a href=https://www.coursera.org/course/compilers>Coursera</a>. It's currently
-available only in self-study but that's enough for me. I should mention
+<a href=https://www.coursera.org/course/compilers>Coursera</a>. It&rsquo;s currently
+available only in self-study but that&rsquo;s enough for me. I should mention
 the <a href=http://www.amazon.com/Compilers-Principles-Techniques-Alfred-Aho/dp/0201100886%3FSubscriptionId%3D0G81C5DAZ03ZR9WH9X82%26tag%3Dzem-20%26linkCode%3Dxm2%26camp%3D2025%26creative%3D165953%26creativeASIN%3D0201100886 title="Compilers: Principles, Techniques, and Tools">Dragon
 Book</a>,
-but I didn't read that(yet) so I can't comment. Compiler is basicaly
+but I didn&rsquo;t read that(yet) so I can&rsquo;t comment. Compiler is basicaly
 <code>lexer -> parser -> optimiser -> code generator</code>.</p><h3 id=the-regex-approach>The regex approach</h3><p>I made it through introduction and lesson on <a href=http://en.wikipedia.org/wiki/Lexical_analysis title="Lexical analysis">lexical
 analysis</a>
 and recognized <a href=http://en.wikipedia.org/wiki/Finite-state_machine title="Finite-state machine">finite
@@ -35,20 +35,20 @@ expressions</a>
 but no-one figured out what was the connection). </p><p>Feeling empowered by the newly obtained knowledge I set out to make a
 lexer for my language.  I had no clear specification in mind since this
 is supposed to be a fun and creative project&mldr;I intended to just invent
-as I go.</p><p>My lexer was something like that(won't post the real code since
-I'm embarrassed)</p><ul><li>create a bunch of java regex objects that all match to the start of the string</li><li>take the string and try to match it against all regexes</li><li>return an identifier object corresponding to the match</li><li>remove matched part of the string</li><li>loop</li></ul><p>Yeah, pretty horrible.I kinda abandoned this idea.</p><h3 id=the-recursive-descent-parserhttpenwikipediaorgwikirecursive-descent-parser-recursive-descent-parser-approach>The <a href=http://en.wikipedia.org/wiki/Recursive_descent_parser title="Recursive descent parser">recursive descent parser</a> approach</h3><p>By now I was into <a href=http://en.wikipedia.org/wiki/Functional_programming title="Functional programming">functional
+as I go.</p><p>My lexer was something like that(won&rsquo;t post the real code since
+I&rsquo;m embarrassed)</p><ul><li>create a bunch of java regex objects that all match to the start of the string</li><li>take the string and try to match it against all regexes</li><li>return an identifier object corresponding to the match</li><li>remove matched part of the string</li><li>loop</li></ul><p>Yeah, pretty horrible.I kinda abandoned this idea.</p><h3 id=the-recursive-descent-parserhttpenwikipediaorgwikirecursive_descent_parser-recursive-descent-parser-approach>The <a href=http://en.wikipedia.org/wiki/Recursive_descent_parser title="Recursive descent parser">recursive descent parser</a> approach</h3><p>By now I was into <a href=http://en.wikipedia.org/wiki/Functional_programming title="Functional programming">functional
 programming</a>
 and <a href=http://www.scala-lang.org/ title="Scala (programming language)">scala
 language</a>.  I
 also watched lesson on recursive descent on coursera. The code was
 fugly, bunch of c++ with
 <a href=http://en.wikipedia.org/wiki/Pointer_%28computing%29 title="Pointer (computing)">pointer arithmetic</a> and
-side effects. I wan't pretty functions :(</p><p>I considered doing a framework for this in scala or perhaps java but&mldr;</p><p><a href=http://en.wikipedia.org/wiki/File%3AScala_logo.png><img src=http://upload.wikimedia.org/wikipedia/en/thumb/8/85/Scala_logo.png/300px-Scala_logo.png alt="Scala (programming language)"></a></p><p>Enter scala's <a href=http://en.wikipedia.org/wiki/Parser_combinator title="Parser combinator">parser
+side effects. I wan&rsquo;t pretty functions :(</p><p>I considered doing a framework for this in scala or perhaps java but&mldr;</p><p><a href=http://en.wikipedia.org/wiki/File%3AScala_logo.png><img src=http://upload.wikimedia.org/wikipedia/en/thumb/8/85/Scala_logo.png/300px-Scala_logo.png alt="Scala (programming language)"></a></p><p>Enter scala&rsquo;s <a href=http://en.wikipedia.org/wiki/Parser_combinator title="Parser combinator">parser
 combinators</a>.
 I suggest reading
 <a href=http://www.codecommit.com/blog/scala/the-magic-behind-parser-combinators>this</a>
 if you arent familiar. One of the reasons scala is awesome. You get
-parser &ldquo;generation&rdquo; baked into the standard library. Granted, it's a bit
+parser &ldquo;generation&rdquo; baked into the standard library. Granted, it&rsquo;s a bit
 slow, but who cares - this is a project for fun not for general usage.
 On the PLUS side you get productions in the laguage itself and parsing
 is almost like magic.</p><p>And in scaladoc you even get a nice <a href=http://www.scala-lang.org/api/current/index.html#scala.util.parsing.combinator.RegexParsers>code
@@ -59,11 +59,11 @@ would be nice. Fortunately scala also provides action combinators that
 allow to <a href=http://en.wikipedia.org/wiki/Pattern_matching title="Pattern matching">pattern
 match</a>
 the <a href=http://en.wikipedia.org/wiki/Parsing title=Parsing>parsers</a> themself
-and map them into an AST. And it even isn't that complicated. </p><p>I recreated the grammar from the scaladoc example and added the action
+and map them into an AST. And it even isn&rsquo;t that complicated. </p><p>I recreated the grammar from the scaladoc example and added the action
 combinators. The code block is kinda long, but I promise there is a
 short explanation at the bottom.</p><p>Notice the <code>^^</code> symbol. It sends the output from the parser  combinator
 into my mapping function(anonymous). And I just create the case
-class.There is also an evaluator at the and&mldr;but that's in part 2.</p><p><strong><a href=/posts/2012-08-30-creating-a-language-2>next -> Part 2: something that kinda works</a></strong></p><hr width=100%><p style=color:#777>Last modified on 2012-08-29</p></div></div><nav class=post-pagination><a class=newer-posts href=/posts/2012-08-30-creating-a-language-2/>Next<br>Making a programming language Part 2 - something that kinda works</a>
+class.There is also an evaluator at the and&mldr;but that&rsquo;s in part 2.</p><p><strong><a href=/posts/2012-08-30-creating-a-language-2>next -> Part 2: something that kinda works</a></strong></p><hr width=100%><p style=color:#777>Last modified on 2012-08-29</p></div></div><nav class=post-pagination><a class=newer-posts href=/posts/2012-08-30-creating-a-language-2/>Next<br>Making a programming language Part 2 - something that kinda works</a>
 <a class=older-posts href=/about/>Previous<br>About me</a></nav><div class=post-comment-wrapper></div></div></div></div></div><div id=single-column-footer>&copy;
 2021
 Andraz Bajt</div></div><script src=//js/journal.js></script></body></html>

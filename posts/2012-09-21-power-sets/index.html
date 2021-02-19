@@ -22,49 +22,49 @@ He totaly over-engineered it and after an hour of fiddling came up with
 4-liner in python. Ok. Big deal. How hard can it be? I immediately
 started to brainstorm a solution of my own(and Matevž helped).
 Paraphrased train of thought below.
-So what is a power set? Say a power set of set A. It's a set of all
-<a href=http://en.wikipedia.org/wiki/Subset title=Subset>subsets</a> of A. It's all
+So what is a power set? Say a power set of set A. It&rsquo;s a set of all
+<a href=http://en.wikipedia.org/wiki/Subset title=Subset>subsets</a> of A. It&rsquo;s all
 possible combinations of including and excluding single elements. So
-it's like applying filters to the original set. Wait a sec, a set of
+it&rsquo;s like applying filters to the original set. Wait a sec, a set of
 size n has 2 to the n-th power subsets. It all matches up. N-bit number
 are said filters. So you count from 0 to 2^n-1 you enumerate exactly
 all the filters and therefore all the subsets. You just calculated the
 power set. This took about 30sec in real time. Another minute to sketch
-the implementation. You implement set as Lists. Let's say
+the implementation. You implement set as Lists. Let&rsquo;s say
 <a href=http://www.oracle.com/technetwork/java/ title="Java (programming language)">Java</a>
 is the language of choice. Any reasonable input would be shorter than
 64 elements, at least on current machinery. So long can be used as
 counter. And now a nested for loop to iterate over elements and
-appending them if counter && (1 &#171; n). Simple. Won't post the code
+appending them if counter && (1 &#171; n). Simple. Won&rsquo;t post the code
 since I never wrote it.</p><h3 id=the-original-blogpost>The original blogpost</h3><p>This happened in a lab at Faculty for Computer and Information science.
 On my way home I started thinkking&mldr;.what is that 4-line
-implementation? It can't be my algorithm, that won't fit - it just isn't
+implementation? It can&rsquo;t be my algorithm, that won&rsquo;t fit - it just isn&rsquo;t
 that elegant. Matevž also told me who was the original author and it was
-someone whose blog I was subscribed to(I still am, it's pretty awesome,
+someone whose blog I was subscribed to(I still am, it&rsquo;s pretty awesome,
 <a href=http://swizec.com/>check it out</a>). So I searched for the original
 blogpost. And <a href=http://swizec.com/blog/a-google-phone-interview/swizec/3813>found
 it</a>. It
-wasn't four lines.</p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-scala data-lang=scala><span style=color:#66d9ef>def</span> powerset<span style=color:#f92672>(</span>set<span style=color:#f92672>)</span><span style=color:#66d9ef>:</span>
-      <span style=color:#66d9ef>binaries</span> <span style=color:#f92672>=</span> <span style=color:#f92672>[</span><span style=color:#66d9ef>bin</span><span style=color:#f92672>(</span><span style=color:#66d9ef>a</span><span style=color:#f92672>)</span> <span style=color:#66d9ef>for</span> <span style=color:#66d9ef>a</span> <span style=color:#66d9ef>in</span> <span style=color:#66d9ef>range</span><span style=color:#f92672>(</span><span style=color:#960050;background-color:#1e0010>2</span><span style=color:#66d9ef>^</span><span style=color:#66d9ef>len</span><span style=color:#f92672>(</span><span style=color:#66d9ef>set</span><span style=color:#f92672>)</span><span style=color:#f92672>)</span><span style=color:#f92672>]</span>
-      power <span style=color:#66d9ef>=</span> <span style=color:#f92672>[</span><span style=color:#f92672>]</span>
+wasn&rsquo;t four lines.</p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-scala data-lang=scala><span style=color:#66d9ef>def</span> powerset<span style=color:#f92672>(</span>set<span style=color:#f92672>)</span><span style=color:#66d9ef>:</span>
+      <span style=color:#66d9ef>binaries</span> <span style=color:#f92672>=</span> <span style=color:#f92672>[</span><span style=color:#66d9ef>bin</span><span style=color:#f92672>(</span><span style=color:#66d9ef>a</span><span style=color:#f92672>)</span> <span style=color:#66d9ef>for</span> <span style=color:#66d9ef>a</span> <span style=color:#66d9ef>in</span> <span style=color:#66d9ef>range</span><span style=color:#f92672>(</span><span style=color:#960050;background-color:#1e0010>2</span><span style=color:#66d9ef>^len</span><span style=color:#f92672>(</span><span style=color:#66d9ef>set</span><span style=color:#f92672>))]</span>
+      power <span style=color:#66d9ef>=</span> <span style=color:#f92672>[]</span>
       <span style=color:#66d9ef>for</span> yeses in binaries<span style=color:#66d9ef>:</span>
-        <span style=color:#66d9ef>subset</span> <span style=color:#f92672>=</span> <span style=color:#f92672>[</span><span style=color:#f92672>]</span>
+        <span style=color:#66d9ef>subset</span> <span style=color:#f92672>=</span> <span style=color:#f92672>[]</span>
  yeses <span style=color:#66d9ef>=</span> str<span style=color:#f92672>(</span>yeses<span style=color:#f92672>)</span>
- <span style=color:#66d9ef>for</span> i in range<span style=color:#f92672>(</span>len<span style=color:#f92672>(</span>yeses<span style=color:#f92672>)</span><span style=color:#f92672>)</span><span style=color:#66d9ef>:</span>
+ <span style=color:#66d9ef>for</span> i in range<span style=color:#f92672>(</span>len<span style=color:#f92672>(</span>yeses<span style=color:#f92672>))</span><span style=color:#66d9ef>:</span>
                  <span style=color:#66d9ef>if</span> <span style=color:#66d9ef>yeses</span><span style=color:#f92672>[</span><span style=color:#66d9ef>i</span><span style=color:#f92672>]</span> <span style=color:#f92672>==</span> <span style=color:#960050;background-color:#1e0010>“</span><span style=color:#ae81ff>1</span><span style=color:#960050;background-color:#1e0010>”</span><span style=color:#66d9ef>:</span>
-          <span style=color:#66d9ef>subset</span><span style=color:#66d9ef>.</span><span style=color:#66d9ef>append</span><span style=color:#f92672>(</span><span style=color:#66d9ef>set</span><span style=color:#f92672>[</span><span style=color:#66d9ef>i</span><span style=color:#f92672>]</span><span style=color:#f92672>)</span>
+          <span style=color:#66d9ef>subset.append</span><span style=color:#f92672>(</span><span style=color:#66d9ef>set</span><span style=color:#f92672>[</span><span style=color:#66d9ef>i</span><span style=color:#f92672>])</span>
  power<span style=color:#f92672>.</span>append<span style=color:#f92672>(</span>subset<span style=color:#f92672>)</span>
       <span style=color:#66d9ef>return</span> power
-</code></pre></div><p>But more importantly, it's essentially my algorithm. (And it didn't took
-him an hour, read the post, it's interesting) And then I realised. This
+</code></pre></div><p>But more importantly, it&rsquo;s essentially my algorithm. (And it didn&rsquo;t took
+him an hour, read the post, it&rsquo;s interesting) And then I realised. This
 is ugly. Quite ugly. It may be efficient and allow for doing iteration
-and evaluating it lazily, but oh boy it's ugly. Can't it be done in a
+and evaluating it lazily, but oh boy it&rsquo;s ugly. Can&rsquo;t it be done in a
 simpler way?</p><h4 id=recursive-solution>Recursive solution</h4><p>So by asking how I <strong>compute</strong> a power set I obtained the imperative
-algorithm above.</p><p><a href=http://commons.wikipedia.org/wiki/File%3ABalanced_tree.png><img src=http://upload.wikimedia.org/wikipedia/commons/thumb/3/33/Balanced_tree.png/300px-Balanced_tree.png alt="Balanced tree"></a></p><p>Time to change the question. What <strong>is</strong> a power set?</p><p>It's a set of leaves of a balanced binary decision tree. Every inner
+algorithm above.</p><p><a href=http://commons.wikipedia.org/wiki/File%3ABalanced_tree.png><img src=http://upload.wikimedia.org/wikipedia/commons/thumb/3/33/Balanced_tree.png/300px-Balanced_tree.png alt="Balanced tree"></a></p><p>Time to change the question. What <strong>is</strong> a power set?</p><p>It&rsquo;s a set of leaves of a balanced binary decision tree. Every inner
 node represents a decision to either take or leave out the element at
 respective index(I assume elements are indexed). That is root node
-responds to first element, it's children to second element, etc. Every
-leaf can be computed by following the decision path.  It's
+responds to first element, it&rsquo;s children to second element, etc. Every
+leaf can be computed by following the decision path.  It&rsquo;s
 a <strong>recursive</strong> structure. So the tree can be decomposed to left and
 right subtree and recombined. An this is repeated until you get to
 leaves. So a power set of A is an union of the power set of &ldquo;A minus the
@@ -72,9 +72,9 @@ first element&rdquo; and the same power set again but with every subset added
 the first element. Subtrees are represented by the two powersets and the
 recombination by adding head element to one set of sets and then doing
 the union. And to stop the recursion: power set of an empty set is a set
-containing just an empty set.</p><p>Now let's do that in code, my language of choice now is scala</p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-scala data-lang=scala><span style=color:#66d9ef>def</span> power<span style=color:#f92672>[</span><span style=color:#66d9ef>A</span><span style=color:#f92672>]</span><span style=color:#f92672>(</span>set<span style=color:#66d9ef>:</span> <span style=color:#66d9ef>List</span><span style=color:#f92672>[</span><span style=color:#66d9ef>A</span><span style=color:#f92672>]</span><span style=color:#f92672>)</span><span style=color:#66d9ef>:</span> <span style=color:#66d9ef>List</span><span style=color:#f92672>[</span><span style=color:#66d9ef>List</span><span style=color:#f92672>[</span><span style=color:#66d9ef>A</span><span style=color:#f92672>]</span><span style=color:#f92672>]</span> <span style=color:#66d9ef>=</span> set <span style=color:#66d9ef>match</span> <span style=color:#f92672>{</span>
+containing just an empty set.</p><p>Now let&rsquo;s do that in code, my language of choice now is scala</p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-scala data-lang=scala><span style=color:#66d9ef>def</span> power<span style=color:#f92672>[</span><span style=color:#66d9ef>A</span><span style=color:#f92672>](</span>set<span style=color:#66d9ef>:</span> <span style=color:#66d9ef>List</span><span style=color:#f92672>[</span><span style=color:#66d9ef>A</span><span style=color:#f92672>])</span><span style=color:#66d9ef>:</span> <span style=color:#66d9ef>List</span><span style=color:#f92672>[</span><span style=color:#66d9ef>List</span><span style=color:#f92672>[</span><span style=color:#66d9ef>A</span><span style=color:#f92672>]]</span> <span style=color:#66d9ef>=</span> set <span style=color:#66d9ef>match</span> <span style=color:#f92672>{</span>
     <span style=color:#66d9ef>case</span> <span style=color:#a6e22e>Nil</span> <span style=color:#66d9ef>=&gt;</span> <span style=color:#a6e22e>List</span><span style=color:#f92672>(</span><span style=color:#a6e22e>Nil</span><span style=color:#f92672>)</span>
-    <span style=color:#66d9ef>case</span> head<span style=color:#66d9ef>:</span><span style=color:#66d9ef>:</span><span style=color:#66d9ef>tail</span> <span style=color:#f92672>=&gt;</span> power<span style=color:#f92672>(</span>tail<span style=color:#f92672>)</span> flatMap <span style=color:#f92672>(</span>set <span style=color:#66d9ef>=&gt;</span> <span style=color:#a6e22e>List</span><span style=color:#f92672>(</span>set<span style=color:#f92672>,</span> head<span style=color:#66d9ef>:</span><span style=color:#66d9ef>:</span><span style=color:#66d9ef>set</span><span style=color:#f92672>)</span><span style=color:#f92672>)</span>
+    <span style=color:#66d9ef>case</span> head<span style=color:#66d9ef>:</span><span style=color:#66d9ef>:tail</span> <span style=color:#f92672>=&gt;</span> power<span style=color:#f92672>(</span>tail<span style=color:#f92672>)</span> flatMap <span style=color:#f92672>(</span>set <span style=color:#66d9ef>=&gt;</span> <span style=color:#a6e22e>List</span><span style=color:#f92672>(</span>set<span style=color:#f92672>,</span> head<span style=color:#66d9ef>:</span><span style=color:#66d9ef>:set</span><span style=color:#f92672>))</span>
 <span style=color:#f92672>}</span>
 </code></pre></div><p>Yay just four lines. and the last one barely matters. But I can do even
 better. The same code in haskell</p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-haskell data-lang=haskell><span style=color:#a6e22e>power</span> <span style=color:#66d9ef>[]</span> <span style=color:#f92672>=</span> [<span style=color:#66d9ef>[]</span>]

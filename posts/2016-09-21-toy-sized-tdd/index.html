@@ -14,18 +14,18 @@ Andraz Bajt</div></div><div ref=extraContainer class=extra-container><div class=
 <a href=/index.xml><img src=/icons/rss.svg width=20></a>
 <a href=mailto:edofic@edofic.com><img src=/icons/email.svg width=20></a></div><div id=content><div ref=streamContainer class=stream-container><div class="post-list-container post-list-container-shadow"><div class=post><div class=post-head-wrapper-text-only style="background-image:url('/')"><div class=post-title>TDD-ing a toy sized project<div class=post-meta><time itemprop=datePublished>2016-09-21</time></div></div></div><div class=post-body-wrapper><div class=post-body><p>Just recently I was porting a toy sized parser combinator library (a proof of
 concept) from Haskell to Python. You know, for educational purposes. It turns
-out I'm not smart enough to keep the complicated types (and explicit laziness)
+out I&rsquo;m not smart enough to keep the complicated types (and explicit laziness)
 in my head even for such a small project. So my solution was to do TDD. To
 clarify: I wanted to test happy paths through my functions to make sure at
 least types fit together.</p><p>So tests I will write. But that means I need another file for tests (yes, it
-was I single file project, that's what I mean with &ldquo;toy-sized&rdquo;), some actual
+was I single file project, that&rsquo;s what I mean with &ldquo;toy-sized&rdquo;), some actual
 structure, a test runner, probably a package description for dependencies&mldr;
 How about no? I remembered seeing a thing called <code>doctest</code> once. Turns out it
 fit perfectly!.</p><p>This is how using <code>doctest</code> looks in Python:</p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-python data-lang=python><span style=color:#66d9ef>def</span> <span style=color:#a6e22e>parseString</span>(target):
-  <span style=color:#e6db74></span><span style=color:#e6db74>&#34;&#34;&#34;</span><span style=color:#e6db74>
-</span><span style=color:#e6db74></span><span style=color:#e6db74>  &gt;&gt;&gt; parseString(</span><span style=color:#e6db74>&#39;</span><span style=color:#e6db74>foo</span><span style=color:#e6db74>&#39;</span><span style=color:#e6db74>)(</span><span style=color:#e6db74>&#39;</span><span style=color:#e6db74>foobar</span><span style=color:#e6db74>&#39;</span><span style=color:#e6db74>)</span><span style=color:#e6db74>
-</span><span style=color:#e6db74></span><span style=color:#e6db74>  [(</span><span style=color:#e6db74>&#39;</span><span style=color:#e6db74>foo</span><span style=color:#e6db74>&#39;</span><span style=color:#e6db74>, </span><span style=color:#e6db74>&#39;</span><span style=color:#e6db74>bar</span><span style=color:#e6db74>&#39;</span><span style=color:#e6db74>)]</span><span style=color:#e6db74>
-</span><span style=color:#e6db74></span><span style=color:#e6db74>  </span><span style=color:#e6db74>&#34;&#34;&#34;</span>
+  <span style=color:#e6db74>&#34;&#34;&#34;
+</span><span style=color:#e6db74>  &gt;&gt;&gt; parseString(&#39;foo&#39;)(&#39;foobar&#39;)
+</span><span style=color:#e6db74>  [(&#39;foo&#39;, &#39;bar&#39;)]
+</span><span style=color:#e6db74>  &#34;&#34;&#34;</span>
   <span style=color:#66d9ef>def</span> <span style=color:#a6e22e>p</span>(s):
     <span style=color:#66d9ef>if</span> s<span style=color:#f92672>.</span>startswith(target):
       <span style=color:#66d9ef>return</span> [(target, s[len(target):])]
@@ -34,12 +34,12 @@ fit perfectly!.</p><p>This is how using <code>doctest</code> looks in Python:</p
   <span style=color:#66d9ef>return</span> p
 
 
-<span style=color:#66d9ef>if</span> __name__ <span style=color:#f92672>==</span> <span style=color:#e6db74></span><span style=color:#e6db74>&#39;</span><span style=color:#e6db74>__main__</span><span style=color:#e6db74>&#39;</span>:
+<span style=color:#66d9ef>if</span> __name__ <span style=color:#f92672>==</span> <span style=color:#e6db74>&#39;__main__&#39;</span>:
   <span style=color:#f92672>import</span> doctest
   doctest<span style=color:#f92672>.</span>testmod()
 </code></pre></div><p>And then run with <code>python myfile.py</code>. It is that simple (and built-int). You
-just put examples in the docstring and they will be machine checked.</p><p>But I'm lazy and don't want to run tests every time by hand. I want a
-poor-man's runner with <code>--watch</code> capability. And I can have it as a bash
+just put examples in the docstring and they will be machine checked.</p><p>But I&rsquo;m lazy and don&rsquo;t want to run tests every time by hand. I want a
+poor-man&rsquo;s runner with <code>--watch</code> capability. And I can have it as a bash
 one-liner (given that <code>inotify-tools</code> package is installed on my system).</p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=color:#66d9ef>while</span> true; <span style=color:#66d9ef>do</span>
   inotifywait myfile.py
   clear
@@ -47,7 +47,7 @@ one-liner (given that <code>inotify-tools</code> package is installed on my syst
 <span style=color:#66d9ef>done</span>
 </code></pre></div><p>This will automatically clear the screen and re-run tests every time I change
 the file - save it from my editor. Now I can finally develop my toy projects in
-split screen with terminal and vim using only my editor's save function to run
+split screen with terminal and vim using only my editor&rsquo;s save function to run
 tests :)</p><h2 id=bonus-section>Bonus section</h2><p>Doctest is ported to Haskell, so I can use it there as well. Just need to
 <code>stack install</code> it globally and it will be available for my one-file projects.</p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-haskell data-lang=haskell><span style=color:#75715e>-- |</span>
 <span style=color:#75715e>-- &gt;&gt;&gt; parseNumber &#34;123&#34;</span>

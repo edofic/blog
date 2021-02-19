@@ -24,34 +24,34 @@ out
 has some funky operators that solve this in a (sort-of) clean way.</p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-csharp data-lang=csharp><span style=color:#66d9ef>var</span> outputString = input1 ?? <span style=color:#e6db74>&#34;&#34;</span> + input2 ?? <span style=color:#e6db74>&#34;&#34;</span>;
 </code></pre></div><p>I like <a href=http://en.wikipedia.org/wiki/Type_inference title="Type inference">type
 inference</a>
-so I use var's extensively - please don't judge me. What this does is
+so I use var&rsquo;s extensively - please don&rsquo;t judge me. What this does is
 concatenate input1 and input2 substituting null values with <a href=http://en.wikipedia.org/wiki/Empty_string title="Empty string">empty
 string</a>. In
-scala you would write something like</p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-scala data-lang=scala><span style=color:#66d9ef>val</span> outputString <span style=color:#66d9ef>=</span> <span style=color:#a6e22e>Option</span><span style=color:#f92672>(</span>input1<span style=color:#f92672>)</span><span style=color:#f92672>.</span>getOrElse<span style=color:#f92672>(</span><span style=color:#e6db74>&#34;&#34;</span><span style=color:#f92672>)</span> <span style=color:#f92672>+</span> <span style=color:#a6e22e>Option</span><span style=color:#f92672>(</span>input2<span style=color:#f92672>)</span><span style=color:#f92672>.</span>getOrElse<span style=color:#f92672>(</span><span style=color:#e6db74>&#34;&#34;</span><span style=color:#f92672>)</span>
-</code></pre></div><p>but that's verbose and ugly. Wrapping and unwrapping to get some added
+scala you would write something like</p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-scala data-lang=scala><span style=color:#66d9ef>val</span> outputString <span style=color:#66d9ef>=</span> <span style=color:#a6e22e>Option</span><span style=color:#f92672>(</span>input1<span style=color:#f92672>).</span>getOrElse<span style=color:#f92672>(</span><span style=color:#e6db74>&#34;&#34;</span><span style=color:#f92672>)</span> <span style=color:#f92672>+</span> <span style=color:#a6e22e>Option</span><span style=color:#f92672>(</span>input2<span style=color:#f92672>).</span>getOrElse<span style=color:#f92672>(</span><span style=color:#e6db74>&#34;&#34;</span><span style=color:#f92672>)</span>
+</code></pre></div><p>but that&rsquo;s verbose and ugly. Wrapping and unwrapping to get some added
 semantics of the Option factory(returns None for null). But you
-shouldn't have nulls in the first place if you're using scala. That's
-what Option is for! Enough ranting, let's implement this <a href=http://en.wikipedia.org/wiki/Null_coalescing_operator title="Null coalescing operator">??
+shouldn&rsquo;t have nulls in the first place if you&rsquo;re using scala. That&rsquo;s
+what Option is for! Enough ranting, let&rsquo;s implement this <a href=http://en.wikipedia.org/wiki/Null_coalescing_operator title="Null coalescing operator">??
 operator</a>
-in scala.</p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-scala data-lang=scala><span style=color:#66d9ef>implicit</span> <span style=color:#66d9ef>class</span> <span style=color:#a6e22e>NullCoalescent</span><span style=color:#f92672>[</span><span style=color:#66d9ef>A</span><span style=color:#f92672>]</span><span style=color:#f92672>(</span>a<span style=color:#66d9ef>:</span> <span style=color:#66d9ef>A</span><span style=color:#f92672>)</span><span style=color:#f92672>{</span>
-  <span style=color:#66d9ef>def</span> <span style=color:#f92672>??</span><span style=color:#f92672>(</span>b<span style=color:#66d9ef>:</span> <span style=color:#f92672>=&gt;</span> A<span style=color:#f92672>)</span> <span style=color:#66d9ef>=</span> <span style=color:#66d9ef>if</span><span style=color:#f92672>(</span>a<span style=color:#f92672>!=</span><span style=color:#66d9ef>null</span><span style=color:#f92672>)</span> a <span style=color:#66d9ef>else</span> b
+in scala.</p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-scala data-lang=scala><span style=color:#66d9ef>implicit</span> <span style=color:#66d9ef>class</span> <span style=color:#a6e22e>NullCoalescent</span><span style=color:#f92672>[</span><span style=color:#66d9ef>A</span><span style=color:#f92672>](</span>a<span style=color:#66d9ef>:</span> <span style=color:#66d9ef>A</span><span style=color:#f92672>){</span>
+  <span style=color:#66d9ef>def</span> <span style=color:#f92672>??(</span>b<span style=color:#66d9ef>:</span> <span style=color:#f92672>=&gt;</span> A<span style=color:#f92672>)</span> <span style=color:#66d9ef>=</span> <span style=color:#66d9ef>if</span><span style=color:#f92672>(</span>a<span style=color:#f92672>!=</span><span style=color:#66d9ef>null</span><span style=color:#f92672>)</span> a <span style=color:#66d9ef>else</span> b
 <span style=color:#f92672>}</span>
-</code></pre></div><p>Yup. That's it! You only need this in scope and of you go writing code
+</code></pre></div><p>Yup. That&rsquo;s it! You only need this in scope and of you go writing code
 C#-style.</p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-scala data-lang=scala>scala<span style=color:#f92672>&gt;</span> <span style=color:#e6db74>&#34;hi&#34;</span> <span style=color:#f92672>??</span> <span style=color:#e6db74>&#34;there&#34;</span>
 res0<span style=color:#66d9ef>:</span> <span style=color:#66d9ef>String</span> <span style=color:#f92672>=</span> hi
 
 scala<span style=color:#f92672>&gt;</span> <span style=color:#f92672>(</span><span style=color:#66d9ef>null</span><span style=color:#66d9ef>:</span><span style=color:#66d9ef>String</span><span style=color:#f92672>)</span> <span style=color:#f92672>??</span> <span style=color:#e6db74>&#34;empty&#34;</span>
 res2<span style=color:#66d9ef>:</span> <span style=color:#66d9ef>String</span> <span style=color:#f92672>=</span> empty
-</code></pre></div><p>Note the type of b parameter in ?? method. It's => A. By name
+</code></pre></div><p>Note the type of b parameter in ?? method. It&rsquo;s => A. By name
 evaluation. This means our new operator behaves properly and only
 evaluates right hand side if value is in fact null. This lets you for
 example log unexpected nulls while substituting for default value</p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-scala data-lang=scala><span style=color:#66d9ef>val</span> key <span style=color:#66d9ef>=</span> valueFromUser <span style=color:#f92672>??</span> <span style=color:#f92672>{</span>
   log<span style=color:#f92672>(</span><span style=color:#e6db74>&#34;key is null!&#34;</span><span style=color:#f92672>}</span>
   defaultKey
 <span style=color:#f92672>}</span>
-</code></pre></div><p>This works because scala let's you do side effects like that. I just
+</code></pre></div><p>This works because scala let&rsquo;s you do side effects like that. I just
 wanted to add one reason why I love scala is this easy way of defining
-structures that feel like they're part of the language while being
+structures that feel like they&rsquo;re part of the language while being
 nothing more than just libraries.</p><hr width=100%><p style=color:#777>Last modified on 2013-01-27</p></div></div><nav class=post-pagination><a class=newer-posts href=/posts/2013-01-27-monadic-io/>Next<br>Monadic IO with ScalaZ</a>
 <a class=older-posts href=/posts/2013-01-27-union-types/>Previous<br>Union types in scala</a></nav><div class=post-comment-wrapper></div></div></div></div></div><div id=single-column-footer>&copy;
 2021
