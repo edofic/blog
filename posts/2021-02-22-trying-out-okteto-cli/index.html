@@ -1,0 +1,284 @@
+<!doctype html><html><head><title>Trying out Okteto (CLI)</title><meta charset=utf-8><meta name=X-UA-Compatible content="IE=edge"><meta name=google-site-verification content><meta content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=0" name=viewport><meta content="telephone=no" name=format-detection><meta name=renderer content="webkit"><meta name=theme-color content="#ffffff"><link type=text/css rel=stylesheet href=/vendor/css/bootstrap.min.css><link rel=stylesheet href=/scss/journal.min.01c37d732f853bf90329007dc6f0a25c67722dd47b7168f8907facb93414bd91.css media=screen><link rel=stylesheet href="https://fonts.googleapis.com/css?family=Lora|Montserrat|Fira+Mono|Noto+Serif+SC|Material+Icons"></head><body><div id=app><div ref=sideContainer class=side-container><div class="a-block nav-head false"><div class=nav-title>My Programming Escapades</div><div class=nav-subtitle>Andraz Bajt</div><a href=https://github.com/edofic><img src=/icons/github.svg width=20></a>
+<a href=https://www.linkedin.com/in/edofic><img src=/icons/linkedin.svg width=20></a>
+<a href=https://twitter.com/edofic><img src=/icons/twitter.svg width=20></a>
+<a href=/index.xml><img src=/icons/rss.svg width=20></a>
+<a href=mailto:edofic@edofic.com><img src=/icons/email.svg width=20></a></div><div class=nav-link-list><a class="a-block nav-link-item" href=/about>About Me</a>
+<a class="a-block nav-link-item" href=/>Archive</a></div><div class=nav-footer>&copy;
+2021
+Andraz Bajt</div></div><div ref=extraContainer class=extra-container><div class=pagination><a id=globalBackToTop class="pagination-action animated-visibility" href=#top :class="{ invisible: scrollY == 0 }"><i class="material-icons pagination-action-icon">keyboard_arrow_up</i></a></div></div><div class=single-column-drawer-container ref=drawer><div class=drawer-content><div class=drawer-menu><a class="a-block drawer-menu-item" href=/about>About Me</a>
+<a class="a-block drawer-menu-item" href=/>Archive</a></div></div></div><div class=single-column-header-container ref=pageHead><a href=/><div class=single-column-header-title>My Programming Escapades</div><div class=single-column-header-subtitle>Andraz Bajt</div></a><a href=https://github.com/edofic><img src=/icons/github.svg width=20></a>
+<a href=https://www.linkedin.com/in/edofic><img src=/icons/linkedin.svg width=20></a>
+<a href=https://twitter.com/edofic><img src=/icons/twitter.svg width=20></a>
+<a href=/index.xml><img src=/icons/rss.svg width=20></a>
+<a href=mailto:edofic@edofic.com><img src=/icons/email.svg width=20></a></div><div id=content><div ref=streamContainer class=stream-container><div class="post-list-container post-list-container-shadow"><div class=post><div class=post-head-wrapper-text-only style="background-image:url('/')"><div class=post-title>Trying out Okteto (CLI)<div class=post-meta><time itemprop=datePublished>2021-02-22</time>
+<i class=material-icons>label</i>
+<a href=/tags/trying-out>trying-out</a>
+&nbsp;</div></div></div><div class=post-body-wrapper><div class=post-body><p>Today I&rsquo;ll be giving <a href=https://github.com/okteto/okteto>Okteto</a> a spin. From the docs</p><blockquote><p>Okteto: Tool to Develop Applications on Kubernetes</p></blockquote><p>Or my personal pitch:</p><blockquote><p>Okteto delivers on the &ldquo;my other computer is the cloud&rdquo; trope</p></blockquote><p>What does this mean? First of all: there is a distinction between</p><ul><li>Okteto Cloud & Okteto Enterprise: this is a server side solution that provides
+managed k8s namespaces, CD and other bells and whistles - will look into this
+in the future</li><li>okteto - the tool: open source client to work with Okteto Cloud & Okteto
+Enterprise - but the core functionality works with any k8s cluster. This is the
+tool I&rsquo;m trying out today.</li><li>Okteto - the company (behind all of this)</li></ul><h1 id=how-it-works>How it works</h1><p>From the docs:</p><blockquote><p>Okteto allows you to develop inside a container. When you run okteto up your
+Kubernetes deployment is replaced by a development container that contains
+your development tools (e.g. maven and jdk, or npm, python, go compiler,
+debuggers, etc). This development container can be any docker image. The
+development container inherits the same secrets, configmaps, volumes or any
+other configuration value of the original Kubernetes deployment.</p></blockquote><blockquote><p>In addition to that, okteto up will:</p></blockquote><blockquote><p>Create a bidirectional file synchronization service to keep your changes up to
+date between your local filesystem and your development container.</p></blockquote><blockquote><p>Automatic local and remote port forwarding using SSH, so you can access your
+cluster services via localhost or connect a remote debugger.</p></blockquote><blockquote><p>Give you an interactive terminal to your development container, so you can
+build, test, and run your application as you would from a local terminal.o</p></blockquote><p>Or my mental model: just how &ldquo;docker for mac&rdquo; allows you to develop locally on
+you mac against a virtual machine it manages, okteto allows you to do the same
+but against any kubernetes cluster.</p><p>Yes underlying mechanisms are very different, but it still allows you to run
+containers (or deployments to be exact) and does the necessary wiring to make it
+seem they are running on your machine. The same happens when you spin up a
+docker container on a mac - it&rsquo;s effecively running on a foreign machine (that
+just happens to be virtualised on you laptop), you can actually even use remote
+docker hosts.</p><p>In my particular use case I&rsquo;m using spare on-prem servers to offload heavy
+services needed for development - that&rsquo;s running on kubernetes and is wired into
+my local environment with port forwarding. K8s is used as a scheduler here so my
+colleagues can share and more efficiently utilise underlying infra. But over
+time the setup grew, offloading more and more components, to the point I&rsquo;m only
+running the component I&rsquo;m actually working on locally. Which brings me to the
+logical conclusion - can I run this on the server too? Might as well make use
+of the more performant hardware. I will confess: I&rsquo;m not using okteto for my
+day-to-day work yet, but I&rsquo;m looking into it.</p><p>So this post is not describing my exact first impression but I genuinely haven&rsquo;t
+tried doing this from scratch on linux for <a href=/posts/2021-02-07-trying-out-buffalo/>an application that is not yet
+packaged for k8s</a>.</p><h1 id=installation>Installation</h1><p>Let&rsquo;s see the docs: <a href=https://okteto.com/docs/getting-started/installation/index.html>https://okteto.com/docs/getting-started/installation/index.html</a></p><p>Installation method for linux is a &ldquo;curl to shell&rdquo;, ugh</p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-sh data-lang=sh> $ curl https://get.okteto.com -sSfL | sh
+</code></pre></div><p>Not a fan and highly sceptical it will actually work on NixOS. (I&rsquo;ve been using
+the brew version on mac previously). Let&rsquo;s read through the file and do a manual
+approximation.</p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash>$ wget -O ~/bin/okteto https://github.com/okteto/okteto/releases/download/1.10.6/okteto-Linux-x86_64
+$ chmod +x ~/bin/okteto
+$ okteto --version
+okteto version 1.10.6
+</code></pre></div><p>Hooray for static builds, no need to compile from source :D</p><h1 id=a-cluster>A cluster</h1><p>Now we need a cluster to run against. I have an experimentation setup I&rsquo;ll use
+but you can also get a free managed namespace from
+<a href=https://okteto.com/>okteto.com</a> to keep in the spirit of the tool :)</p><p>Otherwise you can use <a href=https://k3d.io/>k3d</a> (k3s in docker) to follow along if
+you with (or simply enable kubernetes if you&rsquo;re using docker for desktop)</p><h2 id=k3d>K3d</h2><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash>$ wget -O ~/bin/k3d https://github.com/rancher/k3d/releases/download/v4.1.1/k3d-linux-amd64
+$ chmod +x ~/bin/k3d
+$ k3d version
+k3d version v4.1.1
+k3s version v1.20.2-k3s1 <span style=color:#f92672>(</span>default<span style=color:#f92672>)</span>
+</code></pre></div><p>We now have the wrapper, let&rsquo;s create a local cluster (requires docker to run
+some containers)</p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash>k3d cluster create
+</code></pre></div><p>This stood up a cluster and created a context, just need to use it</p><p>follow the output of the command</p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash>nix-env -iA nixos.kubectl <span style=color:#75715e># I actually need to install kubectl first</span>
+kubectl config use-context k3d-k3s-default
+kubectl cluster-info
+</code></pre></div><p>And we&rsquo;re in business :)</p><h1 id=packaging-our-app>Packaging our app</h1><p>I&rsquo;ll be using the dummy app I&rsquo;ve created in <a href=/posts/2021-02-07-trying-out-buffalo/>Trying out
+Buffalo</a>. All the code I produced is
+available <a href=https://github.com/edofic/trying-out/tree/main/okteto/v1>on github</a>.</p><p>First off I&rsquo;ll set-up a dummy database. Since I don&rsquo;t really need persistence of
+any sort of production-level quality I&rsquo;ll create a deployment. This is the
+easiest way to get started for me (this is <em>FAR</em> from production grade setup).</p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-yaml data-lang=yaml><span style=color:#f92672>apiVersion</span>: <span style=color:#ae81ff>apps/v1</span>
+<span style=color:#f92672>kind</span>: <span style=color:#ae81ff>Deployment</span>
+<span style=color:#f92672>metadata</span>:
+  <span style=color:#f92672>name</span>: <span style=color:#ae81ff>db</span>
+  <span style=color:#f92672>labels</span>:
+    <span style=color:#f92672>app</span>: <span style=color:#ae81ff>db</span>
+<span style=color:#f92672>spec</span>:
+  <span style=color:#f92672>replicas</span>: <span style=color:#ae81ff>1</span>
+  <span style=color:#f92672>selector</span>:
+    <span style=color:#f92672>matchLabels</span>:
+      <span style=color:#f92672>app</span>: <span style=color:#ae81ff>db</span>
+  <span style=color:#f92672>template</span>:
+    <span style=color:#f92672>metadata</span>:
+      <span style=color:#f92672>labels</span>:
+        <span style=color:#f92672>app</span>: <span style=color:#ae81ff>db</span>
+    <span style=color:#f92672>spec</span>:
+      <span style=color:#f92672>containers</span>:
+      - <span style=color:#f92672>name</span>: <span style=color:#ae81ff>postgres</span>
+        <span style=color:#f92672>image</span>: <span style=color:#ae81ff>postgres:13.1-alpine</span>
+        <span style=color:#f92672>env</span>:
+        - <span style=color:#f92672>name</span>: <span style=color:#ae81ff>POSTGRES_PASSWORD</span>
+          <span style=color:#f92672>value</span>: <span style=color:#e6db74>&#34;postgres&#34;</span>
+        <span style=color:#f92672>ports</span>:
+        - <span style=color:#f92672>containerPort</span>: <span style=color:#ae81ff>5432</span>
+---
+<span style=color:#f92672>apiVersion</span>: <span style=color:#ae81ff>v1</span>
+<span style=color:#f92672>kind</span>: <span style=color:#ae81ff>Service</span>
+<span style=color:#f92672>metadata</span>:
+  <span style=color:#f92672>name</span>: <span style=color:#ae81ff>db</span>
+<span style=color:#f92672>spec</span>:
+  <span style=color:#f92672>selector</span>:
+    <span style=color:#f92672>app</span>: <span style=color:#ae81ff>db</span>
+  <span style=color:#f92672>ports</span>:
+    - <span style=color:#f92672>protocol</span>: <span style=color:#ae81ff>TCP</span>
+      <span style=color:#f92672>port</span>: <span style=color:#ae81ff>5432</span>
+</code></pre></div><p>And apply this config to my cluster</p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash>kubectl apply -f ./postgres.yaml
+</code></pre></div><p>Are we up?</p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash> $ kubectl get pod
+ NAME                  READY   STATUS    RESTARTS   AGE
+ db-5d5cd58cdf-6fvsd   1/1     Running   <span style=color:#ae81ff>0</span>          18s
+</code></pre></div><p>Yes we are. Now let&rsquo;s use this pod for my local development via a port forward -
+I&rsquo;m setting myself up in a situation where I have my dependencies running in the
+cluster so I can get some benefit from doing my development in the cluster a
+well.</p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash>kubectl port-forward service/db 5432:5432
+</code></pre></div><p>Now I need to create my database and run the dev server.</p><pre><code>cd ../buffalo
+buffalo pop create -a
+buffalo dev
+</code></pre><p>BOOM. We&rsquo;re using a remote db. (this is now serving on localhost)</p><h1 id=enter-okteto>Enter okteto</h1><p>Now that I have a dependency in the cluster, let&rsquo;s try to simplify my life using
+<code>okteto</code>. First thing I like to do with new tools is check the build-in help</p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash> $ okteto -h
+Manage development containers
+
+Usage:
+  okteto <span style=color:#f92672>[</span>command<span style=color:#f92672>]</span>
+
+Available Commands:
+  analytics   Enable / Disable analytics
+  build       Build <span style=color:#f92672>(</span>and optionally push<span style=color:#f92672>)</span> a Docker image
+  create      Creates resources
+  delete      Deletes resources
+  doctor      Generates a zip file with the okteto logs
+  down        Deactivates your development container
+  exec        Execute a command in your development container
+  help        Help about any command
+  init        Automatically generates your okteto manifest file
+  login       Log into Okteto
+  namespace   Downloads k8s credentials <span style=color:#66d9ef>for</span> a namespace
+  pipeline    Pipeline management commands
+  push        Builds, pushes and redeploys source code to the target deployment
+  restart     Restarts the deployments listed in the services field of the okteto manifest
+  stack       Stack management commands
+  status      Status of the synchronization process
+  up          Activates your development container
+  version     View the version of the okteto binary
+
+Flags:
+  -h, --help              help <span style=color:#66d9ef>for</span> okteto
+  -l, --loglevel string   amount of information outputted <span style=color:#f92672>(</span>debug, info, warn, error<span style=color:#f92672>)</span> <span style=color:#f92672>(</span>default <span style=color:#e6db74>&#34;warn&#34;</span><span style=color:#f92672>)</span>
+
+Use <span style=color:#e6db74>&#34;okteto [command] --help&#34;</span> <span style=color:#66d9ef>for</span> more information about a command.
+</code></pre></div><p>Hum, we can try running <code>init</code> to get started - or you&rsquo;re sane and you read
+through the readme to find <a href=https://github.com/okteto/okteto#super-quick-start>Super Quick
+Start</a> that tells you the
+same: run <code>init</code> and then <code>up</code>.</p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash> $ okteto init -h
+Automatically generates your okteto manifest file
+
+Usage:
+  okteto init <span style=color:#f92672>[</span>flags<span style=color:#f92672>]</span>
+
+Flags:
+  -c, --context string     context target <span style=color:#66d9ef>for</span> generating the okteto manifest
+  -f, --file string        path to the manifest file <span style=color:#f92672>(</span>default <span style=color:#e6db74>&#34;okteto.yml&#34;</span><span style=color:#f92672>)</span>
+  -h, --help               help <span style=color:#66d9ef>for</span> init
+  -n, --namespace string   namespace target <span style=color:#66d9ef>for</span> generating the okteto manifest
+  -o, --overwrite          overwrite existing manifest file
+
+Global Flags:
+  -l, --loglevel string   amount of information outputted <span style=color:#f92672>(</span>debug, info, warn, error<span style=color:#f92672>)</span> <span style=color:#f92672>(</span>default <span style=color:#e6db74>&#34;warn&#34;</span><span style=color:#f92672>)</span>
+</code></pre></div><p>Let&rsquo;s try the defaults - will run this in the buffalo application folder.</p><pre><code>okteto init
+</code></pre><p>Somewhat surprisingly, init was interactive, so no snippets here. Some
+takeaways:</p><ul><li>auto detected we&rsquo;re using Go, very nice</li><li>no deployment detected (my app is not deployed to cluster yet), let&rsquo;s go with
+defaults</li></ul><p>And we got a new file: <code>okteto.yml</code></p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-yaml data-lang=yaml><span style=color:#f92672>name</span>: <span style=color:#ae81ff>buffalo</span>
+<span style=color:#f92672>image</span>: <span style=color:#ae81ff>okteto/golang:1</span>
+<span style=color:#f92672>command</span>: <span style=color:#ae81ff>bash</span>
+<span style=color:#f92672>securityContext</span>:
+  <span style=color:#f92672>capabilities</span>:
+    <span style=color:#f92672>add</span>:
+    - <span style=color:#ae81ff>SYS_PTRACE</span>
+<span style=color:#f92672>volumes</span>:
+- <span style=color:#ae81ff>/go/pkg/</span>
+- <span style=color:#ae81ff>/root/.cache/go-build/</span>
+<span style=color:#f92672>sync</span>:
+- <span style=color:#ae81ff>.:/usr/src/app</span>
+<span style=color:#f92672>forward</span>:
+- <span style=color:#ae81ff>2345</span>:<span style=color:#ae81ff>2345</span>
+- <span style=color:#ae81ff>8080</span>:<span style=color:#ae81ff>8080</span>
+</code></pre></div><p>Let&rsquo;s try to dissect it:</p><ul><li>name: default</li><li>image&mldr;will come back to this as there is more to unpack</li><li>command, I&rsquo;m guessing this is what you get as your dev shell - bash is a sane
+default</li><li>PTRACE capabilites - this is usually needed to attach debuggers</li><li>volumes: makes sense to create a volume for go packages and cache - maybe this
+maps to k8s pvcs and we get persistence this way (this is what I&rsquo;d expect)</li><li>sync: so we&rsquo;ll be syncing current dir to <code>/usr/src/app</code>, ok</li><li>forwards: 8000 is a sane default for our app while 2345 is the default port
+for <a href=https://github.com/go-delve/delve>delve</a> - a go debugger, confirming my
+PTRACE suspicion</li></ul><p>Now let&rsquo;s dive deep into the image. You can look at the <a href="https://hub.docker.com/layers/okteto/golang/1.14/images/sha256-060f1ef05023e836f4711e1b41fe8141c7b5d048a8fcd9cecc3bed5af6604ce8?context=explore">layers on docker
+hub</a></p><pre><code>1 ADD file ... in /
+2 CMD [&quot;bash&quot;]
+3 /bin/sh -c set -eux; apt-get
+4 /bin/sh -c set -ex; if
+5 /bin/sh -c apt-get update &amp;&amp;
+6 /bin/sh -c apt-get update &amp;&amp;
+7 ENV PATH=/usr/local/go/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+8 ENV GOLANG_VERSION=1.14.15
+9 /bin/sh -c set -eux; dpkgArch=&quot;$(dpkg
+10 ENV GOPATH=/go
+11 ENV PATH=/go/bin:/usr/local/go/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+12 /bin/sh -c mkdir -p &quot;$GOPATH/src&quot;
+13 WORKDIR /go
+14 WORKDIR /usr/src/app
+15 COPY file:276084f05422a205579d0bb9852e23a9b7bb569ebacb1a59dd92a96a192bccc3 in /root/.bashrc
+16 /bin/sh -c go get github.com/codegangsta/gin
+17 CMD [&quot;bash&quot;]
+</code></pre><p>Looks like a mostly straightforward go env + gin (tool for auto reloading).</p><p>But I already have an environment I want to package up - the one I set up
+locally in the <a href=/posts/2021-02-07-trying-out-buffalo/>buffalo post</a>: buffalo,
+go, node, yarn.</p><p>A quick search on docker hub reveals: <a href=https://hub.docker.com/r/gobuffalo/buffalo>https://hub.docker.com/r/gobuffalo/buffalo</a></p><p>Looking at <a href="https://hub.docker.com/layers/gobuffalo/buffalo/v0.16.21/images/sha256-608ee13bdf5a71f37165d43e48ff89757faf4257b46f6979cf4fb3ff6d960681?context=explore">the layers</a>
+this looks spot on. Let&rsquo;s try running it locally to verify</p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash>docker run --rm -it gobuffalo/buffalo:v0.16.21 sh
+<span style=color:#75715e># buffalo version</span>
+INFO Buffalo version is: v0.16.20
+<span style=color:#75715e># go version</span>
+go version go1.15.6 linux/amd64
+<span style=color:#75715e># node --version</span>
+v12.20.1
+<span style=color:#75715e># yarn --version</span>
+1.22.10
+<span style=color:#75715e># pwd</span>
+/src
+</code></pre></div><p>We&rsquo;re in business. Since the default okteto images doesn&rsquo;t seem to contain
+anything okteto-specific I&rsquo;ll naively try to use the buffalo image and cross my
+fingers (I&rsquo;ll also change default ports and sync path to better match buffalo)</p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-yaml data-lang=yaml><span style=color:#f92672>name</span>: <span style=color:#ae81ff>buffalo</span>
+<span style=color:#f92672>image</span>: <span style=color:#ae81ff>gobuffalo/buffalo:v0.16.21</span>
+<span style=color:#f92672>command</span>: <span style=color:#ae81ff>bash</span>
+<span style=color:#f92672>securityContext</span>:
+  <span style=color:#f92672>capabilities</span>:
+    <span style=color:#f92672>add</span>:
+    - <span style=color:#ae81ff>SYS_PTRACE</span>
+<span style=color:#f92672>volumes</span>:
+- <span style=color:#ae81ff>/go/pkg/</span>
+- <span style=color:#ae81ff>/root/.cache/go-build/</span>
+<span style=color:#f92672>sync</span>:
+- <span style=color:#ae81ff>.:/src</span>
+<span style=color:#f92672>forward</span>:
+- <span style=color:#ae81ff>2345</span>:<span style=color:#ae81ff>2345</span>
+- <span style=color:#ae81ff>3000</span>:<span style=color:#ae81ff>3000</span>
+</code></pre></div><p>That&rsquo;s the whole setup - let&rsquo;s see if it works.</p><pre><code> $ okteto up
+Installing dependencies...
+syncthing-linux-amd64-v1.13.1.tar.gz 10.36 MiB / 10.36 MiB [-----------------------------------------------------] 100.00% 928.87 KiB p/s
+ ✓  Dependencies successfully installed
+ ✓  Client certificates generated
+ ✓  Development container activated
+ ✓  Connected to your development container
+ ✓  Files synchronized
+    Namespace: andraz
+    Name:      buffalo
+    Forward:   2345 -&gt; 2345
+               3000 -&gt; 3000
+
+root@buffalo-bbb6d7f56-vlvng:/src#
+</code></pre><p>Got an environment, now let&rsquo;s run our app and hope it works :)</p><pre><code>buffalo dev
+...
+
+couldn't start a new transaction: could not create new transaction: failed to connect to `host=127.0.0.1 user=postgres
+database=trying_out_development`: dial error (dial tcp 127.0.0.1:5432: connect: connection refused)
+</code></pre><p>Welp, that didn&rsquo;t work. Need to update the database config to point to <code>db</code> now
+instead of <code>localhost</code> (host field)</p><pre><code>development:
+  dialect: postgres
+  database: trying_out_development
+  user: postgres
+  password: postgres
+  host: db
+  pool: 5
+</code></pre><p>And we&rsquo;re in business! Okteto synced the changes in the config automatically.
+But new problems arise, can you spot them?</p><pre><code>INFO[2021-02-15T17:29:21Z] Starting application at http://127.0.0.1:3000
+INFO[2021-02-15T17:29:21Z] Starting Simple Background Worker
+</code></pre><p>Buffalo is listening on <code>127.0.0.1</code> so it will be only reachable from inside the
+pod - no use for me trying to access it from the browser on my local machine.</p><p>we need to bind to external IP. Quick google search points me at <a href=https://gobuffalo.io/en/docs/getting-started/config-vars>buffalo
+docs</a> on how to setup
+the host:</p><pre><code> $ ADDR=0.0.0.0 buffalo dev
+</code></pre><p>et voila - development environment in the cluster. Now if I do a code change
+okteto will pick it up, sync to the pod where buffalo server will
+recompile/reload and I get seamleass development experience.</p><p>But more on that in the next installment where I go deeper and try out Okteto
+Cloud as well.</p><h1 id=volumes>Volumes</h1><p>Let&rsquo;s confirm my suspicion about PVCs:</p><pre><code> $ kubectl get pvc
+NAME         STATUS   VOLUME                                     CAPACITY   ACCESS MODES   STORAGECLASS   AGE
+okteto-web   Bound    pvc-ead3ab73-9d8f-4e52-8990-bbe6a6d5b897   2Gi        RWO            okteto         4m8s
+</code></pre><p>yup, we get persistent storage for our environment. Love it.</p><h1 id=shutting-down>Shutting down</h1><p>Interestingly, just exiting the shell does nothing. You can <code>okteto up</code> again
+and re-attach to a running pod. Great for e.g. switching WI-FIs. Of course you
+can shut down:</p><pre><code>okteto down
+</code></pre><p>this will still leave the PVC so we get to keep our cache (and other state).</p><h1 id=conclusion>Conclusion</h1><p>I like this technology very much as it seems it just generalizes existing
+concepts with very little surprises. I&rsquo;ll do another installment of &ldquo;trying out&rdquo;
+with Okteto Cloud and more hands on experience with development.</p><hr width=100%><p style=color:#777>Last modified on 2021-02-22</p></div></div><nav class=post-pagination><a class=newer-posts>Next<br>No newer posts.</a>
+<a class=older-posts href=/posts/2021-02-07-trying-out-buffalo/>Previous<br>Trying out Buffalo</a></nav><div class=post-comment-wrapper></div></div></div></div></div><div id=single-column-footer>&copy;
+2021
+Andraz Bajt</div></div></body></html>
