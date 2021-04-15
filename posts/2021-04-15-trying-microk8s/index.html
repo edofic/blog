@@ -1,0 +1,351 @@
+<!doctype html><html><head><title>Trying out Microk8s</title><meta charset=utf-8><meta name=X-UA-Compatible content="IE=edge"><meta name=google-site-verification content><meta content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=0" name=viewport><meta content="telephone=no" name=format-detection><meta name=renderer content="webkit"><meta name=theme-color content="#ffffff"><link type=text/css rel=stylesheet href=/vendor/css/bootstrap.min.css><link rel=stylesheet href=/scss/journal.min.01c37d732f853bf90329007dc6f0a25c67722dd47b7168f8907facb93414bd91.css media=screen><link rel=stylesheet href="https://fonts.googleapis.com/css?family=Lora|Montserrat|Fira+Mono|Noto+Serif+SC|Material+Icons"></head><body><div id=app><div ref=sideContainer class=side-container><div class="a-block nav-head false"><div class=nav-title>My Programming Escapades</div><div class=nav-subtitle>Andraz Bajt</div><a href=https://github.com/edofic><img src=/icons/github.svg width=20></a>
+<a href=https://www.linkedin.com/in/edofic><img src=/icons/linkedin.svg width=20></a>
+<a href=https://twitter.com/edofic><img src=/icons/twitter.svg width=20></a>
+<a href=/index.xml><img src=/icons/rss.svg width=20></a>
+<a href=mailto:edofic@edofic.com><img src=/icons/email.svg width=20></a></div><div class=nav-link-list><a class="a-block nav-link-item" href=/about>About Me</a>
+<a class="a-block nav-link-item" href=/>Archive</a></div><div class=nav-footer>&copy;
+2021
+Andraz Bajt</div></div><div ref=extraContainer class=extra-container><div class=pagination><a id=globalBackToTop class="pagination-action animated-visibility" href=#top :class="{ invisible: scrollY == 0 }"><i class="material-icons pagination-action-icon">keyboard_arrow_up</i></a></div></div><div class=single-column-drawer-container ref=drawer><div class=drawer-content><div class=drawer-menu><a class="a-block drawer-menu-item" href=/about>About Me</a>
+<a class="a-block drawer-menu-item" href=/>Archive</a></div></div></div><div class=single-column-header-container ref=pageHead><a href=/><div class=single-column-header-title>My Programming Escapades</div><div class=single-column-header-subtitle>Andraz Bajt</div></a><a href=https://github.com/edofic><img src=/icons/github.svg width=20></a>
+<a href=https://www.linkedin.com/in/edofic><img src=/icons/linkedin.svg width=20></a>
+<a href=https://twitter.com/edofic><img src=/icons/twitter.svg width=20></a>
+<a href=/index.xml><img src=/icons/rss.svg width=20></a>
+<a href=mailto:edofic@edofic.com><img src=/icons/email.svg width=20></a></div><div id=content><div ref=streamContainer class=stream-container><div class="post-list-container post-list-container-shadow"><div class=post><div class=post-head-wrapper-text-only style="background-image:url('/')"><div class=post-title>Trying out Microk8s<div class=post-meta><time itemprop=datePublished>2021-04-15</time>
+<i class=material-icons>label</i>
+<a href=/tags/trying-out>trying-out</a>
+&nbsp;</div></div></div><div class=post-body-wrapper><div class=post-body><p>In another &ldquo;running kuberets&rdquo; flavoured post I&rsquo;ll be trying out
+<a href=https://microk8s.io/>microk8s</a></p><blockquote><p>High availability K8s.
+Low-ops, minimal production Kubernetes,
+for devs, cloud, clusters, workstations, Edge and IoT.</p></blockquote><p>In the past I&rsquo;ve been using <a href=https://k3s.io/>k3s</a> for small (mostly single
+node) &ldquo;clusters&rdquo;. The pitch is very similar. The few differences I can point
+out now are:</p><ul><li>microk8s is a bit heavier - I don&rsquo;t think it will run on 1G vps, let&rsquo;s try it
+out</li><li>microk8s has a better HA story - definately want to try this out</li><li>k3s comes as a single &ldquo;run everywhere&rdquo; binary whereas microk8s requires
+<a href=https://snapcraft.io/docs/installing-snapd>snap</a></li></ul><h1 id=setting-up>Setting up</h1><p>I&rsquo;ll be using <a href=https://www.hetzner.com/cloud>Hetzner Cloud</a> to provision a few
+small VMs for my laboratory. But I&rsquo;ll start with a single one.</p><p>Specs: Ubuntu 20.04 (so we get snap out of the box), 40GB local NVMe storage, 2x
+vCPU, 4GB ram. And a private network so I can connect future instances to it as
+well. A minute later I&rsquo;m in</p><pre><code>$ ssh root@162.55.52.75
+Last login: Wed Apr 14 10:14:55 2021 from 46.123.240.50
+root@microk8s-1:~#
+</code></pre><p>Now let&rsquo;s follow the instructions on microk8s homepage</p><pre><code>root@microk8s-1:~# snap install microk8s --classic
+
+Command 'snap' not found, but can be installed with:
+
+apt install snapd
+</code></pre><p>Ok, apparently I need to still install snap first.</p><pre><code>apt update
+...
+apt install -y snapd
+...
+</code></pre><h1 id=installation-and-setup>Installation and setup</h1><p>Here we go again</p><pre><code>root@microk8s-1:~# snap install microk8s --classic
+...
+2021-04-14T10:18:14+02:00 INFO Waiting for automatic snapd restart...
+microk8s (1.20/stable) v1.20.5 from Canonical✓ installed
+</code></pre><p>Step 2: wait for it :)</p><pre><code>microk8s status --wait-ready
+
+microk8s is running
+high-availability: no
+  datastore master nodes: 127.0.0.1:19001
+  datastore standby nodes: none
+addons:
+  enabled:
+    ha-cluster           # Configure high availability on the current node
+  disabled:
+    ambassador           # Ambassador API Gateway and Ingress
+    cilium               # SDN, fast with full network policy
+    dashboard            # The Kubernetes dashboard
+    dns                  # CoreDNS
+    fluentd              # Elasticsearch-Fluentd-Kibana logging and monitoring
+    gpu                  # Automatic enablement of Nvidia CUDA
+    helm                 # Helm 2 - the package manager for Kubernetes
+    helm3                # Helm 3 - Kubernetes package manager
+    host-access          # Allow Pods connecting to Host services smoothly
+    ingress              # Ingress controller for external access
+    istio                # Core Istio service mesh services
+    jaeger               # Kubernetes Jaeger operator with its simple config
+    keda                 # Kubernetes-based Event Driven Autoscaling
+    knative              # The Knative framework on Kubernetes.
+    kubeflow             # Kubeflow for easy ML deployments
+    linkerd              # Linkerd is a service mesh for Kubernetes and other frameworks
+    metallb              # Loadbalancer for your Kubernetes cluster
+    metrics-server       # K8s Metrics Server for API access to service metrics
+    multus               # Multus CNI enables attaching multiple network interfaces to pods
+    portainer            # Portainer UI for your Kubernetes cluster
+    prometheus           # Prometheus operator for monitoring and logging
+    rbac                 # Role-Based Access Control for authorisation
+    registry             # Private image registry exposed on localhost:32000
+    storage              # Storage class; allocates storage from host directory
+    traefik              # traefik Ingress controller for external access
+</code></pre><p>Well apparently this worked :D</p><p>Step 3: enable services</p><pre><code>root@microk8s-1:~# microk8s enable dashboard dns helm3 metrics-server registry
+storage traefik
+Enabling Kubernetes Dashboard
+Enabling Metrics-Server
+...
+clusterrolebinding.rbac.authorization.k8s.io/traefik-ingress-controller created
+service/traefik-web-ui created
+ingress.networking.k8s.io/traefik-web-ui created
+traefik ingress controller has been installed on port 8080
+</code></pre><p>I must say this already feels much smoother than k3s setup.</p><pre><code>microk8s is running
+high-availability: no
+  datastore master nodes: 127.0.0.1:19001
+  datastore standby nodes: none
+addons:
+  enabled:
+    dashboard            # The Kubernetes dashboard
+    dns                  # CoreDNS
+    ha-cluster           # Configure high availability on the current node
+    helm3                # Helm 3 - Kubernetes package manager
+    metrics-server       # K8s Metrics Server for API access to service metrics
+    registry             # Private image registry exposed on localhost:32000
+    storage              # Storage class; allocates storage from host directory
+    traefik              # traefik Ingress controller for external access
+  disabled:
+    ambassador           # Ambassador API Gateway and Ingress
+    cilium               # SDN, fast with full network policy
+    fluentd              # Elasticsearch-Fluentd-Kibana logging and monitoring
+    gpu                  # Automatic enablement of Nvidia CUDA
+    helm                 # Helm 2 - the package manager for Kubernetes
+    host-access          # Allow Pods connecting to Host services smoothly
+    ingress              # Ingress controller for external access
+    istio                # Core Istio service mesh services
+    jaeger               # Kubernetes Jaeger operator with its simple config
+    keda                 # Kubernetes-based Event Driven Autoscaling
+    knative              # The Knative framework on Kubernetes.
+    kubeflow             # Kubeflow for easy ML deployments
+    linkerd              # Linkerd is a service mesh for Kubernetes and other frameworks
+    metallb              # Loadbalancer for your Kubernetes cluster
+    multus               # Multus CNI enables attaching multiple network interfaces to pods
+    portainer            # Portainer UI for your Kubernetes cluster
+    prometheus           # Prometheus operator for monitoring and logging
+    rbac                 # Role-Based Access Control for authorisation
+</code></pre><h1 id=using>Using</h1><p>Step 4: start using (like k3s there is a <code>kubectl</code> packaged in)</p><pre><code>root@microk8s-1:~# microk8s kubectl get namespaces
+NAME                 STATUS   AGE
+kube-system          Active   7m5s
+kube-public          Active   7m4s
+kube-node-lease      Active   7m4s
+default              Active   7m4s
+container-registry   Active   3m43s
+traefik              Active   3m41s
+root@microk8s-1:~# microk8s kubectl get nodes
+NAME         STATUS   ROLES    AGE    VERSION
+microk8s-1   Ready    &lt;none&gt;   7m8s   v1.20.5-34+40f5951bd9888a
+</code></pre><p>Now how do I connect to this from my laptop? Quick search says microk8s config`
+will outtput a kubeconfig file. And indeed it works</p><pre><code>andraz@amaterasu /tmp/temp
+ $ export KUBECONFIG=$(pwd)/kubeconfig
+andraz@amaterasu /tmp/temp
+ $ kubectl get nodes
+NAME         STATUS   ROLES    AGE   VERSION
+microk8s-1   Ready    &lt;none&gt;   12m   v1.20.5-34+40f5951bd9888a
+</code></pre><p>Can we get a dashboard?</p><pre><code>
+andraz@amaterasu /tmp/temp
+ $ k get service -A | grep dashboard
+kube-system          kubernetes-dashboard        ClusterIP   10.152.183.220   &lt;none&gt;        443/TCP                  12m
+kube-system          dashboard-metrics-scraper   ClusterIP   10.152.183.160   &lt;none&gt;        8000/TCP                 12m
+andraz@amaterasu /tmp/temp
+ $ k proxy
+Starting to serve on 127.0.0.1:8001
+</code></pre><p>And indded I get the Web UI available <a href=http://localhost:8001/api/v1/namespaces/kube-system/services/https:kubernetes-dashboard:/proxy/#/login>on
+localhost</a></p><p>How about resource usage?</p><pre><code>root@microk8s-1:~# free -m
+              total        used        free      shared  buff/cache   available
+Mem:           3840        1154         331           1        2354        2524
+Swap:             0           0           0
+</code></pre><p>microk8s comes in at about 1.1G. Slightly heavier than <a href=http://k3s.io/>k3</a>
+(around 0.8G) but lighter than <a href=https://rancher.com/products/rke/>RKE</a> (around
+1.7G).</p><h1 id=deploying-workloads>Deploying workloads</h1><p>Let&rsquo;s try to get a demo server up and running. I&rsquo;ll be using <code>nginx-hello</code> from
+<a href=https://github.com/nginxinc/NGINX-Demos>nginx-demos</a></p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-yaml data-lang=yaml><span style=color:#f92672>apiVersion</span>: <span style=color:#ae81ff>apps/v1</span>
+<span style=color:#f92672>kind</span>: <span style=color:#ae81ff>Deployment</span>
+<span style=color:#f92672>metadata</span>:
+  <span style=color:#f92672>name</span>: <span style=color:#ae81ff>hello</span>
+  <span style=color:#f92672>labels</span>:
+    <span style=color:#f92672>app</span>: <span style=color:#ae81ff>hello</span>
+<span style=color:#f92672>spec</span>:
+  <span style=color:#f92672>replicas</span>: <span style=color:#ae81ff>3</span>
+  <span style=color:#f92672>selector</span>:
+    <span style=color:#f92672>matchLabels</span>:
+      <span style=color:#f92672>app</span>: <span style=color:#ae81ff>hello</span>
+  <span style=color:#f92672>template</span>:
+    <span style=color:#f92672>metadata</span>:
+      <span style=color:#f92672>labels</span>:
+        <span style=color:#f92672>app</span>: <span style=color:#ae81ff>hello</span>
+    <span style=color:#f92672>spec</span>:
+      <span style=color:#f92672>containers</span>:
+      - <span style=color:#f92672>name</span>: <span style=color:#ae81ff>nginx</span>
+        <span style=color:#f92672>image</span>: <span style=color:#ae81ff>nginxdemos/hello:plain-text</span>
+        <span style=color:#f92672>ports</span>:
+        - <span style=color:#f92672>containerPort</span>: <span style=color:#ae81ff>80</span>
+---
+<span style=color:#f92672>apiVersion</span>: <span style=color:#ae81ff>v1</span>
+<span style=color:#f92672>kind</span>: <span style=color:#ae81ff>Service</span>
+<span style=color:#f92672>metadata</span>:
+  <span style=color:#f92672>name</span>: <span style=color:#ae81ff>hello</span>
+<span style=color:#f92672>spec</span>:
+  <span style=color:#f92672>selector</span>:
+    <span style=color:#f92672>app</span>: <span style=color:#ae81ff>hello</span>
+  <span style=color:#f92672>ports</span>:
+    - <span style=color:#f92672>protocol</span>: <span style=color:#ae81ff>TCP</span>
+      <span style=color:#f92672>port</span>: <span style=color:#ae81ff>80</span>
+</code></pre></div><p>After applying I can curl this though <code>kubectl proxy</code></p><pre><code>andraz@amaterasu /tmp/temp
+ $ curl http://localhost:8001/api/v1/namespaces/default/services/http:hello:/proxy/
+Server address: 10.1.35.142:80
+Server name: hello-767b8bc964-f4xfs
+Date: 14/Apr/2021:15:55:14 +0000
+URI: /
+Request ID: 1218ef33c76f9bdc5616b8934f64898b
+andraz@amaterasu /tmp/temp
+ $ curl http://localhost:8001/api/v1/namespaces/default/services/http:hello:/proxy/
+Server address: 10.1.35.141:80
+Server name: hello-767b8bc964-scq6z
+Date: 14/Apr/2021:15:55:16 +0000
+URI: /
+Request ID: a4cd09501f7fb10f457ef40ecc4f4d27
+</code></pre><p>Note different server ips for subsequent requests. Multiple pods are in fact
+serving traffic.</p><h1 id=setting-up-ingress>Setting up ingress</h1><p>I did enable <code>traefik</code> ingress controller so this should be pretty
+straightforward.</p><p>First of all I set up a domain record <code>*.microk8s.edofic.com</code> pointing directly
+to the IP of my single node.</p><p>Let&rsquo;s try it out</p><pre><code> $ curl http://demo.microk8s.edofic.com
+curl: (7) Failed to connect to demo.microk8s.edofic.com port 80: Connection refused
+</code></pre><p>huh, this should return 404. Let&rsquo;s see what traefik is actually listening to</p><pre><code>andraz@amaterasu /tmp/temp
+ $ k get pod -A | grep traefik
+traefik              traefik-ingress-controller-l57tb             1/1     Running   0          8h
+andraz@amaterasu /tmp/temp
+ $ k get pod -n traefik traefik-ingress-controller-l57tb -o json | jq '.spec.containers[] | .ports'
+[
+  {
+    &quot;containerPort&quot;: 8080,
+    &quot;hostPort&quot;: 8080,
+    &quot;name&quot;: &quot;http&quot;,
+    &quot;protocol&quot;: &quot;TCP&quot;
+  }
+]
+</code></pre><p>Apparently it&rsquo;s 8080&mldr; I can live with this for now.</p><pre><code> $ curl http://demo.microk8s.edofic.com:8080
+404 page not found
+</code></pre><p>Lift off! Now let&rsquo;s wire up some ingress</p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-yaml data-lang=yaml><span style=color:#f92672>apiVersion</span>: <span style=color:#ae81ff>networking.k8s.io/v1</span>
+<span style=color:#f92672>kind</span>: <span style=color:#ae81ff>Ingress</span>
+<span style=color:#f92672>metadata</span>:
+  <span style=color:#f92672>name</span>: <span style=color:#ae81ff>hello</span>
+<span style=color:#f92672>spec</span>:
+  <span style=color:#f92672>rules</span>:
+  - <span style=color:#f92672>host</span>: <span style=color:#e6db74>&#34;demo.microk8s.edofic.com&#34;</span>
+    <span style=color:#f92672>http</span>:
+      <span style=color:#f92672>paths</span>:
+      - <span style=color:#f92672>pathType</span>: <span style=color:#ae81ff>Prefix</span>
+        <span style=color:#f92672>path</span>: <span style=color:#e6db74>&#34;/&#34;</span>
+        <span style=color:#f92672>backend</span>:
+          <span style=color:#f92672>service</span>:
+            <span style=color:#f92672>name</span>: <span style=color:#ae81ff>hello</span>
+            <span style=color:#f92672>port</span>:
+              <span style=color:#f92672>number</span>: <span style=color:#ae81ff>80</span>
+</code></pre></div><p>And apply. Should work now.</p><pre><code>
+ $ curl http://demo.microk8s.edofic.com:8080
+Server address: 10.1.35.141:80
+Server name: hello-767b8bc964-scq6z
+Date: 14/Apr/2021:17:05:10 +0000
+URI: /
+Request ID: bebd6693485e5581305da8c3e68060de
+</code></pre><p>And indeed it does.</p><h1 id=storage>Storage</h1><p>I&rsquo;ll skip over storage as I can see from the description in status that it&rsquo;sjj
+just a host path provisioner - pretty much the same as K3s. If you want fancier
+storage you need to bring your own (plenty of options).</p><p>Storage classes confirm there is nothing fancy going on</p><pre><code> $ k get storageclass
+NAME                          PROVISIONER            RECLAIMPOLICY   VOLUMEBINDINGMODE   ALLOWVOLUMEEXPANSION   AGE
+microk8s-hostpath (default)   microk8s.io/hostpath   Delete          Immediate           false                  8h
+an
+</code></pre><h1 id=scaling--high-availability>Scaling / high availability</h1><p>So let&rsquo;s try out the magical HA setup! According to <a href=https://microk8s.io/docs/high-availability>the
+docs</a> it should be as simple as
+creating a token on the existing node and then issuing a single command on new
+nodes to join. But first I need to create some new nodes.</p><p>I created two more VMs just like the first one and ran through the same steps on
+each one:</p><pre><code>apt update
+apt install -y snapd
+snap install microk8s --classic
+</code></pre><p>Then on my inital node</p><pre><code>root@microk8s-1:~# microk8s add-node
+From the node you wish to join to this cluster, run the following:
+microk8s join 162.55.52.75:25000/0b9399975ac32273a17f210ae7e25802
+
+If the node you are adding is not reachable through the default interface you can use one of the following:
+ microk8s join 162.55.52.75:25000/0b9399975ac32273a17f210ae7e25802
+ microk8s join 10.0.0.2:25000/0b9399975ac32273a17f210ae7e25802
+</code></pre><p>And follow the instructions (using the private IP). First on the second node.</p><pre><code>root@microk8s-2:~# microk8s join 10.0.0.2:25000/0b9399975ac32273a17f210ae7e25802
+Contacting cluster at 10.0.0.2
+Waiting for this node to finish joining the cluster. ..
+root@microk8s-2:~# microk8s status
+microk8s is running
+high-availability: no
+  datastore master nodes: 10.0.0.2:19001
+  datastore standby nodes: none
+...
+root@microk8s-2:~# microk8s kubectl get nodes
+NAME         STATUS   ROLES    AGE   VERSION
+microk8s-1   Ready    &lt;none&gt;   8h    v1.20.5-34+40f5951bd9888a
+microk8s-2   Ready    &lt;none&gt;   69s   v1.20.5-34+40f5951bd9888a
+</code></pre><p>Apparently I have a two node cluster now. Let&rsquo;s join in the third node -
+microk8s should automatically switch to HA mode.</p><pre><code>root@microk8s-3:~# microk8s join 10.0.0.2:25000/0b9399975ac32273a17f210ae7e25802
+Contacting cluster at 10.0.0.2
+Failed to join cluster. Error code 500. Invalid token
+</code></pre><p>Huh, looks like I need a new token. Fine.</p><pre><code>root@microk8s-3:~# microk8s join 10.0.0.2:25000/cab6b9f7f538bbb5c7e1a3a3f6239c50
+Contacting cluster at 10.0.0.2
+Waiting for this node to finish joining the cluster. ..
+</code></pre><p>After this is done I can check (on any node, outputs agree now)</p><pre><code>root@microk8s-1:~# microk8s status
+microk8s is running
+high-availability: yes
+  datastore master nodes: 10.0.0.2:19001 10.0.0.3:19001 10.0.0.4:19001
+  datastore standby nodes: none
+...
+</code></pre><p>Yay: <code>high-availability: yes</code>. It worked. Looking from my laptop I now also see
+three nodes.</p><pre><code> $ k get nodes
+NAME         STATUS   ROLES    AGE     VERSION
+microk8s-2   Ready    &lt;none&gt;   5m10s   v1.20.5-34+40f5951bd9888a
+microk8s-1   Ready    &lt;none&gt;   9h      v1.20.5-34+40f5951bd9888a
+microk8s-3   Ready    &lt;none&gt;   33s     v1.20.5-34+40f5951bd9888a
+</code></pre><p>If I check pod placement I still see that everything is still runing on node 1</p><pre><code>andraz@amaterasu /tmp/temp
+ $ k get pod -o wide
+NAME                     READY   STATUS    RESTARTS   AGE   IP            NODE         NOMINATED NODE   READINESS GATES
+hello-767b8bc964-scq6z   1/1     Running   0          92m   10.1.35.141   microk8s-1   &lt;none&gt;           &lt;none&gt;
+hello-767b8bc964-f4xfs   1/1     Running   0          92m   10.1.35.142   microk8s-1   &lt;none&gt;           &lt;none&gt;
+hello-767b8bc964-sf4ds   1/1     Running   0          92m   10.1.35.143   microk8s-1   &lt;none&gt;           &lt;none&gt;
+</code></pre><p>But if I kill any pod it should quickly be rescheduled around the cluster</p><pre><code>andraz@amaterasu /tmp/temp
+ $ k delete pod hello-767b8bc964-sf4ds
+pod &quot;hello-767b8bc964-sf4ds&quot; deleted
+andraz@amaterasu /tmp/temp
+ $ k get pod -o wide
+NAME                     READY   STATUS    RESTARTS   AGE   IP             NODE         NOMINATED NODE   READINESS GATES
+hello-767b8bc964-scq6z   1/1     Running   0          92m   10.1.35.141    microk8s-1   &lt;none&gt;           &lt;none&gt;
+hello-767b8bc964-f4xfs   1/1     Running   0          92m   10.1.35.142    microk8s-1   &lt;none&gt;           &lt;none&gt;
+hello-767b8bc964-p9xw8   1/1     Running   0          9s    10.1.100.129   microk8s-2   &lt;none&gt;           &lt;none&gt;
+andraz@amaterasu /tmp/temp
+</code></pre><p>Great, everything behaving as expected.</p><h1 id=load-balancing>Load balancing</h1><p>I want to try to kill my initial node to see HA in action but this will bork my
+ingress as the IP is hard coded. Luckily Hetzner also provides managed load
+balancers so I&rsquo;ll set one up. I can use labels to automatically pick up servers
+to use as targets, use health checks to see which ones take traffic and even
+expose port 80 and target 8080 internally via internal IPs. Yes I can target any
+server as traefik ingress controller is provisioned on all of them and will
+route traffic internally to wherever target pods are scheduled.</p><p>So all I really need to do know is to update my domain record and my cluster is
+none the wiser.</p><p>Mind the lack of port 8080</p><pre><code> $ curl http://demo.microk8s.edofic.com
+Server address: 10.1.35.142:80
+Server name: hello-767b8bc964-f4xfs
+Date: 14/Apr/2021:17:32:52 +0000
+URI: /
+Request ID: 237198f55f60c5cc4629750d1f4e3908
+</code></pre><h1 id=deleting-the-initial-node>Deleting the initial node</h1><p>With my setup now truly HA let&rsquo;s try to kill the initial node. I simulated this
+by doing a hard power off of <code>microk8s-1</code>.</p><p>Load balancer needed a few moment to detecd the node is down and then it stoped
+routing traffic to it.</p><p>Microk8s needed a bit more time. Initially <code>kutectl get node</code> still showed no.1
+as ready. But after a few minutes it turned <code>NotReady</code></p><pre><code>root@microk8s-2:~# microk8s kubectl get nodes
+NAME         STATUS     ROLES    AGE   VERSION
+microk8s-1   NotReady   &lt;none&gt;   9h    v1.20.5-34+40f5951bd9888a
+microk8s-2   Ready      &lt;none&gt;   36m   v1.20.5-34+40f5951bd9888a
+microk8s-3   Ready      &lt;none&gt;   32m   v1.20.5-34+40f5951bd9888a
+</code></pre><p>However this means that my pods are still scheduled to node 1 so I get reduced
+availability of my service. However the service objects correctly routes so
+requests still go through. Not great though.</p><p>Reading the docs I now need manual intervention to tell kubernetes that this
+node is not coming back.</p><pre><code>root@microk8s-2:~# microk8s remove-node microk8s-1 --force
+root@microk8s-2:~# microk8s kubectl get nodes
+NAME         STATUS   ROLES    AGE   VERSION
+microk8s-2   Ready    &lt;none&gt;   39m   v1.20.5-34+40f5951bd9888a
+microk8s-3   Ready    &lt;none&gt;   35m   v1.20.5-34+40f5951bd9888a
+</code></pre><p>Better. How about my pods?</p><pre><code>root@microk8s-2:~# microk8s kubectl get pod -o wide
+NAME                     READY   STATUS    RESTARTS   AGE     IP             NODE         NOMINATED NODE   READINESS GATES
+hello-767b8bc964-p9xw8   1/1     Running   0          34m     10.1.100.129   microk8s-2   &lt;none&gt;           &lt;none&gt;
+hello-767b8bc964-5787w   1/1     Running   0          3m38s   10.1.151.68    microk8s-3   &lt;none&gt;           &lt;none&gt;
+hello-767b8bc964-bk5gd   1/1     Running   0          3m38s   10.1.151.65    microk8s-3   &lt;none&gt;           &lt;none&gt;
+</code></pre><p>All rescheduled. So microk8s HA is not a silver bullet - it does not know about
+underlying comput infrastructure. But it&rsquo;s really low-ops - just as the
+description claims :D</p><h1 id=closing-thoughts>Closing thoughts</h1><p>It&rsquo;s an interesting piece of technology. I definately see a use case where you
+want to easily setup a cluster on a small number of manually managed machines.
+May come use in the future.</p><hr width=100%><p style=color:#777>Last modified on 2021-04-15</p></div></div><nav class=post-pagination><a class=newer-posts>Next<br>No newer posts.</a>
+<a class=older-posts href=/posts/2021-04-14-trying-out-rancher/>Previous<br>Trying out Rancher</a></nav><div class=post-comment-wrapper></div></div></div></div></div><div id=single-column-footer>&copy;
+2021
+Andraz Bajt</div></div></body></html>
