@@ -1,0 +1,87 @@
+<!doctype html><html><head><title>Trying out Rancher</title><meta charset=utf-8><meta name=X-UA-Compatible content="IE=edge"><meta name=google-site-verification content><meta content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=0" name=viewport><meta content="telephone=no" name=format-detection><meta name=renderer content="webkit"><meta name=theme-color content="#ffffff"><link type=text/css rel=stylesheet href=/vendor/css/bootstrap.min.css><link rel=stylesheet href=/scss/journal.min.01c37d732f853bf90329007dc6f0a25c67722dd47b7168f8907facb93414bd91.css media=screen><link rel=stylesheet href="https://fonts.googleapis.com/css?family=Lora|Montserrat|Fira+Mono|Noto+Serif+SC|Material+Icons"></head><body><div id=app><div ref=sideContainer class=side-container><div class="a-block nav-head false"><div class=nav-title>My Programming Escapades</div><div class=nav-subtitle>Andraz Bajt</div><a href=https://github.com/edofic><img src=/icons/github.svg width=20></a>
+<a href=https://www.linkedin.com/in/edofic><img src=/icons/linkedin.svg width=20></a>
+<a href=https://twitter.com/edofic><img src=/icons/twitter.svg width=20></a>
+<a href=/index.xml><img src=/icons/rss.svg width=20></a>
+<a href=mailto:edofic@edofic.com><img src=/icons/email.svg width=20></a></div><div class=nav-link-list><a class="a-block nav-link-item" href=/about>About Me</a>
+<a class="a-block nav-link-item" href=/>Archive</a></div><div class=nav-footer>&copy;
+2021
+Andraz Bajt</div></div><div ref=extraContainer class=extra-container><div class=pagination><a id=globalBackToTop class="pagination-action animated-visibility" href=#top :class="{ invisible: scrollY == 0 }"><i class="material-icons pagination-action-icon">keyboard_arrow_up</i></a></div></div><div class=single-column-drawer-container ref=drawer><div class=drawer-content><div class=drawer-menu><a class="a-block drawer-menu-item" href=/about>About Me</a>
+<a class="a-block drawer-menu-item" href=/>Archive</a></div></div></div><div class=single-column-header-container ref=pageHead><a href=/><div class=single-column-header-title>My Programming Escapades</div><div class=single-column-header-subtitle>Andraz Bajt</div></a><a href=https://github.com/edofic><img src=/icons/github.svg width=20></a>
+<a href=https://www.linkedin.com/in/edofic><img src=/icons/linkedin.svg width=20></a>
+<a href=https://twitter.com/edofic><img src=/icons/twitter.svg width=20></a>
+<a href=/index.xml><img src=/icons/rss.svg width=20></a>
+<a href=mailto:edofic@edofic.com><img src=/icons/email.svg width=20></a></div><div id=content><div ref=streamContainer class=stream-container><div class="post-list-container post-list-container-shadow"><div class=post><div class=post-head-wrapper-text-only style="background-image:url('/')"><div class=post-title>Trying out Rancher<div class=post-meta><time itemprop=datePublished>2021-04-14</time>
+<i class=material-icons>label</i>
+<a href=/tags/trying-out>trying-out</a>
+&nbsp;</div></div></div><div class=post-body-wrapper><div class=post-body><p>This time it&rsquo;s a bit different: this post has very little code and a lot of
+screenshots as I was primarily working with a GUI.</p><p>Reading about (and working with) <a href=https://k3s.io/>K3s</a> is almost impossible to
+not hear about <a href=https://rancher.com/>Rancher</a> - the company behind K3s. But
+what had me slightly confused is their primary product: <a href=https://rancher.com/products/rancher/>Rancher (the
+software)</a>.</p><p>The web page says</p><blockquote><p>Managed Kubernetes Cluster Operations</p></blockquote><p>but that doesn&rsquo;t really tell me much. Neither do their presentations. So what
+better way to get a feel for it than taking it for a spin :) (there is some
+enterprise offerings but the base product is free).</p><h1 id=getting-started>Getting started</h1><p>After clicking the fetching <a href=https://rancher.com/quick-start/>Getting Started</a>
+button I&rsquo;m presented with these rather short instructions:</p><p><img src=/images/rancher/01.png alt="getting started"></p><p>Ok, prerequisites first. I spun up a new VM on <a href=https://www.digitalocean.com/>Digital
+Ocean</a> and selected Ubuntu 20.04 (which is on the
+list of supported distros and is not ancient), 8gb of ram and 4 vCPUs -
+completely guessing here - no idea what I actually need I picked a &ldquo;smallish VM
+that should still handle any reasonable application&rdquo;.</p><p>Second step is getting <a href=https://www.docker.com/>docker</a> on my machine, this is
+where picking Ubuntu comes in handy:</p><pre><code>snap install docker
+</code></pre><p>Just a few minutes later I can actually proceed onto actually running rancher
+via docker:</p><pre><code>docker run --privileged -d --restart=unless-stopped -p 80:80 -p 443:443 rancher/rancher
+</code></pre><p>And just like that we&rsquo;re up and listening on port 80!</p><pre><code>root@ubuntu-s-4vcpu-8gb-amd-fra1-01:~# docker ps
+CONTAINER ID        IMAGE               COMMAND             CREATED             STATUS              PORTS                                      NAMES
+89ffd60c0892        rancher/rancher     &quot;entrypoint.sh&quot;     16 seconds ago      Up 15 seconds       0.0.0.0:80-&gt;80/tcp, 0.0.0.0:443-&gt;443/tcp   sweet_cannon
+r
+</code></pre><h1 id=first-impressions>First impressions</h1><p>I navigate to port 80 of my new VM from my laptop and I&rsquo;m greeted with a first
+time setup. Nice :)</p><p><img src=/images/rancher/02.png alt="initial setup"></p><p>Let&rsquo;s go with multiple clusters, to see what this is all about.</p><p><img src=/images/rancher/03.png alt="global dashboard"></p><p>Huh. Apparently we got a local K3s cluster as well. I&rsquo;m guessing &ldquo;local&rdquo; means
+it&rsquo;s running on the same VM (there is no real other option anyway).</p><p>I&rsquo;m wondering if you can also install rancher on an existing cluster. Quick
+search suggests the answer <a href=https://rancher.com/docs/rancher/v2.x/en/installation/install-rancher-on-k8s/>is
+yes</a>.</p><p>What happens if I click on &ldquo;local&rdquo;?</p><p><img src=/images/rancher/04.png alt=04.png></p><p>Vaguely reminiscent of <a href=https://kubernetes.io/docs/tasks/access-application-cluster/web-ui-dashboard/>K8s Web
+UI</a>. Looks useful.</p><h1 id=creating-clusters>Creating clusters</h1><p>But I&rsquo;m not interested in a dashboard for a K3s instance - I want to try setting
+up some clusters :D Let&rsquo;s try clicking add cluster.</p><p><img src=/images/rancher/05.png alt=05.png></p><p>That&rsquo;s quite a list of providers already. Quite intriguing one is &ldquo;Existing
+nodes&rdquo;. Also interesting to me is the ability to connect managed clusters. You
+really do get one central management tool for all your clusters. Huh you can
+even automatically provision VMs on vSphere. But I&rsquo;m going with DigitalOcean
+today as this is where I&rsquo;m doing my experiment. A happy accident really -
+haven&rsquo;t checked what is supported upfront.</p><p>But I did do some digging at this point and apparently you can install extra
+(even 3rd party) providers to extend this. E.g. I&rsquo;ve found <a href=https://jmrobles.medium.com/how-to-create-a-kubernetes-cluster-with-rancher-on-hetzner-3b2f7f0c037a>this tutorial</a> for setting up a cluster on <a href=https://www.hetzner.com/>Hetzner</a> - which is another provider I sometimes use for my projects. Liking this extensibility a lot.</p><p><img src=/images/rancher/06.png alt=06.png></p><p>First I need to configure a template for my nodes (since this is the first
+time and I don&rsquo;t have any?). I&rsquo;m going with something small as I don&rsquo;t have
+plans for any substantial workloads on this cluster.</p><p>Note: I was also prompted to configure DO integration at this point by providing
+an API token - no magic integration but super straightforward.</p><p><img src=/images/rancher/07.png alt=07.png></p><p>Time to setup my node pools now. If I&rsquo;m reading this right I&rsquo;m configuring how
+many VMs of what template to run and what services to run on them. There&rsquo;s even
+validation (green checkmarks) that I have a setup that yields a functional
+cluster. I won&rsquo;t bother with other options, let&rsquo;s just take defaults out for a
+spin.</p><p><img src=/images/rancher/08.png alt=08.png></p><p>And now we wait&mldr;.</p><p>Meanwhile in DO console I can see droplets coming up</p><p><img src=/images/rancher/09.png alt=09.png></p><p>After about 10min the cluster reports as &ldquo;active&rdquo;. Great success!</p><p><img src=/images/rancher/11.png alt=11.png></p><p>Clicking that I get an overview of my new nodes</p><p><img src=/images/rancher/12.png alt=12.png></p><p>And some management too</p><p><img src=/images/rancher/13.png alt=13.png></p><p>Doesn&rsquo;t seem much&mldr;but stop to think about it for a moment. This abstracts over
+the underlying compute provider which is great if you&rsquo;re running multiple
+clusters on a mix (e.g. AWS + on prem).</p><p>I can also pick &ldquo;namespaces&rdquo; from the menu and get an overview of k8s namespaces
+on my cluster.</p><p><img src=/images/rancher/14.png alt=14.png></p><p>And yes - there is still the dashboard.</p><p><img src=/images/rancher/15.png alt=15.png></p><p>One interesting difference pops out: we&rsquo;re not running K3s anymore but
+<a href=https://rancher.com/products/rke/>RKE</a> - Rancher Kubernetes Engine.</p><blockquote><p>RKE is a CNCF-certified Kubernetes distribution that runs entirely within
+Docker containers. It solves the common frustration of installation complexity
+with Kubernetes by removing most host dependencies and presenting a stable
+path for deployment, upgrades, and rollbacks.</p></blockquote><p>The key point here is that we got what is basically a managed cluster (k8s as
+a service) using only a compute provider (yes I know DO also offers managed k8s
+but that a different beast altogether).</p><h1 id=features>Features</h1><p>With a few more clicks I got a metrics stack installed in the cluster and now
+have more detailed stats.</p><p><img src=/images/rancher/16.png alt=16.png></p><p>And a configured grafana instance too!</p><p><img src=/images/rancher/17.png alt=17.png></p><p>I can get a kubeconfig file directly from the UI and use it to connect to my new
+cluster like any other cluster</p><pre><code>andraz@amaterasu /tmp
+ $ export KUBECONFIG=$(pwd)/kubeconfig
+andraz@amaterasu ~
+ $ kubectl get nodes
+NAME   STATUS   ROLES                      AGE   VERSION
+sb2    Ready    controlplane,etcd,worker   10m   v1.20.5
+sb3    Ready    controlplane,etcd,worker   10m   v1.20.5
+sb4    Ready    controlplane,etcd,worker   10m   v1.20.5
+</code></pre><p>But if I cannot be bothered and just want to poke around a bit there is even a
+convenient web-based shell</p><p><img src=/images/rancher/18.png alt=18.png></p><h1 id=apps>Apps</h1><p>Moving on the last element I see in the UI - Apps</p><p><img src=/images/rancher/19.png alt=19.png></p><p>Looks like some form of prepackaged software.</p><p><img src=/images/rancher/20.png alt=20.png></p><p>Digging deeper confirms this is in fact a UI for <a href=https://helm.sh/>helm</a>
+charts.</p><p><img src=/images/rancher/21.png alt=21.png></p><p>Let&rsquo;s configure a Wordpress instance then. This should be a nice test if our
+cluster is in fact fully functional and provides all we could possibly want</p><p><img src=/images/rancher/22.png alt=22.png></p><p>Takes a moment to deploy the chart. I can now zoom in and see the actual
+deployment in action</p><p><img src=/images/rancher/23.png alt=23.png></p><p>Few more minutes and we&rsquo;re green.</p><p><img src=/images/rancher/24.png alt=24.png></p><p>A quick <code>/etc/hosts</code> edit later I&rsquo;m accessing my WP instance. I&rsquo;m pointing my
+browser at one of the nodes where I&rsquo;m hitting an ingress controller that routes
+to an internal service based on the virtual host (hence <code>/etc/hosts</code> edit) that
+routes to the actual pod running somewhere in the cluster.</p><p><img src=/images/rancher/25.png alt=25.png></p><h1 id=removing-a-cluster>Removing a cluster</h1><p>That was enough fun. Let&rsquo;s tear the cluster down to see if it cleans up after
+itself.</p><p><img src=/images/rancher/26.png alt=26.png></p><p>Entered a &ldquo;Removing&rdquo; state</p><p><img src=/images/rancher/27.png alt=27.png></p><p>and few moments later is gone. So are all the traces from my DO dashboard.</p><h1 id=closing-thoughts>Closing thoughts</h1><p>I think I get &ldquo;managed kuberenetes cluster operations&rdquo; now. Provisioning,
+monitoring, day 2 ops, running some common workloads. Seems like the primary use
+case is managing multiple clusters but it&rsquo;s also an interesting alternative for
+providing &ldquo;managed&rdquo; clusters in places where you don&rsquo;t have this option.</p><hr width=100%><p style=color:#777>Last modified on 2021-04-14</p></div></div><nav class=post-pagination><a class=newer-posts>Next<br>No newer posts.</a>
+<a class=older-posts href=/posts/2021-02-27-trying-out-okteto-cloud/>Previous<br>Trying out Okteto Cloud</a></nav><div class=post-comment-wrapper></div></div></div></div></div><div id=single-column-footer>&copy;
+2021
+Andraz Bajt</div></div></body></html>
