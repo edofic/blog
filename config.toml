@@ -1,12 +1,11 @@
 baseURL = "/"
 languageCode = "en-us"
-title = "My Programming Escapades"
+title = "Andraž Bajt's blog"
 disableKinds = ["section"]
 theme = "diary"
 copyright = "Andraz Bajt"
 
 [params]
-    subtitle = "Andraz Bajt"
     github = "edofic"
     linkedin = "edofic"
     twitter = "edofic"
