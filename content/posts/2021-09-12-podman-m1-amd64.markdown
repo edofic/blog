@@ -1,0 +1,114 @@
+---
+title: Running amd64 docker images with Podman on Apple Silicon (M1)
+date: 2021-09-12
+---
+
+**tl;dr** it works, scroll though and look for the code snippets
+
+You might have heard about Docker (the company) changing the terms of use which effectively requires enterprise users to pay up. While I personally think that paying for critical infrastructure that supports your business is a good idea there was a considerable backlash among engineers and "alternative to docker" was the common them on HN front page for a few days.
+
+And the most notable alternative is [Podman](https://podman.io/).
+
+> What is Podman? Podman is a daemonless container engine for developing, managing, and running OCI Containers on your Linux System. Containers can either be run as root or in rootless mode. Simply put: alias docker=podman. More details [here](https://podman.io/whatis.html).
+
+# Podman on MacOS
+
+Podman relies on Linux kernel in order to work so I fact it's linux-only software. People have been running it in VMs for a while (like Docker it supports a remote server, which can be a VM). And recently VM support has become native in form of `podman machine` commands which manage a VM for you. More [here](https://podman.io/blogs/2021/09/06/podman-on-macs.html).
+
+# Podman on Apple Silicon
+
+At the time of writing the instructions above don't work on Apple Silicon machines (currently just M1 macs). Reason for that is that `podman machine` relies on `qemu` for virtualisation and `qemu` does not (yet) have support for the M1 specifics of the Apple Virtualisation Framework. But it's close. In fact there is already a patch out there, just not yet part of the upstream distribution. [simnalamburt](https://github.com/simnalamburt/) has even packaged it for brew so you can install the patched `qemu` and configure `podman` to use it with a one liner.
+
+```
+brew install simnalamburt/x/podman-apple-silicon
+```
+
+Full instructions [here](https://github.com/simnalamburt/homebrew-x). Do read through [the source](https://github.com/simnalamburt/homebrew-x/tree/main/Formula), there is not much magic going on.
+
+
+Now we can configure our machine
+
+```
+podman machine init --cpus=2 --disk-size=20 --memory 4096
+podman machine list
+```
+
+Should be `Currently running`. Let's run something
+
+```
+$ podman run -it --rm docker.io/hello-world
+
+Hello from Docker!
+This message shows that your installation appears to be working correctly.
+
+To generate this message, Docker took the following steps:
+ 1. The Docker client contacted the Docker daemon.
+ 2. The Docker daemon pulled the "hello-world" image from the Docker Hub.
+    (arm64v8)
+ 3. The Docker daemon created a new container from that image which runs the
+    executable that produces the output you are currently reading.
+ 4. The Docker daemon streamed that output to the Docker client, which sent it
+    to your terminal.
+
+To try something more ambitious, you can run an Ubuntu container with:
+ $ docker run -it ubuntu bash
+
+Share images, automate workflows, and more with a free Docker ID:
+ https://hub.docker.com/
+
+For more examples and ideas, visit:
+ https://docs.docker.com/get-started/
+```
+
+# Running amd64 images
+
+What's not obvious is that currently we only have support for running ARM images. Unlike Docker For Mac which can transparently run both. Let's see what happens if you try to run something that does not have native ARM support.
+
+```
+podman run --rm -it docker.io/amd64/alpine:3.14 sh
+{"msg":"exec container process `/bin/sh`: Exec format error","level":"error","time":"2021-09-12T08:33:34.000095300Z"}
+```
+
+Luckily we can fix that, we can teach our VM how to run this format of executables by using [qemu-user-static](https://github.com/multiarch/qemu-user-static)
+
+```
+podman machine ssh
+sudo -i
+rpm-ostree install qemu-user-static
+systemctl reboot
+```
+
+And after a few moments to reboot the VM
+
+```
+$ podman run --rm -it docker.io/amd64/alpine:3.14 sh
+/ # apk add file
+fetch https://dl-cdn.alpinelinux.org/alpine/v3.14/main/x86_64/APKINDEX.tar.gz
+fetch https://dl-cdn.alpinelinux.org/alpine/v3.14/community/x86_64/APKINDEX.tar.gz
+(1/2) Installing libmagic (5.40-r1)
+(2/2) Installing file (5.40-r1)
+Executing busybox-1.33.1-r3.trigger
+OK: 13 MiB in 16 packages
+/ # file /bin/busybox
+/bin/busybox: ELF 64-bit LSB pie executable, x86-64, version 1 (SYSV), dynamically linked, interpreter /lib/ld-musl-x86_64.so.1, stripped
+/ # which file
+/usr/bin/file
+/ # file /usr/bin/file
+/usr/bin/file: ELF 64-bit LSB pie executable, x86-64, version 1 (SYSV), dynamically linked, interpreter /lib/ld-musl-x86_64.so.1, stripped
+```
+
+Liftoff! (mind the `x86_64`)
+
+## How does it work?
+
+[QEMU](https://www.qemu.org/) is multiple things, it powers our `podman machine` VM but it can also run inside this VM in a mode called `User-mode emulation`. From the home-page
+
+> Run programs for another Linux/BSD target, on any supported architecture
+
+In our case emulating an amd64 CPU on an ARM CPU (inside a VM!). Why user-mode? Because it's not full emulation; it's not emulating a kernel like a full VM but passing through syscalls to the regular kernel (in our case the VM).
+
+This is different from the `podman machine` VM which is not emulated but virtualised. Instructions run natively on the CPU with hardware support for sandboxing it away from the host. This is why patches for Apple's Virtualisation Framework are needed for the (host) qemu.
+
+How about performance? Just like with docker. Good performance for native images, and a penalty for running  emulated images. IO should still be okay since it's handled by the virtual kernel but CPU-bound workloads slow down a lot (up to 50x in my benchmarks). Should be good enough for development as long as you're not compiling big stuff.
+
+What's that `rpm-ostree` stuff? `podman machine` uses Fedora CoreOS which is based off a baked image with "layered packages" instead of a more traditional package management. More [here](https://coreos.github.io/rpm-ostree/).
