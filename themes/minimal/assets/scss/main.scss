@@ -4,15 +4,12 @@ body {
     line-height: 1.6;
     font-size: 18px;
     color:#444;
-    padding:0 10px
+    padding:0 10px;
+    text-align: justify;
 }
 
 h1,h2,h3 {
     line-height:1.2;
-}
-
-a, a:visited, a:hover, a:active {
-  color: blue;
 }
 
 .nav {
@@ -40,7 +37,7 @@ a, a:visited, a:hover, a:active {
 .main {
     img {
         display: block;
-        max-width: 90%;
+        max-width: 100%;
         margin: auto;
     }
     pre {

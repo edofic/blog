@@ -20,7 +20,7 @@
 </head>
     <body>
         <div class="nav">
-            <h2 class="title">{{ .Site.Title }}</h2>
+            <a href="{{ .Site.BaseURL }}"><h2 class="title">{{ .Site.Title }}</h2></a>
             <div class="nav-sub">
                 {{ range .Site.Menus.main }}
                     <a class="nav-item" href="{{ .URL }}">
