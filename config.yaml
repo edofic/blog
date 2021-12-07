@@ -1,0 +1,26 @@
+baseURL: "/"
+languageCode: "en-us"
+title: "Andraž Bajt's blog"
+disableKinds: ["section"]
+theme: "minimal"
+copyright: "Andraz Bajt"
+paginate: 20
+
+author:
+    name: "Andraz Bajt"
+
+params:
+    github: "edofic"
+    linkedin: "edofic"
+    twitter: "edofic"
+    email: "blog@edofic.com"
+
+menu:
+  main:
+  - identifier: "archive"
+    name: "Archive"
+    url: "/"
+  - identifier: "about"
+    name: "About Me"
+    url: "/about"
+
