@@ -1,16 +1,9 @@
-<!doctype html><html><head><title>Null-coalescing(??) in scala</title><meta charset=utf-8><meta name=X-UA-Compatible content="IE=edge"><meta name=google-site-verification content><meta content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=0" name=viewport><meta content="telephone=no" name=format-detection><meta name=renderer content="webkit"><meta name=theme-color content="#ffffff"><link type=text/css rel=stylesheet href=/vendor/css/bootstrap.min.css><link rel=stylesheet href=/scss/journal.min.01c37d732f853bf90329007dc6f0a25c67722dd47b7168f8907facb93414bd91.css media=screen><link rel=stylesheet href="https://fonts.googleapis.com/css?family=Lora|Montserrat|Fira+Mono|Noto+Serif+SC|Material+Icons"></head><body><div id=app><div ref=sideContainer class=side-container><div class="a-block nav-head false"><div class=nav-title>Andraž Bajt's blog</div><div class=nav-subtitle></div><a href=https://github.com/edofic><img src=/icons/github.svg width=20></a>
-<a href=https://www.linkedin.com/in/edofic><img src=/icons/linkedin.svg width=20></a>
-<a href=https://twitter.com/edofic><img src=/icons/twitter.svg width=20></a>
-<a href=/index.xml><img src=/icons/rss.svg width=20></a>
-<a href=mailto:edofic@edofic.com><img src=/icons/email.svg width=20></a></div><div class=nav-link-list><a class="a-block nav-link-item" href=/about>About Me</a>
-<a class="a-block nav-link-item" href=/>Archive</a></div><div class=nav-footer>&copy;
-2021
-Andraz Bajt</div></div><div ref=extraContainer class=extra-container><div class=pagination><a id=globalBackToTop class="pagination-action animated-visibility" href=#top :class="{ invisible: scrollY == 0 }"><i class="material-icons pagination-action-icon">keyboard_arrow_up</i></a></div></div><div class=single-column-drawer-container ref=drawer><div class=drawer-content><div class=drawer-menu><a class="a-block drawer-menu-item" href=/about>About Me</a>
-<a class="a-block drawer-menu-item" href=/>Archive</a></div></div></div><div class=single-column-header-container ref=pageHead><a href=/><div class=single-column-header-title>Andraž Bajt's blog</div></a><a href=https://github.com/edofic><img src=/icons/github.svg width=20></a>
-<a href=https://www.linkedin.com/in/edofic><img src=/icons/linkedin.svg width=20></a>
-<a href=https://twitter.com/edofic><img src=/icons/twitter.svg width=20></a>
-<a href=/index.xml><img src=/icons/rss.svg width=20></a>
-<a href=mailto:edofic@edofic.com><img src=/icons/email.svg width=20></a></div><div id=content><div ref=streamContainer class=stream-container><div class="post-list-container post-list-container-shadow"><div class=post><div class=post-head-wrapper-text-only style="background-image:url('/')"><div class=post-title>Null-coalescing(??) in scala<div class=post-meta><time itemprop=datePublished>2013-01-27</time></div></div></div><div class=post-body-wrapper><div class=post-body><p>I was doing my homework
+<!doctype html><html><head><title>Null-coalescing(??) in scala</title><meta charset=utf-8><meta name=X-UA-Compatible content="IE=edge"><meta name=google-site-verification content><meta content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=0" name=viewport><link rel=stylesheet href=/scss/main.min.31cac6fb291c18037123c54900f92aaa75653b03bf9d6b70a2fd0565930494e3.css media=screen></head><body><div class=nav><a href=/><h2 class=title>Andraž Bajt's blog</h2></a><div class=nav-sub><a class=nav-item href=/about>About Me</a>
+<a class=nav-item href=/>Archive</a></div><div class=nav-sub-right><a class=nav-icon href=https://github.com/edofic target=_blank><img src=/icons/github.svg width=20></a>
+<a class=nav-icon href=https://www.linkedin.com/in/edofic target=_blank><img src=/icons/linkedin.svg width=20></a>
+<a class=nav-icon href=https://twitter.com/edofic target=_blank><img src=/icons/twitter.svg width=20></a>
+<a class=nav-icon href=/index.xml target=_blank><img src=/icons/rss.svg width=20></a>
+<a class=nav-icon href=mailto:blog@edofic.com target=_blank><img src=/icons/email.svg width=20></a></div></div><hr><div class=main><h1>Null-coalescing(??) in scala</h1><time>2013-01-27</time><hr><p>I was doing my homework
 today(yes I am aware I should be enjoying myself on 30th December) and had some problems
 with <a href=http://en.wikipedia.org/wiki/Concatenation title=Concatenation>concatenating</a> possibly
 null strings in
@@ -19,38 +12,49 @@ Quick trip to
 <a href=http://stackoverflow.com/ title="Stack Overflow">StackOverflow</a> and I find
 out
 <a href=http://msdn2.microsoft.com/en-us/vcsharp/aa336809.aspx title="C Sharp (programming language)">C#</a>
-has some funky operators that solve this in a (sort-of) clean way.</p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-csharp data-lang=csharp><span style=color:#66d9ef>var</span> outputString = input1 ?? <span style=color:#e6db74>&#34;&#34;</span> + input2 ?? <span style=color:#e6db74>&#34;&#34;</span>;
-</code></pre></div><p>I like <a href=http://en.wikipedia.org/wiki/Type_inference title="Type inference">type
+has some funky operators that solve this in a (sort-of) clean way.</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-csharp data-lang=csharp><span style=color:#66d9ef>var</span> outputString = input1 ?? <span style=color:#e6db74>&#34;&#34;</span> + input2 ?? <span style=color:#e6db74>&#34;&#34;</span>;
+</code></pre></td></tr></table></div></div><p>I like <a href=http://en.wikipedia.org/wiki/Type_inference title="Type inference">type
 inference</a>
 so I use var&rsquo;s extensively - please don&rsquo;t judge me. What this does is
 concatenate input1 and input2 substituting null values with <a href=http://en.wikipedia.org/wiki/Empty_string title="Empty string">empty
 string</a>. In
-scala you would write something like</p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-scala data-lang=scala><span style=color:#66d9ef>val</span> outputString <span style=color:#66d9ef>=</span> <span style=color:#a6e22e>Option</span><span style=color:#f92672>(</span>input1<span style=color:#f92672>).</span>getOrElse<span style=color:#f92672>(</span><span style=color:#e6db74>&#34;&#34;</span><span style=color:#f92672>)</span> <span style=color:#f92672>+</span> <span style=color:#a6e22e>Option</span><span style=color:#f92672>(</span>input2<span style=color:#f92672>).</span>getOrElse<span style=color:#f92672>(</span><span style=color:#e6db74>&#34;&#34;</span><span style=color:#f92672>)</span>
-</code></pre></div><p>but that&rsquo;s verbose and ugly. Wrapping and unwrapping to get some added
+scala you would write something like</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-scala data-lang=scala><span style=color:#66d9ef>val</span> outputString <span style=color:#66d9ef>=</span> <span style=color:#a6e22e>Option</span><span style=color:#f92672>(</span>input1<span style=color:#f92672>).</span>getOrElse<span style=color:#f92672>(</span><span style=color:#e6db74>&#34;&#34;</span><span style=color:#f92672>)</span> <span style=color:#f92672>+</span> <span style=color:#a6e22e>Option</span><span style=color:#f92672>(</span>input2<span style=color:#f92672>).</span>getOrElse<span style=color:#f92672>(</span><span style=color:#e6db74>&#34;&#34;</span><span style=color:#f92672>)</span>
+</code></pre></td></tr></table></div></div><p>but that&rsquo;s verbose and ugly. Wrapping and unwrapping to get some added
 semantics of the Option factory(returns None for null). But you
 shouldn&rsquo;t have nulls in the first place if you&rsquo;re using scala. That&rsquo;s
 what Option is for! Enough ranting, let&rsquo;s implement this <a href=http://en.wikipedia.org/wiki/Null_coalescing_operator title="Null coalescing operator">??
 operator</a>
-in scala.</p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-scala data-lang=scala><span style=color:#66d9ef>implicit</span> <span style=color:#66d9ef>class</span> <span style=color:#a6e22e>NullCoalescent</span><span style=color:#f92672>[</span><span style=color:#66d9ef>A</span><span style=color:#f92672>](</span>a<span style=color:#66d9ef>:</span> <span style=color:#66d9ef>A</span><span style=color:#f92672>){</span>
+in scala.</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-scala data-lang=scala><span style=color:#66d9ef>implicit</span> <span style=color:#66d9ef>class</span> <span style=color:#a6e22e>NullCoalescent</span><span style=color:#f92672>[</span><span style=color:#66d9ef>A</span><span style=color:#f92672>](</span>a<span style=color:#66d9ef>:</span> <span style=color:#66d9ef>A</span><span style=color:#f92672>){</span>
   <span style=color:#66d9ef>def</span> <span style=color:#f92672>??(</span>b<span style=color:#66d9ef>:</span> <span style=color:#f92672>=&gt;</span> A<span style=color:#f92672>)</span> <span style=color:#66d9ef>=</span> <span style=color:#66d9ef>if</span><span style=color:#f92672>(</span>a<span style=color:#f92672>!=</span><span style=color:#66d9ef>null</span><span style=color:#f92672>)</span> a <span style=color:#66d9ef>else</span> b
 <span style=color:#f92672>}</span>
-</code></pre></div><p>Yup. That&rsquo;s it! You only need this in scope and of you go writing code
-C#-style.</p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-scala data-lang=scala>scala<span style=color:#f92672>&gt;</span> <span style=color:#e6db74>&#34;hi&#34;</span> <span style=color:#f92672>??</span> <span style=color:#e6db74>&#34;there&#34;</span>
+</code></pre></td></tr></table></div></div><p>Yup. That&rsquo;s it! You only need this in scope and of you go writing code
+C#-style.</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">4
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">5
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-scala data-lang=scala>scala<span style=color:#f92672>&gt;</span> <span style=color:#e6db74>&#34;hi&#34;</span> <span style=color:#f92672>??</span> <span style=color:#e6db74>&#34;there&#34;</span>
 res0<span style=color:#66d9ef>:</span> <span style=color:#66d9ef>String</span> <span style=color:#f92672>=</span> hi
 
 scala<span style=color:#f92672>&gt;</span> <span style=color:#f92672>(</span><span style=color:#66d9ef>null</span><span style=color:#66d9ef>:</span><span style=color:#66d9ef>String</span><span style=color:#f92672>)</span> <span style=color:#f92672>??</span> <span style=color:#e6db74>&#34;empty&#34;</span>
 res2<span style=color:#66d9ef>:</span> <span style=color:#66d9ef>String</span> <span style=color:#f92672>=</span> empty
-</code></pre></div><p>Note the type of b parameter in ?? method. It&rsquo;s => A. By name
+</code></pre></td></tr></table></div></div><p>Note the type of b parameter in ?? method. It&rsquo;s => A. By name
 evaluation. This means our new operator behaves properly and only
 evaluates right hand side if value is in fact null. This lets you for
-example log unexpected nulls while substituting for default value</p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-scala data-lang=scala><span style=color:#66d9ef>val</span> key <span style=color:#66d9ef>=</span> valueFromUser <span style=color:#f92672>??</span> <span style=color:#f92672>{</span>
+example log unexpected nulls while substituting for default value</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">4
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-scala data-lang=scala><span style=color:#66d9ef>val</span> key <span style=color:#66d9ef>=</span> valueFromUser <span style=color:#f92672>??</span> <span style=color:#f92672>{</span>
   log<span style=color:#f92672>(</span><span style=color:#e6db74>&#34;key is null!&#34;</span><span style=color:#f92672>}</span>
   defaultKey
 <span style=color:#f92672>}</span>
-</code></pre></div><p>This works because scala let&rsquo;s you do side effects like that. I just
+</code></pre></td></tr></table></div></div><p>This works because scala let&rsquo;s you do side effects like that. I just
 wanted to add one reason why I love scala is this easy way of defining
 structures that feel like they&rsquo;re part of the language while being
-nothing more than just libraries.</p><hr width=100%><p style=color:#777>Last modified on 2013-01-27</p></div></div><nav class=post-pagination><a class=newer-posts href=/posts/2013-01-27-monadic-io/>Next<br>Monadic IO with ScalaZ</a>
-<a class=older-posts href=/posts/2013-01-27-union-types/>Previous<br>Union types in scala</a></nav><div class=post-comment-wrapper></div></div></div></div></div><div id=single-column-footer>&copy;
-2021
-Andraz Bajt</div></div></body></html>
+nothing more than just libraries.</p><hr><p>Last modified on 2013-01-27</p><a href=/posts/2013-01-27-union-types/>Previous Union types in scala</a><br><a href=/posts/2013-01-27-monadic-io/>Next Monadic IO with ScalaZ</a></div></body></html>

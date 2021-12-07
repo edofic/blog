@@ -1,16 +1,9 @@
-<!doctype html><html><head><title>Homework - functional style (outer sorting)</title><meta charset=utf-8><meta name=X-UA-Compatible content="IE=edge"><meta name=google-site-verification content><meta content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=0" name=viewport><meta content="telephone=no" name=format-detection><meta name=renderer content="webkit"><meta name=theme-color content="#ffffff"><link type=text/css rel=stylesheet href=/vendor/css/bootstrap.min.css><link rel=stylesheet href=/scss/journal.min.01c37d732f853bf90329007dc6f0a25c67722dd47b7168f8907facb93414bd91.css media=screen><link rel=stylesheet href="https://fonts.googleapis.com/css?family=Lora|Montserrat|Fira+Mono|Noto+Serif+SC|Material+Icons"></head><body><div id=app><div ref=sideContainer class=side-container><div class="a-block nav-head false"><div class=nav-title>Andraž Bajt's blog</div><div class=nav-subtitle></div><a href=https://github.com/edofic><img src=/icons/github.svg width=20></a>
-<a href=https://www.linkedin.com/in/edofic><img src=/icons/linkedin.svg width=20></a>
-<a href=https://twitter.com/edofic><img src=/icons/twitter.svg width=20></a>
-<a href=/index.xml><img src=/icons/rss.svg width=20></a>
-<a href=mailto:edofic@edofic.com><img src=/icons/email.svg width=20></a></div><div class=nav-link-list><a class="a-block nav-link-item" href=/about>About Me</a>
-<a class="a-block nav-link-item" href=/>Archive</a></div><div class=nav-footer>&copy;
-2021
-Andraz Bajt</div></div><div ref=extraContainer class=extra-container><div class=pagination><a id=globalBackToTop class="pagination-action animated-visibility" href=#top :class="{ invisible: scrollY == 0 }"><i class="material-icons pagination-action-icon">keyboard_arrow_up</i></a></div></div><div class=single-column-drawer-container ref=drawer><div class=drawer-content><div class=drawer-menu><a class="a-block drawer-menu-item" href=/about>About Me</a>
-<a class="a-block drawer-menu-item" href=/>Archive</a></div></div></div><div class=single-column-header-container ref=pageHead><a href=/><div class=single-column-header-title>Andraž Bajt's blog</div></a><a href=https://github.com/edofic><img src=/icons/github.svg width=20></a>
-<a href=https://www.linkedin.com/in/edofic><img src=/icons/linkedin.svg width=20></a>
-<a href=https://twitter.com/edofic><img src=/icons/twitter.svg width=20></a>
-<a href=/index.xml><img src=/icons/rss.svg width=20></a>
-<a href=mailto:edofic@edofic.com><img src=/icons/email.svg width=20></a></div><div id=content><div ref=streamContainer class=stream-container><div class="post-list-container post-list-container-shadow"><div class=post><div class=post-head-wrapper-text-only style="background-image:url('/')"><div class=post-title>Homework - functional style (outer sorting)<div class=post-meta><time itemprop=datePublished>2012-12-04</time></div></div></div><div class=post-body-wrapper><div class=post-body><p>I&rsquo;m attending
+<!doctype html><html><head><title>Homework - functional style (outer sorting)</title><meta charset=utf-8><meta name=X-UA-Compatible content="IE=edge"><meta name=google-site-verification content><meta content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=0" name=viewport><link rel=stylesheet href=/scss/main.min.31cac6fb291c18037123c54900f92aaa75653b03bf9d6b70a2fd0565930494e3.css media=screen></head><body><div class=nav><a href=/><h2 class=title>Andraž Bajt's blog</h2></a><div class=nav-sub><a class=nav-item href=/about>About Me</a>
+<a class=nav-item href=/>Archive</a></div><div class=nav-sub-right><a class=nav-icon href=https://github.com/edofic target=_blank><img src=/icons/github.svg width=20></a>
+<a class=nav-icon href=https://www.linkedin.com/in/edofic target=_blank><img src=/icons/linkedin.svg width=20></a>
+<a class=nav-icon href=https://twitter.com/edofic target=_blank><img src=/icons/twitter.svg width=20></a>
+<a class=nav-icon href=/index.xml target=_blank><img src=/icons/rss.svg width=20></a>
+<a class=nav-icon href=mailto:blog@edofic.com target=_blank><img src=/icons/email.svg width=20></a></div></div><hr><div class=main><h1>Homework - functional style (outer sorting)</h1><time>2012-12-04</time><hr><p>I&rsquo;m attending
 Algorithms and data structures class this semester. Material it self is
 quite interesting and one TA is pretty cool too. But I don&rsquo;t like
 professor(makes whole experience very much worse) and I believe
@@ -35,7 +28,16 @@ code should also be capable of sorting in non-ascending order thus the
 up variable).
 Some additional explanation: all tracks should be in separate files(no
 overwriting - for automatic checking). N is number of tracks, prefix is
-track name prefix, and i is current iteration.</p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-java data-lang=java><span style=color:#66d9ef>int</span> i <span style=color:#f92672>=</span> 0<span style=color:#f92672>;</span>
+track name prefix, and i is current iteration.</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">4
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">5
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">6
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">7
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">8
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">9
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-java data-lang=java><span style=color:#66d9ef>int</span> i <span style=color:#f92672>=</span> 0<span style=color:#f92672>;</span>
 Iterable source <span style=color:#f92672>=</span> <span style=color:#66d9ef>new</span> InTrack<span style=color:#f92672>(</span>inName<span style=color:#f92672>);</span>
 MultiSink sink<span style=color:#f92672>;</span>
 <span style=color:#66d9ef>do</span><span style=color:#f92672>{</span>
@@ -44,7 +46,7 @@ MultiSink sink<span style=color:#f92672>;</span>
     source <span style=color:#f92672>=</span> <span style=color:#66d9ef>new</span> MultiSource<span style=color:#f92672>(</span>prefix<span style=color:#f92672>,</span> i<span style=color:#f92672>,</span> N<span style=color:#f92672>,</span> up<span style=color:#f92672>);</span>
     i<span style=color:#f92672>++;</span>
 <span style=color:#f92672>}</span> <span style=color:#66d9ef>while</span> <span style=color:#f92672>(</span>sink<span style=color:#f92672>.</span><span style=color:#a6e22e>isMoreThanOneUsed</span><span style=color:#f92672>());</span>
-</code></pre></div><p>I&rsquo;m probably not allowed to share my full solution because of
+</code></pre></td></tr></table></div></div><p>I&rsquo;m probably not allowed to share my full solution because of
 university rules so I won&rsquo;t.
 Now to comment on this. I have a source that&rsquo;s agnostic to the amount of
 open files. And I have a similar sink. End-point switching is
@@ -59,7 +61,16 @@ The whole point of tracks is they only hold one element in memory(or a
 few for efficiency but that&rsquo;s currently not my concern). So a track can
 be implemented as a
 <a href=http://en.wikipedia.org/wiki/Stream_%28computing%29 title="Stream (computing)">Stream</a>(linked
-list with a lazy val for tail).</p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-scala data-lang=scala><span style=color:#66d9ef>def</span> <span style=color:#a6e22e>Reader</span><span style=color:#f92672>(</span>filename<span style=color:#66d9ef>:</span> <span style=color:#66d9ef>String</span><span style=color:#f92672>)</span> <span style=color:#66d9ef>=</span> <span style=color:#f92672>{</span>
+list with a lazy val for tail).</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">4
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">5
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">6
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">7
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">8
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">9
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-scala data-lang=scala><span style=color:#66d9ef>def</span> <span style=color:#a6e22e>Reader</span><span style=color:#f92672>(</span>filename<span style=color:#66d9ef>:</span> <span style=color:#66d9ef>String</span><span style=color:#f92672>)</span> <span style=color:#66d9ef>=</span> <span style=color:#f92672>{</span>
   <span style=color:#66d9ef>val</span> sc <span style=color:#66d9ef>=</span> <span style=color:#66d9ef>new</span> <span style=color:#a6e22e>Scanner</span><span style=color:#f92672>(</span><span style=color:#66d9ef>new</span> <span style=color:#a6e22e>File</span><span style=color:#f92672>(</span>filename<span style=color:#f92672>))</span>
   <span style=color:#66d9ef>def</span> loop<span style=color:#f92672>()</span><span style=color:#66d9ef>:</span> <span style=color:#66d9ef>Stream</span><span style=color:#f92672>[</span><span style=color:#66d9ef>Int</span><span style=color:#f92672>]</span> <span style=color:#66d9ef>=</span> <span style=color:#f92672>{</span>
     <span style=color:#66d9ef>if</span> <span style=color:#f92672>(</span>sc<span style=color:#f92672>.</span>hasNextInt<span style=color:#f92672>){</span>
@@ -68,14 +79,30 @@ list with a lazy val for tail).</p><div class=highlight><pre style=color:#f8f8f2
   <span style=color:#f92672>}</span>
   loop<span style=color:#f92672>()</span>
 <span style=color:#f92672>}</span>
-</code></pre></div><p>This is the <a href=http://en.wikipedia.org/wiki/Constructor_%28object-oriented_programming%29 title="Constructor (object-oriented programming)">constructor
+</code></pre></td></tr></table></div></div><p>This is the <a href=http://en.wikipedia.org/wiki/Constructor_%28object-oriented_programming%29 title="Constructor (object-oriented programming)">constructor
 function</a>
 for the input stream. It just returns a recursive value that has a
 Scanner in its closure. As stream elements are immutable you get an iron
 clad guarantee that sc will stay in sync.   And you get all collections
 stuff for free. Moving on, how to abstract over multiple streams? That
 should be a stream again right? I kinda feel my code is too complicated
-and that it could be done simpler but that&rsquo;s what I came up with</p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-scala data-lang=scala><span style=color:#66d9ef>def</span> <span style=color:#a6e22e>MultiReader</span><span style=color:#f92672>(</span>prefix<span style=color:#66d9ef>:</span> <span style=color:#66d9ef>String</span><span style=color:#f92672>,</span> phase<span style=color:#66d9ef>:</span> <span style=color:#66d9ef>Int</span><span style=color:#f92672>,</span> N<span style=color:#66d9ef>:</span> <span style=color:#66d9ef>Int</span><span style=color:#f92672>,</span> up<span style=color:#66d9ef>:</span> <span style=color:#66d9ef>Boolean</span><span style=color:#f92672>)</span> <span style=color:#66d9ef>=</span> <span style=color:#f92672>{</span>
+and that it could be done simpler but that&rsquo;s what I came up with</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">11
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">12
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">13
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">14
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">15
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">16
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-scala data-lang=scala><span style=color:#66d9ef>def</span> <span style=color:#a6e22e>MultiReader</span><span style=color:#f92672>(</span>prefix<span style=color:#66d9ef>:</span> <span style=color:#66d9ef>String</span><span style=color:#f92672>,</span> phase<span style=color:#66d9ef>:</span> <span style=color:#66d9ef>Int</span><span style=color:#f92672>,</span> N<span style=color:#66d9ef>:</span> <span style=color:#66d9ef>Int</span><span style=color:#f92672>,</span> up<span style=color:#66d9ef>:</span> <span style=color:#66d9ef>Boolean</span><span style=color:#f92672>)</span> <span style=color:#66d9ef>=</span> <span style=color:#f92672>{</span>
   <span style=color:#66d9ef>def</span> loop<span style=color:#f92672>(</span>last<span style=color:#66d9ef>:</span> <span style=color:#66d9ef>Int</span><span style=color:#f92672>,</span> sources<span style=color:#66d9ef>:</span> <span style=color:#66d9ef>Seq</span><span style=color:#f92672>[</span><span style=color:#66d9ef>Stream</span><span style=color:#f92672>[</span><span style=color:#66d9ef>Int</span><span style=color:#f92672>]])</span><span style=color:#66d9ef>:</span> <span style=color:#66d9ef>Stream</span><span style=color:#f92672>[</span><span style=color:#66d9ef>Int</span><span style=color:#f92672>]</span> <span style=color:#66d9ef>=</span> <span style=color:#f92672>{</span>
     <span style=color:#66d9ef>val</span> nonEmpty <span style=color:#66d9ef>=</span> sources<span style=color:#f92672>.</span>filterNot<span style=color:#f92672>(</span><span style=color:#66d9ef>_</span><span style=color:#f92672>.</span>isEmpty<span style=color:#f92672>)</span>
     <span style=color:#66d9ef>if</span><span style=color:#f92672>(</span>nonEmpty<span style=color:#f92672>.</span>length<span style=color:#f92672>==</span><span style=color:#ae81ff>0</span><span style=color:#f92672>)</span>
@@ -91,7 +118,7 @@ and that it could be done simpler but that&rsquo;s what I came up with</p><div c
   <span style=color:#f92672>}</span>
   loop<span style=color:#f92672>(</span><span style=color:#ae81ff>0</span><span style=color:#f92672>,</span> <span style=color:#f92672>(</span><span style=color:#ae81ff>0</span> until N<span style=color:#f92672>).</span>map<span style=color:#f92672>(</span>n <span style=color:#66d9ef>=&gt;</span> <span style=color:#a6e22e>Reader</span><span style=color:#f92672>(</span>prefix <span style=color:#f92672>+</span> <span style=color:#e6db74>&#34;-&#34;</span> <span style=color:#f92672>+</span> phase <span style=color:#f92672>+</span> <span style=color:#e6db74>&#34;-&#34;</span> <span style=color:#f92672>+</span> n<span style=color:#f92672>)))</span>
 <span style=color:#f92672>}</span>
-</code></pre></div><p>Let&rsquo;s walk through. Again the stream is recursive. It starts with a
+</code></pre></td></tr></table></div></div><p>Let&rsquo;s walk through. Again the stream is recursive. It starts with a
 collection of Readers set to right files. Then in each step you filter
 out empty stream(tracks with no more elements) and partition them
 according to the last element(in the argument). If there are higher you
@@ -101,11 +128,36 @@ with the read one advanced by one element.</p><p>Writer was a bit trickier. It n
 mutable state. Solution is to return a new Writer containing a new state
 every time you write. Then the user must just be careful not to use
 stale Writers - not that big a deal.
-This is the Writer trait</p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-scala data-lang=scala><span style=color:#66d9ef>trait</span> <span style=color:#a6e22e>Writer</span><span style=color:#f92672>{</span>
+This is the Writer trait</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">4
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-scala data-lang=scala><span style=color:#66d9ef>trait</span> <span style=color:#a6e22e>Writer</span><span style=color:#f92672>{</span>
   <span style=color:#66d9ef>def</span> write<span style=color:#f92672>(</span>num<span style=color:#66d9ef>:</span> <span style=color:#66d9ef>Int</span><span style=color:#f92672>)</span><span style=color:#66d9ef>:</span> <span style=color:#66d9ef>Writer</span>
   <span style=color:#66d9ef>def</span> moreThanOneUsed<span style=color:#66d9ef>:</span> <span style=color:#66d9ef>Boolean</span>
 <span style=color:#f92672>}</span>
-</code></pre></div><p>Very simple interface. And here&rsquo;s the recursive constructor function</p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-scala data-lang=scala><span style=color:#66d9ef>def</span> <span style=color:#a6e22e>Writer</span><span style=color:#f92672>(</span>prefix<span style=color:#66d9ef>:</span> <span style=color:#66d9ef>String</span><span style=color:#f92672>,</span> phase<span style=color:#66d9ef>:</span> <span style=color:#66d9ef>Int</span><span style=color:#f92672>,</span> N<span style=color:#66d9ef>:</span> <span style=color:#66d9ef>Int</span><span style=color:#f92672>,</span> up<span style=color:#66d9ef>:</span> <span style=color:#66d9ef>Boolean</span><span style=color:#f92672>)</span><span style=color:#66d9ef>:</span> <span style=color:#66d9ef>Writer</span> <span style=color:#f92672>=</span> <span style=color:#f92672>{</span>
+</code></pre></td></tr></table></div></div><p>Very simple interface. And here&rsquo;s the recursive constructor function</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">11
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">12
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">13
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">14
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">15
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">16
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">17
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">18
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">19
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">20
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">21
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-scala data-lang=scala><span style=color:#66d9ef>def</span> <span style=color:#a6e22e>Writer</span><span style=color:#f92672>(</span>prefix<span style=color:#66d9ef>:</span> <span style=color:#66d9ef>String</span><span style=color:#f92672>,</span> phase<span style=color:#66d9ef>:</span> <span style=color:#66d9ef>Int</span><span style=color:#f92672>,</span> N<span style=color:#66d9ef>:</span> <span style=color:#66d9ef>Int</span><span style=color:#f92672>,</span> up<span style=color:#66d9ef>:</span> <span style=color:#66d9ef>Boolean</span><span style=color:#f92672>)</span><span style=color:#66d9ef>:</span> <span style=color:#66d9ef>Writer</span> <span style=color:#f92672>=</span> <span style=color:#f92672>{</span>
   <span style=color:#66d9ef>val</span> tracks <span style=color:#66d9ef>=</span> <span style=color:#f92672>(</span><span style=color:#ae81ff>0</span> until N<span style=color:#f92672>).</span>map <span style=color:#f92672>{</span> n <span style=color:#66d9ef>=&gt;</span>
     <span style=color:#66d9ef>new</span> <span style=color:#a6e22e>PrintWriter</span><span style=color:#f92672>(</span><span style=color:#66d9ef>new</span> <span style=color:#a6e22e>BufferedWriter</span><span style=color:#f92672>(</span><span style=color:#66d9ef>new</span> <span style=color:#a6e22e>FileWriter</span><span style=color:#f92672>(</span>prefix<span style=color:#f92672>+</span><span style=color:#e6db74>&#34;-&#34;</span><span style=color:#f92672>+</span>phase<span style=color:#f92672>+</span><span style=color:#e6db74>&#34;-&#34;</span><span style=color:#f92672>+</span>n<span style=color:#f92672>)))</span>
   <span style=color:#f92672>}</span>
@@ -126,27 +178,30 @@ This is the Writer trait</p><div class=highlight><pre style=color:#f8f8f2;backgr
 
   mkWriter<span style=color:#f92672>(</span><span style=color:#ae81ff>0</span><span style=color:#f92672>,</span> <span style=color:#66d9ef>if</span> <span style=color:#f92672>(</span>up<span style=color:#f92672>)</span> <span style=color:#a6e22e>Integer</span><span style=color:#f92672>.</span><span style=color:#a6e22e>MIN_VALUE</span> <span style=color:#66d9ef>else</span> <span style=color:#a6e22e>Integer</span><span style=color:#f92672>.</span><span style=color:#a6e22e>MAX_VALUE</span><span style=color:#f92672>,</span> used<span style=color:#66d9ef>=</span><span style=color:#66d9ef>false</span><span style=color:#f92672>)</span>
 <span style=color:#f92672>}</span>
-</code></pre></div><p>Creates all the tracks to be put in the closure. First writer has the
+</code></pre></td></tr></table></div></div><p>Creates all the tracks to be put in the closure. First writer has the
 proper start value then every next is constructed like this: figure out
 the new values for track number and &lsquo;used&rsquo;(the long if) then actually
 write out and return a new writer encapsulating track number and &lsquo;used&rsquo;.
 Since these writers are quite lightweight garbage collection pressure
 shouldn&rsquo;t be a problem. Especially since the whole process is bound by
 I/O. Anyway you could optimize by creating all possible states in
-advance and just passing a new reference each time.</p><p>Putting it all together.</p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-scala data-lang=scala><span style=color:#66d9ef>def</span> loop<span style=color:#f92672>(</span>i<span style=color:#66d9ef>:</span> <span style=color:#66d9ef>Int</span><span style=color:#f92672>,</span> source<span style=color:#66d9ef>:</span> <span style=color:#66d9ef>Stream</span><span style=color:#f92672>[</span><span style=color:#66d9ef>Int</span><span style=color:#f92672>]){</span>
+advance and just passing a new reference each time.</p><p>Putting it all together.</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">4
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">5
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">6
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-scala data-lang=scala><span style=color:#66d9ef>def</span> loop<span style=color:#f92672>(</span>i<span style=color:#66d9ef>:</span> <span style=color:#66d9ef>Int</span><span style=color:#f92672>,</span> source<span style=color:#66d9ef>:</span> <span style=color:#66d9ef>Stream</span><span style=color:#f92672>[</span><span style=color:#66d9ef>Int</span><span style=color:#f92672>]){</span>
   <span style=color:#66d9ef>val</span> sink <span style=color:#66d9ef>=</span> source<span style=color:#f92672>.</span>foldLeft<span style=color:#f92672>(</span><span style=color:#a6e22e>Writer</span><span style=color:#f92672>(</span>prefix<span style=color:#f92672>,</span> i<span style=color:#f92672>,</span> N<span style=color:#f92672>,</span> up<span style=color:#f92672>))(</span><span style=color:#66d9ef>_</span> write <span style=color:#66d9ef>_</span><span style=color:#f92672>)</span>
   <span style=color:#66d9ef>if</span> <span style=color:#f92672>(</span>sink<span style=color:#f92672>.</span>moreThanOneUsed<span style=color:#f92672>)</span> loop<span style=color:#f92672>(</span>i<span style=color:#f92672>+</span><span style=color:#ae81ff>1</span><span style=color:#f92672>,</span> <span style=color:#a6e22e>MultiReader</span><span style=color:#f92672>(</span>prefix<span style=color:#f92672>,</span> i<span style=color:#f92672>,</span> N <span style=color:#f92672>,</span>up<span style=color:#f92672>))</span>
 <span style=color:#f92672>}</span>
 
 loop<span style=color:#f92672>(</span><span style=color:#ae81ff>0</span><span style=color:#f92672>,</span> <span style=color:#a6e22e>Reader</span><span style=color:#f92672>(</span>inName<span style=color:#f92672>))</span>
-</code></pre></div><p>So you take an input stream, fold it over a writer writing in each step.
+</code></pre></td></tr></table></div></div><p>So you take an input stream, fold it over a writer writing in each step.
 And if you used more than one track you repeat with a new input stream.
 I find this solution to be MUCH MORE elegant. Not to mention it&rsquo;s just
 65 lines of scala. But it makes me really sad they don&rsquo;t even mention
 <a href=http://en.wikipedia.org/wiki/Functional_programming title="Functional programming">functional
 programming</a>
 at algorithms course. I&rsquo;m probably gonna pay the professor and TA&rsquo;s a
-visit in near future.</p><hr width=100%><p style=color:#777>Last modified on 2012-12-04</p></div></div><nav class=post-pagination><a class=newer-posts href=/posts/2012-12-10-dynamic-db/>Next<br>Cool Monday - Exploration of dynamic db acces from scala</a>
-<a class=older-posts href=/posts/2012-11-26-functional-compilers/>Previous<br>Cool Monday - Functional compilers and atoms</a></nav><div class=post-comment-wrapper></div></div></div></div></div><div id=single-column-footer>&copy;
-2021
-Andraz Bajt</div></div></body></html>
+visit in near future.</p><hr><p>Last modified on 2012-12-04</p><a href=/posts/2012-11-26-functional-compilers/>Previous Cool Monday - Functional compilers and atoms</a><br><a href=/posts/2012-12-10-dynamic-db/>Next Cool Monday - Exploration of dynamic db acces from scala</a></div></body></html>

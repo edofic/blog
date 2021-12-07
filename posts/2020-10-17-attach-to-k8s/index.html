@@ -1,16 +1,9 @@
-<!doctype html><html><head><title>Attaching your local machine to a Kubernetes cluster</title><meta charset=utf-8><meta name=X-UA-Compatible content="IE=edge"><meta name=google-site-verification content><meta content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=0" name=viewport><meta content="telephone=no" name=format-detection><meta name=renderer content="webkit"><meta name=theme-color content="#ffffff"><link type=text/css rel=stylesheet href=/vendor/css/bootstrap.min.css><link rel=stylesheet href=/scss/journal.min.01c37d732f853bf90329007dc6f0a25c67722dd47b7168f8907facb93414bd91.css media=screen><link rel=stylesheet href="https://fonts.googleapis.com/css?family=Lora|Montserrat|Fira+Mono|Noto+Serif+SC|Material+Icons"></head><body><div id=app><div ref=sideContainer class=side-container><div class="a-block nav-head false"><div class=nav-title>Andraž Bajt's blog</div><div class=nav-subtitle></div><a href=https://github.com/edofic><img src=/icons/github.svg width=20></a>
-<a href=https://www.linkedin.com/in/edofic><img src=/icons/linkedin.svg width=20></a>
-<a href=https://twitter.com/edofic><img src=/icons/twitter.svg width=20></a>
-<a href=/index.xml><img src=/icons/rss.svg width=20></a>
-<a href=mailto:edofic@edofic.com><img src=/icons/email.svg width=20></a></div><div class=nav-link-list><a class="a-block nav-link-item" href=/about>About Me</a>
-<a class="a-block nav-link-item" href=/>Archive</a></div><div class=nav-footer>&copy;
-2021
-Andraz Bajt</div></div><div ref=extraContainer class=extra-container><div class=pagination><a id=globalBackToTop class="pagination-action animated-visibility" href=#top :class="{ invisible: scrollY == 0 }"><i class="material-icons pagination-action-icon">keyboard_arrow_up</i></a></div></div><div class=single-column-drawer-container ref=drawer><div class=drawer-content><div class=drawer-menu><a class="a-block drawer-menu-item" href=/about>About Me</a>
-<a class="a-block drawer-menu-item" href=/>Archive</a></div></div></div><div class=single-column-header-container ref=pageHead><a href=/><div class=single-column-header-title>Andraž Bajt's blog</div></a><a href=https://github.com/edofic><img src=/icons/github.svg width=20></a>
-<a href=https://www.linkedin.com/in/edofic><img src=/icons/linkedin.svg width=20></a>
-<a href=https://twitter.com/edofic><img src=/icons/twitter.svg width=20></a>
-<a href=/index.xml><img src=/icons/rss.svg width=20></a>
-<a href=mailto:edofic@edofic.com><img src=/icons/email.svg width=20></a></div><div id=content><div ref=streamContainer class=stream-container><div class="post-list-container post-list-container-shadow"><div class=post><div class=post-head-wrapper-text-only style="background-image:url('/')"><div class=post-title>Attaching your local machine to a Kubernetes cluster<div class=post-meta><time itemprop=datePublished>2020-10-17</time></div></div></div><div class=post-body-wrapper><div class=post-body><p>Why on earth would you want to do that?! You may have a legitimate reason like
+<!doctype html><html><head><title>Attaching your local machine to a Kubernetes cluster</title><meta charset=utf-8><meta name=X-UA-Compatible content="IE=edge"><meta name=google-site-verification content><meta content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=0" name=viewport><link rel=stylesheet href=/scss/main.min.31cac6fb291c18037123c54900f92aaa75653b03bf9d6b70a2fd0565930494e3.css media=screen></head><body><div class=nav><a href=/><h2 class=title>Andraž Bajt's blog</h2></a><div class=nav-sub><a class=nav-item href=/about>About Me</a>
+<a class=nav-item href=/>Archive</a></div><div class=nav-sub-right><a class=nav-icon href=https://github.com/edofic target=_blank><img src=/icons/github.svg width=20></a>
+<a class=nav-icon href=https://www.linkedin.com/in/edofic target=_blank><img src=/icons/linkedin.svg width=20></a>
+<a class=nav-icon href=https://twitter.com/edofic target=_blank><img src=/icons/twitter.svg width=20></a>
+<a class=nav-icon href=/index.xml target=_blank><img src=/icons/rss.svg width=20></a>
+<a class=nav-icon href=mailto:blog@edofic.com target=_blank><img src=/icons/email.svg width=20></a></div></div><hr><div class=main><h1>Attaching your local machine to a Kubernetes cluster</h1><time>2020-10-17</time><hr><p>Why on earth would you want to do that?! You may have a legitimate reason like
 pooling spare compute capacity. Oooooor you&rsquo;re just goofing around in order to
 understand things. Like me.</p><p>Specifically I was playing with <a href=https://www.telepresence.io/>telepresence</a> (a
 &ldquo;VPN into the cluster&rdquo;) and a had an idea: why not just run a part of the
@@ -19,30 +12,61 @@ interact with your host (host port, host path etc), no magic required.</p><h1 id
 for small clusters as it&rsquo;s very easy to set up and doesn&rsquo;t require much
 resources to run. Perfect if I want to run part of it on my machine.</p><p>So for purposes of this testing I setup a single node remote cluster in the
 cloud. Specifically I provisioned a VM on <a href=https://www.digitalocean.com/>Digital
-Ocean</a> and ran this on it</p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash>curl -sfL https://get.k3s.io | sh -
+Ocean</a> and ran this on it</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-bash data-lang=bash>curl -sfL https://get.k3s.io | sh -
 k3s kubectl get node <span style=color:#75715e># to confirm we&#39;re up</span>
-</code></pre></div><p>Then copied <code>/etc/rancher/k3s/k3s.yaml</code> to my machine and updated the IP to
+</code></pre></td></tr></table></div></div><p>Then copied <code>/etc/rancher/k3s/k3s.yaml</code> to my machine and updated the IP to
 point to the VM&rsquo;s external IP, point <code>KUBECONFIG</code> env variable to this file and
-we&rsquo;re connected! Locally I can now also run o</p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash>kubectl get node
-</code></pre></div><h1 id=joining-the-cluster>Joining the cluster</h1><p>K3s makes joining a worker node (an agent as they call it) super easy, you just
+we&rsquo;re connected! Locally I can now also run o</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-bash data-lang=bash>kubectl get node
+</code></pre></td></tr></table></div></div><h1 id=joining-the-cluster>Joining the cluster</h1><p>K3s makes joining a worker node (an agent as they call it) super easy, you just
 need to point it to the K8s API server and provide an authentication token.</p><p>We can get the token by reading <code>/var/lib/rancher/k3s/server/node-token</code> on the
 VM.</p><p>And since I&rsquo;m on Linux I can actually install K3s locally natively (server and
-token values are placeholders here.</p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash>curl -sfL https://get.k3s.io | K3S_URL<span style=color:#f92672>=</span>https://myserver:6443 K3S_TOKEN<span style=color:#f92672>=</span>mynodetoken sh -
-</code></pre></div><p>Et voila, we&rsquo;re now part of the cluster. This does make a bit of a mess on the
-local machine so instead we can run it in a docker container.</p><pre><code>... set TOKEN &amp; SERVER_IP
-docker run --rm -it --name=k3s-agent --privileged  rancher/k3s:v1.18.9-k3s1 agent --token &quot;$TOKEN&quot; --server &quot;https://${SERVER_IP}:6443&quot; --node-name=amaterasu
-</code></pre><p>but we can do better, we can actually integrate with host docker so pods and
-containers will show up as containers on host!</p><pre><code>docker run --rm -it --name=k3s-agent --privileged -v /var/run/docker.sock:/var/run/docker.sock rancher/k3s:v1.18.9-k3s1 agent --token &quot;$TOKEN&quot; --server &quot;https://${SERVER_IP}:6443&quot; --node-name=amaterasu --docker
-</code></pre><p>Note I&rsquo;m using hostname <code>amaterasu</code> here because futher configs will refer to
-it.</p><h1 id=using-the-cluster>Using the cluster</h1><p>Let&rsquo;s run some workloads!</p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash>kubectl create deployment hello-node --image<span style=color:#f92672>=</span>k8s.gcr.io/echoserver:1.4
+token values are placeholders here.</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-bash data-lang=bash>curl -sfL https://get.k3s.io | K3S_URL<span style=color:#f92672>=</span>https://myserver:6443 K3S_TOKEN<span style=color:#f92672>=</span>mynodetoken sh -
+</code></pre></td></tr></table></div></div><p>Et voila, we&rsquo;re now part of the cluster. This does make a bit of a mess on the
+local machine so instead we can run it in a docker container.</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-fallback data-lang=fallback>... set TOKEN &amp; SERVER_IP
+docker run --rm -it --name=k3s-agent --privileged  rancher/k3s:v1.18.9-k3s1 agent --token &#34;$TOKEN&#34; --server &#34;https://${SERVER_IP}:6443&#34; --node-name=amaterasu
+</code></pre></td></tr></table></div></div><p>but we can do better, we can actually integrate with host docker so pods and
+containers will show up as containers on host!</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-fallback data-lang=fallback>docker run --rm -it --name=k3s-agent --privileged -v /var/run/docker.sock:/var/run/docker.sock rancher/k3s:v1.18.9-k3s1 agent --token &#34;$TOKEN&#34; --server &#34;https://${SERVER_IP}:6443&#34; --node-name=amaterasu --docker
+</code></pre></td></tr></table></div></div><p>Note I&rsquo;m using hostname <code>amaterasu</code> here because futher configs will refer to
+it.</p><h1 id=using-the-cluster>Using the cluster</h1><p>Let&rsquo;s run some workloads!</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-bash data-lang=bash>kubectl create deployment hello-node --image<span style=color:#f92672>=</span>k8s.gcr.io/echoserver:1.4
 kubectl get pod -o wide
-</code></pre></div><p>And can now connect to it</p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash>kubectl port-forward  pod/hello-node-7bf657c596-dgtmk <span style=color:#ae81ff>8080</span>
+</code></pre></td></tr></table></div></div><p>And can now connect to it</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-bash data-lang=bash>kubectl port-forward  pod/hello-node-7bf657c596-dgtmk <span style=color:#ae81ff>8080</span>
 http://localhost:8080/
-</code></pre></div><p>AND see it running as containers on my local docker</p><pre><code class=language-bah data-lang=bah>docker ps
-</code></pre><p>How about running some workloads that are <em>always</em> on my local machine? I can
-use a node selector for that!</p><p>First I label my node</p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash>kubectl label nodes amaterasu name<span style=color:#f92672>=</span>amaterasu
-</code></pre></div><p>And then I can use this label as a selector for a pod that specifically
-leverages something available only on my node. E.g. mounting a host path volume.</p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-yaml data-lang=yaml><span style=color:#f92672>apiVersion</span>: <span style=color:#ae81ff>v1</span>
+</code></pre></td></tr></table></div></div><p>AND see it running as containers on my local docker</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-fallback data-lang=fallback>docker ps
+</code></pre></td></tr></table></div></div><p>How about running some workloads that are <em>always</em> on my local machine? I can
+use a node selector for that!</p><p>First I label my node</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-bash data-lang=bash>kubectl label nodes amaterasu name<span style=color:#f92672>=</span>amaterasu
+</code></pre></td></tr></table></div></div><p>And then I can use this label as a selector for a pod that specifically
+leverages something available only on my node. E.g. mounting a host path volume.</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">11
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">12
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">13
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">14
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">15
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">16
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">17
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">18
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-yaml data-lang=yaml><span style=color:#f92672>apiVersion</span>: <span style=color:#ae81ff>v1</span>
 <span style=color:#f92672>kind</span>: <span style=color:#ae81ff>Pod</span>
 <span style=color:#f92672>metadata</span>:
   <span style=color:#f92672>name</span>: <span style=color:#ae81ff>local-pod</span>
@@ -60,22 +84,53 @@ leverages something available only on my node. E.g. mounting a host path volume.
       <span style=color:#f92672>type</span>: <span style=color:#ae81ff>Directory</span>
   <span style=color:#f92672>nodeSelector</span>:
     <span style=color:#f92672>name</span>: <span style=color:#ae81ff>amaterasu</span>
-</code></pre></div><p>And deploy with:</p><pre><code>kubectl create -f ./local.yaml
+</code></pre></td></tr></table></div></div><p>And deploy with:</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-fallback data-lang=fallback>kubectl create -f ./local.yaml
 kubectl get pod -o wide
-</code></pre><p>Now I can get a shell in there with <code>kubectl exec -it local-pod -- bash</code> or I
-can use docker directly:</p><pre><code>docker exec -it k8s_test-container_local-pod_default_1e9ecfbb-6b03-493e-94c8-82b7dbb8bc13_0 bash
-</code></pre><p>Once in I can confirm I&rsquo;ve actually mounted a host path:</p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash>cd /host
+</code></pre></td></tr></table></div></div><p>Now I can get a shell in there with <code>kubectl exec -it local-pod -- bash</code> or I
+can use docker directly:</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-fallback data-lang=fallback>docker exec -it k8s_test-container_local-pod_default_1e9ecfbb-6b03-493e-94c8-82b7dbb8bc13_0 bash
+</code></pre></td></tr></table></div></div><p>Once in I can confirm I&rsquo;ve actually mounted a host path:</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-bash data-lang=bash>cd /host
 date &gt; now
-</code></pre></div><p>And check the contents on my host machine:</p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash>cat /tmp/shared/now
-</code></pre></div><p>Works like magic :)</p><h2 id=avoiding-other-workloads>Avoiding other workloads</h2><p>If you&rsquo;re running multiple workloads then the scheduler may decide to use your
+</code></pre></td></tr></table></div></div><p>And check the contents on my host machine:</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-bash data-lang=bash>cat /tmp/shared/now
+</code></pre></td></tr></table></div></div><p>Works like magic :)</p><h2 id=avoiding-other-workloads>Avoiding other workloads</h2><p>If you&rsquo;re running multiple workloads then the scheduler may decide to use your
 local machine for them. And you might not like that as you only want to run your
 specific workloads.</p><p>You can actually tell that to the scheduler by tainting your node with a
-<code>NoExecute</code> flag.</p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash>kubectl taint nodes amaterasu personal<span style=color:#f92672>=</span>amaterasu:NoExecute
+<code>NoExecute</code> flag.</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-bash data-lang=bash>kubectl taint nodes amaterasu personal<span style=color:#f92672>=</span>amaterasu:NoExecute
 kubectl get pod -o wide
-</code></pre></div><p>In my case pod <code>hello-node*</code> was actually running on my local machine and was
+</code></pre></td></tr></table></div></div><p>In my case pod <code>hello-node*</code> was actually running on my local machine and was
 now killed and subsequently restarted on the remote cluster as it&rsquo;s managed by
 it&rsquo;s parent deployment.</p><p>But <code>local-pod</code> is gone too!</p><p>We also need to specify a toleration so it will actually schedule despite the
-taint.</p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-yaml data-lang=yaml><span style=color:#f92672>apiVersion</span>: <span style=color:#ae81ff>v1</span>
+taint.</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">11
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">12
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">13
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">14
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">15
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">16
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">17
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">18
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">19
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">20
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">21
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">22
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">23
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-yaml data-lang=yaml><span style=color:#f92672>apiVersion</span>: <span style=color:#ae81ff>v1</span>
 <span style=color:#f92672>kind</span>: <span style=color:#ae81ff>Pod</span>
 <span style=color:#f92672>metadata</span>:
   <span style=color:#f92672>name</span>: <span style=color:#ae81ff>local-pod</span>
@@ -98,8 +153,5 @@ taint.</p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822
     <span style=color:#f92672>operator</span>: <span style=color:#e6db74>&#34;Equal&#34;</span>
     <span style=color:#f92672>value</span>: <span style=color:#e6db74>&#34;amaterasu&#34;</span>
     <span style=color:#f92672>effect</span>: <span style=color:#e6db74>&#34;NoExecute&#34;</span>
-</code></pre></div><p>And repeat the deployment.</p><p>There you have it: natively running k8s workloads locally with local access and
-full integration with the remote cluster. Not sure if it&rsquo;s a good idea though ;)</p><hr width=100%><p style=color:#777>Last modified on 2020-10-17</p></div></div><nav class=post-pagination><a class=newer-posts href=/posts/2021-02-07-trying-out-buffalo/>Next<br>Trying out Buffalo</a>
-<a class=older-posts href=/posts/2020-06-07-linux-gaming/>Previous<br>Surprising ease of gaming on Linux in 2020</a></nav><div class=post-comment-wrapper></div></div></div></div></div><div id=single-column-footer>&copy;
-2021
-Andraz Bajt</div></div></body></html>
+</code></pre></td></tr></table></div></div><p>And repeat the deployment.</p><p>There you have it: natively running k8s workloads locally with local access and
+full integration with the remote cluster. Not sure if it&rsquo;s a good idea though ;)</p><hr><p>Last modified on 2020-10-17</p><a href=/posts/2020-06-07-linux-gaming/>Previous Surprising ease of gaming on Linux in 2020</a><br><a href=/posts/2021-02-07-trying-out-buffalo/>Next Trying out Buffalo</a></div></body></html>

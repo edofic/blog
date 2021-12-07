@@ -1,63 +1,92 @@
-<!doctype html><html><head><title>Making a programming language Part 4 - Hello World</title><meta charset=utf-8><meta name=X-UA-Compatible content="IE=edge"><meta name=google-site-verification content><meta content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=0" name=viewport><meta content="telephone=no" name=format-detection><meta name=renderer content="webkit"><meta name=theme-color content="#ffffff"><link type=text/css rel=stylesheet href=/vendor/css/bootstrap.min.css><link rel=stylesheet href=/scss/journal.min.01c37d732f853bf90329007dc6f0a25c67722dd47b7168f8907facb93414bd91.css media=screen><link rel=stylesheet href="https://fonts.googleapis.com/css?family=Lora|Montserrat|Fira+Mono|Noto+Serif+SC|Material+Icons"></head><body><div id=app><div ref=sideContainer class=side-container><div class="a-block nav-head false"><div class=nav-title>Andraž Bajt's blog</div><div class=nav-subtitle></div><a href=https://github.com/edofic><img src=/icons/github.svg width=20></a>
-<a href=https://www.linkedin.com/in/edofic><img src=/icons/linkedin.svg width=20></a>
-<a href=https://twitter.com/edofic><img src=/icons/twitter.svg width=20></a>
-<a href=/index.xml><img src=/icons/rss.svg width=20></a>
-<a href=mailto:edofic@edofic.com><img src=/icons/email.svg width=20></a></div><div class=nav-link-list><a class="a-block nav-link-item" href=/about>About Me</a>
-<a class="a-block nav-link-item" href=/>Archive</a></div><div class=nav-footer>&copy;
-2021
-Andraz Bajt</div></div><div ref=extraContainer class=extra-container><div class=pagination><a id=globalBackToTop class="pagination-action animated-visibility" href=#top :class="{ invisible: scrollY == 0 }"><i class="material-icons pagination-action-icon">keyboard_arrow_up</i></a></div></div><div class=single-column-drawer-container ref=drawer><div class=drawer-content><div class=drawer-menu><a class="a-block drawer-menu-item" href=/about>About Me</a>
-<a class="a-block drawer-menu-item" href=/>Archive</a></div></div></div><div class=single-column-header-container ref=pageHead><a href=/><div class=single-column-header-title>Andraž Bajt's blog</div></a><a href=https://github.com/edofic><img src=/icons/github.svg width=20></a>
-<a href=https://www.linkedin.com/in/edofic><img src=/icons/linkedin.svg width=20></a>
-<a href=https://twitter.com/edofic><img src=/icons/twitter.svg width=20></a>
-<a href=/index.xml><img src=/icons/rss.svg width=20></a>
-<a href=mailto:edofic@edofic.com><img src=/icons/email.svg width=20></a></div><div id=content><div ref=streamContainer class=stream-container><div class="post-list-container post-list-container-shadow"><div class=post><div class=post-head-wrapper-text-only style="background-image:url('/')"><div class=post-title>Making a programming language Part 4 - Hello World<div class=post-meta><time itemprop=datePublished>2012-09-01</time></div></div></div><div class=post-body-wrapper><div class=post-body><p><a href=/posts/2012-08-29-creating-a-language-1>Table of
+<!doctype html><html><head><title>Making a programming language Part 4 - Hello World</title><meta charset=utf-8><meta name=X-UA-Compatible content="IE=edge"><meta name=google-site-verification content><meta content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=0" name=viewport><link rel=stylesheet href=/scss/main.min.31cac6fb291c18037123c54900f92aaa75653b03bf9d6b70a2fd0565930494e3.css media=screen></head><body><div class=nav><a href=/><h2 class=title>Andraž Bajt's blog</h2></a><div class=nav-sub><a class=nav-item href=/about>About Me</a>
+<a class=nav-item href=/>Archive</a></div><div class=nav-sub-right><a class=nav-icon href=https://github.com/edofic target=_blank><img src=/icons/github.svg width=20></a>
+<a class=nav-icon href=https://www.linkedin.com/in/edofic target=_blank><img src=/icons/linkedin.svg width=20></a>
+<a class=nav-icon href=https://twitter.com/edofic target=_blank><img src=/icons/twitter.svg width=20></a>
+<a class=nav-icon href=/index.xml target=_blank><img src=/icons/rss.svg width=20></a>
+<a class=nav-icon href=mailto:blog@edofic.com target=_blank><img src=/icons/email.svg width=20></a></div></div><hr><div class=main><h1>Making a programming language Part 4 - Hello World</h1><time>2012-09-01</time><hr><p><a href=/posts/2012-08-29-creating-a-language-1>Table of
 contents</a>,
 <a href=https://github.com/edofic/scrat-lang>Whole project on github</a></p><p>What good is a language if you cannot do a <a href=http://en.wikipedia.org/wiki/Hello_world_program title="Hello world program">Hello World
 program</a>.
 Every tutorial on every language I ever read has a Hello World in it
 somewhere, even if it&rsquo;s a convoluted and sarcastic one.</p><p>So what do I need?</p><ul><li>a way to print stuff to console </li><li>strings</li></ul><p>In that order. Since this is more of a math lang for now my first hello
 world can just print 1 - arguably the simplest number.</p><h3 id=println>Println</h3><p>This one is super easy. Just wrap scala&rsquo;s println. Here&rsquo;s the whole
-code</p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-scala data-lang=scala><span style=color:#66d9ef>lazy</span> <span style=color:#66d9ef>val</span> sprint<span style=color:#66d9ef>:</span> <span style=color:#66d9ef>FunctionVarArg</span> <span style=color:#f92672>=</span> <span style=color:#f92672>{</span>
+code</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">4
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">5
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">6
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-scala data-lang=scala><span style=color:#66d9ef>lazy</span> <span style=color:#66d9ef>val</span> sprint<span style=color:#66d9ef>:</span> <span style=color:#66d9ef>FunctionVarArg</span> <span style=color:#f92672>=</span> <span style=color:#f92672>{</span>
   <span style=color:#66d9ef>case</span> lst<span style=color:#66d9ef>:</span> <span style=color:#66d9ef>List</span><span style=color:#f92672>[</span><span style=color:#66d9ef>_</span><span style=color:#f92672>]</span> <span style=color:#66d9ef>=&gt;</span>
     lst <span style=color:#f92672>--&gt;</span> mkString <span style=color:#f92672>--&gt;</span> println
   <span style=color:#66d9ef>case</span> other <span style=color:#66d9ef>=&gt;</span>
     <span style=color:#66d9ef>throw</span> <span style=color:#a6e22e>ScratInvalidTypeError</span><span style=color:#f92672>(</span><span style=color:#e6db74>&#34;expected a commaList but got &#34;</span> <span style=color:#f92672>+</span> other<span style=color:#f92672>)</span>
 <span style=color:#f92672>}</span>
-</code></pre></div><p>And then I put this as &ldquo;println&rdquo; into StdLib&rsquo;s map = global namespace.
+</code></pre></td></tr></table></div></div><p>And then I put this as &ldquo;println&rdquo; into StdLib&rsquo;s map = global namespace.
 Since I already have support for functions I just allowed them to do
 side effects(semantics-no code).<br>The <code>--></code> operator might have confused you. It&rsquo;s in an <a href=http://en.wikipedia.org/wiki/Type_conversion title="Type conversion">implicit
 conversion</a>
-I defined:</p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-scala data-lang=scala><span style=color:#66d9ef>implicit</span> <span style=color:#66d9ef>def</span> any2applyFunc<span style=color:#f92672>[</span><span style=color:#66d9ef>A</span><span style=color:#f92672>](</span>a<span style=color:#66d9ef>:</span> <span style=color:#66d9ef>A</span><span style=color:#f92672>)</span> <span style=color:#66d9ef>=</span> <span style=color:#66d9ef>new</span> <span style=color:#a6e22e>AnyRef</span> <span style=color:#f92672>{</span>
+I defined:</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-scala data-lang=scala><span style=color:#66d9ef>implicit</span> <span style=color:#66d9ef>def</span> any2applyFunc<span style=color:#f92672>[</span><span style=color:#66d9ef>A</span><span style=color:#f92672>](</span>a<span style=color:#66d9ef>:</span> <span style=color:#66d9ef>A</span><span style=color:#f92672>)</span> <span style=color:#66d9ef>=</span> <span style=color:#66d9ef>new</span> <span style=color:#a6e22e>AnyRef</span> <span style=color:#f92672>{</span>
   <span style=color:#66d9ef>def</span> <span style=color:#f92672>--&gt;[</span><span style=color:#66d9ef>B</span><span style=color:#f92672>](</span>f<span style=color:#66d9ef>:</span> <span style=color:#66d9ef>A</span> <span style=color:#f92672>=&gt;</span> B<span style=color:#f92672>)</span><span style=color:#66d9ef>:</span> <span style=color:#66d9ef>B</span> <span style=color:#f92672>=</span> f<span style=color:#f92672>(</span>a<span style=color:#f92672>)</span>
 <span style=color:#f92672>}</span>
-</code></pre></div><p>This is the so called <a href="http://www.artima.com/weblogs/viewpost.jsp?thread=179766">pimp my library pattern in
+</code></pre></td></tr></table></div></div><p>This is the so called <a href="http://www.artima.com/weblogs/viewpost.jsp?thread=179766">pimp my library pattern in
 scala</a>. It
 adds the <code>--></code> operator to all objects. This operator takes another
 single argument function, applies it and returns the result.
-So I can have</p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-scala data-lang=scala>lst <span style=color:#f92672>--&gt;</span> mkString <span style=color:#f92672>--&gt;</span> println
-</code></pre></div><p>instead of</p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-scala data-lang=scala>println<span style=color:#f92672>(</span>mkString<span style=color:#f92672>(</span>lst<span style=color:#f92672>))</span>
-</code></pre></div><p>Think of it like
+So I can have</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-scala data-lang=scala>lst <span style=color:#f92672>--&gt;</span> mkString <span style=color:#f92672>--&gt;</span> println
+</code></pre></td></tr></table></div></div><p>instead of</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-scala data-lang=scala>println<span style=color:#f92672>(</span>mkString<span style=color:#f92672>(</span>lst<span style=color:#f92672>))</span>
+</code></pre></td></tr></table></div></div><p>Think of it like
 <a href=http://haskell.org/ title="Haskell (programming language)">Haskell</a>&rsquo;s <code>$</code>
 operator even if it works in a different way. Oh yes, mkString is
 another function that I put into StdLib that takes a List(takes Any but
-does pattern matching) and returns <code>List.mkString</code></p><p>And now I have my Hello Math World</p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-scala data-lang=scala>println<span style=color:#f92672>(</span><span style=color:#ae81ff>1</span><span style=color:#f92672>)</span>
-</code></pre></div><h3 id=strings>Strings</h3><p>First I have to parse strings</p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-scala data-lang=scala><span style=color:#66d9ef>private</span> <span style=color:#66d9ef>def</span> string<span style=color:#66d9ef>:</span> <span style=color:#66d9ef>Parser</span><span style=color:#f92672>[</span><span style=color:#66d9ef>SString</span><span style=color:#f92672>]</span> <span style=color:#66d9ef>=</span> <span style=color:#e6db74>&#34;\&#34;.*?\&#34;&#34;</span><span style=color:#f92672>.</span>r <span style=color:#f92672>^^</span> <span style=color:#f92672>{</span> s <span style=color:#66d9ef>=&gt;</span>
+does pattern matching) and returns <code>List.mkString</code></p><p>And now I have my Hello Math World</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-scala data-lang=scala>println<span style=color:#f92672>(</span><span style=color:#ae81ff>1</span><span style=color:#f92672>)</span>
+</code></pre></td></tr></table></div></div><h3 id=strings>Strings</h3><p>First I have to parse strings</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">4
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-scala data-lang=scala><span style=color:#66d9ef>private</span> <span style=color:#66d9ef>def</span> string<span style=color:#66d9ef>:</span> <span style=color:#66d9ef>Parser</span><span style=color:#f92672>[</span><span style=color:#66d9ef>SString</span><span style=color:#f92672>]</span> <span style=color:#66d9ef>=</span> <span style=color:#e6db74>&#34;\&#34;.*?\&#34;&#34;</span><span style=color:#f92672>.</span>r <span style=color:#f92672>^^</span> <span style=color:#f92672>{</span> s <span style=color:#66d9ef>=&gt;</span>
   <span style=color:#a6e22e>SString</span><span style=color:#f92672>(</span>s<span style=color:#f92672>.</span>substring<span style=color:#f92672>(</span><span style=color:#ae81ff>1</span><span style=color:#f92672>,</span> s<span style=color:#f92672>.</span>length <span style=color:#f92672>-</span> <span style=color:#ae81ff>1</span><span style=color:#f92672>))</span>
 <span style=color:#f92672>}</span>
 <span style=color:#66d9ef>private</span> <span style=color:#66d9ef>def</span> value<span style=color:#66d9ef>:</span> <span style=color:#66d9ef>Parser</span><span style=color:#f92672>[</span><span style=color:#66d9ef>Expression</span><span style=color:#f92672>]</span> <span style=color:#66d9ef>=</span> number <span style=color:#f92672>|</span> string <span style=color:#f92672>|</span> identifier
-</code></pre></div><p>SString is just a case class wrapper for string that extends Expression
+</code></pre></td></tr></table></div></div><p>SString is just a case class wrapper for string that extends Expression
 so I can use it in other expressions.
 When I was first writing this I forgot to add the action combinator to
 strip of the quotes and was greatly mistified by all strings being
 wrapped in &ldquo;&rdquo;. I even spend half an hour debugging my evaluator before
 it dawned on me.
-I believe the evaluation of this is trivial.</p><p>Now I have a REAL hello world:</p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-scala data-lang=scala>    println<span style=color:#f92672>(</span><span style=color:#e6db74>&#34;Hello world&#34;</span><span style=color:#f92672>)</span>
-</code></pre></div><p>Well&mldr;no. Hello world is a program you run. I need an interpreter to
+I believe the evaluation of this is trivial.</p><p>Now I have a REAL hello world:</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-scala data-lang=scala>    println<span style=color:#f92672>(</span><span style=color:#e6db74>&#34;Hello world&#34;</span><span style=color:#f92672>)</span>
+</code></pre></td></tr></table></div></div><p>Well&mldr;no. Hello world is a program you run. I need an interpreter to
 run files.</p><h3 id=interpreterhttpenwikipediaorgwikiinterpreter_28computing29-interpreter-computing><a href=http://en.wikipedia.org/wiki/Interpreter_%28computing%29 title="Interpreter (computing)">Interpreter</a></h3><p>Not quite that different from
 <a href=http://en.wikipedia.org/wiki/Read%E2%80%93eval%E2%80%93print_loop title="Read–eval–print loop">REPL</a>.
 In fact it&rsquo;s just REL: read, evaluate, loop. Printing is now only with
 explicit println calls. And I don&rsquo;t need to catch exceptions and return
-into the loop.  Whole code for the interpreter</p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-scala data-lang=scala><span style=color:#66d9ef>object</span> <span style=color:#a6e22e>Interpreter</span> <span style=color:#f92672>{</span>
+into the loop.  Whole code for the interpreter</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">11
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">12
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">13
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">14
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">15
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">16
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">17
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">18
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">19
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-scala data-lang=scala><span style=color:#66d9ef>object</span> <span style=color:#a6e22e>Interpreter</span> <span style=color:#f92672>{</span>
   <span style=color:#66d9ef>def</span> main<span style=color:#f92672>(</span>args<span style=color:#66d9ef>:</span> <span style=color:#66d9ef>Array</span><span style=color:#f92672>[</span><span style=color:#66d9ef>String</span><span style=color:#f92672>])</span> <span style=color:#66d9ef>=</span> <span style=color:#f92672>{</span>
     <span style=color:#66d9ef>if</span> <span style=color:#f92672>(</span>args<span style=color:#f92672>.</span>length <span style=color:#f92672>!=</span> <span style=color:#ae81ff>1</span><span style=color:#f92672>)</span> <span style=color:#f92672>{</span>
       println<span style=color:#f92672>(</span><span style=color:#e6db74>&#34;parameters: filename to interpret&#34;</span><span style=color:#f92672>)</span>
@@ -76,7 +105,7 @@ into the loop.  Whole code for the interpreter</p><div class=highlight><pre sty
     <span style=color:#f92672>}</span>
   <span style=color:#f92672>}</span>
 <span style=color:#f92672>}</span>
-</code></pre></div><p><a href=http://cdn.memegenerator.net/instances/400x/26006910.jpg><img src=http://cdn.memegenerator.net/instances/400x/26006910.jpg alt></a><br>And now I can put my hello world in a file and run it.<br>But I needed to decide on the extension. I know it&rsquo;s silly but I didn&rsquo;t
+</code></pre></td></tr></table></div></div><p><a href=http://cdn.memegenerator.net/instances/400x/26006910.jpg><img src=http://cdn.memegenerator.net/instances/400x/26006910.jpg alt></a><br>And now I can put my hello world in a file and run it.<br>But I needed to decide on the extension. I know it&rsquo;s silly but I didn&rsquo;t
 want to save the file until I had the extension in mind. And this mean
 naming the language. Being in &ldquo;logic mode&rdquo; I asked my awsome girlfriend
 who&rsquo;s more artsy type of a person and she immediately responded
@@ -85,7 +114,4 @@ who&rsquo;s more artsy type of a person and she immediately responded
 the squirrel from <a href=http://en.wikipedia.org/wiki/Ice_age title="Ice age">Ice
 Age</a>). And them some
 more funny names, but scrat stuck with me. So I named the file
-hello.scrat.</p><p><strong>next: <a href=/posts/2012-09-02-creating-a-language-5>variables and decisions</a></strong></p><hr width=100%><p style=color:#777>Last modified on 2012-09-01</p></div></div><nav class=post-pagination><a class=newer-posts href=/posts/2012-09-02-creating-a-language-5/>Next<br>Making a programming language Part 5 - variables and decisions</a>
-<a class=older-posts href=/posts/2012-08-31-creating-a-language3/>Previous<br>Making a programming language Part 3 - adding features</a></nav><div class=post-comment-wrapper></div></div></div></div></div><div id=single-column-footer>&copy;
-2021
-Andraz Bajt</div></div></body></html>
+hello.scrat.</p><p><strong>next: <a href=/posts/2012-09-02-creating-a-language-5>variables and decisions</a></strong></p><hr><p>Last modified on 2012-09-01</p><a href=/posts/2012-08-31-creating-a-language3/>Previous Making a programming language Part 3 - adding features</a><br><a href=/posts/2012-09-02-creating-a-language-5/>Next Making a programming language Part 5 - variables and decisions</a></div></body></html>

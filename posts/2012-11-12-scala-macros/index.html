@@ -1,16 +1,9 @@
-<!doctype html><html><head><title>Cool Monday - Scala Macros</title><meta charset=utf-8><meta name=X-UA-Compatible content="IE=edge"><meta name=google-site-verification content><meta content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=0" name=viewport><meta content="telephone=no" name=format-detection><meta name=renderer content="webkit"><meta name=theme-color content="#ffffff"><link type=text/css rel=stylesheet href=/vendor/css/bootstrap.min.css><link rel=stylesheet href=/scss/journal.min.01c37d732f853bf90329007dc6f0a25c67722dd47b7168f8907facb93414bd91.css media=screen><link rel=stylesheet href="https://fonts.googleapis.com/css?family=Lora|Montserrat|Fira+Mono|Noto+Serif+SC|Material+Icons"></head><body><div id=app><div ref=sideContainer class=side-container><div class="a-block nav-head false"><div class=nav-title>Andraž Bajt's blog</div><div class=nav-subtitle></div><a href=https://github.com/edofic><img src=/icons/github.svg width=20></a>
-<a href=https://www.linkedin.com/in/edofic><img src=/icons/linkedin.svg width=20></a>
-<a href=https://twitter.com/edofic><img src=/icons/twitter.svg width=20></a>
-<a href=/index.xml><img src=/icons/rss.svg width=20></a>
-<a href=mailto:edofic@edofic.com><img src=/icons/email.svg width=20></a></div><div class=nav-link-list><a class="a-block nav-link-item" href=/about>About Me</a>
-<a class="a-block nav-link-item" href=/>Archive</a></div><div class=nav-footer>&copy;
-2021
-Andraz Bajt</div></div><div ref=extraContainer class=extra-container><div class=pagination><a id=globalBackToTop class="pagination-action animated-visibility" href=#top :class="{ invisible: scrollY == 0 }"><i class="material-icons pagination-action-icon">keyboard_arrow_up</i></a></div></div><div class=single-column-drawer-container ref=drawer><div class=drawer-content><div class=drawer-menu><a class="a-block drawer-menu-item" href=/about>About Me</a>
-<a class="a-block drawer-menu-item" href=/>Archive</a></div></div></div><div class=single-column-header-container ref=pageHead><a href=/><div class=single-column-header-title>Andraž Bajt's blog</div></a><a href=https://github.com/edofic><img src=/icons/github.svg width=20></a>
-<a href=https://www.linkedin.com/in/edofic><img src=/icons/linkedin.svg width=20></a>
-<a href=https://twitter.com/edofic><img src=/icons/twitter.svg width=20></a>
-<a href=/index.xml><img src=/icons/rss.svg width=20></a>
-<a href=mailto:edofic@edofic.com><img src=/icons/email.svg width=20></a></div><div id=content><div ref=streamContainer class=stream-container><div class="post-list-container post-list-container-shadow"><div class=post><div class=post-head-wrapper-text-only style="background-image:url('/')"><div class=post-title>Cool Monday - Scala Macros<div class=post-meta><time itemprop=datePublished>2012-11-12</time></div></div></div><div class=post-body-wrapper><div class=post-body><p><a href=http://commons.wikipedia.org/wiki/File%3AGarden_flower_.jpg><img src=http://upload.wikimedia.org/wikipedia/commons/thumb/b/b6/Garden_flower_.jpg/300px-Garden_flower_.jpg alt="Garden flower"></a></p><p>For me the highlight of this week was discovering Bootstrap. I heard of
+<!doctype html><html><head><title>Cool Monday - Scala Macros</title><meta charset=utf-8><meta name=X-UA-Compatible content="IE=edge"><meta name=google-site-verification content><meta content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=0" name=viewport><link rel=stylesheet href=/scss/main.min.31cac6fb291c18037123c54900f92aaa75653b03bf9d6b70a2fd0565930494e3.css media=screen></head><body><div class=nav><a href=/><h2 class=title>Andraž Bajt's blog</h2></a><div class=nav-sub><a class=nav-item href=/about>About Me</a>
+<a class=nav-item href=/>Archive</a></div><div class=nav-sub-right><a class=nav-icon href=https://github.com/edofic target=_blank><img src=/icons/github.svg width=20></a>
+<a class=nav-icon href=https://www.linkedin.com/in/edofic target=_blank><img src=/icons/linkedin.svg width=20></a>
+<a class=nav-icon href=https://twitter.com/edofic target=_blank><img src=/icons/twitter.svg width=20></a>
+<a class=nav-icon href=/index.xml target=_blank><img src=/icons/rss.svg width=20></a>
+<a class=nav-icon href=mailto:blog@edofic.com target=_blank><img src=/icons/email.svg width=20></a></div></div><hr><div class=main><h1>Cool Monday - Scala Macros</h1><time>2012-11-12</time><hr><p><a href=http://commons.wikipedia.org/wiki/File%3AGarden_flower_.jpg><img src=http://upload.wikimedia.org/wikipedia/commons/thumb/b/b6/Garden_flower_.jpg/300px-Garden_flower_.jpg alt="Garden flower"></a></p><p>For me the highlight of this week was discovering Bootstrap. I heard of
 it before but never looked into it. Probably because I wasn&rsquo;t doing web
 stuff. The thing is bloody awesome. Back on topic.</p><p><a href=http://www.scala-lang.org/ title="Scala (programming language)">Scala</a> 2.10
 RC2 was released this Friday. Considering 2.9 had 3 RC releases, 2.10
@@ -64,7 +57,20 @@ I hope now that 2.10 is in RC things stabilize, because in the milestone
 releases api was changing constantly. <a href=http://www.scala-lang.org/archives/downloads/distrib/files/nightly/docs/library/index.html>Nightly API
 scaladoc</a>&mldr;.
 Proper documentation is apparently <a href=http://docs.scala-lang.org/sips/pending/self-cleaning-macros.html>coming
-soon</a>,</p><h3 id=le-code>Le Code</h3><p>A use case for macros, loop unrolling.</p><p>Below is a trivial sample of repetitive code.</p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-scala data-lang=scala><span style=color:#66d9ef>class</span> <span style=color:#a6e22e>Manual</span><span style=color:#f92672>{</span>
+soon</a>,</p><h3 id=le-code>Le Code</h3><p>A use case for macros, loop unrolling.</p><p>Below is a trivial sample of repetitive code.</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">11
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">12
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">13
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-scala data-lang=scala><span style=color:#66d9ef>class</span> <span style=color:#a6e22e>Manual</span><span style=color:#f92672>{</span>
   <span style=color:#66d9ef>def</span> show<span style=color:#f92672>(</span>n<span style=color:#66d9ef>:</span> <span style=color:#66d9ef>Int</span><span style=color:#f92672>){</span>
     println<span style=color:#f92672>(</span><span style=color:#e6db74>&#34;number &#34;</span><span style=color:#f92672>+</span>n<span style=color:#f92672>)</span>
   <span style=color:#f92672>}</span>
@@ -77,20 +83,40 @@ soon</a>,</p><h3 id=le-code>Le Code</h3><p>A use case for macros, loop unrolling
     show<span style=color:#f92672>(</span><span style=color:#ae81ff>5</span><span style=color:#f92672>)</span>
   <span style=color:#f92672>}</span>
 <span style=color:#f92672>}</span>
-</code></pre></div><p>We can deal with repetition writing a loop. (<a href=http://en.wikipedia.org/wiki/Higher-order_function title="Higher-order function">Higher order
+</code></pre></td></tr></table></div></div><p>We can deal with repetition writing a loop. (<a href=http://en.wikipedia.org/wiki/Higher-order_function title="Higher-order function">Higher order
 function</a>
-really)</p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-scala data-lang=scala><span style=color:#66d9ef>for</span><span style=color:#f92672>(</span> i <span style=color:#66d9ef>&lt;-</span> <span style=color:#ae81ff>1</span> to <span style=color:#ae81ff>5</span> <span style=color:#f92672>)</span> show<span style=color:#f92672>(</span>i<span style=color:#f92672>)</span>
-</code></pre></div><p>But this doesnt generate the same AST(and bytecode)!
+really)</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-scala data-lang=scala><span style=color:#66d9ef>for</span><span style=color:#f92672>(</span> i <span style=color:#66d9ef>&lt;-</span> <span style=color:#ae81ff>1</span> to <span style=color:#ae81ff>5</span> <span style=color:#f92672>)</span> show<span style=color:#f92672>(</span>i<span style=color:#f92672>)</span>
+</code></pre></td></tr></table></div></div><p>But this doesnt generate the same AST(and bytecode)!
 Protip: use</p><pre><code>scalac -Xprint:parser -Yshow-trees Manual.scala
 </code></pre><p>to see AST after parsing.
 Sometimes(rarely!) you want to unroll the loop to produce same <a href=http://en.wikipedia.org/wiki/Bytecode title=Bytecode>byte
 code</a> as typing all
-the iterations by hand.</p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-scala data-lang=scala><span style=color:#a6e22e>Macros</span><span style=color:#f92672>.</span>unroll<span style=color:#f92672>(</span><span style=color:#ae81ff>1</span><span style=color:#f92672>,</span><span style=color:#ae81ff>5</span><span style=color:#f92672>,</span><span style=color:#ae81ff>1</span><span style=color:#f92672>)(</span>show<span style=color:#f92672>)</span>
-</code></pre></div><p>With a proper unroll macro defined. I spent an hour to come up with this
+the iterations by hand.</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-scala data-lang=scala><span style=color:#a6e22e>Macros</span><span style=color:#f92672>.</span>unroll<span style=color:#f92672>(</span><span style=color:#ae81ff>1</span><span style=color:#f92672>,</span><span style=color:#ae81ff>5</span><span style=color:#f92672>,</span><span style=color:#ae81ff>1</span><span style=color:#f92672>)(</span>show<span style=color:#f92672>)</span>
+</code></pre></td></tr></table></div></div><p>With a proper unroll macro defined. I spent an hour to come up with this
 implementation&mldr;and then scalac started crashing on me&mldr; Is there
 something terrible in my code?
 I gave up and went on to do useful stuff&mldr;But macros hear me! I&rsquo;ll be
-back.</p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-scala data-lang=scala><span style=color:#66d9ef>import</span> reflect.macros.Context
+back.</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">11
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">12
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">13
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">14
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">15
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">16
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">17
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">18
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-scala data-lang=scala><span style=color:#66d9ef>import</span> reflect.macros.Context
 <span style=color:#66d9ef>import</span> scala.language.experimental.macros
 
 <span style=color:#66d9ef>object</span> <span style=color:#a6e22e>Macros</span> <span style=color:#f92672>{</span>
@@ -108,7 +134,4 @@ back.</p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;
     c<span style=color:#f92672>.</span><span style=color:#a6e22e>Expr</span><span style=color:#f92672>(</span><span style=color:#a6e22e>Block</span><span style=color:#f92672>(</span>invocations<span style=color:#66d9ef>:_</span><span style=color:#66d9ef>*</span><span style=color:#f92672>))</span>
   <span style=color:#f92672>}</span>
 <span style=color:#f92672>}</span>
-</code></pre></div><hr width=100%><p style=color:#777>Last modified on 2012-11-12</p></div></div><nav class=post-pagination><a class=newer-posts href=/posts/2012-11-17-y-u-no-linux/>Next<br>Why Linux will never win the desktop</a>
-<a class=older-posts href=/posts/2012-11-05-hindley-milner/>Previous<br>Cool Monday - Hindley-Milner on a dynamic language</a></nav><div class=post-comment-wrapper></div></div></div></div></div><div id=single-column-footer>&copy;
-2021
-Andraz Bajt</div></div></body></html>
+</code></pre></td></tr></table></div></div><hr><p>Last modified on 2012-11-12</p><a href=/posts/2012-11-05-hindley-milner/>Previous Cool Monday - Hindley-Milner on a dynamic language</a><br><a href=/posts/2012-11-17-y-u-no-linux/>Next Why Linux will never win the desktop</a></div></body></html>

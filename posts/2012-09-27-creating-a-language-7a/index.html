@@ -1,16 +1,9 @@
-<!doctype html><html><head><title>Making a programming language Part 7a - objects</title><meta charset=utf-8><meta name=X-UA-Compatible content="IE=edge"><meta name=google-site-verification content><meta content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=0" name=viewport><meta content="telephone=no" name=format-detection><meta name=renderer content="webkit"><meta name=theme-color content="#ffffff"><link type=text/css rel=stylesheet href=/vendor/css/bootstrap.min.css><link rel=stylesheet href=/scss/journal.min.01c37d732f853bf90329007dc6f0a25c67722dd47b7168f8907facb93414bd91.css media=screen><link rel=stylesheet href="https://fonts.googleapis.com/css?family=Lora|Montserrat|Fira+Mono|Noto+Serif+SC|Material+Icons"></head><body><div id=app><div ref=sideContainer class=side-container><div class="a-block nav-head false"><div class=nav-title>Andraž Bajt's blog</div><div class=nav-subtitle></div><a href=https://github.com/edofic><img src=/icons/github.svg width=20></a>
-<a href=https://www.linkedin.com/in/edofic><img src=/icons/linkedin.svg width=20></a>
-<a href=https://twitter.com/edofic><img src=/icons/twitter.svg width=20></a>
-<a href=/index.xml><img src=/icons/rss.svg width=20></a>
-<a href=mailto:edofic@edofic.com><img src=/icons/email.svg width=20></a></div><div class=nav-link-list><a class="a-block nav-link-item" href=/about>About Me</a>
-<a class="a-block nav-link-item" href=/>Archive</a></div><div class=nav-footer>&copy;
-2021
-Andraz Bajt</div></div><div ref=extraContainer class=extra-container><div class=pagination><a id=globalBackToTop class="pagination-action animated-visibility" href=#top :class="{ invisible: scrollY == 0 }"><i class="material-icons pagination-action-icon">keyboard_arrow_up</i></a></div></div><div class=single-column-drawer-container ref=drawer><div class=drawer-content><div class=drawer-menu><a class="a-block drawer-menu-item" href=/about>About Me</a>
-<a class="a-block drawer-menu-item" href=/>Archive</a></div></div></div><div class=single-column-header-container ref=pageHead><a href=/><div class=single-column-header-title>Andraž Bajt's blog</div></a><a href=https://github.com/edofic><img src=/icons/github.svg width=20></a>
-<a href=https://www.linkedin.com/in/edofic><img src=/icons/linkedin.svg width=20></a>
-<a href=https://twitter.com/edofic><img src=/icons/twitter.svg width=20></a>
-<a href=/index.xml><img src=/icons/rss.svg width=20></a>
-<a href=mailto:edofic@edofic.com><img src=/icons/email.svg width=20></a></div><div id=content><div ref=streamContainer class=stream-container><div class="post-list-container post-list-container-shadow"><div class=post><div class=post-head-wrapper-text-only style="background-image:url('/')"><div class=post-title>Making a programming language Part 7a - objects<div class=post-meta><time itemprop=datePublished>2012-09-27</time></div></div></div><div class=post-body-wrapper><div class=post-body><p><a href=/posts/2012-08-29-creating-a-language-1>Table of contents</a>, 
+<!doctype html><html><head><title>Making a programming language Part 7a - objects</title><meta charset=utf-8><meta name=X-UA-Compatible content="IE=edge"><meta name=google-site-verification content><meta content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=0" name=viewport><link rel=stylesheet href=/scss/main.min.31cac6fb291c18037123c54900f92aaa75653b03bf9d6b70a2fd0565930494e3.css media=screen></head><body><div class=nav><a href=/><h2 class=title>Andraž Bajt's blog</h2></a><div class=nav-sub><a class=nav-item href=/about>About Me</a>
+<a class=nav-item href=/>Archive</a></div><div class=nav-sub-right><a class=nav-icon href=https://github.com/edofic target=_blank><img src=/icons/github.svg width=20></a>
+<a class=nav-icon href=https://www.linkedin.com/in/edofic target=_blank><img src=/icons/linkedin.svg width=20></a>
+<a class=nav-icon href=https://twitter.com/edofic target=_blank><img src=/icons/twitter.svg width=20></a>
+<a class=nav-icon href=/index.xml target=_blank><img src=/icons/rss.svg width=20></a>
+<a class=nav-icon href=mailto:blog@edofic.com target=_blank><img src=/icons/email.svg width=20></a></div></div><hr><div class=main><h1>Making a programming language Part 7a - objects</h1><time>2012-09-27</time><hr><p><a href=/posts/2012-08-29-creating-a-language-1>Table of contents</a>, 
 <a href=https://github.com/edofic/scrat-lang>Whole project on github</a></p><p>My goal in this post is for this to compile</p><pre><code>func create(n){this}
 </code></pre><p>and a call to it to return a reference to an
 <a href=http://en.wikipedia.org/wiki/Object_%28computer_science%29 title="Object (computer science)">object</a>
@@ -36,9 +29,11 @@ right now. I&rsquo;m creating objects. I could just as well pass the reference
 to that object. I even have the reference. It&rsquo;s current scope - &ldquo;this&rdquo;
 in scala code. So I just need a <a href=http://en.wikipedia.org/wiki/Language_construct title="Language construct">language
 construct</a>
-to access that. How about &ldquo;this&rdquo;.</p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-scala data-lang=scala><span style=color:#75715e>//in SScope body
+to access that. How about &ldquo;this&rdquo;.</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-scala data-lang=scala><span style=color:#75715e>//in SScope body
 </span><span style=color:#75715e></span>map<span style=color:#f92672>.</span>put<span style=color:#f92672>(</span><span style=color:#e6db74>&#34;this&#34;</span><span style=color:#f92672>,</span> <span style=color:#66d9ef>this</span><span style=color:#f92672>)</span>
-</code></pre></div><p>Not even a language construct, just a magic variable. You can even
+</code></pre></td></tr></table></div></div><p>Not even a language construct, just a magic variable. You can even
 shadow it. Anticlimactic? I hope so. The whole point of object is that
 it&rsquo;s just another view on function. I could end the post here but I want
 to show why this is awesome(and therefore why I&rsquo;m proud of it)</p><h3 id=privates>Privates</h3><p>You don&rsquo;t even need access modifiers, you can use shadowing and nesting</p><pre><code>func private(n) {
@@ -61,7 +56,4 @@ o.that = func(){
 o.get()
 </code></pre><p>Returns 3. Though knowledge of implementation is needed to execute such
 attack. <strong>update:</strong> I kinda sorta forgot to include how I made that
-dot-access thingy-o.get() to work. Continuation below</p><p><strong>next: <a href=/posts/2012-10-08-creating-a-language-7b>using objects</a></strong></p><hr width=100%><p style=color:#777>Last modified on 2012-09-27</p></div></div><nav class=post-pagination><a class=newer-posts href=/posts/2012-09-29-creating-a-language-8/>Next<br>Making a programming language Part 8 - going faster</a>
-<a class=older-posts href=/posts/2012-09-25-creating-a-language-6/>Previous<br>Making a programming language Part 6 - functions</a></nav><div class=post-comment-wrapper></div></div></div></div></div><div id=single-column-footer>&copy;
-2021
-Andraz Bajt</div></div></body></html>
+dot-access thingy-o.get() to work. Continuation below</p><p><strong>next: <a href=/posts/2012-10-08-creating-a-language-7b>using objects</a></strong></p><hr><p>Last modified on 2012-09-27</p><a href=/posts/2012-09-25-creating-a-language-6/>Previous Making a programming language Part 6 - functions</a><br><a href=/posts/2012-09-29-creating-a-language-8/>Next Making a programming language Part 8 - going faster</a></div></body></html>

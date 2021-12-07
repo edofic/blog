@@ -1,16 +1,9 @@
-<!doctype html><html><head><title>Cool Monday - Functional compilers and atoms</title><meta charset=utf-8><meta name=X-UA-Compatible content="IE=edge"><meta name=google-site-verification content><meta content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=0" name=viewport><meta content="telephone=no" name=format-detection><meta name=renderer content="webkit"><meta name=theme-color content="#ffffff"><link type=text/css rel=stylesheet href=/vendor/css/bootstrap.min.css><link rel=stylesheet href=/scss/journal.min.01c37d732f853bf90329007dc6f0a25c67722dd47b7168f8907facb93414bd91.css media=screen><link rel=stylesheet href="https://fonts.googleapis.com/css?family=Lora|Montserrat|Fira+Mono|Noto+Serif+SC|Material+Icons"></head><body><div id=app><div ref=sideContainer class=side-container><div class="a-block nav-head false"><div class=nav-title>Andraž Bajt's blog</div><div class=nav-subtitle></div><a href=https://github.com/edofic><img src=/icons/github.svg width=20></a>
-<a href=https://www.linkedin.com/in/edofic><img src=/icons/linkedin.svg width=20></a>
-<a href=https://twitter.com/edofic><img src=/icons/twitter.svg width=20></a>
-<a href=/index.xml><img src=/icons/rss.svg width=20></a>
-<a href=mailto:edofic@edofic.com><img src=/icons/email.svg width=20></a></div><div class=nav-link-list><a class="a-block nav-link-item" href=/about>About Me</a>
-<a class="a-block nav-link-item" href=/>Archive</a></div><div class=nav-footer>&copy;
-2021
-Andraz Bajt</div></div><div ref=extraContainer class=extra-container><div class=pagination><a id=globalBackToTop class="pagination-action animated-visibility" href=#top :class="{ invisible: scrollY == 0 }"><i class="material-icons pagination-action-icon">keyboard_arrow_up</i></a></div></div><div class=single-column-drawer-container ref=drawer><div class=drawer-content><div class=drawer-menu><a class="a-block drawer-menu-item" href=/about>About Me</a>
-<a class="a-block drawer-menu-item" href=/>Archive</a></div></div></div><div class=single-column-header-container ref=pageHead><a href=/><div class=single-column-header-title>Andraž Bajt's blog</div></a><a href=https://github.com/edofic><img src=/icons/github.svg width=20></a>
-<a href=https://www.linkedin.com/in/edofic><img src=/icons/linkedin.svg width=20></a>
-<a href=https://twitter.com/edofic><img src=/icons/twitter.svg width=20></a>
-<a href=/index.xml><img src=/icons/rss.svg width=20></a>
-<a href=mailto:edofic@edofic.com><img src=/icons/email.svg width=20></a></div><div id=content><div ref=streamContainer class=stream-container><div class="post-list-container post-list-container-shadow"><div class=post><div class=post-head-wrapper-text-only style="background-image:url('/')"><div class=post-title>Cool Monday - Functional compilers and atoms<div class=post-meta><time itemprop=datePublished>2012-11-26</time></div></div></div><div class=post-body-wrapper><div class=post-body><p>I&rsquo;ve seen
+<!doctype html><html><head><title>Cool Monday - Functional compilers and atoms</title><meta charset=utf-8><meta name=X-UA-Compatible content="IE=edge"><meta name=google-site-verification content><meta content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=0" name=viewport><link rel=stylesheet href=/scss/main.min.31cac6fb291c18037123c54900f92aaa75653b03bf9d6b70a2fd0565930494e3.css media=screen></head><body><div class=nav><a href=/><h2 class=title>Andraž Bajt's blog</h2></a><div class=nav-sub><a class=nav-item href=/about>About Me</a>
+<a class=nav-item href=/>Archive</a></div><div class=nav-sub-right><a class=nav-icon href=https://github.com/edofic target=_blank><img src=/icons/github.svg width=20></a>
+<a class=nav-icon href=https://www.linkedin.com/in/edofic target=_blank><img src=/icons/linkedin.svg width=20></a>
+<a class=nav-icon href=https://twitter.com/edofic target=_blank><img src=/icons/twitter.svg width=20></a>
+<a class=nav-icon href=/index.xml target=_blank><img src=/icons/rss.svg width=20></a>
+<a class=nav-icon href=mailto:blog@edofic.com target=_blank><img src=/icons/email.svg width=20></a></div></div><hr><div class=main><h1>Cool Monday - Functional compilers and atoms</h1><time>2012-11-26</time><hr><p>I&rsquo;ve seen
 <a href=http://skillsmatter.com/podcast/scala/functional-compilers-from-cfg-to-exe/ac-5896>this great
 talk</a>
 by Daniel Spiewak on Functional
@@ -41,8 +34,9 @@ huge problem. AST is not a tree. It&rsquo;s huge misnomer. AST is just a
 <a href=http://en.wikipedia.org/wiki/Spanning_tree title="Spanning tree">spanning
 tree</a> in the
 program graph. See, when you add stuff like let expressions, or
-types(what I&rsquo;m doing currently) you get problems</p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-haskell data-lang=haskell><span style=color:#66d9ef>let</span> a <span style=color:#f92672>=</span> <span style=color:#ae81ff>1</span>in f a
-</code></pre></div><p>There are edges between the siblings. Or going back up. Or skipping
+types(what I&rsquo;m doing currently) you get problems</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-haskell data-lang=haskell><span style=color:#66d9ef>let</span> a <span style=color:#f92672>=</span> <span style=color:#ae81ff>1</span>in f a
+</code></pre></td></tr></table></div></div><p>There are edges between the siblings. Or going back up. Or skipping
 levels. Definitely not trees. These edges may be implicit but you still
 have to store the information. Traditional solution to this is to
 compute look-up tables(maps) and carry them along with the tree. So the
@@ -61,7 +55,35 @@ Or deal with a situation when you need to init them when you have data
 not when you need to read them. And this is the problem in a compiler.
 You compute data coming from out of the scope and you need to store it.
 And some time later you need to read it. And you use atoms.  First some
-code, then explanation.</p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-scala data-lang=scala><span style=color:#66d9ef>class</span> <span style=color:#a6e22e>Atom</span><span style=color:#f92672>[</span><span style=color:#66d9ef>A</span><span style=color:#f92672>]</span> <span style=color:#f92672>{</span>
+code, then explanation.</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">11
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">12
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">13
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">14
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">15
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">16
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">17
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">18
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">19
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">20
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">21
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">22
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">23
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">24
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">25
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">26
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">27
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">28
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-scala data-lang=scala><span style=color:#66d9ef>class</span> <span style=color:#a6e22e>Atom</span><span style=color:#f92672>[</span><span style=color:#66d9ef>A</span><span style=color:#f92672>]</span> <span style=color:#f92672>{</span>
   <span style=color:#66d9ef>private</span> <span style=color:#66d9ef>var</span> value<span style=color:#66d9ef>:</span> <span style=color:#66d9ef>A</span> <span style=color:#f92672>=</span> <span style=color:#66d9ef>_</span>
   <span style=color:#66d9ef>private</span> <span style=color:#66d9ef>var</span> isSet <span style=color:#66d9ef>=</span> <span style=color:#66d9ef>false</span>
   <span style=color:#66d9ef>private</span> <span style=color:#66d9ef>var</span> isForced <span style=color:#66d9ef>=</span> <span style=color:#66d9ef>false</span>
@@ -89,7 +111,7 @@ code, then explanation.</p><div class=highlight><pre style=color:#f8f8f2;backgro
     <span style=color:#f92672>}</span>
   <span style=color:#f92672>}</span>
 <span style=color:#f92672>}</span>
-</code></pre></div><p>Here is the workflow&mldr; you create an atom, you can write(update) to
+</code></pre></td></tr></table></div></div><p>Here is the workflow&mldr; you create an atom, you can write(update) to
 it-in fact writes are indempotent and you can do many successive writes
 as long as you don&rsquo;t read the value. Once written to isSet flag is set
 and atom can be read(apply method) setting the isForced flag. If the
@@ -99,7 +121,4 @@ it&rsquo;s closure or even perform some side-effects. And you can safely
 assume it will only execute once. And if everything fails and atom isn&rsquo;t
 set you get an error. Yay no bothering with nulls any more.
 You can quickly see how atoms are great containers for storing computed
-information in the AST for passing it on to the later stages.</p><hr width=100%><p style=color:#777>Last modified on 2012-11-26</p></div></div><nav class=post-pagination><a class=newer-posts href=/posts/2012-12-04-hw-functional/>Next<br>Homework - functional style (outer sorting)</a>
-<a class=older-posts href=/posts/2012-11-23-nomadic-programming/>Previous<br>Nomadic programming</a></nav><div class=post-comment-wrapper></div></div></div></div></div><div id=single-column-footer>&copy;
-2021
-Andraz Bajt</div></div></body></html>
+information in the AST for passing it on to the later stages.</p><hr><p>Last modified on 2012-11-26</p><a href=/posts/2012-11-23-nomadic-programming/>Previous Nomadic programming</a><br><a href=/posts/2012-12-04-hw-functional/>Next Homework - functional style (outer sorting)</a></div></body></html>

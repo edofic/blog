@@ -1,19 +1,10 @@
-<!doctype html><html><head><title>Trying out Rancher</title><meta charset=utf-8><meta name=X-UA-Compatible content="IE=edge"><meta name=google-site-verification content><meta content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=0" name=viewport><meta content="telephone=no" name=format-detection><meta name=renderer content="webkit"><meta name=theme-color content="#ffffff"><link type=text/css rel=stylesheet href=/vendor/css/bootstrap.min.css><link rel=stylesheet href=/scss/journal.min.01c37d732f853bf90329007dc6f0a25c67722dd47b7168f8907facb93414bd91.css media=screen><link rel=stylesheet href="https://fonts.googleapis.com/css?family=Lora|Montserrat|Fira+Mono|Noto+Serif+SC|Material+Icons"></head><body><div id=app><div ref=sideContainer class=side-container><div class="a-block nav-head false"><div class=nav-title>Andraž Bajt's blog</div><div class=nav-subtitle></div><a href=https://github.com/edofic><img src=/icons/github.svg width=20></a>
-<a href=https://www.linkedin.com/in/edofic><img src=/icons/linkedin.svg width=20></a>
-<a href=https://twitter.com/edofic><img src=/icons/twitter.svg width=20></a>
-<a href=/index.xml><img src=/icons/rss.svg width=20></a>
-<a href=mailto:edofic@edofic.com><img src=/icons/email.svg width=20></a></div><div class=nav-link-list><a class="a-block nav-link-item" href=/about>About Me</a>
-<a class="a-block nav-link-item" href=/>Archive</a></div><div class=nav-footer>&copy;
-2021
-Andraz Bajt</div></div><div ref=extraContainer class=extra-container><div class=pagination><a id=globalBackToTop class="pagination-action animated-visibility" href=#top :class="{ invisible: scrollY == 0 }"><i class="material-icons pagination-action-icon">keyboard_arrow_up</i></a></div></div><div class=single-column-drawer-container ref=drawer><div class=drawer-content><div class=drawer-menu><a class="a-block drawer-menu-item" href=/about>About Me</a>
-<a class="a-block drawer-menu-item" href=/>Archive</a></div></div></div><div class=single-column-header-container ref=pageHead><a href=/><div class=single-column-header-title>Andraž Bajt's blog</div></a><a href=https://github.com/edofic><img src=/icons/github.svg width=20></a>
-<a href=https://www.linkedin.com/in/edofic><img src=/icons/linkedin.svg width=20></a>
-<a href=https://twitter.com/edofic><img src=/icons/twitter.svg width=20></a>
-<a href=/index.xml><img src=/icons/rss.svg width=20></a>
-<a href=mailto:edofic@edofic.com><img src=/icons/email.svg width=20></a></div><div id=content><div ref=streamContainer class=stream-container><div class="post-list-container post-list-container-shadow"><div class=post><div class=post-head-wrapper-text-only style="background-image:url('/')"><div class=post-title>Trying out Rancher<div class=post-meta><time itemprop=datePublished>2021-04-14</time>
-<i class=material-icons>label</i>
-<a href=/tags/trying-out>trying-out</a>
-&nbsp;</div></div></div><div class=post-body-wrapper><div class=post-body><p>This time it&rsquo;s a bit different: this post has very little code and a lot of
+<!doctype html><html><head><title>Trying out Rancher</title><meta charset=utf-8><meta name=X-UA-Compatible content="IE=edge"><meta name=google-site-verification content><meta content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=0" name=viewport><link rel=stylesheet href=/scss/main.min.31cac6fb291c18037123c54900f92aaa75653b03bf9d6b70a2fd0565930494e3.css media=screen></head><body><div class=nav><a href=/><h2 class=title>Andraž Bajt's blog</h2></a><div class=nav-sub><a class=nav-item href=/about>About Me</a>
+<a class=nav-item href=/>Archive</a></div><div class=nav-sub-right><a class=nav-icon href=https://github.com/edofic target=_blank><img src=/icons/github.svg width=20></a>
+<a class=nav-icon href=https://www.linkedin.com/in/edofic target=_blank><img src=/icons/linkedin.svg width=20></a>
+<a class=nav-icon href=https://twitter.com/edofic target=_blank><img src=/icons/twitter.svg width=20></a>
+<a class=nav-icon href=/index.xml target=_blank><img src=/icons/rss.svg width=20></a>
+<a class=nav-icon href=mailto:blog@edofic.com target=_blank><img src=/icons/email.svg width=20></a></div></div><hr><div class=main><h1>Trying out Rancher</h1><time>2021-04-14</time>
+<a href=/tags/trying-out>trying-out</a><hr><p>This time it&rsquo;s a bit different: this post has very little code and a lot of
 screenshots as I was primarily working with a GUI.</p><p>Reading about (and working with) <a href=https://k3s.io/>K3s</a> is almost impossible to
 not hear about <a href=https://rancher.com/>Rancher</a> - the company behind K3s. But
 what had me slightly confused is their primary product: <a href=https://rancher.com/products/rancher/>Rancher (the
@@ -25,14 +16,20 @@ Ocean</a> and selected Ubuntu 20.04 (which is on the
 list of supported distros and is not ancient), 8gb of ram and 4 vCPUs -
 completely guessing here - no idea what I actually need I picked a &ldquo;smallish VM
 that should still handle any reasonable application&rdquo;.</p><p>Second step is getting <a href=https://www.docker.com/>docker</a> on my machine, this is
-where picking Ubuntu comes in handy:</p><pre><code>snap install docker
-</code></pre><p>Just a few minutes later I can actually proceed onto actually running rancher
-via docker:</p><pre><code>docker run --privileged -d --restart=unless-stopped -p 80:80 -p 443:443 rancher/rancher
-</code></pre><p>And just like that we&rsquo;re up and listening on port 80!</p><pre><code>root@ubuntu-s-4vcpu-8gb-amd-fra1-01:~# docker ps
+where picking Ubuntu comes in handy:</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-fallback data-lang=fallback>snap install docker
+</code></pre></td></tr></table></div></div><p>Just a few minutes later I can actually proceed onto actually running rancher
+via docker:</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-fallback data-lang=fallback>docker run --privileged -d --restart=unless-stopped -p 80:80 -p 443:443 rancher/rancher
+</code></pre></td></tr></table></div></div><p>And just like that we&rsquo;re up and listening on port 80!</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">4
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-fallback data-lang=fallback>root@ubuntu-s-4vcpu-8gb-amd-fra1-01:~# docker ps
 CONTAINER ID        IMAGE               COMMAND             CREATED             STATUS              PORTS                                      NAMES
-89ffd60c0892        rancher/rancher     &quot;entrypoint.sh&quot;     16 seconds ago      Up 15 seconds       0.0.0.0:80-&gt;80/tcp, 0.0.0.0:443-&gt;443/tcp   sweet_cannon
+89ffd60c0892        rancher/rancher     &#34;entrypoint.sh&#34;     16 seconds ago      Up 15 seconds       0.0.0.0:80-&gt;80/tcp, 0.0.0.0:443-&gt;443/tcp   sweet_cannon
 r
-</code></pre><h1 id=first-impressions>First impressions</h1><p>I navigate to port 80 of my new VM from my laptop and I&rsquo;m greeted with a first
+</code></pre></td></tr></table></div></div><h1 id=first-impressions>First impressions</h1><p>I navigate to port 80 of my new VM from my laptop and I&rsquo;m greeted with a first
 time setup. Nice :)</p><p><img src=/images/rancher/02.png alt="initial setup"></p><p>Let&rsquo;s go with multiple clusters, to see what this is all about.</p><p><img src=/images/rancher/03.png alt="global dashboard"></p><p>Huh. Apparently we got a local K3s cluster as well. I&rsquo;m guessing &ldquo;local&rdquo; means
 it&rsquo;s running on the same VM (there is no real other option anyway).</p><p>I&rsquo;m wondering if you can also install rancher on an existing cluster. Quick
 search suggests the answer <a href=https://rancher.com/docs/rancher/v2.x/en/installation/install-rancher-on-k8s/>is
@@ -62,7 +59,15 @@ path for deployment, upgrades, and rollbacks.</p></blockquote><p>The key point h
 a service) using only a compute provider (yes I know DO also offers managed k8s
 but that a different beast altogether).</p><h1 id=features>Features</h1><p>With a few more clicks I got a metrics stack installed in the cluster and now
 have more detailed stats.</p><p><img src=/images/rancher/16.png alt=16.png></p><p>And a configured grafana instance too!</p><p><img src=/images/rancher/17.png alt=17.png></p><p>I can get a kubeconfig file directly from the UI and use it to connect to my new
-cluster like any other cluster</p><pre><code>andraz@amaterasu /tmp
+cluster like any other cluster</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">4
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">5
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">6
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">7
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">8
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-fallback data-lang=fallback>andraz@amaterasu /tmp
  $ export KUBECONFIG=$(pwd)/kubeconfig
 andraz@amaterasu ~
  $ kubectl get nodes
@@ -70,7 +75,7 @@ NAME   STATUS   ROLES                      AGE   VERSION
 sb2    Ready    controlplane,etcd,worker   10m   v1.20.5
 sb3    Ready    controlplane,etcd,worker   10m   v1.20.5
 sb4    Ready    controlplane,etcd,worker   10m   v1.20.5
-</code></pre><p>But if I cannot be bothered and just want to poke around a bit there is even a
+</code></pre></td></tr></table></div></div><p>But if I cannot be bothered and just want to poke around a bit there is even a
 convenient web-based shell</p><p><img src=/images/rancher/18.png alt=18.png></p><h1 id=apps>Apps</h1><p>Moving on the last element I see in the UI - Apps</p><p><img src=/images/rancher/19.png alt=19.png></p><p>Looks like some form of prepackaged software.</p><p><img src=/images/rancher/20.png alt=20.png></p><p>Digging deeper confirms this is in fact a UI for <a href=https://helm.sh/>helm</a>
 charts.</p><p><img src=/images/rancher/21.png alt=21.png></p><p>Let&rsquo;s configure a Wordpress instance then. This should be a nice test if our
 cluster is in fact fully functional and provides all we could possibly want</p><p><img src=/images/rancher/22.png alt=22.png></p><p>Takes a moment to deploy the chart. I can now zoom in and see the actual
@@ -81,7 +86,4 @@ routes to the actual pod running somewhere in the cluster.</p><p><img src=/image
 itself.</p><p><img src=/images/rancher/26.png alt=26.png></p><p>Entered a &ldquo;Removing&rdquo; state</p><p><img src=/images/rancher/27.png alt=27.png></p><p>and few moments later is gone. So are all the traces from my DO dashboard.</p><h1 id=closing-thoughts>Closing thoughts</h1><p>I think I get &ldquo;managed kuberenetes cluster operations&rdquo; now. Provisioning,
 monitoring, day 2 ops, running some common workloads. Seems like the primary use
 case is managing multiple clusters but it&rsquo;s also an interesting alternative for
-providing &ldquo;managed&rdquo; clusters in places where you don&rsquo;t have this option.</p><hr width=100%><p style=color:#777>Last modified on 2021-04-14</p></div></div><nav class=post-pagination><a class=newer-posts href=/posts/2021-04-15-trying-microk8s/>Next<br>Trying out Microk8s</a>
-<a class=older-posts href=/posts/2021-02-27-trying-out-okteto-cloud/>Previous<br>Trying out Okteto Cloud</a></nav><div class=post-comment-wrapper></div></div></div></div></div><div id=single-column-footer>&copy;
-2021
-Andraz Bajt</div></div></body></html>
+providing &ldquo;managed&rdquo; clusters in places where you don&rsquo;t have this option.</p><hr><p>Last modified on 2021-04-14</p><a href=/posts/2021-02-27-trying-out-okteto-cloud/>Previous Trying out Okteto Cloud</a><br><a href=/posts/2021-04-15-trying-microk8s/>Next Trying out Microk8s</a></div></body></html>

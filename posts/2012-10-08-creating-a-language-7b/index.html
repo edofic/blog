@@ -1,16 +1,9 @@
-<!doctype html><html><head><title>Making a programming language Part 7b - using objects</title><meta charset=utf-8><meta name=X-UA-Compatible content="IE=edge"><meta name=google-site-verification content><meta content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=0" name=viewport><meta content="telephone=no" name=format-detection><meta name=renderer content="webkit"><meta name=theme-color content="#ffffff"><link type=text/css rel=stylesheet href=/vendor/css/bootstrap.min.css><link rel=stylesheet href=/scss/journal.min.01c37d732f853bf90329007dc6f0a25c67722dd47b7168f8907facb93414bd91.css media=screen><link rel=stylesheet href="https://fonts.googleapis.com/css?family=Lora|Montserrat|Fira+Mono|Noto+Serif+SC|Material+Icons"></head><body><div id=app><div ref=sideContainer class=side-container><div class="a-block nav-head false"><div class=nav-title>Andraž Bajt's blog</div><div class=nav-subtitle></div><a href=https://github.com/edofic><img src=/icons/github.svg width=20></a>
-<a href=https://www.linkedin.com/in/edofic><img src=/icons/linkedin.svg width=20></a>
-<a href=https://twitter.com/edofic><img src=/icons/twitter.svg width=20></a>
-<a href=/index.xml><img src=/icons/rss.svg width=20></a>
-<a href=mailto:edofic@edofic.com><img src=/icons/email.svg width=20></a></div><div class=nav-link-list><a class="a-block nav-link-item" href=/about>About Me</a>
-<a class="a-block nav-link-item" href=/>Archive</a></div><div class=nav-footer>&copy;
-2021
-Andraz Bajt</div></div><div ref=extraContainer class=extra-container><div class=pagination><a id=globalBackToTop class="pagination-action animated-visibility" href=#top :class="{ invisible: scrollY == 0 }"><i class="material-icons pagination-action-icon">keyboard_arrow_up</i></a></div></div><div class=single-column-drawer-container ref=drawer><div class=drawer-content><div class=drawer-menu><a class="a-block drawer-menu-item" href=/about>About Me</a>
-<a class="a-block drawer-menu-item" href=/>Archive</a></div></div></div><div class=single-column-header-container ref=pageHead><a href=/><div class=single-column-header-title>Andraž Bajt's blog</div></a><a href=https://github.com/edofic><img src=/icons/github.svg width=20></a>
-<a href=https://www.linkedin.com/in/edofic><img src=/icons/linkedin.svg width=20></a>
-<a href=https://twitter.com/edofic><img src=/icons/twitter.svg width=20></a>
-<a href=/index.xml><img src=/icons/rss.svg width=20></a>
-<a href=mailto:edofic@edofic.com><img src=/icons/email.svg width=20></a></div><div id=content><div ref=streamContainer class=stream-container><div class="post-list-container post-list-container-shadow"><div class=post><div class=post-head-wrapper-text-only style="background-image:url('/')"><div class=post-title>Making a programming language Part 7b - using objects<div class=post-meta><time itemprop=datePublished>2012-10-08</time></div></div></div><div class=post-body-wrapper><div class=post-body><p><a href=/posts/2012-08-29-creating-a-language-1>Table of contents</a>, 
+<!doctype html><html><head><title>Making a programming language Part 7b - using objects</title><meta charset=utf-8><meta name=X-UA-Compatible content="IE=edge"><meta name=google-site-verification content><meta content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=0" name=viewport><link rel=stylesheet href=/scss/main.min.31cac6fb291c18037123c54900f92aaa75653b03bf9d6b70a2fd0565930494e3.css media=screen></head><body><div class=nav><a href=/><h2 class=title>Andraž Bajt's blog</h2></a><div class=nav-sub><a class=nav-item href=/about>About Me</a>
+<a class=nav-item href=/>Archive</a></div><div class=nav-sub-right><a class=nav-icon href=https://github.com/edofic target=_blank><img src=/icons/github.svg width=20></a>
+<a class=nav-icon href=https://www.linkedin.com/in/edofic target=_blank><img src=/icons/linkedin.svg width=20></a>
+<a class=nav-icon href=https://twitter.com/edofic target=_blank><img src=/icons/twitter.svg width=20></a>
+<a class=nav-icon href=/index.xml target=_blank><img src=/icons/rss.svg width=20></a>
+<a class=nav-icon href=mailto:blog@edofic.com target=_blank><img src=/icons/email.svg width=20></a></div></div><hr><div class=main><h1>Making a programming language Part 7b - using objects</h1><time>2012-10-08</time><hr><p><a href=/posts/2012-08-29-creating-a-language-1>Table of contents</a>, 
 <a href=https://github.com/edofic/scrat-lang>Whole project on github</a></p><p>Something like EPIC FAIL occured to me and I <a href=/posts/2012-08-29-creating-a-language-1>published a post</a>
 containing only half the content I intended to write. So I&rsquo;m doing a
 part b.</p><p>My intended usage of objects is something along the lines of</p><pre><code>objectName.someProperty
@@ -33,19 +26,27 @@ bad one leave a comment). Notice the &ldquo;simple
 <a href=http://en.wikipedia.org/wiki/Identifier title=Identifier>identifier</a>&rdquo;.
 That&rsquo;s what I did: Renamed identifier to simple identifier and put
 something that handles dots under name identifier. And then fixed
-everything. </p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-scala data-lang=scala><span style=color:#66d9ef>case</span> <span style=color:#66d9ef>class</span> <span style=color:#a6e22e>DotAccess</span><span style=color:#f92672>(</span>lst<span style=color:#66d9ef>:</span> <span style=color:#66d9ef>List</span><span style=color:#f92672>[</span><span style=color:#66d9ef>Expression</span><span style=color:#f92672>])</span> <span style=color:#66d9ef>extends</span> <span style=color:#a6e22e>Expression</span>
+everything. </p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">4
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-scala data-lang=scala><span style=color:#66d9ef>case</span> <span style=color:#66d9ef>class</span> <span style=color:#a6e22e>DotAccess</span><span style=color:#f92672>(</span>lst<span style=color:#66d9ef>:</span> <span style=color:#66d9ef>List</span><span style=color:#f92672>[</span><span style=color:#66d9ef>Expression</span><span style=color:#f92672>])</span> <span style=color:#66d9ef>extends</span> <span style=color:#a6e22e>Expression</span>
 
 <span style=color:#66d9ef>private</span> <span style=color:#66d9ef>def</span> identifier<span style=color:#66d9ef>:</span> <span style=color:#66d9ef>Parser</span><span style=color:#f92672>[</span><span style=color:#66d9ef>DotAccess</span><span style=color:#f92672>]</span> <span style=color:#66d9ef>=</span>
     rep1sep<span style=color:#f92672>((</span>functionCall <span style=color:#f92672>|</span> simpleIdentifier<span style=color:#f92672>),</span> <span style=color:#e6db74>&#34;.&#34;</span><span style=color:#f92672>)</span> <span style=color:#f92672>^^</span> <span style=color:#a6e22e>DotAccess</span><span style=color:#f92672>.</span>apply
-</code></pre></div><p>That&rsquo;s about it. At least for parsing. Now the fun begins.</p><h3 id=nesting-scopes>Nesting scopes</h3><p>Scopes were designed with nesting in mind. This is a double edged sword.
+</code></pre></td></tr></table></div></div><p>That&rsquo;s about it. At least for parsing. Now the fun begins.</p><h3 id=nesting-scopes>Nesting scopes</h3><p>Scopes were designed with nesting in mind. This is a double edged sword.
 See, the &ldquo;privates&rdquo; can be  done if you rely on not being able to access
 the parent scope. If dot access exposes full addressing functionality a
 powerful feature ceases to exist. So some protection should be in place.
-Something like strict get</p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-scala data-lang=scala><span style=color:#66d9ef>class</span> <span style=color:#a6e22e>SScope</span>
+Something like strict get</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">4
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-scala data-lang=scala><span style=color:#66d9ef>class</span> <span style=color:#a6e22e>SScope</span>
   <span style=color:#f92672>...</span>
   <span style=color:#66d9ef>def</span> getStrict<span style=color:#f92672>(</span>key<span style=color:#66d9ef>:</span> <span style=color:#66d9ef>String</span><span style=color:#f92672>)</span><span style=color:#66d9ef>:</span> <span style=color:#66d9ef>Option</span><span style=color:#f92672>[</span><span style=color:#66d9ef>Any</span><span style=color:#f92672>]</span> <span style=color:#66d9ef>=</span> map<span style=color:#f92672>.</span>get<span style=color:#f92672>(</span>key<span style=color:#f92672>)</span>
   <span style=color:#f92672>...</span>
-</code></pre></div><p>And I also added an unlinked view to it just to ease usage. This is just
+</code></pre></td></tr></table></div></div><p>And I also added an unlinked view to it just to ease usage. This is just
 a method that returns new SScope with no parent overriding getters and
 put to use map available in closure.
 So now I can walk down the list in DotAccess recursively and explicitly
@@ -57,7 +58,34 @@ attempts at more complex recursion brought up this quite obvious bug.<br>So how 
 recursion to do this and it&rsquo;s two levels(at least) deeper from where
 dots happen. So no go. I need to carry on the outer scope. I overloaded
 the apply method from Evaluator so other code can still function(tests
-ftw!) and all in all it looks like this:</p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-scala data-lang=scala><span style=color:#66d9ef>def</span> apply<span style=color:#f92672>(</span>e<span style=color:#66d9ef>:</span> <span style=color:#66d9ef>List</span><span style=color:#f92672>[</span><span style=color:#66d9ef>Expression</span><span style=color:#f92672>])(</span><span style=color:#66d9ef>implicit</span> scope<span style=color:#66d9ef>:</span> <span style=color:#66d9ef>SScope</span><span style=color:#f92672>)</span><span style=color:#66d9ef>:</span> <span style=color:#66d9ef>Any</span> <span style=color:#f92672>=</span> <span style=color:#f92672>{</span>
+ftw!) and all in all it looks like this:</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">11
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">12
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">13
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">14
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">15
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">16
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">17
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">18
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">19
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">20
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">21
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">22
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">23
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">24
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">25
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">26
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">27
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-scala data-lang=scala><span style=color:#66d9ef>def</span> apply<span style=color:#f92672>(</span>e<span style=color:#66d9ef>:</span> <span style=color:#66d9ef>List</span><span style=color:#f92672>[</span><span style=color:#66d9ef>Expression</span><span style=color:#f92672>])(</span><span style=color:#66d9ef>implicit</span> scope<span style=color:#66d9ef>:</span> <span style=color:#66d9ef>SScope</span><span style=color:#f92672>)</span><span style=color:#66d9ef>:</span> <span style=color:#66d9ef>Any</span> <span style=color:#f92672>=</span> <span style=color:#f92672>{</span>
   <span style=color:#f92672>(</span>e map apply<span style=color:#f92672>).</span>lastOption <span style=color:#66d9ef>match</span> <span style=color:#f92672>{</span>
     <span style=color:#66d9ef>case</span> <span style=color:#a6e22e>Some</span><span style=color:#f92672>(</span>a<span style=color:#f92672>)</span> <span style=color:#66d9ef>=&gt;</span> a
     <span style=color:#66d9ef>case</span> <span style=color:#a6e22e>None</span> <span style=color:#66d9ef>=&gt;</span> <span style=color:#f92672>()</span>
@@ -84,8 +112,5 @@ ftw!) and all in all it looks like this:</p><div class=highlight><pre style=colo
     <span style=color:#f92672>}</span>
     step<span style=color:#f92672>(</span>list<span style=color:#f92672>)</span>
 <span style=color:#f92672>}</span>
-</code></pre></div><p>So an optional aux scope is the answer. It doesn&rsquo;t seem pretty to me,
-but it does the job. </p><p>**next: **<a href=/posts/2012-09-29-creating-a-language-8>trying to go faster</a></p><hr width=100%><p style=color:#777>Last modified on 2012-10-08</p></div></div><nav class=post-pagination><a class=newer-posts href=/posts/2012-10-21-javascript-ftl/>Next<br>Javascript faster than light! (well C actually)</a>
-<a class=older-posts href=/posts/2012-09-29-creating-a-language-8/>Previous<br>Making a programming language Part 8 - going faster</a></nav><div class=post-comment-wrapper></div></div></div></div></div><div id=single-column-footer>&copy;
-2021
-Andraz Bajt</div></div></body></html>
+</code></pre></td></tr></table></div></div><p>So an optional aux scope is the answer. It doesn&rsquo;t seem pretty to me,
+but it does the job. </p><p>**next: **<a href=/posts/2012-09-29-creating-a-language-8>trying to go faster</a></p><hr><p>Last modified on 2012-10-08</p><a href=/posts/2012-09-29-creating-a-language-8/>Previous Making a programming language Part 8 - going faster</a><br><a href=/posts/2012-10-21-javascript-ftl/>Next Javascript faster than light! (well C actually)</a></div></body></html>
