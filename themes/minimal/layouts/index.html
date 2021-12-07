@@ -1,0 +1,28 @@
+{{ define "main" }}
+    {{range .Paginator.Pages}}
+        {{if .IsPage}}
+        <div>
+            <a href="{{.Permalink}}" class="a-block">
+                {{ .PublishDate.Format "2006-01-02" }}
+                {{.Title}}
+            </a>
+            {{/*<div>{{.Summary}}</div>*/}}
+            {{ $featured_image := .Params.featured_image }}
+            {{ if $featured_image }}
+                <img src="{{$featured_image | relLangURL }}"/>
+            {{ end }}
+        {{ end }}
+    {{ end }}
+    <hr/>
+    {{ if .Paginator.HasPrev }}
+    <a href="{{.Paginator.Prev.URL}}">
+        Previous
+    </a>
+    {{ end }}
+    {{ .Paginator.PageNumber }} / {{ .Paginator.TotalPages }}
+    {{ if .Paginator.HasNext }}
+    <a href="{{.Paginator.Next.URL}}">
+        Next
+    </a>
+    {{ end }}
+{{ end }}

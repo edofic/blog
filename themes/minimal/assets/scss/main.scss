@@ -1,0 +1,49 @@
+body {
+    max-width: 800px;
+    margin: auto;
+    line-height: 1.6;
+    font-size: 18px;
+    color:#444;
+    padding:0 10px
+}
+
+h1,h2,h3 {
+    line-height:1.2;
+}
+
+a, a:visited, a:hover, a:active {
+  color: blue;
+}
+
+.nav {
+    a, a:visited, a:hover, a:active {
+      color: inherit;
+    }
+    .title {
+        margin: 0;
+    }
+    .nav-sub {
+        display: inline-block;
+        .nav-item {
+            margin: 5px;
+        }
+    }
+    .nav-sub-right {
+        display: inline-block;
+        float: right;
+        .nav-icon {
+            margin-right: 5px;
+        }
+    }
+}
+
+.main {
+    img {
+        display: block;
+        max-width: 90%;
+        margin: auto;
+    }
+    pre {
+        overflow: auto;
+    }
+}

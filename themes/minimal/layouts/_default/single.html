@@ -1,0 +1,35 @@
+{{ define "main" }}
+    <h1>{{ .Title }}</h1>
+    {{ if .PublishDate }}
+        <time>{{ .PublishDate.Format "2006-01-02" }}</time>
+    {{ end }}
+    {{ if .Params.categories }}
+        <a href="{{ "/categories/" | relLangURL }}{{ .Params.categories | urlize }}">{{ .Params.categories }}</a>
+    {{ end }}
+    {{ if gt .Params.tags 0 }}
+        {{ range .Params.tags }}
+            <a href="{{ "/tags/" | relLangURL }}{{ . | urlize }}">{{ . }}</a>
+        {{ end }}
+    {{ end }}
+    <hr/>
+    {{.Content}}
+    <hr/>
+    {{ if .Page.Lastmod }}
+        <p>Last modified on {{ .Page.Lastmod.Format "2006-01-02" }}</p>
+    {{ end }}
+    {{if .Prev}}
+        <a href="{{.Prev.Permalink}}">
+            Previous {{.Prev.Title}}
+        </a>
+    {{else}}
+        <a>No older posts.</a>
+    {{end}}
+    <br/>
+    {{if .Next}}
+    <a href="{{.Next.Permalink}}">
+        Next {{.Next.Title}}
+    </a>
+    {{else}}
+        <a>No newer posts.</a>
+    {{end}}
+{{ end }}

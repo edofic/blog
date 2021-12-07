@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>{{.Title}}</title>
+<meta charset="utf-8">
+<meta name="X-UA-Compatible" content="IE=edge">
+<meta name="google-site-verification" content="{{ .Site.Params.googleSiteVerification }}">
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+
+{{ if .Site.Params.favicon }}
+<link rel="icon" href="{{ .Site.Params.favicon }}">
+{{ end }}
+
+{{ with .OutputFormats.Get "rss" -}}
+    {{ printf `<link rel="%s" type="%s" href="%s" title="%s" />` .Rel .MediaType.Type .Permalink $.Site.Title | safeHTML }}
+{{ end -}}
+
+{{ $styles := resources.Get "scss/main.scss" | toCSS | minify | fingerprint }}
+<link rel="stylesheet" href="{{ $styles.Permalink }}" media="screen">
+</head>
+    <body>
+        <div class="nav">
+            <h2 class="title">{{ .Site.Title }}</h2>
+            <div class="nav-sub">
+                {{ range .Site.Menus.main }}
+                    <a class="nav-item" href="{{ .URL }}">
+                        {{ .Name }}
+                    </a>
+                {{ end }}
+            </div>
+            <div class="nav-sub-right">
+                {{ with .Site.Params.github }}
+                    <a class="nav-icon" href="https://github.com/{{.}}" target="_blank"><img src="/icons/github.svg" width="20"/></a>
+                {{ end }}
+                {{ with .Site.Params.linkedin }}
+                    <a class="nav-icon" href="https://www.linkedin.com/in/{{.}}" target="_blank"><img src="/icons/linkedin.svg" width="20"/></a>
+                {{ end }}
+                {{ with .Site.Params.twitter }}
+                    <a class="nav-icon" href="https://twitter.com/{{.}}" target="_blank"><img src="/icons/twitter.svg" width="20"/></a>
+                {{ end }}
+                <a class="nav-icon" href="/index.xml" target="_blank"><img src="/icons/rss.svg" width="20"/></a>
+                {{ with .Site.Params.email }}
+                    <a class="nav-icon" href="mailto:{{.}}" target="_blank"><img src="/icons/email.svg" width="20"/></a>
+                {{ end }}
+            </div>
+        </div>
+        <hr/>
+        <div class="main">
+            {{- block "main" . }}{{- end }}
+        </div>
+    </body>
+</html>

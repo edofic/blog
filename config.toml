@@ -2,14 +2,15 @@ baseURL = "/"
 languageCode = "en-us"
 title = "Andraž Bajt's blog"
 disableKinds = ["section"]
-theme = "diary"
+theme = "minimal"
 copyright = "Andraz Bajt"
+paginate = 20
 
 [params]
     github = "edofic"
     linkedin = "edofic"
     twitter = "edofic"
-    email = "edofic@edofic.com"
+    email = "blog@edofic.com"
 
 [menu]
   [[menu.main]]

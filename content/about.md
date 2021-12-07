@@ -12,6 +12,6 @@ functional programming "things". But work has also led me in the direction of
 distributed systems and low latency which both turned out of great interest as
 well.
 
-Feel free to [contact me](https://twitter.com/edofic).
+Feel free to [contact me](mailto:blog@edofic.com).
 
 ![Me](/images/me.jpg?width=100)

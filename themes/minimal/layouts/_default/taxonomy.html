@@ -1,0 +1,9 @@
+{{ define "main" }}
+    <a href="{{.FirstSection.Permalink}}">{{.FirstSection.Title}}</a> / {{ .Title }}
+    <br/>
+    {{- range .Data.Pages -}}
+        <a href="{{ .RelPermalink }}" class="a-block">{{.Title}}</a>
+        {{ dateFormat "Jan 2, 2006" .Date }}
+        <br/>
+    {{- end -}}
+{{ end }}
