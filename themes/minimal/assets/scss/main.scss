@@ -18,19 +18,23 @@ h1,h2,h3 {
     .title {
         margin: 0;
     }
-    .nav-sub {
-        display: inline-block;
-        .nav-item {
-            margin: 5px;
-        }
-    }
-    .nav-sub-right {
-        display: inline-block;
-        float: right;
-        .nav-icon {
-            margin-right: 5px;
-        }
-    }
+}
+
+.nav-sub {
+    display: inline-block;
+}
+
+.nav-item {
+    margin: 5px;
+}
+
+.nav-sub-right {
+    display: inline-block;
+    float: right;
+}
+
+.nav-icon {
+    margin-right: 5px;
 }
 
 .main {
