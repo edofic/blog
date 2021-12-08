@@ -16,7 +16,7 @@
 {{ end -}}
 
 {{ $styles := resources.Get "scss/main.scss" | toCSS | minify | fingerprint }}
-<link rel="stylesheet" href="{{ $styles.Permalink }}" media="screen">
+<style>{{ $styles.Content | safeCSS }}" media="screen"></style>
 </head>
     <body>
         <div class="nav">
