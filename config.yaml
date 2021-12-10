@@ -2,7 +2,6 @@ baseURL: "/"
 languageCode: "en-us"
 title: "Andraž Bajt's blog"
 disableKinds: ["section"]
-theme: "minimal"
 copyright: "Andraz Bajt"
 paginate: 20
 
