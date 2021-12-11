@@ -1,15 +1,70 @@
-<!doctype html><html><head><title>Running amd64 docker images with Podman on Apple Silicon (M1)</title><meta charset=utf-8><meta name=X-UA-Compatible content="IE=edge"><meta name=google-site-verification content><meta content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=0" name=viewport><style>body{max-width:800px;margin:auto;line-height:1.6;font-size:18px;color:#444;padding:0 10px}h1,h2,h3{line-height:1.2}.nav a,.nav a:visited,.nav a:hover,.nav a:active{color:inherit}.nav .title{margin:0}.nav-sub{display:inline-block}.nav-item{margin:5px}.nav-sub-right{display:inline-block;float:right}.nav-icon{margin-right:5px}.main img{display:block;max-width:100%;margin:auto}.main pre{overflow:auto}" media="screen"></style></head><body><div class=nav><a href=/><h2 class=title>Andraž Bajt's blog</h2></a><div class=nav-sub><a class=nav-item href=/about>About Me</a>
-<a class=nav-item href=/>Archive</a></div><div class=nav-sub-right><a class=nav-icon href=https://github.com/edofic target=_blank><img src=/icons/github.svg width=20 height=20></a>
+<!doctype html><html>
+<head>
+<title>Running amd64 docker images with Podman on Apple Silicon (M1)</title>
+<meta charset=utf-8>
+<meta name=X-UA-Compatible content="IE=edge">
+<meta name=google-site-verification content>
+<meta content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=0" name=viewport>
+<style>body{max-width:800px;margin:auto;line-height:1.6;font-size:18px;color:#444;padding:0 10px}h1,h2,h3{line-height:1.2}.nav a,.nav a:visited,.nav a:hover,.nav a:active{color:inherit}.nav .title{margin:0}.nav-sub{display:inline-block}.nav-item{margin:5px}.nav-sub-right{display:inline-block;float:right}.nav-icon{margin-right:5px}.main img{display:block;max-width:100%;margin:auto}.main pre{overflow:auto}" media="screen"></style>
+</head>
+<body>
+<div class=nav>
+<a href=/><h2 class=title>Andraž Bajt's blog</h2></a>
+<div class=nav-sub>
+<a class=nav-item href=/about>
+About Me
+</a>
+<a class=nav-item href=/>
+Archive
+</a>
+</div>
+<div class=nav-sub-right>
+<a class=nav-icon href=https://github.com/edofic target=_blank><img src=/icons/github.svg width=20 height=20></a>
 <a class=nav-icon href=https://www.linkedin.com/in/edofic target=_blank><img src=/icons/linkedin.svg width=20 height=20></a>
 <a class=nav-icon href=https://twitter.com/edofic target=_blank><img src=/icons/twitter.svg width=20 height=20></a>
 <a class=nav-icon href=/index.xml target=_blank><img src=/icons/rss.svg width=20 height=20></a>
-<a class=nav-icon href=mailto:blog@edofic.com target=_blank><img src=/icons/email.svg width=20 height=20></a></div></div><hr><div class=main><h1>Running amd64 docker images with Podman on Apple Silicon (M1)</h1><time>2021-09-12</time><hr><p><strong>tl;dr</strong> it works, scroll though and look for the code snippets</p><p>You might have heard about Docker (the company) changing the terms of use which effectively requires enterprise users to pay up. While I personally think that paying for critical infrastructure that supports your business is a good idea there was a considerable backlash among engineers and &ldquo;alternative to docker&rdquo; was the common them on HN front page for a few days.</p><p>And the most notable alternative is <a href=https://podman.io/>Podman</a>.</p><blockquote><p>What is Podman? Podman is a daemonless container engine for developing, managing, and running OCI Containers on your Linux System. Containers can either be run as root or in rootless mode. Simply put: alias docker=podman. More details <a href=https://podman.io/whatis.html>here</a>.</p></blockquote><h1 id=podman-on-macos>Podman on MacOS</h1><p>Podman relies on Linux kernel in order to work so I fact it&rsquo;s linux-only software. People have been running it in VMs for a while (like Docker it supports a remote server, which can be a VM). And recently VM support has become native in form of <code>podman machine</code> commands which manage a VM for you. More <a href=https://podman.io/blogs/2021/09/06/podman-on-macs.html>here</a>.</p><h1 id=podman-on-apple-silicon>Podman on Apple Silicon</h1><p>At the time of writing the instructions above don&rsquo;t work on Apple Silicon machines (currently just M1 macs). Reason for that is that <code>podman machine</code> relies on <code>qemu</code> for virtualisation and <code>qemu</code> does not (yet) have support for the M1 specifics of the Apple Virtualisation Framework. But it&rsquo;s close. In fact there is already a patch out there, just not yet part of the upstream distribution. <a href=https://github.com/simnalamburt/>simnalamburt</a> has even packaged it for brew so you can install the patched <code>qemu</code> and configure <code>podman</code> to use it with a one liner.</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
-</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-fallback data-lang=fallback>brew install simnalamburt/x/podman-apple-silicon
-</code></pre></td></tr></table></div></div><p>Full instructions <a href=https://github.com/simnalamburt/homebrew-x>here</a>. Do read through <a href=https://github.com/simnalamburt/homebrew-x/tree/main/Formula>the source</a>, there is not much magic going on.</p><p>Now we can configure our machine</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+<a class=nav-icon href=mailto:blog@edofic.com target=_blank><img src=/icons/email.svg width=20 height=20></a>
+</div>
+</div>
+<hr>
+<div class=main>
+<h1>Running amd64 docker images with Podman on Apple Silicon (M1)</h1>
+<time>2021-09-12</time>
+<hr>
+<p><strong>tl;dr</strong> it works, scroll though and look for the code snippets</p>
+<p>You might have heard about Docker (the company) changing the terms of use which effectively requires enterprise users to pay up. While I personally think that paying for critical infrastructure that supports your business is a good idea there was a considerable backlash among engineers and &ldquo;alternative to docker&rdquo; was the common them on HN front page for a few days.</p>
+<p>And the most notable alternative is <a href=https://podman.io/>Podman</a>.</p>
+<blockquote>
+<p>What is Podman? Podman is a daemonless container engine for developing, managing, and running OCI Containers on your Linux System. Containers can either be run as root or in rootless mode. Simply put: alias docker=podman. More details <a href=https://podman.io/whatis.html>here</a>.</p>
+</blockquote>
+<h1 id=podman-on-macos>Podman on MacOS</h1>
+<p>Podman relies on Linux kernel in order to work so I fact it&rsquo;s linux-only software. People have been running it in VMs for a while (like Docker it supports a remote server, which can be a VM). And recently VM support has become native in form of <code>podman machine</code> commands which manage a VM for you. More <a href=https://podman.io/blogs/2021/09/06/podman-on-macs.html>here</a>.</p>
+<h1 id=podman-on-apple-silicon>Podman on Apple Silicon</h1>
+<p>At the time of writing the instructions above don&rsquo;t work on Apple Silicon machines (currently just M1 macs). Reason for that is that <code>podman machine</code> relies on <code>qemu</code> for virtualisation and <code>qemu</code> does not (yet) have support for the M1 specifics of the Apple Virtualisation Framework. But it&rsquo;s close. In fact there is already a patch out there, just not yet part of the upstream distribution. <a href=https://github.com/simnalamburt/>simnalamburt</a> has even packaged it for brew so you can install the patched <code>qemu</code> and configure <code>podman</code> to use it with a one liner.</p>
+<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2>
+<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
+<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
+<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-fallback data-lang=fallback>brew install simnalamburt/x/podman-apple-silicon
+</code></pre></td></tr></table>
+</div>
+</div><p>Full instructions <a href=https://github.com/simnalamburt/homebrew-x>here</a>. Do read through <a href=https://github.com/simnalamburt/homebrew-x/tree/main/Formula>the source</a>, there is not much magic going on.</p>
+<p>Now we can configure our machine</p>
+<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2>
+<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
+<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
-</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-fallback data-lang=fallback>podman machine init --cpus=2 --disk-size=20 --memory 4096
+</span></code></pre></td>
+<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
+<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-fallback data-lang=fallback>podman machine init --cpus=2 --disk-size=20 --memory 4096
 podman machine list
-</code></pre></td></tr></table></div></div><p>Should be <code>Currently running</code>. Let&rsquo;s run something</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
+</code></pre></td></tr></table>
+</div>
+</div><p>Should be <code>Currently running</code>. Let&rsquo;s run something</p>
+<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2>
+<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
+<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
@@ -31,7 +86,9 @@ podman machine list
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">20
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">21
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">22
-</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-fallback data-lang=fallback>$ podman run -it --rm docker.io/hello-world
+</span></code></pre></td>
+<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
+<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-fallback data-lang=fallback>$ podman run -it --rm docker.io/hello-world
 
 Hello from Docker!
 This message shows that your installation appears to be working correctly.
@@ -53,19 +110,39 @@ Share images, automate workflows, and more with a free Docker ID:
 
 For more examples and ideas, visit:
  https://docs.docker.com/get-started/
-</code></pre></td></tr></table></div></div><h1 id=running-amd64-images>Running amd64 images</h1><p>What&rsquo;s not obvious is that currently we only have support for running ARM images. Unlike Docker For Mac which can transparently run both. Let&rsquo;s see what happens if you try to run something that does not have native ARM support.</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</code></pre></td></tr></table>
+</div>
+</div><h1 id=running-amd64-images>Running amd64 images</h1>
+<p>What&rsquo;s not obvious is that currently we only have support for running ARM images. Unlike Docker For Mac which can transparently run both. Let&rsquo;s see what happens if you try to run something that does not have native ARM support.</p>
+<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2>
+<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
+<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
-</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-fallback data-lang=fallback>podman run --rm -it docker.io/amd64/alpine:3.14 sh
+</span></code></pre></td>
+<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
+<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-fallback data-lang=fallback>podman run --rm -it docker.io/amd64/alpine:3.14 sh
 {&#34;msg&#34;:&#34;exec container process `/bin/sh`: Exec format error&#34;,&#34;level&#34;:&#34;error&#34;,&#34;time&#34;:&#34;2021-09-12T08:33:34.000095300Z&#34;}
-</code></pre></td></tr></table></div></div><p>Luckily we can fix that, we can teach our VM how to run this format of executables by using <a href=https://github.com/multiarch/qemu-user-static>qemu-user-static</a></p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</code></pre></td></tr></table>
+</div>
+</div><p>Luckily we can fix that, we can teach our VM how to run this format of executables by using <a href=https://github.com/multiarch/qemu-user-static>qemu-user-static</a></p>
+<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2>
+<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
+<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">4
-</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-fallback data-lang=fallback>podman machine ssh
+</span></code></pre></td>
+<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
+<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-fallback data-lang=fallback>podman machine ssh
 sudo -i
 rpm-ostree install qemu-user-static
 systemctl reboot
-</code></pre></td></tr></table></div></div><p>And after a few moments to reboot the VM</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
+</code></pre></td></tr></table>
+</div>
+</div><p>And after a few moments to reboot the VM</p>
+<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2>
+<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
+<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
@@ -79,7 +156,9 @@ systemctl reboot
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">12
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">13
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">14
-</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-fallback data-lang=fallback>$ podman run --rm -it docker.io/amd64/alpine:3.14 sh
+</span></code></pre></td>
+<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
+<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-fallback data-lang=fallback>$ podman run --rm -it docker.io/amd64/alpine:3.14 sh
 / # apk add file
 fetch https://dl-cdn.alpinelinux.org/alpine/v3.14/main/x86_64/APKINDEX.tar.gz
 fetch https://dl-cdn.alpinelinux.org/alpine/v3.14/community/x86_64/APKINDEX.tar.gz
@@ -93,4 +172,25 @@ OK: 13 MiB in 16 packages
 /usr/bin/file
 / # file /usr/bin/file
 /usr/bin/file: ELF 64-bit LSB pie executable, x86-64, version 1 (SYSV), dynamically linked, interpreter /lib/ld-musl-x86_64.so.1, stripped
-</code></pre></td></tr></table></div></div><p>Liftoff! (mind the <code>x86_64</code>)</p><h2 id=how-does-it-work>How does it work?</h2><p><a href=https://www.qemu.org/>QEMU</a> is multiple things, it powers our <code>podman machine</code> VM but it can also run inside this VM in a mode called <code>User-mode emulation</code>. From the home-page</p><blockquote><p>Run programs for another Linux/BSD target, on any supported architecture</p></blockquote><p>In our case emulating an amd64 CPU on an ARM CPU (inside a VM!). Why user-mode? Because it&rsquo;s not full emulation; it&rsquo;s not emulating a kernel like a full VM but passing through syscalls to the regular kernel (in our case the VM).</p><p>This is different from the <code>podman machine</code> VM which is not emulated but virtualised. Instructions run natively on the CPU with hardware support for sandboxing it away from the host. This is why patches for Apple&rsquo;s Virtualisation Framework are needed for the (host) qemu.</p><p>How about performance? Just like with docker. Good performance for native images, and a penalty for running emulated images. IO should still be okay since it&rsquo;s handled by the virtual kernel but CPU-bound workloads slow down a lot (up to 50x in my benchmarks). Should be good enough for development as long as you&rsquo;re not compiling big stuff.</p><p>What&rsquo;s that <code>rpm-ostree</code> stuff? <code>podman machine</code> uses Fedora CoreOS which is based off a baked image with &ldquo;layered packages&rdquo; instead of a more traditional package management. More <a href=https://coreos.github.io/rpm-ostree/>here</a>.</p><hr><p>Last modified on 2021-09-12</p><a href=/posts/2021-06-27-trying-out-prometheus/>Previous Trying out Prometheus</a><br><a>No newer posts.</a></div></body></html>
+</code></pre></td></tr></table>
+</div>
+</div><p>Liftoff! (mind the <code>x86_64</code>)</p>
+<h2 id=how-does-it-work>How does it work?</h2>
+<p><a href=https://www.qemu.org/>QEMU</a> is multiple things, it powers our <code>podman machine</code> VM but it can also run inside this VM in a mode called <code>User-mode emulation</code>. From the home-page</p>
+<blockquote>
+<p>Run programs for another Linux/BSD target, on any supported architecture</p>
+</blockquote>
+<p>In our case emulating an amd64 CPU on an ARM CPU (inside a VM!). Why user-mode? Because it&rsquo;s not full emulation; it&rsquo;s not emulating a kernel like a full VM but passing through syscalls to the regular kernel (in our case the VM).</p>
+<p>This is different from the <code>podman machine</code> VM which is not emulated but virtualised. Instructions run natively on the CPU with hardware support for sandboxing it away from the host. This is why patches for Apple&rsquo;s Virtualisation Framework are needed for the (host) qemu.</p>
+<p>How about performance? Just like with docker. Good performance for native images, and a penalty for running emulated images. IO should still be okay since it&rsquo;s handled by the virtual kernel but CPU-bound workloads slow down a lot (up to 50x in my benchmarks). Should be good enough for development as long as you&rsquo;re not compiling big stuff.</p>
+<p>What&rsquo;s that <code>rpm-ostree</code> stuff? <code>podman machine</code> uses Fedora CoreOS which is based off a baked image with &ldquo;layered packages&rdquo; instead of a more traditional package management. More <a href=https://coreos.github.io/rpm-ostree/>here</a>.</p>
+<hr>
+<p>Last modified on 2021-09-12</p>
+<a href=/posts/2021-06-27-trying-out-prometheus/>
+Previous Trying out Prometheus
+</a>
+<br>
+<a>No newer posts.</a>
+</div>
+</body>
+</html>

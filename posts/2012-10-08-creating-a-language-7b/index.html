@@ -1,21 +1,61 @@
-<!doctype html><html><head><title>Making a programming language Part 7b - using objects</title><meta charset=utf-8><meta name=X-UA-Compatible content="IE=edge"><meta name=google-site-verification content><meta content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=0" name=viewport><style>body{max-width:800px;margin:auto;line-height:1.6;font-size:18px;color:#444;padding:0 10px}h1,h2,h3{line-height:1.2}.nav a,.nav a:visited,.nav a:hover,.nav a:active{color:inherit}.nav .title{margin:0}.nav-sub{display:inline-block}.nav-item{margin:5px}.nav-sub-right{display:inline-block;float:right}.nav-icon{margin-right:5px}.main img{display:block;max-width:100%;margin:auto}.main pre{overflow:auto}" media="screen"></style></head><body><div class=nav><a href=/><h2 class=title>Andraž Bajt's blog</h2></a><div class=nav-sub><a class=nav-item href=/about>About Me</a>
-<a class=nav-item href=/>Archive</a></div><div class=nav-sub-right><a class=nav-icon href=https://github.com/edofic target=_blank><img src=/icons/github.svg width=20 height=20></a>
+<!doctype html><html>
+<head>
+<title>Making a programming language Part 7b - using objects</title>
+<meta charset=utf-8>
+<meta name=X-UA-Compatible content="IE=edge">
+<meta name=google-site-verification content>
+<meta content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=0" name=viewport>
+<style>body{max-width:800px;margin:auto;line-height:1.6;font-size:18px;color:#444;padding:0 10px}h1,h2,h3{line-height:1.2}.nav a,.nav a:visited,.nav a:hover,.nav a:active{color:inherit}.nav .title{margin:0}.nav-sub{display:inline-block}.nav-item{margin:5px}.nav-sub-right{display:inline-block;float:right}.nav-icon{margin-right:5px}.main img{display:block;max-width:100%;margin:auto}.main pre{overflow:auto}" media="screen"></style>
+</head>
+<body>
+<div class=nav>
+<a href=/><h2 class=title>Andraž Bajt's blog</h2></a>
+<div class=nav-sub>
+<a class=nav-item href=/about>
+About Me
+</a>
+<a class=nav-item href=/>
+Archive
+</a>
+</div>
+<div class=nav-sub-right>
+<a class=nav-icon href=https://github.com/edofic target=_blank><img src=/icons/github.svg width=20 height=20></a>
 <a class=nav-icon href=https://www.linkedin.com/in/edofic target=_blank><img src=/icons/linkedin.svg width=20 height=20></a>
 <a class=nav-icon href=https://twitter.com/edofic target=_blank><img src=/icons/twitter.svg width=20 height=20></a>
 <a class=nav-icon href=/index.xml target=_blank><img src=/icons/rss.svg width=20 height=20></a>
-<a class=nav-icon href=mailto:blog@edofic.com target=_blank><img src=/icons/email.svg width=20 height=20></a></div></div><hr><div class=main><h1>Making a programming language Part 7b - using objects</h1><time>2012-10-08</time><hr><p><a href=/posts/2012-08-29-creating-a-language-1>Table of contents</a>, 
-<a href=https://github.com/edofic/scrat-lang>Whole project on github</a></p><p>Something like EPIC FAIL occured to me and I <a href=/posts/2012-08-29-creating-a-language-1>published a post</a>
+<a class=nav-icon href=mailto:blog@edofic.com target=_blank><img src=/icons/email.svg width=20 height=20></a>
+</div>
+</div>
+<hr>
+<div class=main>
+<h1>Making a programming language Part 7b - using objects</h1>
+<time>2012-10-08</time>
+<hr>
+<p><a href=/posts/2012-08-29-creating-a-language-1>Table of contents</a>, 
+<a href=https://github.com/edofic/scrat-lang>Whole project on github</a></p>
+<p>Something like EPIC FAIL occured to me and I <a href=/posts/2012-08-29-creating-a-language-1>published a post</a>
 containing only half the content I intended to write. So I&rsquo;m doing a
-part b.</p><p>My intended usage of objects is something along the lines of</p><pre><code>objectName.someProperty
+part b.</p>
+<p>My intended usage of objects is something along the lines of</p>
+<pre><code>objectName.someProperty
 objectName.someFunction()
 someFunction().someProperty
 someObject.someProperty.someFunction().someProperty.someFunction
-</code></pre><p>Explanation</p><ol><li>getting a value from an
-<a href=http://en.wikipedia.org/wiki/Object_%28computer_science%29 title="Object (computer science)">object</a></li><li>invoking a function contained in an object</li><li>getting a value from returned object of the invoked function</li><li>a bit contrived example. Invoking a function contained inside a
+</code></pre>
+<p>Explanation</p>
+<ol>
+<li>getting a value from an
+<a href=http://en.wikipedia.org/wiki/Object_%28computer_science%29 title="Object (computer science)">object</a></li>
+<li>invoking a function contained in an object</li>
+<li>getting a value from returned object of the invoked function</li>
+<li>a bit contrived example. Invoking a function contained inside a
 property(object) of an object and then getting a <a href=http://en.wikipedia.org/wiki/Function_%28mathematics%29 title="Function (mathematics)">function
 value</a>
 from a property of the returned value from the first function.
-That&rsquo;s a mouthful, just read the damn code instead</li></ol><h3 id=dot-access>Dot access</h3><p>So everything bases on those little dots. First my thoughts were
+That&rsquo;s a mouthful, just read the damn code instead</li>
+</ol>
+<h3 id=dot-access>Dot access</h3>
+<p>So everything bases on those little dots. First my thoughts were
 something like &ldquo;you just do expr &lt;- expr | expr.expr&rdquo;. This is just
 wrong. At least I should have reversed the order as this leads to
 infinite <a href=http://en.wikipedia.org/wiki/Left_recursion title="Left recursion">left
@@ -26,27 +66,43 @@ bad one leave a comment). Notice the &ldquo;simple
 <a href=http://en.wikipedia.org/wiki/Identifier title=Identifier>identifier</a>&rdquo;.
 That&rsquo;s what I did: Renamed identifier to simple identifier and put
 something that handles dots under name identifier. And then fixed
-everything. </p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+everything. </p>
+<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2>
+<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
+<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">4
-</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-scala data-lang=scala><span style=color:#66d9ef>case</span> <span style=color:#66d9ef>class</span> <span style=color:#a6e22e>DotAccess</span><span style=color:#f92672>(</span>lst<span style=color:#66d9ef>:</span> <span style=color:#66d9ef>List</span><span style=color:#f92672>[</span><span style=color:#66d9ef>Expression</span><span style=color:#f92672>])</span> <span style=color:#66d9ef>extends</span> <span style=color:#a6e22e>Expression</span>
+</span></code></pre></td>
+<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
+<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-scala data-lang=scala><span style=color:#66d9ef>case</span> <span style=color:#66d9ef>class</span> <span style=color:#a6e22e>DotAccess</span><span style=color:#f92672>(</span>lst<span style=color:#66d9ef>:</span> <span style=color:#66d9ef>List</span><span style=color:#f92672>[</span><span style=color:#66d9ef>Expression</span><span style=color:#f92672>])</span> <span style=color:#66d9ef>extends</span> <span style=color:#a6e22e>Expression</span>
 
 <span style=color:#66d9ef>private</span> <span style=color:#66d9ef>def</span> identifier<span style=color:#66d9ef>:</span> <span style=color:#66d9ef>Parser</span><span style=color:#f92672>[</span><span style=color:#66d9ef>DotAccess</span><span style=color:#f92672>]</span> <span style=color:#66d9ef>=</span>
     rep1sep<span style=color:#f92672>((</span>functionCall <span style=color:#f92672>|</span> simpleIdentifier<span style=color:#f92672>),</span> <span style=color:#e6db74>&#34;.&#34;</span><span style=color:#f92672>)</span> <span style=color:#f92672>^^</span> <span style=color:#a6e22e>DotAccess</span><span style=color:#f92672>.</span>apply
-</code></pre></td></tr></table></div></div><p>That&rsquo;s about it. At least for parsing. Now the fun begins.</p><h3 id=nesting-scopes>Nesting scopes</h3><p>Scopes were designed with nesting in mind. This is a double edged sword.
+</code></pre></td></tr></table>
+</div>
+</div><p>That&rsquo;s about it. At least for parsing. Now the fun begins.</p>
+<h3 id=nesting-scopes>Nesting scopes</h3>
+<p>Scopes were designed with nesting in mind. This is a double edged sword.
 See, the &ldquo;privates&rdquo; can be  done if you rely on not being able to access
 the parent scope. If dot access exposes full addressing functionality a
 powerful feature ceases to exist. So some protection should be in place.
-Something like strict get</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+Something like strict get</p>
+<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2>
+<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
+<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">4
-</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-scala data-lang=scala><span style=color:#66d9ef>class</span> <span style=color:#a6e22e>SScope</span>
+</span></code></pre></td>
+<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
+<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-scala data-lang=scala><span style=color:#66d9ef>class</span> <span style=color:#a6e22e>SScope</span>
   <span style=color:#f92672>...</span>
   <span style=color:#66d9ef>def</span> getStrict<span style=color:#f92672>(</span>key<span style=color:#66d9ef>:</span> <span style=color:#66d9ef>String</span><span style=color:#f92672>)</span><span style=color:#66d9ef>:</span> <span style=color:#66d9ef>Option</span><span style=color:#f92672>[</span><span style=color:#66d9ef>Any</span><span style=color:#f92672>]</span> <span style=color:#66d9ef>=</span> map<span style=color:#f92672>.</span>get<span style=color:#f92672>(</span>key<span style=color:#f92672>)</span>
   <span style=color:#f92672>...</span>
-</code></pre></td></tr></table></div></div><p>And I also added an unlinked view to it just to ease usage. This is just
+</code></pre></td></tr></table>
+</div>
+</div><p>And I also added an unlinked view to it just to ease usage. This is just
 a method that returns new SScope with no parent overriding getters and
 put to use map available in closure.
 So now I can walk down the list in DotAccess recursively and explicitly
@@ -54,11 +110,15 @@ override the implicit scope parameter. And everything automagically
 works. Well, not quite. If you have a function call, the arguments need
 to be evaluated in top scope. Not in the nested one like the function
 identifier. At first I didn&rsquo;t even think about this and only failing
-attempts at more complex recursion brought up this quite obvious bug.<br>So how to solve this? I could pre-evaluate all arguments, but I use
+attempts at more complex recursion brought up this quite obvious bug.<br>
+So how to solve this? I could pre-evaluate all arguments, but I use
 recursion to do this and it&rsquo;s two levels(at least) deeper from where
 dots happen. So no go. I need to carry on the outer scope. I overloaded
 the apply method from Evaluator so other code can still function(tests
-ftw!) and all in all it looks like this:</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
+ftw!) and all in all it looks like this:</p>
+<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2>
+<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
+<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
@@ -85,7 +145,9 @@ ftw!) and all in all it looks like this:</p><div class=highlight><div style=colo
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">25
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">26
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">27
-</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-scala data-lang=scala><span style=color:#66d9ef>def</span> apply<span style=color:#f92672>(</span>e<span style=color:#66d9ef>:</span> <span style=color:#66d9ef>List</span><span style=color:#f92672>[</span><span style=color:#66d9ef>Expression</span><span style=color:#f92672>])(</span><span style=color:#66d9ef>implicit</span> scope<span style=color:#66d9ef>:</span> <span style=color:#66d9ef>SScope</span><span style=color:#f92672>)</span><span style=color:#66d9ef>:</span> <span style=color:#66d9ef>Any</span> <span style=color:#f92672>=</span> <span style=color:#f92672>{</span>
+</span></code></pre></td>
+<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
+<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-scala data-lang=scala><span style=color:#66d9ef>def</span> apply<span style=color:#f92672>(</span>e<span style=color:#66d9ef>:</span> <span style=color:#66d9ef>List</span><span style=color:#f92672>[</span><span style=color:#66d9ef>Expression</span><span style=color:#f92672>])(</span><span style=color:#66d9ef>implicit</span> scope<span style=color:#66d9ef>:</span> <span style=color:#66d9ef>SScope</span><span style=color:#f92672>)</span><span style=color:#66d9ef>:</span> <span style=color:#66d9ef>Any</span> <span style=color:#f92672>=</span> <span style=color:#f92672>{</span>
   <span style=color:#f92672>(</span>e map apply<span style=color:#f92672>).</span>lastOption <span style=color:#66d9ef>match</span> <span style=color:#f92672>{</span>
     <span style=color:#66d9ef>case</span> <span style=color:#a6e22e>Some</span><span style=color:#f92672>(</span>a<span style=color:#f92672>)</span> <span style=color:#66d9ef>=&gt;</span> a
     <span style=color:#66d9ef>case</span> <span style=color:#a6e22e>None</span> <span style=color:#66d9ef>=&gt;</span> <span style=color:#f92672>()</span>
@@ -112,5 +174,20 @@ ftw!) and all in all it looks like this:</p><div class=highlight><div style=colo
     <span style=color:#f92672>}</span>
     step<span style=color:#f92672>(</span>list<span style=color:#f92672>)</span>
 <span style=color:#f92672>}</span>
-</code></pre></td></tr></table></div></div><p>So an optional aux scope is the answer. It doesn&rsquo;t seem pretty to me,
-but it does the job. </p><p>**next: **<a href=/posts/2012-09-29-creating-a-language-8>trying to go faster</a></p><hr><p>Last modified on 2012-10-08</p><a href=/posts/2012-09-29-creating-a-language-8/>Previous Making a programming language Part 8 - going faster</a><br><a href=/posts/2012-10-21-javascript-ftl/>Next Javascript faster than light! (well C actually)</a></div></body></html>
+</code></pre></td></tr></table>
+</div>
+</div><p>So an optional aux scope is the answer. It doesn&rsquo;t seem pretty to me,
+but it does the job. </p>
+<p>**next: **<a href=/posts/2012-09-29-creating-a-language-8>trying to go faster</a></p>
+<hr>
+<p>Last modified on 2012-10-08</p>
+<a href=/posts/2012-09-29-creating-a-language-8/>
+Previous Making a programming language Part 8 - going faster
+</a>
+<br>
+<a href=/posts/2012-10-21-javascript-ftl/>
+Next Javascript faster than light! (well C actually)
+</a>
+</div>
+</body>
+</html>

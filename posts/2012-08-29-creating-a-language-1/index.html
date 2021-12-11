@@ -1,9 +1,50 @@
-<!doctype html><html><head><title>Making a programming language Part 1 - how to start</title><meta charset=utf-8><meta name=X-UA-Compatible content="IE=edge"><meta name=google-site-verification content><meta content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=0" name=viewport><style>body{max-width:800px;margin:auto;line-height:1.6;font-size:18px;color:#444;padding:0 10px}h1,h2,h3{line-height:1.2}.nav a,.nav a:visited,.nav a:hover,.nav a:active{color:inherit}.nav .title{margin:0}.nav-sub{display:inline-block}.nav-item{margin:5px}.nav-sub-right{display:inline-block;float:right}.nav-icon{margin-right:5px}.main img{display:block;max-width:100%;margin:auto}.main pre{overflow:auto}" media="screen"></style></head><body><div class=nav><a href=/><h2 class=title>Andraž Bajt's blog</h2></a><div class=nav-sub><a class=nav-item href=/about>About Me</a>
-<a class=nav-item href=/>Archive</a></div><div class=nav-sub-right><a class=nav-icon href=https://github.com/edofic target=_blank><img src=/icons/github.svg width=20 height=20></a>
+<!doctype html><html>
+<head>
+<title>Making a programming language Part 1 - how to start</title>
+<meta charset=utf-8>
+<meta name=X-UA-Compatible content="IE=edge">
+<meta name=google-site-verification content>
+<meta content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=0" name=viewport>
+<style>body{max-width:800px;margin:auto;line-height:1.6;font-size:18px;color:#444;padding:0 10px}h1,h2,h3{line-height:1.2}.nav a,.nav a:visited,.nav a:hover,.nav a:active{color:inherit}.nav .title{margin:0}.nav-sub{display:inline-block}.nav-item{margin:5px}.nav-sub-right{display:inline-block;float:right}.nav-icon{margin-right:5px}.main img{display:block;max-width:100%;margin:auto}.main pre{overflow:auto}" media="screen"></style>
+</head>
+<body>
+<div class=nav>
+<a href=/><h2 class=title>Andraž Bajt's blog</h2></a>
+<div class=nav-sub>
+<a class=nav-item href=/about>
+About Me
+</a>
+<a class=nav-item href=/>
+Archive
+</a>
+</div>
+<div class=nav-sub-right>
+<a class=nav-icon href=https://github.com/edofic target=_blank><img src=/icons/github.svg width=20 height=20></a>
 <a class=nav-icon href=https://www.linkedin.com/in/edofic target=_blank><img src=/icons/linkedin.svg width=20 height=20></a>
 <a class=nav-icon href=https://twitter.com/edofic target=_blank><img src=/icons/twitter.svg width=20 height=20></a>
 <a class=nav-icon href=/index.xml target=_blank><img src=/icons/rss.svg width=20 height=20></a>
-<a class=nav-icon href=mailto:blog@edofic.com target=_blank><img src=/icons/email.svg width=20 height=20></a></div></div><hr><div class=main><h1>Making a programming language Part 1 - how to start</h1><time>2012-08-29</time><hr><h3 id=table-of-contents>Table of contents</h3><ul><li>Part 1 - how to start (this article)</li><li><a href=/posts/2012-08-30-creating-a-language-2>Part 2 - something that kinda works</a></li><li><a href=/posts/2012-08-31-creating-a-language3>Part 3 - adding features</a></li><li><a href=/posts/2012-09-01-creating-a-language4>Part 4 - Hello World</a></li><li><a href=/posts/2012-09-02-creating-a-language-5>Part 5 - variables and decisions</a></li><li><a href=/posts/2012-09-25-creating-a-language-6>Part 6 - user defined functions</a></li><li><a href=/posts/2012-09-27-creating-a-language-7a>Part 7a - constructors and objects</a></li><li><a href=/posts/2012-10-08-creating-a-language-7b>Part 7b - using objects</a></li><li><a href=/posts/2012-09-29-creating-a-language-8>Part 8 - going faster</a></li></ul><h4 id=source-version-for-this-posthttpsgithubcomedoficscrat-langtreeblogpost1and2><a href=https://github.com/edofic/scrat-lang/tree/blogpost1and2>Source version for this post</a></h4><p>Lately I gained some interest in <a href=http://en.wikipedia.org/wiki/Programming_language title="Programming language">programming
+<a class=nav-icon href=mailto:blog@edofic.com target=_blank><img src=/icons/email.svg width=20 height=20></a>
+</div>
+</div>
+<hr>
+<div class=main>
+<h1>Making a programming language Part 1 - how to start</h1>
+<time>2012-08-29</time>
+<hr>
+<h3 id=table-of-contents>Table of contents</h3>
+<ul>
+<li>Part 1 - how to start (this article)</li>
+<li><a href=/posts/2012-08-30-creating-a-language-2>Part 2 - something that kinda works</a></li>
+<li><a href=/posts/2012-08-31-creating-a-language3>Part 3 - adding features</a></li>
+<li><a href=/posts/2012-09-01-creating-a-language4>Part 4 - Hello World</a></li>
+<li><a href=/posts/2012-09-02-creating-a-language-5>Part 5 - variables and decisions</a></li>
+<li><a href=/posts/2012-09-25-creating-a-language-6>Part 6 - user defined functions</a></li>
+<li><a href=/posts/2012-09-27-creating-a-language-7a>Part 7a - constructors and objects</a></li>
+<li><a href=/posts/2012-10-08-creating-a-language-7b>Part 7b - using objects</a></li>
+<li><a href=/posts/2012-09-29-creating-a-language-8>Part 8 - going faster</a></li>
+</ul>
+<h4 id=source-version-for-this-posthttpsgithubcomedoficscrat-langtreeblogpost1and2><a href=https://github.com/edofic/scrat-lang/tree/blogpost1and2>Source version for this post</a></h4>
+<p>Lately I gained some interest in <a href=http://en.wikipedia.org/wiki/Programming_language title="Programming language">programming
 languages</a>
 and <a href=http://en.wikipedia.org/wiki/Compiler title=Compiler>compilers</a>. Those
 seem like quite some daunting monsters - just consider the amount of
@@ -15,7 +56,9 @@ available only in self-study but that&rsquo;s enough for me. I should mention
 the <a href=http://www.amazon.com/Compilers-Principles-Techniques-Alfred-Aho/dp/0201100886%3FSubscriptionId%3D0G81C5DAZ03ZR9WH9X82%26tag%3Dzem-20%26linkCode%3Dxm2%26camp%3D2025%26creative%3D165953%26creativeASIN%3D0201100886 title="Compilers: Principles, Techniques, and Tools">Dragon
 Book</a>,
 but I didn&rsquo;t read that(yet) so I can&rsquo;t comment. Compiler is basicaly
-<code>lexer -> parser -> optimiser -> code generator</code>.</p><h3 id=the-regex-approach>The regex approach</h3><p>I made it through introduction and lesson on <a href=http://en.wikipedia.org/wiki/Lexical_analysis title="Lexical analysis">lexical
+<code>lexer -> parser -> optimiser -> code generator</code>.</p>
+<h3 id=the-regex-approach>The regex approach</h3>
+<p>I made it through introduction and lesson on <a href=http://en.wikipedia.org/wiki/Lexical_analysis title="Lexical analysis">lexical
 analysis</a>
 and recognized <a href=http://en.wikipedia.org/wiki/Finite-state_machine title="Finite-state machine">finite
 automata</a>
@@ -23,18 +66,33 @@ as something from college(thank your professor!) and finnaly understood
 the connection from them to regex in java and the like(professor
 mentioned <a href=http://en.wikipedia.org/wiki/Regular_expression title="Regular expression">regular
 expressions</a>
-but no-one figured out what was the connection). </p><p>Feeling empowered by the newly obtained knowledge I set out to make a
+but no-one figured out what was the connection). </p>
+<p>Feeling empowered by the newly obtained knowledge I set out to make a
 lexer for my language.  I had no clear specification in mind since this
 is supposed to be a fun and creative project&mldr;I intended to just invent
-as I go.</p><p>My lexer was something like that(won&rsquo;t post the real code since
-I&rsquo;m embarrassed)</p><ul><li>create a bunch of java regex objects that all match to the start of the string</li><li>take the string and try to match it against all regexes</li><li>return an identifier object corresponding to the match</li><li>remove matched part of the string</li><li>loop</li></ul><p>Yeah, pretty horrible.I kinda abandoned this idea.</p><h3 id=the-recursive-descent-parserhttpenwikipediaorgwikirecursive_descent_parser-recursive-descent-parser-approach>The <a href=http://en.wikipedia.org/wiki/Recursive_descent_parser title="Recursive descent parser">recursive descent parser</a> approach</h3><p>By now I was into <a href=http://en.wikipedia.org/wiki/Functional_programming title="Functional programming">functional
+as I go.</p>
+<p>My lexer was something like that(won&rsquo;t post the real code since
+I&rsquo;m embarrassed)</p>
+<ul>
+<li>create a bunch of java regex objects that all match to the start of the string</li>
+<li>take the string and try to match it against all regexes</li>
+<li>return an identifier object corresponding to the match</li>
+<li>remove matched part of the string</li>
+<li>loop</li>
+</ul>
+<p>Yeah, pretty horrible.I kinda abandoned this idea.</p>
+<h3 id=the-recursive-descent-parserhttpenwikipediaorgwikirecursive_descent_parser-recursive-descent-parser-approach>The <a href=http://en.wikipedia.org/wiki/Recursive_descent_parser title="Recursive descent parser">recursive descent parser</a> approach</h3>
+<p>By now I was into <a href=http://en.wikipedia.org/wiki/Functional_programming title="Functional programming">functional
 programming</a>
 and <a href=http://www.scala-lang.org/ title="Scala (programming language)">scala
 language</a>.  I
 also watched lesson on recursive descent on coursera. The code was
 fugly, bunch of c++ with
 <a href=http://en.wikipedia.org/wiki/Pointer_%28computing%29 title="Pointer (computing)">pointer arithmetic</a> and
-side effects. I wan&rsquo;t pretty functions :(</p><p>I considered doing a framework for this in scala or perhaps java but&mldr;</p><p><a href=http://en.wikipedia.org/wiki/File%3AScala_logo.png><img src=http://upload.wikimedia.org/wikipedia/en/thumb/8/85/Scala_logo.png/300px-Scala_logo.png alt="Scala (programming language)"></a></p><p>Enter scala&rsquo;s <a href=http://en.wikipedia.org/wiki/Parser_combinator title="Parser combinator">parser
+side effects. I wan&rsquo;t pretty functions :(</p>
+<p>I considered doing a framework for this in scala or perhaps java but&mldr;</p>
+<p><a href=http://en.wikipedia.org/wiki/File%3AScala_logo.png><img src=http://upload.wikimedia.org/wikipedia/en/thumb/8/85/Scala_logo.png/300px-Scala_logo.png alt="Scala (programming language)"></a></p>
+<p>Enter scala&rsquo;s <a href=http://en.wikipedia.org/wiki/Parser_combinator title="Parser combinator">parser
 combinators</a>.
 I suggest reading
 <a href=http://www.codecommit.com/blog/scala/the-magic-behind-parser-combinators>this</a>
@@ -42,16 +100,33 @@ if you arent familiar. One of the reasons scala is awesome. You get
 parser &ldquo;generation&rdquo; baked into the standard library. Granted, it&rsquo;s a bit
 slow, but who cares - this is a project for fun not for general usage.
 On the PLUS side you get productions in the laguage itself and parsing
-is almost like magic.</p><p>And in scaladoc you even get a nice <a href=http://www.scala-lang.org/api/current/index.html#scala.util.parsing.combinator.RegexParsers>code
+is almost like magic.</p>
+<p>And in scaladoc you even get a nice <a href=http://www.scala-lang.org/api/current/index.html#scala.util.parsing.combinator.RegexParsers>code
 snippet</a>.
-What more can a geek ask for.</p><p>Well&mldr;.an
+What more can a geek ask for.</p>
+<p>Well&mldr;.an
 <a href=http://en.wikipedia.org/wiki/Abstract_syntax_tree title="Abstract syntax tree">AST</a>
 would be nice. Fortunately scala also provides action combinators that
 allow to <a href=http://en.wikipedia.org/wiki/Pattern_matching title="Pattern matching">pattern
 match</a>
 the <a href=http://en.wikipedia.org/wiki/Parsing title=Parsing>parsers</a> themself
-and map them into an AST. And it even isn&rsquo;t that complicated. </p><p>I recreated the grammar from the scaladoc example and added the action
+and map them into an AST. And it even isn&rsquo;t that complicated. </p>
+<p>I recreated the grammar from the scaladoc example and added the action
 combinators. The code block is kinda long, but I promise there is a
-short explanation at the bottom.</p><p>Notice the <code>^^</code> symbol. It sends the output from the parser  combinator
+short explanation at the bottom.</p>
+<p>Notice the <code>^^</code> symbol. It sends the output from the parser  combinator
 into my mapping function(anonymous). And I just create the case
-class.There is also an evaluator at the and&mldr;but that&rsquo;s in part 2.</p><p><strong><a href=/posts/2012-08-30-creating-a-language-2>next -> Part 2: something that kinda works</a></strong></p><hr><p>Last modified on 2012-08-29</p><a href=/about/>Previous About me</a><br><a href=/posts/2012-08-30-creating-a-language-2/>Next Making a programming language Part 2 - something that kinda works</a></div></body></html>
+class.There is also an evaluator at the and&mldr;but that&rsquo;s in part 2.</p>
+<p><strong><a href=/posts/2012-08-30-creating-a-language-2>next -> Part 2: something that kinda works</a></strong></p>
+<hr>
+<p>Last modified on 2012-08-29</p>
+<a href=/about/>
+Previous About me
+</a>
+<br>
+<a href=/posts/2012-08-30-creating-a-language-2/>
+Next Making a programming language Part 2 - something that kinda works
+</a>
+</div>
+</body>
+</html>

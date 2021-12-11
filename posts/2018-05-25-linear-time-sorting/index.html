@@ -1,54 +1,109 @@
-<!doctype html><html><head><title>Linear time sorting</title><meta charset=utf-8><meta name=X-UA-Compatible content="IE=edge"><meta name=google-site-verification content><meta content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=0" name=viewport><style>body{max-width:800px;margin:auto;line-height:1.6;font-size:18px;color:#444;padding:0 10px}h1,h2,h3{line-height:1.2}.nav a,.nav a:visited,.nav a:hover,.nav a:active{color:inherit}.nav .title{margin:0}.nav-sub{display:inline-block}.nav-item{margin:5px}.nav-sub-right{display:inline-block;float:right}.nav-icon{margin-right:5px}.main img{display:block;max-width:100%;margin:auto}.main pre{overflow:auto}" media="screen"></style></head><body><div class=nav><a href=/><h2 class=title>Andraž Bajt's blog</h2></a><div class=nav-sub><a class=nav-item href=/about>About Me</a>
-<a class=nav-item href=/>Archive</a></div><div class=nav-sub-right><a class=nav-icon href=https://github.com/edofic target=_blank><img src=/icons/github.svg width=20 height=20></a>
+<!doctype html><html>
+<head>
+<title>Linear time sorting</title>
+<meta charset=utf-8>
+<meta name=X-UA-Compatible content="IE=edge">
+<meta name=google-site-verification content>
+<meta content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=0" name=viewport>
+<style>body{max-width:800px;margin:auto;line-height:1.6;font-size:18px;color:#444;padding:0 10px}h1,h2,h3{line-height:1.2}.nav a,.nav a:visited,.nav a:hover,.nav a:active{color:inherit}.nav .title{margin:0}.nav-sub{display:inline-block}.nav-item{margin:5px}.nav-sub-right{display:inline-block;float:right}.nav-icon{margin-right:5px}.main img{display:block;max-width:100%;margin:auto}.main pre{overflow:auto}" media="screen"></style>
+</head>
+<body>
+<div class=nav>
+<a href=/><h2 class=title>Andraž Bajt's blog</h2></a>
+<div class=nav-sub>
+<a class=nav-item href=/about>
+About Me
+</a>
+<a class=nav-item href=/>
+Archive
+</a>
+</div>
+<div class=nav-sub-right>
+<a class=nav-icon href=https://github.com/edofic target=_blank><img src=/icons/github.svg width=20 height=20></a>
 <a class=nav-icon href=https://www.linkedin.com/in/edofic target=_blank><img src=/icons/linkedin.svg width=20 height=20></a>
 <a class=nav-icon href=https://twitter.com/edofic target=_blank><img src=/icons/twitter.svg width=20 height=20></a>
 <a class=nav-icon href=/index.xml target=_blank><img src=/icons/rss.svg width=20 height=20></a>
-<a class=nav-icon href=mailto:blog@edofic.com target=_blank><img src=/icons/email.svg width=20 height=20></a></div></div><hr><div class=main><h1>Linear time sorting</h1><time>2018-05-25</time><hr><p>Did you know that you can sort data in time linear with respect to the lenght
+<a class=nav-icon href=mailto:blog@edofic.com target=_blank><img src=/icons/email.svg width=20 height=20></a>
+</div>
+</div>
+<hr>
+<div class=main>
+<h1>Linear time sorting</h1>
+<time>2018-05-25</time>
+<hr>
+<p>Did you know that you can sort data in time linear with respect to the lenght
 of said data? Some people dismiss linear time sorts because they&rsquo;ve learned
-that <code>n log n</code> is the bottom bound for sorting an arbitrary input.</p><h1 id=but-n-log-n-is-optimal>But <em>n log n</em> is optimal!?</h1><p>Let&rsquo;s even sketch out a proof. Any function that sorts an array of elements
+that <code>n log n</code> is the bottom bound for sorting an arbitrary input.</p>
+<h1 id=but-n-log-n-is-optimal>But <em>n log n</em> is optimal!?</h1>
+<p>Let&rsquo;s even sketch out a proof. Any function that sorts an array of elements
 will in fact figure out a permutation of elements into a sorted order. Even if
 your algorithm does not work in terms of permutations it can be viewed as a
-black box that computes a permutation.</p><p>There are <code>n!</code> permutations of an array of length <code>n</code>. Each time you compare
+black box that computes a permutation.</p>
+<p>There are <code>n!</code> permutations of an array of length <code>n</code>. Each time you compare
 two elements there are three possible possible results (less, equal, greater).
 You can now imagine a decision tree that has a comparison at each inner node
 and a permutation at each leaf. An optimal tree will be balanced with a
 branching factor of 3. Because we know how many leaves we have (<code>n!</code>) we can
 compute the depth of the tree. Using Stirling&rsquo;s approximation for factorial
-immediately yields the result <code>n log n</code>. This means you have to do at least <code>n log n</code> comparisons to figure out the permutation.</p><p>But this is a theorem about <strong>comparison</strong> sorts. You cannot do less than <code>n log n</code> <em>comparisons</em> if all you have is pair-wise comparison. Assuming you can
+immediately yields the result <code>n log n</code>. This means you have to do at least <code>n log n</code> comparisons to figure out the permutation.</p>
+<p>But this is a theorem about <strong>comparison</strong> sorts. You cannot do less than <code>n log n</code> <em>comparisons</em> if all you have is pair-wise comparison. Assuming you can
 do comparisons in <code>O(1)</code> this makes your sort <code>O(n log n)</code>. But beware: if your
 comparison is not constant-time this is not true any more. If you are comparing
 arbitrary precision integers or strings your sort will be <code>O(k n log n)</code> where
-<code>k</code> is the length of a single element.</p><p>This still leaves place for improvement if you have more structure on your
+<code>k</code> is the length of a single element.</p>
+<p>This still leaves place for improvement if you have more structure on your
 data. I&rsquo;m going to talk about the algorithms that have access to the underlying
 binary representation of data. Sorting will mean sorting the bit-strings that
 represent the data. This is enough for most sorts since you can usually build
-up a surrogate key that conforms to this.</p><h1 id=a-naive-approach>A naive approach</h1><p>Let <code>A</code> be an input array of 16 bit integers. We allocate another array of size
-<code>2 ^ 16</code> - 64k. Then we loop over the input</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+up a surrogate key that conforms to this.</p>
+<h1 id=a-naive-approach>A naive approach</h1>
+<p>Let <code>A</code> be an input array of 16 bit integers. We allocate another array of size
+<code>2 ^ 16</code> - 64k. Then we loop over the input</p>
+<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2>
+<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
+<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
-</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-python data-lang=python>tmp <span style=color:#f92672>=</span> [<span style=color:#ae81ff>0</span>] <span style=color:#f92672>*</span> (<span style=color:#ae81ff>2</span> <span style=color:#f92672>**</span> <span style=color:#ae81ff>16</span>)
+</span></code></pre></td>
+<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
+<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-python data-lang=python>tmp <span style=color:#f92672>=</span> [<span style=color:#ae81ff>0</span>] <span style=color:#f92672>*</span> (<span style=color:#ae81ff>2</span> <span style=color:#f92672>**</span> <span style=color:#ae81ff>16</span>)
 <span style=color:#66d9ef>for</span> a <span style=color:#f92672>in</span> A:
   tmp[a] <span style=color:#f92672>+=</span> <span style=color:#ae81ff>1</span>
-</code></pre></td></tr></table></div></div><p>This is enough to spit out the sorted array</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</code></pre></td></tr></table>
+</div>
+</div><p>This is enough to spit out the sorted array</p>
+<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2>
+<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
+<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">4
-</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-python data-lang=python>var sorted <span style=color:#f92672>=</span> [];
+</span></code></pre></td>
+<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
+<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-python data-lang=python>var sorted <span style=color:#f92672>=</span> [];
 <span style=color:#66d9ef>for</span> i, c <span style=color:#f92672>in</span> enumerate(A):
   <span style=color:#66d9ef>for</span> _ <span style=color:#f92672>in</span> range(c):
     sorted<span style=color:#f92672>.</span>append(i)
-</code></pre></td></tr></table></div></div><p>And we didn&rsquo;t use comparisons! I will even argue this is linear with respect to
+</code></pre></td></tr></table>
+</div>
+</div><p>And we didn&rsquo;t use comparisons! I will even argue this is linear with respect to
 the length of the input array. We allocated an array of constant size. This is
 <code>O(1)</code>. Then we did one operation per input element. And another when
 outputting it. It&rsquo;s a hand-wavy argument but it&rsquo;s only for illustration. A
 slightly less naive version of this is known as counting sort and actually
-performs really well on some types of input.</p><h1 id=a-generalization>A generalization</h1><p>What if we want to use different size of integers? If we just used this
-algorithm for 64 bit integers we would run out of space before even starting.</p><p>We can tackle this problem by looking at a constant number of bits of each
+performs really well on some types of input.</p>
+<h1 id=a-generalization>A generalization</h1>
+<p>What if we want to use different size of integers? If we just used this
+algorithm for 64 bit integers we would run out of space before even starting.</p>
+<p>We can tackle this problem by looking at a constant number of bits of each
 element at a time. The simplest is just a single bit, but a byte works out
 quite well in practice. So now we sort our array by the least significant byte.
 We now cannot use the naive counting because index does not tell us anything
 about the remaining bytes. We have to replace counters by buckets that hold
-elements.</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+elements.</p>
+<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2>
+<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
+<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">4
@@ -56,7 +111,9 @@ elements.</p><div class=highlight><div style=color:#f8f8f2;background-color:#272
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">6
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">7
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">8
-</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-python data-lang=python><span style=color:#66d9ef>def</span> <span style=color:#a6e22e>get_byte</span>(a, i):
+</span></code></pre></td>
+<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
+<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-python data-lang=python><span style=color:#66d9ef>def</span> <span style=color:#a6e22e>get_byte</span>(a, i):
   <span style=color:#66d9ef>return</span> (a <span style=color:#f92672>&gt;&gt;</span> (<span style=color:#ae81ff>8</span> <span style=color:#f92672>*</span> i)) <span style=color:#f92672>&amp;</span> <span style=color:#ae81ff>0xff</span>
 
 <span style=color:#66d9ef>def</span> <span style=color:#a6e22e>one_pass</span>(ar, i):
@@ -64,22 +121,34 @@ elements.</p><div class=highlight><div style=color:#f8f8f2;background-color:#272
   <span style=color:#66d9ef>for</span> a <span style=color:#f92672>in</span> ar:
     buckets[get_byte(a, i)]<span style=color:#f92672>.</span>append(a)
   <span style=color:#66d9ef>return</span> sum(buckets, [])
-</code></pre></td></tr></table></div></div><p>And the sorted result is just the concatenation of the buckets. The good thing
+</code></pre></td></tr></table>
+</div>
+</div><p>And the sorted result is just the concatenation of the buckets. The good thing
 about this is that it&rsquo;s a stable sort. It will preserve the order of elements
 that it considers equal (at one byte that is). So we can repeat this with other
 bytes (going from right to left) and we will end up with a sorted array. This
 was not very intuitive to me but if you work through an example by hand you
-quickly figure it out.</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+quickly figure it out.</p>
+<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2>
+<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
+<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">4
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">5
-</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-python data-lang=python><span style=color:#66d9ef>def</span> <span style=color:#a6e22e>sort</span>(ar):
+</span></code></pre></td>
+<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
+<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-python data-lang=python><span style=color:#66d9ef>def</span> <span style=color:#a6e22e>sort</span>(ar):
   num_bytes <span style=color:#f92672>=</span> int(math<span style=color:#f92672>.</span>ceil(math<span style=color:#f92672>.</span>log(max(ar), <span style=color:#ae81ff>2</span>)))
   <span style=color:#66d9ef>for</span> i <span style=color:#f92672>in</span> range(num_bytes):
     ar <span style=color:#f92672>=</span> one_pass(ar, i)
   <span style=color:#66d9ef>return</span> ar
-</code></pre></td></tr></table></div></div><p>We can compact it all into one simple function</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</code></pre></td></tr></table>
+</div>
+</div><p>We can compact it all into one simple function</p>
+<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2>
+<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
+<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">4
@@ -87,7 +156,9 @@ quickly figure it out.</p><div class=highlight><div style=color:#f8f8f2;backgrou
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">6
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">7
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">8
-</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-python data-lang=python><span style=color:#66d9ef>def</span> <span style=color:#a6e22e>sort</span>(ar):
+</span></code></pre></td>
+<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
+<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-python data-lang=python><span style=color:#66d9ef>def</span> <span style=color:#a6e22e>sort</span>(ar):
   num_bytes <span style=color:#f92672>=</span> int(math<span style=color:#f92672>.</span>ceil(math<span style=color:#f92672>.</span>log(max(ar), <span style=color:#ae81ff>2</span>)))
   <span style=color:#66d9ef>for</span> i <span style=color:#f92672>in</span> range(num_bytes):
     buckets <span style=color:#f92672>=</span> [[] <span style=color:#66d9ef>for</span> _ <span style=color:#f92672>in</span> range(<span style=color:#ae81ff>256</span>)]
@@ -95,7 +166,9 @@ quickly figure it out.</p><div class=highlight><div style=color:#f8f8f2;backgrou
       buckets[(a <span style=color:#f92672>&gt;&gt;</span> (<span style=color:#ae81ff>8</span> <span style=color:#f92672>*</span> i)) <span style=color:#f92672>&amp;</span> <span style=color:#ae81ff>0xff</span>]<span style=color:#f92672>.</span>append(a)
     ar <span style=color:#f92672>=</span> sum(buckets, [])
   <span style=color:#66d9ef>return</span> ar
-</code></pre></td></tr></table></div></div><p>This is known as Least Significant Byte (LSB) Radix Sort. Let&rsquo;s take a quick
+</code></pre></td></tr></table>
+</div>
+</div><p>This is known as Least Significant Byte (LSB) Radix Sort. Let&rsquo;s take a quick
 look at it&rsquo;s complexity. It does a constant amount of work (one append) per
 each byte of input. So it&rsquo;s linear with respect to number of input bytes. For
 fixed precision numbers this means it&rsquo;s even linear with respect to number of
@@ -103,7 +176,9 @@ input elements. Great! This is very simple. Well&mldr; not so quick. There&rsquo
 variations and tradeoffs to be made. One I quote like is the <a href=https://en.wikipedia.org/wiki/American_flag_sort>American Flag
 Sort</a> - which is an in-place
 top down variation. This entails that you can use it to efficiently sort things
-other than integers -> if you can discriminate them into equality buckets.</p><h1 id=conclusion>Conclusion</h1><p>I think linear time sorting is under-appreciated and could be used more
+other than integers -> if you can discriminate them into equality buckets.</p>
+<h1 id=conclusion>Conclusion</h1>
+<p>I think linear time sorting is under-appreciated and could be used more
 problems more efficiently but it isn&rsquo;t easily accessible enough. I only became
 interested in the topic after hearing <a href="https://www.youtube.com/watch?v=cB8DapKQz-I">Edward Kmett&rsquo;s awesome talk on the
 topic</a> He also wrote <a href=https://hackage.haskell.org/package/discrimination>an amazing
@@ -111,4 +186,16 @@ library for Haskell</a> that
 makes linear time sorting and grouping trivial to use when you need it. This is
 the only library of the sort that I know of, buy as you&rsquo;ve seen above, even
 rolling your own is not that hard. So if that extra <em>log n</em> is bothering you,
-remember the radix.</p><hr><p>Last modified on 2018-05-25</p><a href=/posts/2018-01-25-jira-gsheet/>Previous Integrating Jira into Google Sheets</a><br><a href=/posts/2020-01-15-hugo/>Next Moving to Hugo</a></div></body></html>
+remember the radix.</p>
+<hr>
+<p>Last modified on 2018-05-25</p>
+<a href=/posts/2018-01-25-jira-gsheet/>
+Previous Integrating Jira into Google Sheets
+</a>
+<br>
+<a href=/posts/2020-01-15-hugo/>
+Next Moving to Hugo
+</a>
+</div>
+</body>
+</html>

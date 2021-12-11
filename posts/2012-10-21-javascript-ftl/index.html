@@ -1,10 +1,40 @@
-<!doctype html><html><head><title>Javascript faster than light! (well C actually)</title><meta charset=utf-8><meta name=X-UA-Compatible content="IE=edge"><meta name=google-site-verification content><meta content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=0" name=viewport><style>body{max-width:800px;margin:auto;line-height:1.6;font-size:18px;color:#444;padding:0 10px}h1,h2,h3{line-height:1.2}.nav a,.nav a:visited,.nav a:hover,.nav a:active{color:inherit}.nav .title{margin:0}.nav-sub{display:inline-block}.nav-item{margin:5px}.nav-sub-right{display:inline-block;float:right}.nav-icon{margin-right:5px}.main img{display:block;max-width:100%;margin:auto}.main pre{overflow:auto}" media="screen"></style></head><body><div class=nav><a href=/><h2 class=title>Andraž Bajt's blog</h2></a><div class=nav-sub><a class=nav-item href=/about>About Me</a>
-<a class=nav-item href=/>Archive</a></div><div class=nav-sub-right><a class=nav-icon href=https://github.com/edofic target=_blank><img src=/icons/github.svg width=20 height=20></a>
+<!doctype html><html>
+<head>
+<title>Javascript faster than light! (well C actually)</title>
+<meta charset=utf-8>
+<meta name=X-UA-Compatible content="IE=edge">
+<meta name=google-site-verification content>
+<meta content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=0" name=viewport>
+<style>body{max-width:800px;margin:auto;line-height:1.6;font-size:18px;color:#444;padding:0 10px}h1,h2,h3{line-height:1.2}.nav a,.nav a:visited,.nav a:hover,.nav a:active{color:inherit}.nav .title{margin:0}.nav-sub{display:inline-block}.nav-item{margin:5px}.nav-sub-right{display:inline-block;float:right}.nav-icon{margin-right:5px}.main img{display:block;max-width:100%;margin:auto}.main pre{overflow:auto}" media="screen"></style>
+</head>
+<body>
+<div class=nav>
+<a href=/><h2 class=title>Andraž Bajt's blog</h2></a>
+<div class=nav-sub>
+<a class=nav-item href=/about>
+About Me
+</a>
+<a class=nav-item href=/>
+Archive
+</a>
+</div>
+<div class=nav-sub-right>
+<a class=nav-icon href=https://github.com/edofic target=_blank><img src=/icons/github.svg width=20 height=20></a>
 <a class=nav-icon href=https://www.linkedin.com/in/edofic target=_blank><img src=/icons/linkedin.svg width=20 height=20></a>
 <a class=nav-icon href=https://twitter.com/edofic target=_blank><img src=/icons/twitter.svg width=20 height=20></a>
 <a class=nav-icon href=/index.xml target=_blank><img src=/icons/rss.svg width=20 height=20></a>
-<a class=nav-icon href=mailto:blog@edofic.com target=_blank><img src=/icons/email.svg width=20 height=20></a></div></div><hr><div class=main><h1>Javascript faster than light! (well C actually)</h1><time>2012-10-21</time><hr><p><a href=http://www.flickr.com/photos/42149364@N03/6772086623><img src=http://farm8.static.flickr.com/7156/6772086623_646ee6ab31_m.jpg alt="157/365. Acorn - Oak Nut - The Scrat Problem."></a></p><p>Disclaimer: I never was a fan of js, but I&rsquo;ve come to think it&rsquo;s quite
-AWESOME!</p><p>Anyway I <a href=/posts/2012-08-29-creating-a-language-1>invented my own toy language
+<a class=nav-icon href=mailto:blog@edofic.com target=_blank><img src=/icons/email.svg width=20 height=20></a>
+</div>
+</div>
+<hr>
+<div class=main>
+<h1>Javascript faster than light! (well C actually)</h1>
+<time>2012-10-21</time>
+<hr>
+<p><a href=http://www.flickr.com/photos/42149364@N03/6772086623><img src=http://farm8.static.flickr.com/7156/6772086623_646ee6ab31_m.jpg alt="157/365. Acorn - Oak Nut - The Scrat Problem."></a></p>
+<p>Disclaimer: I never was a fan of js, but I&rsquo;ve come to think it&rsquo;s quite
+AWESOME!</p>
+<p>Anyway I <a href=/posts/2012-08-29-creating-a-language-1>invented my own toy language
 scrat</a>
 recently. And I now I want it to go fast and do cool stuff. So I went on
 to compile it. Well more appropriate term would be
@@ -13,7 +43,8 @@ to compile it. Well more appropriate term would be
 <a href=http://en.wikipedia.org/wiki/JavaScript title=JavaScript>JavaScript</a>. And
 then I use node.js to run it - browser test sometime in the future.
 Enough about that, I&rsquo;ll be doing a post when I get everything to run
-under js.</p><p>My original purpuse for translation was speed as node uses V8 and that&rsquo;s
+under js.</p>
+<p>My original purpuse for translation was speed as node uses V8 and that&rsquo;s
 quite speedy. So I did a quick test. I wrote a simple
 recursive <a href=http://en.wikipedia.org/wiki/Fibonacci_number title="Fibonacci number">Fibonacci sequence</a>
 generator. The cool thing about this is that it takes <code>fib(n)</code> steps to
@@ -22,22 +53,36 @@ I haven&rsquo;t implemented <a href=http://en.wikipedia.org/wiki/Tail_call title
 And then I wrote same thing in js an noticed it&rsquo;s quite a bit faster.
 Great. Now halfway through
 <a href=http://en.wikipedia.org/wiki/Implementation title=Implementation>implementation</a>(more
-like 80%) I decided to do a real benchmark.</p><h3 id=scrat>Scrat</h3><p>Here&rsquo;s the source</p><pre><code>func fib(n) if n&lt;2 then 1 else fib(n-1) + fib(n-2)
+like 80%) I decided to do a real benchmark.</p>
+<h3 id=scrat>Scrat</h3>
+<p>Here&rsquo;s the source</p>
+<pre><code>func fib(n) if n&lt;2 then 1 else fib(n-1) + fib(n-2)
 println(fib(30))
-</code></pre><p>Neat huh?</p><p>And then I timed this repeatedly and all results were about the same:</p><pre><code>time scrat fib.scrat
+</code></pre>
+<p>Neat huh?</p>
+<p>And then I timed this repeatedly and all results were about the same:</p>
+<pre><code>time scrat fib.scrat
 1346269.0
 real 0m3.254s
 user 0m3.652s
 sys 0m0.096s
-</code></pre><p>Of course there is some startup overhead that must be taken into account
-so I ran an empty file</p><pre><code>time scrat empty
+</code></pre>
+<p>Of course there is some startup overhead that must be taken into account
+so I ran an empty file</p>
+<pre><code>time scrat empty
 real 0m0.420s
 user 0m0.448s
 sys 0m0.032s
-</code></pre><p>To obtain total <a href=http://en.wikipedia.org/wiki/Time_complexity title="Time complexity">running
+</code></pre>
+<p>To obtain total <a href=http://en.wikipedia.org/wiki/Time_complexity title="Time complexity">running
 time</a> of
-3254 - 420 = 2830ms</p><h3 id=javascript>Javascript</h3><p>Then I translated my source into js. Below is the untouched(apart from
-whitespace) result</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+3254 - 420 = 2830ms</p>
+<h3 id=javascript>Javascript</h3>
+<p>Then I translated my source into js. Below is the untouched(apart from
+whitespace) result</p>
+<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2>
+<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
+<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">4
@@ -46,7 +91,9 @@ whitespace) result</p><div class=highlight><div style=color:#f8f8f2;background-c
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">7
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">8
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">9
-</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-javascript data-lang=javascript><span style=color:#66d9ef>function</span> <span style=color:#a6e22e>fib</span>(<span style=color:#a6e22e>n</span>){
+</span></code></pre></td>
+<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
+<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-javascript data-lang=javascript><span style=color:#66d9ef>function</span> <span style=color:#a6e22e>fib</span>(<span style=color:#a6e22e>n</span>){
   <span style=color:#66d9ef>return</span> (<span style=color:#66d9ef>function</span>(){
     <span style=color:#66d9ef>if</span>(<span style=color:#a6e22e>n</span><span style=color:#f92672>&lt;</span><span style=color:#ae81ff>2.0</span>){
       <span style=color:#66d9ef>return</span> <span style=color:#ae81ff>1.0</span>;
@@ -55,31 +102,47 @@ whitespace) result</p><div class=highlight><div style=color:#f8f8f2;background-c
     }
   }());
 }
-</code></pre></td></tr></table></div></div><p>In scrat ifs are expressions too, so the if is wrapped in an <a href=http://en.wikipedia.org/wiki/Anonymous_function title="Anonymous function">anonymous
+</code></pre></td></tr></table>
+</div>
+</div><p>In scrat ifs are expressions too, so the if is wrapped in an <a href=http://en.wikipedia.org/wiki/Anonymous_function title="Anonymous function">anonymous
 function</a>.
 In spite of additional invocations, running time decreased dramaticaly:
-128ms.</p><p>Real reason for this test was my wory of if overhead so I did a by-hand
-implementation</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+128ms.</p>
+<p>Real reason for this test was my wory of if overhead so I did a by-hand
+implementation</p>
+<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2>
+<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
+<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">4
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">5
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">6
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">7
-</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-javascript data-lang=javascript><span style=color:#66d9ef>function</span> <span style=color:#a6e22e>fib</span>(<span style=color:#a6e22e>n</span>){
+</span></code></pre></td>
+<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
+<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-javascript data-lang=javascript><span style=color:#66d9ef>function</span> <span style=color:#a6e22e>fib</span>(<span style=color:#a6e22e>n</span>){
   <span style=color:#66d9ef>if</span>(<span style=color:#a6e22e>n</span><span style=color:#f92672>&lt;</span><span style=color:#ae81ff>2</span>){
     <span style=color:#66d9ef>return</span> <span style=color:#ae81ff>1</span>;
   } <span style=color:#66d9ef>else</span> {
     <span style=color:#66d9ef>return</span> <span style=color:#a6e22e>fib</span>(<span style=color:#a6e22e>n</span><span style=color:#f92672>-</span><span style=color:#ae81ff>1</span>)<span style=color:#f92672>+</span><span style=color:#a6e22e>fib</span>(<span style=color:#a6e22e>n</span><span style=color:#f92672>-</span><span style=color:#ae81ff>2</span>);
   }
 }
-</code></pre></td></tr></table></div></div><p>Running time: 35ms.
+</code></pre></td></tr></table>
+</div>
+</div><p>Running time: 35ms.
 Auch! Wrapping the if statement into an if expression multiplies running
 time by almost 4!! But it&rsquo;s still 22 times faster than my interpreter.
-(My code sucks I guess)</p><h3 id=c>C</h3><p>At this point you should be wondering what does this has to do with C.
+(My code sucks I guess)</p>
+<h3 id=c>C</h3>
+<p>At this point you should be wondering what does this has to do with C.
 Not much. I tried to do an implementation in C just for kicks. To see
 how much overhead my by-head function still has. I was assuming C
-program will go in something like 10ms.</p><p>My best attempt(in the same style: recursion, if expression)</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
+program will go in something like 10ms.</p>
+<p>My best attempt(in the same style: recursion, if expression)</p>
+<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2>
+<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
+<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
@@ -89,7 +152,9 @@ program will go in something like 10ms.</p><p>My best attempt(in the same style:
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
-</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-c data-lang=c><span style=color:#75715e>#include</span>
+</span></code></pre></td>
+<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
+<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-c data-lang=c><span style=color:#75715e>#include</span>
 
 <span style=color:#75715e>int fib(int n){</span><span style=color:#75715e>
 </span><span style=color:#75715e></span>  <span style=color:#66d9ef>return</span> (n<span style=color:#f92672>&lt;</span><span style=color:#ae81ff>2</span>)<span style=color:#f92672>?</span><span style=color:#ae81ff>1</span><span style=color:#f92672>:</span>fib(n<span style=color:#f92672>-</span><span style=color:#ae81ff>1</span>)<span style=color:#f92672>+</span>fib(n<span style=color:#f92672>-</span><span style=color:#ae81ff>2</span>);
@@ -99,14 +164,32 @@ program will go in something like 10ms.</p><p>My best attempt(in the same style:
   printf(<span style=color:#e6db74>&#34;%d&#34;</span>, fib(<span style=color:#ae81ff>39</span>));
   <span style=color:#66d9ef>return</span> <span style=color:#ae81ff>0</span>;
 }
-</code></pre></td></tr></table></div></div><p>Startup time is neglectible here, since it doesn&rsquo;t load an interpreter
+</code></pre></td></tr></table>
+</div>
+</div><p>Startup time is neglectible here, since it doesn&rsquo;t load an interpreter
 or a framework. So here&rsquo;s the full running time..ready?
 <strong>634 fricking miliseconds!</strong>
 That&rsquo;s only 4 times faster than my interpreted code. And 18 times slower
 than javascript. I&rsquo;m not sure how is this even possible. It&rsquo;s probably
 just my bad implementation. But rules were: keep the style.
-So I hereby declare: js is faster than C. (in this microbenchmark)</p><h1 id=update>UPDATE</h1><p>I did something terribly wrong. Look at the C code closely. Its <code>fib(39)</code>
+So I hereby declare: js is faster than C. (in this microbenchmark)</p>
+<h1 id=update>UPDATE</h1>
+<p>I did something terribly wrong. Look at the C code closely. Its <code>fib(39)</code>
 where in scrat and js I called <code>fib(30)</code>. I just compared apples and
-oranges. </p><p>Fixing the C code I got average 20ms. A bit faster than node. So it
+oranges. </p>
+<p>Fixing the C code I got average 20ms. A bit faster than node. So it
 turns out javascript isn&rsquo;t faster than light(c) but it&rsquo;s pretty damn
-close. </p><p>I guess this whole post is now wrong, but it was fun to do nonetheless. </p><hr><p>Last modified on 2012-10-21</p><a href=/posts/2012-10-08-creating-a-language-7b/>Previous Making a programming language Part 7b - using objects</a><br><a href=/posts/2012-10-22-scala-android/>Next Setting up for scala development on Android</a></div></body></html>
+close. </p>
+<p>I guess this whole post is now wrong, but it was fun to do nonetheless. </p>
+<hr>
+<p>Last modified on 2012-10-21</p>
+<a href=/posts/2012-10-08-creating-a-language-7b/>
+Previous Making a programming language Part 7b - using objects
+</a>
+<br>
+<a href=/posts/2012-10-22-scala-android/>
+Next Setting up for scala development on Android
+</a>
+</div>
+</body>
+</html>

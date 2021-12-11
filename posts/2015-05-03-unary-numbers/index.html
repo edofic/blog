@@ -1,42 +1,116 @@
-<!doctype html><html><head><title>Lazy unary numbers</title><meta charset=utf-8><meta name=X-UA-Compatible content="IE=edge"><meta name=google-site-verification content><meta content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=0" name=viewport><style>body{max-width:800px;margin:auto;line-height:1.6;font-size:18px;color:#444;padding:0 10px}h1,h2,h3{line-height:1.2}.nav a,.nav a:visited,.nav a:hover,.nav a:active{color:inherit}.nav .title{margin:0}.nav-sub{display:inline-block}.nav-item{margin:5px}.nav-sub-right{display:inline-block;float:right}.nav-icon{margin-right:5px}.main img{display:block;max-width:100%;margin:auto}.main pre{overflow:auto}" media="screen"></style></head><body><div class=nav><a href=/><h2 class=title>Andraž Bajt's blog</h2></a><div class=nav-sub><a class=nav-item href=/about>About Me</a>
-<a class=nav-item href=/>Archive</a></div><div class=nav-sub-right><a class=nav-icon href=https://github.com/edofic target=_blank><img src=/icons/github.svg width=20 height=20></a>
+<!doctype html><html>
+<head>
+<title>Lazy unary numbers</title>
+<meta charset=utf-8>
+<meta name=X-UA-Compatible content="IE=edge">
+<meta name=google-site-verification content>
+<meta content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=0" name=viewport>
+<style>body{max-width:800px;margin:auto;line-height:1.6;font-size:18px;color:#444;padding:0 10px}h1,h2,h3{line-height:1.2}.nav a,.nav a:visited,.nav a:hover,.nav a:active{color:inherit}.nav .title{margin:0}.nav-sub{display:inline-block}.nav-item{margin:5px}.nav-sub-right{display:inline-block;float:right}.nav-icon{margin-right:5px}.main img{display:block;max-width:100%;margin:auto}.main pre{overflow:auto}" media="screen"></style>
+</head>
+<body>
+<div class=nav>
+<a href=/><h2 class=title>Andraž Bajt's blog</h2></a>
+<div class=nav-sub>
+<a class=nav-item href=/about>
+About Me
+</a>
+<a class=nav-item href=/>
+Archive
+</a>
+</div>
+<div class=nav-sub-right>
+<a class=nav-icon href=https://github.com/edofic target=_blank><img src=/icons/github.svg width=20 height=20></a>
 <a class=nav-icon href=https://www.linkedin.com/in/edofic target=_blank><img src=/icons/linkedin.svg width=20 height=20></a>
 <a class=nav-icon href=https://twitter.com/edofic target=_blank><img src=/icons/twitter.svg width=20 height=20></a>
 <a class=nav-icon href=/index.xml target=_blank><img src=/icons/rss.svg width=20 height=20></a>
-<a class=nav-icon href=mailto:blog@edofic.com target=_blank><img src=/icons/email.svg width=20 height=20></a></div></div><hr><div class=main><h1>Lazy unary numbers</h1><time>2015-05-03</time><hr><p>We are used to encoding numbers on computers in binary. Binary is the &ldquo;simplest&rdquo; base that yields logarithmic length though it <a href=http://web.williams.edu/Mathematics/sjmiller/public_html/105Sp10/addcomments/Hayes_ThirdBase.htm>may not be optimal</a>. But can we do simpler? How about unary?</p><p>Unary is often used with Turing machines where we don&rsquo;t care for efficiency and I will assume this same stance. Let&rsquo;s forget about efficiency and explore what can unary numbers do that binary can&rsquo;t. Specifically lazy unary numbers as otherwise the systems are equivalent. I&rsquo;ll be using Haskell as it is lazy by default and thus a good fit.</p><p>Let&rsquo;s start off with a simple definition.</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
-</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-haskell data-lang=haskell><span style=color:#66d9ef>data</span> <span style=color:#66d9ef>Nat</span> <span style=color:#f92672>=</span> <span style=color:#66d9ef>Zero</span> <span style=color:#f92672>|</span> <span style=color:#66d9ef>Succ</span> <span style=color:#66d9ef>Nat</span> <span style=color:#66d9ef>deriving</span> <span style=color:#66d9ef>Eq</span>
-</code></pre></td></tr></table></div></div><p>This are natural numbers as usually defined in mathematics. An example value (3) in this encoding would be <code>Succ $ Succ $ Succ Zero</code>. For the sake of simplicity I will from now on assume that we do not use bottom values that correspond to errors.</p><h2 id=infinity>Infinity</h2><p>The first interesting property of this representation is a simple encoding of infinity in finite space.</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+<a class=nav-icon href=mailto:blog@edofic.com target=_blank><img src=/icons/email.svg width=20 height=20></a>
+</div>
+</div>
+<hr>
+<div class=main>
+<h1>Lazy unary numbers</h1>
+<time>2015-05-03</time>
+<hr>
+<p>We are used to encoding numbers on computers in binary. Binary is the &ldquo;simplest&rdquo; base that yields logarithmic length though it <a href=http://web.williams.edu/Mathematics/sjmiller/public_html/105Sp10/addcomments/Hayes_ThirdBase.htm>may not be optimal</a>. But can we do simpler? How about unary?</p>
+<p>Unary is often used with Turing machines where we don&rsquo;t care for efficiency and I will assume this same stance. Let&rsquo;s forget about efficiency and explore what can unary numbers do that binary can&rsquo;t. Specifically lazy unary numbers as otherwise the systems are equivalent. I&rsquo;ll be using Haskell as it is lazy by default and thus a good fit.</p>
+<p>Let&rsquo;s start off with a simple definition.</p>
+<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2>
+<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
+<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
+<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-haskell data-lang=haskell><span style=color:#66d9ef>data</span> <span style=color:#66d9ef>Nat</span> <span style=color:#f92672>=</span> <span style=color:#66d9ef>Zero</span> <span style=color:#f92672>|</span> <span style=color:#66d9ef>Succ</span> <span style=color:#66d9ef>Nat</span> <span style=color:#66d9ef>deriving</span> <span style=color:#66d9ef>Eq</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>This are natural numbers as usually defined in mathematics. An example value (3) in this encoding would be <code>Succ $ Succ $ Succ Zero</code>. For the sake of simplicity I will from now on assume that we do not use bottom values that correspond to errors.</p>
+<h2 id=infinity>Infinity</h2>
+<p>The first interesting property of this representation is a simple encoding of infinity in finite space.</p>
+<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2>
+<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
+<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
-</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-haskell data-lang=haskell><span style=color:#a6e22e>nInf</span> <span style=color:#f92672>::</span> <span style=color:#66d9ef>Nat</span>
+</span></code></pre></td>
+<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
+<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-haskell data-lang=haskell><span style=color:#a6e22e>nInf</span> <span style=color:#f92672>::</span> <span style=color:#66d9ef>Nat</span>
 <span style=color:#a6e22e>nInf</span> <span style=color:#f92672>=</span> <span style=color:#66d9ef>Succ</span> nInf
-</code></pre></td></tr></table></div></div><p>This ties the knot and only constructs one <code>Succ</code> that points to itself. The interesting (and useless) bit is that we cannot observe this in a given value! At least not in pure functions. Given a <code>Nat</code> we cannot possibly know if it is infinite or just very large.</p><h2 id=equality-and-ordering>Equality and ordering</h2><p>I just derived <code>Eq</code> before not giving it much thought. But notice now that comparison between two <code>Nat</code>s may not return if both are infinite. However if one is finite we can detect that the two are not equal. All is not lost. We can even do more and define ordering</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</code></pre></td></tr></table>
+</div>
+</div><p>This ties the knot and only constructs one <code>Succ</code> that points to itself. The interesting (and useless) bit is that we cannot observe this in a given value! At least not in pure functions. Given a <code>Nat</code> we cannot possibly know if it is infinite or just very large.</p>
+<h2 id=equality-and-ordering>Equality and ordering</h2>
+<p>I just derived <code>Eq</code> before not giving it much thought. But notice now that comparison between two <code>Nat</code>s may not return if both are infinite. However if one is finite we can detect that the two are not equal. All is not lost. We can even do more and define ordering</p>
+<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2>
+<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
+<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">4
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">5
-</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-haskell data-lang=haskell><span style=color:#66d9ef>instance</span> <span style=color:#66d9ef>Ord</span> <span style=color:#66d9ef>Nat</span> <span style=color:#66d9ef>where</span>
+</span></code></pre></td>
+<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
+<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-haskell data-lang=haskell><span style=color:#66d9ef>instance</span> <span style=color:#66d9ef>Ord</span> <span style=color:#66d9ef>Nat</span> <span style=color:#66d9ef>where</span>
   <span style=color:#66d9ef>Zero</span> `compare` <span style=color:#66d9ef>Zero</span> <span style=color:#f92672>=</span> <span style=color:#66d9ef>EQ</span>
   <span style=color:#66d9ef>Zero</span> `compare` <span style=color:#66d9ef>Succ</span> <span style=color:#66d9ef>_</span> <span style=color:#f92672>=</span> <span style=color:#66d9ef>LT</span>
   <span style=color:#66d9ef>Succ</span> <span style=color:#66d9ef>_</span> `compare` <span style=color:#66d9ef>Zero</span> <span style=color:#f92672>=</span> <span style=color:#66d9ef>GT</span>
   <span style=color:#66d9ef>Succ</span> n `compare` <span style=color:#66d9ef>Succ</span> m <span style=color:#f92672>=</span> n `compare` m
-</code></pre></td></tr></table></div></div><p>This does the obvious thing: it &ldquo;zips&rdquo; the two numbers together and finds a differing spot if there is any. Again it will loop forever if both numbers are infinite.</p><h2 id=more-instances>More instances</h2><p>This type is also enumerable which can be implemented by an isomorphisim with integer
-via an <code>Enum</code> instance</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</code></pre></td></tr></table>
+</div>
+</div><p>This does the obvious thing: it &ldquo;zips&rdquo; the two numbers together and finds a differing spot if there is any. Again it will loop forever if both numbers are infinite.</p>
+<h2 id=more-instances>More instances</h2>
+<p>This type is also enumerable which can be implemented by an isomorphisim with integer
+via an <code>Enum</code> instance</p>
+<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2>
+<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
+<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">4
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">5
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">6
-</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-haskell data-lang=haskell><span style=color:#66d9ef>instance</span> <span style=color:#66d9ef>Enum</span> <span style=color:#66d9ef>Nat</span> <span style=color:#66d9ef>where</span>
+</span></code></pre></td>
+<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
+<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-haskell data-lang=haskell><span style=color:#66d9ef>instance</span> <span style=color:#66d9ef>Enum</span> <span style=color:#66d9ef>Nat</span> <span style=color:#66d9ef>where</span>
   toEnum <span style=color:#ae81ff>0</span> <span style=color:#f92672>=</span> <span style=color:#66d9ef>Zero</span>
   toEnum n <span style=color:#f92672>|</span> n <span style=color:#f92672>&gt;</span> <span style=color:#ae81ff>0</span> <span style=color:#f92672>=</span> <span style=color:#66d9ef>Succ</span> <span style=color:#f92672>$</span> toEnum <span style=color:#f92672>$</span> n <span style=color:#f92672>-</span> <span style=color:#ae81ff>1</span>
 
   fromEnum <span style=color:#66d9ef>Zero</span> <span style=color:#f92672>=</span> <span style=color:#ae81ff>0</span>
   fromEnum (<span style=color:#66d9ef>Succ</span> n) <span style=color:#f92672>=</span> fromEnum n <span style=color:#f92672>+</span> <span style=color:#ae81ff>1</span>
-</code></pre></td></tr></table></div></div><p>Given this we can now show <code>Nat</code> as a decimal number</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</code></pre></td></tr></table>
+</div>
+</div><p>Given this we can now show <code>Nat</code> as a decimal number</p>
+<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2>
+<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
+<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
-</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-haskell data-lang=haskell><span style=color:#66d9ef>instance</span> <span style=color:#66d9ef>Show</span> <span style=color:#66d9ef>Nat</span> <span style=color:#66d9ef>where</span>
+</span></code></pre></td>
+<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
+<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-haskell data-lang=haskell><span style=color:#66d9ef>instance</span> <span style=color:#66d9ef>Show</span> <span style=color:#66d9ef>Nat</span> <span style=color:#66d9ef>where</span>
   show n <span style=color:#f92672>=</span> show <span style=color:#f92672>$</span> fromEnum n
-</code></pre></td></tr></table></div></div><p>And I saved the best for last: full <code>Num</code> instance</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
+</code></pre></td></tr></table>
+</div>
+</div><p>And I saved the best for last: full <code>Num</code> instance</p>
+<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2>
+<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
+<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
@@ -55,7 +129,9 @@ via an <code>Enum</code> instance</p><div class=highlight><div style=color:#f8f8
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">17
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">18
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">19
-</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-haskell data-lang=haskell><span style=color:#66d9ef>instance</span> <span style=color:#66d9ef>Num</span> <span style=color:#66d9ef>Nat</span> <span style=color:#66d9ef>where</span>
+</span></code></pre></td>
+<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
+<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-haskell data-lang=haskell><span style=color:#66d9ef>instance</span> <span style=color:#66d9ef>Num</span> <span style=color:#66d9ef>Nat</span> <span style=color:#66d9ef>where</span>
   <span style=color:#66d9ef>Zero</span> <span style=color:#f92672>+</span> m <span style=color:#f92672>=</span> m
   <span style=color:#66d9ef>Succ</span> n <span style=color:#f92672>+</span> m <span style=color:#f92672>=</span> <span style=color:#66d9ef>Succ</span> <span style=color:#f92672>$</span> n <span style=color:#f92672>+</span> m
 
@@ -74,4 +150,22 @@ via an <code>Enum</code> instance</p><div class=highlight><div style=color:#f8f8
   negate <span style=color:#f92672>=</span> <span style=color:#a6e22e>error</span> <span style=color:#e6db74>&#34;cannot represent negative Nat&#34;</span>
   abs <span style=color:#f92672>=</span> id
   signum <span style=color:#66d9ef>_</span> <span style=color:#f92672>=</span> <span style=color:#66d9ef>Succ</span> <span style=color:#66d9ef>Zero</span>
-</code></pre></td></tr></table></div></div><p>Let&rsquo;s walk through it. Addition recurses on first argument. Note that the second argument is reused. It will only allocate <code>Succ</code>s matching the first argument.</p><p>Multiplication again recurses on one argument but does addition at each step. Since there is no way to represent negative numbers in this scheme I defined <code>0 - n = 0</code> which is a bit shady but works in most cases. Similarly <code>negate</code> throws an error. Anther consequence is that <code>abs</code> is just identity and <code>signum</code> always returns <code>1</code>.</p><p>But the most useful function is <code>fromInteger</code>. I extended <code>toEnum</code> by handling negative cases. This does not look like much but due to literal polymorphism we can now write decimal literals and they will be automatically converted to <code>Nat</code> where this is the expected type.</p><h2 id=conclusion>Conclusion</h2><p>There are two interesting things. First is encoding infinity. Not much on itself. But the second thing is partial evaluation. By traversing <em>n</em> <code>Succ</code>s we know that the number is greater or equal to <em>n</em>. This means we can compute even with infinite numbers as long as we don&rsquo;t need to look at the exact result.</p><hr><p>Last modified on 2015-05-03</p><a href=/posts/2015-05-02-tagged-types/>Previous Cheap tagged types in Scala</a><br><a href=/posts/2016-02-24-git-repair/>Next Repairing a corrupt Git repo using a clone</a></div></body></html>
+</code></pre></td></tr></table>
+</div>
+</div><p>Let&rsquo;s walk through it. Addition recurses on first argument. Note that the second argument is reused. It will only allocate <code>Succ</code>s matching the first argument.</p>
+<p>Multiplication again recurses on one argument but does addition at each step. Since there is no way to represent negative numbers in this scheme I defined <code>0 - n = 0</code> which is a bit shady but works in most cases. Similarly <code>negate</code> throws an error. Anther consequence is that <code>abs</code> is just identity and <code>signum</code> always returns <code>1</code>.</p>
+<p>But the most useful function is <code>fromInteger</code>. I extended <code>toEnum</code> by handling negative cases. This does not look like much but due to literal polymorphism we can now write decimal literals and they will be automatically converted to <code>Nat</code> where this is the expected type.</p>
+<h2 id=conclusion>Conclusion</h2>
+<p>There are two interesting things. First is encoding infinity. Not much on itself. But the second thing is partial evaluation. By traversing <em>n</em> <code>Succ</code>s we know that the number is greater or equal to <em>n</em>. This means we can compute even with infinite numbers as long as we don&rsquo;t need to look at the exact result.</p>
+<hr>
+<p>Last modified on 2015-05-03</p>
+<a href=/posts/2015-05-02-tagged-types/>
+Previous Cheap tagged types in Scala
+</a>
+<br>
+<a href=/posts/2016-02-24-git-repair/>
+Next Repairing a corrupt Git repo using a clone
+</a>
+</div>
+</body>
+</html>

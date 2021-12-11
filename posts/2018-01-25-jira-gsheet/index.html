@@ -1,33 +1,105 @@
-<!doctype html><html><head><title>Integrating Jira into Google Sheets</title><meta charset=utf-8><meta name=X-UA-Compatible content="IE=edge"><meta name=google-site-verification content><meta content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=0" name=viewport><style>body{max-width:800px;margin:auto;line-height:1.6;font-size:18px;color:#444;padding:0 10px}h1,h2,h3{line-height:1.2}.nav a,.nav a:visited,.nav a:hover,.nav a:active{color:inherit}.nav .title{margin:0}.nav-sub{display:inline-block}.nav-item{margin:5px}.nav-sub-right{display:inline-block;float:right}.nav-icon{margin-right:5px}.main img{display:block;max-width:100%;margin:auto}.main pre{overflow:auto}" media="screen"></style></head><body><div class=nav><a href=/><h2 class=title>Andraž Bajt's blog</h2></a><div class=nav-sub><a class=nav-item href=/about>About Me</a>
-<a class=nav-item href=/>Archive</a></div><div class=nav-sub-right><a class=nav-icon href=https://github.com/edofic target=_blank><img src=/icons/github.svg width=20 height=20></a>
+<!doctype html><html>
+<head>
+<title>Integrating Jira into Google Sheets</title>
+<meta charset=utf-8>
+<meta name=X-UA-Compatible content="IE=edge">
+<meta name=google-site-verification content>
+<meta content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=0" name=viewport>
+<style>body{max-width:800px;margin:auto;line-height:1.6;font-size:18px;color:#444;padding:0 10px}h1,h2,h3{line-height:1.2}.nav a,.nav a:visited,.nav a:hover,.nav a:active{color:inherit}.nav .title{margin:0}.nav-sub{display:inline-block}.nav-item{margin:5px}.nav-sub-right{display:inline-block;float:right}.nav-icon{margin-right:5px}.main img{display:block;max-width:100%;margin:auto}.main pre{overflow:auto}" media="screen"></style>
+</head>
+<body>
+<div class=nav>
+<a href=/><h2 class=title>Andraž Bajt's blog</h2></a>
+<div class=nav-sub>
+<a class=nav-item href=/about>
+About Me
+</a>
+<a class=nav-item href=/>
+Archive
+</a>
+</div>
+<div class=nav-sub-right>
+<a class=nav-icon href=https://github.com/edofic target=_blank><img src=/icons/github.svg width=20 height=20></a>
 <a class=nav-icon href=https://www.linkedin.com/in/edofic target=_blank><img src=/icons/linkedin.svg width=20 height=20></a>
 <a class=nav-icon href=https://twitter.com/edofic target=_blank><img src=/icons/twitter.svg width=20 height=20></a>
 <a class=nav-icon href=/index.xml target=_blank><img src=/icons/rss.svg width=20 height=20></a>
-<a class=nav-icon href=mailto:blog@edofic.com target=_blank><img src=/icons/email.svg width=20 height=20></a></div></div><hr><div class=main><h1>Integrating Jira into Google Sheets</h1><time>2018-01-25</time><hr><p>So I got a (recurring) task to compile some stats from Jira. You now, some
+<a class=nav-icon href=mailto:blog@edofic.com target=_blank><img src=/icons/email.svg width=20 height=20></a>
+</div>
+</div>
+<hr>
+<div class=main>
+<h1>Integrating Jira into Google Sheets</h1>
+<time>2018-01-25</time>
+<hr>
+<p>So I got a (recurring) task to compile some stats from Jira. You now, some
 filtering and agregation. Possibly a pivot table and a chart. Sounds like a
 perfect task for spreadsheets. But Jira doesn&rsquo;t have spreadsheets - at least
-without addons, but that is not an options for me.</p><p>So I decided to use Google Sheets. And figure out a way to automatically fetch
+without addons, but that is not an options for me.</p>
+<p>So I decided to use Google Sheets. And figure out a way to automatically fetch
 data from Jira because there&rsquo;s no way in hell I&rsquo;m doing that manually every
 time. Turns out there are some scripts you are supposed to paste into sheets and
 give them all the permissions. But I don&rsquo;t trust that, not without properly
-reviewing the thousands of lines of code.</p><p>Obviously I decided to roll my own. I figured a way that&rsquo;s actually really easy.
+reviewing the thousands of lines of code.</p>
+<p>Obviously I decided to roll my own. I figured a way that&rsquo;s actually really easy.
 Just create a filter in Jira and click <code>Export -> Printable</code>. This will give you
-an URL with all your tickets formatted nicely in a <code>&lt;table></code>.:</p><p>Why is this useful? Because Google Sheets knows how to scrape HTML tables. If
+an URL with all your tickets formatted nicely in a <code>&lt;table></code>.:</p>
+<p>Why is this useful? Because Google Sheets knows how to scrape HTML tables. If
 you append your credentials to the url. The whole formula will look something
-like this:</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
-</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-fallback data-lang=fallback>=IMPORTHTML(&#34;https://my_instance.atlassian.net/sr/jira.issueviews:searchrequest-printable/14900/SearchRequest-14900.html?tempMax=1000&amp;os_username=my_username&amp;os_password=my_password&#34;, &#34;table&#34;, 1)
-</code></pre></td></tr></table></div></div><p>This magically pulls your Jira table into a spreadsheet. Now you can use all
+like this:</p>
+<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2>
+<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
+<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
+<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-fallback data-lang=fallback>=IMPORTHTML(&#34;https://my_instance.atlassian.net/sr/jira.issueviews:searchrequest-printable/14900/SearchRequest-14900.html?tempMax=1000&amp;os_username=my_username&amp;os_password=my_password&#34;, &#34;table&#34;, 1)
+</code></pre></td></tr></table>
+</div>
+</div><p>This magically pulls your Jira table into a spreadsheet. Now you can use all
 your spreadsheet tools to make reports out of this. Or even SQL! Google Sheets
 has a <code>QUERY</code> function which takes a data range and an SQL-like expression to
-run over it.</p><p>Now we just need a way to simply refresh the data (remember, this is a recurring
+run over it.</p>
+<p>Now we just need a way to simply refresh the data (remember, this is a recurring
 task). Sheet re-load the data when the URL changes and Jira ignores unknown
-parameters. We can use this to add a dummy counter which we increment!</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
-</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-fallback data-lang=fallback>=IMPORTHTML(CONCATENATE(&#34;https://...my_passoword&amp;dummy=&#34;, B1), &#34;table&#34;, 1)
-</code></pre></td></tr></table></div></div><p>But this means we now need to edit a number. No fun. Let&rsquo;s write a script to do
-it.</p><p>In <code>Tools</code> -> <code>Script Editor</code></p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+parameters. We can use this to add a dummy counter which we increment!</p>
+<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2>
+<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
+<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
+<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-fallback data-lang=fallback>=IMPORTHTML(CONCATENATE(&#34;https://...my_passoword&amp;dummy=&#34;, B1), &#34;table&#34;, 1)
+</code></pre></td></tr></table>
+</div>
+</div><p>But this means we now need to edit a number. No fun. Let&rsquo;s write a script to do
+it.</p>
+<p>In <code>Tools</code> -> <code>Script Editor</code></p>
+<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2>
+<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
+<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
-</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-fallback data-lang=fallback>function increment() {
+</span></code></pre></td>
+<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
+<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-fallback data-lang=fallback>function increment() {
   SpreadsheetApp.getActiveSheet().getRange(&#39;B1&#39;).setValue(SpreadsheetApp.getActiveSheet().getRange(&#39;B1&#39;).getValue() + 1);
 }
-</code></pre></td></tr></table></div></div><p>Now we just need a way to run it.</p><ol><li>insert a drawing</li><li>right click</li><li>assign a script</li></ol><p>Voila we have a button!</p><hr><p>Last modified on 2018-01-25</p><a href=/posts/2018-01-24-nixos-install-pains/>Previous NixOS install & labor pains</a><br><a href=/posts/2018-05-25-linear-time-sorting/>Next Linear time sorting</a></div></body></html>
+</code></pre></td></tr></table>
+</div>
+</div><p>Now we just need a way to run it.</p>
+<ol>
+<li>insert a drawing</li>
+<li>right click</li>
+<li>assign a script</li>
+</ol>
+<p>Voila we have a button!</p>
+<hr>
+<p>Last modified on 2018-01-25</p>
+<a href=/posts/2018-01-24-nixos-install-pains/>
+Previous NixOS install & labor pains
+</a>
+<br>
+<a href=/posts/2018-05-25-linear-time-sorting/>
+Next Linear time sorting
+</a>
+</div>
+</body>
+</html>
