@@ -4,6 +4,7 @@ title: "Andraž Bajt's blog"
 disableKinds: ["section"]
 copyright: "Andraz Bajt"
 paginate: 20
+enableEmoji: true
 
 author:
     name: "Andraz Bajt"
