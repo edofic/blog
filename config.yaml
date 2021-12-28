@@ -22,7 +22,7 @@ menu:
     url: "/"
   - identifier: "about"
     name: "About Me"
-    url: "/about"
+    url: "/about/"
 
 markup:
   highlight:
