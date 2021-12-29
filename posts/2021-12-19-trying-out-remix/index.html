@@ -40,7 +40,7 @@ of course because it&rsquo;s outside my comfort zone - so maybe I&rsquo;ll learn
 <h1 id=getting-started>Getting started</h1>
 <p>There&rsquo;s a code example right on the home page but I&rsquo;m having hard time building
 a mental model from just that. Luckily there is also a bit <a href=https://remix.run/docs/en/v1/tutorials/blog>Get started</a> button which takes me to a tutorial. Great, let&rsquo;s follow that.</p>
-<p><img src=/images/remix/1.png alt="following initial instructions"></p>
+<p><img src=/images/remix/1.webp alt="following initial instructions"></p>
 <p>Few more commands</p>
 <div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2>
 <table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
@@ -53,7 +53,7 @@ npm run dev
 </code></pre></td></tr></table>
 </div>
 </div><p>And we&rsquo;re up.</p>
-<p><img src=/images/remix/2.png alt="localhost shows dmeo app"></p>
+<p><img src=/images/remix/2.webp alt="localhost shows dmeo app"></p>
 <p>Then there is text that really speaks to me</p>
 <blockquote>
 <p>If you want, take a minute and poke around the starter template, there&rsquo;s a
@@ -174,7 +174,7 @@ the <em>server</em>.</p>
 <p>Maybe time to read some <a href=https://remix.run/docs/en/v1/tutorials/blog#your-first-route>more
 docs</a> 🤷</p>
 <h1 id=babys-first-code>Baby&rsquo;s first code</h1>
-<p><img src=/images/remix/3.png alt="localhost shows dmeo app"></p>
+<p><img src=/images/remix/3.webp alt="localhost shows dmeo app"></p>
 <p>Confused for a moment&mldr;apparently docs are not up to date, the links are now in
 <code>app/routes/index.tsx</code>. Oh well, I&rsquo;ll manage. I added the <code>li</code> as instructed</p>
 <div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2>
@@ -200,7 +200,7 @@ import based on imports in <code>root.tsx</code> to be</p>
 </code></pre></td></tr></table>
 </div>
 </div><p>It works!</p>
-<p><img src=/images/remix/4.png alt="link to posts"></p>
+<p><img src=/images/remix/4.webp alt="link to posts"></p>
 <p>Then created <code>app/routes/posts/index.tsx</code> as</p>
 <div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2>
 <table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
@@ -294,7 +294,7 @@ import based on imports in <code>root.tsx</code> to be</p>
 </code></pre></td></tr></table>
 </div>
 </div><p>And it show up as expected.</p>
-<p><img src=/images/remix/5.png alt="link to posts"></p>
+<p><img src=/images/remix/5.webp alt="link to posts"></p>
 <p>Then the tutorial moves on to refactoring, extracting data and fetching from an
 external data source but I&rsquo;m more interested in this mechanics as it seems to me
 this is the meat and the potatoes of remix. So what is going on?</p>
@@ -375,7 +375,7 @@ evaluate properly. In any case there is a way to get an overview of the routes:<
 </code></pre></td></tr></table>
 </div>
 </div><p>And sure enough I can now click on one of the posts and it renders</p>
-<p><img src=/images/remix/6.png alt="rendered post"></p>
+<p><img src=/images/remix/6.webp alt="rendered post"></p>
 <p>So what is happening here?</p>
 <ul>
 <li>My url path <code>/posts/my-first-post</code> is matched against the <code>posts/:slug</code> route
@@ -479,7 +479,7 @@ GET /posts/ 200 - - 11.870 ms
 </code></pre></td></tr></table>
 </div>
 </div><p>And a cryptic error appears</p>
-<p><img src=/images/remix/7.png alt="application error"></p>
+<p><img src=/images/remix/7.webp alt="application error"></p>
 <p>What is slug doing here? Sprinkling in some logging I notice that <code>year</code>
 actually holds data from <code>$slug.txs</code> loader, not my footer loader. So I&rsquo;m
 holding it wrong - back to the docs it is.</p>

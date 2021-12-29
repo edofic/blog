@@ -49,9 +49,9 @@ based on the README.</p>
 <pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-fallback data-lang=fallback>docker run --rm -it -p9090:9090 prom/prometheus:main
 </code></pre></td></tr></table>
 </div>
-</div><p><img src=/images/prometheus/1.png alt="prometheus dashboard"></p>
+</div><p><img src=/images/prometheus/1.webp alt="prometheus dashboard"></p>
 <p>We&rsquo;ve got lift off! And it&rsquo;s monitoring itself right out the gate:</p>
-<p><img src=/images/prometheus/2.png alt="prometheus monitoring itself"></p>
+<p><img src=/images/prometheus/2.webp alt="prometheus monitoring itself"></p>
 <h1 id=docker-compose>docker-compose</h1>
 <p>I want to add more services now and I don&rsquo;t want to fiddle with <code>docker run</code> so
 time for a compose file.</p>
@@ -131,11 +131,11 @@ time for a compose file.</p>
 </div><p>Running <code>docker-compose up -d</code> and we&rsquo;re off to the races.
 <code>http://localhost:9090</code> gives the same interface (but now with persistent
 storage) but there is now Grafana as well (on port 3000)</p>
-<p><img src=/images/prometheus/3.png alt=img></p>
+<p><img src=/images/prometheus/3.webp alt=img></p>
 <p>And it can easily be configured to point to the Prometheus instance.</p>
-<p><img src=/images/prometheus/5.png alt=img></p>
+<p><img src=/images/prometheus/5.webp alt=img></p>
 <p>Yaay, metrics in Grafana.</p>
-<p><img src=/images/prometheus/6.png alt=img></p>
+<p><img src=/images/prometheus/6.webp alt=img></p>
 <h1 id=my-app>My app</h1>
 <p>For the next step I want to run my own app and have Prometheus scrape it. To get
 started I add <a href=https://github.com/mitranim/gow>gow</a>-based service to my compose
@@ -271,7 +271,7 @@ prometheus_1  | level=info ts=2021-06-27T09:05:57.511Z caller=main.go:995 msg=&#
 </code></pre></td></tr></table>
 </div>
 </div><p>and now &ldquo;app&rdquo; shows up in metrics in Grafana!</p>
-<p><img src=/images/prometheus/7.png alt=img></p>
+<p><img src=/images/prometheus/7.webp alt=img></p>
 <h1 id=request-counter>Request counter</h1>
 <p>This is still only showing preconfigured metrics. How do I do my custom metrics?
 e.g. a request counter.</p>
@@ -356,7 +356,7 @@ put this together</p>
 </code></pre></td></tr></table>
 </div>
 </div><p>gow picks up changes, and my curl requests do indeed show up in Grafana.</p>
-<p><img src=/images/prometheus/8.png alt=img></p>
+<p><img src=/images/prometheus/8.webp alt=img></p>
 <h1 id=kuberetes>Kuberetes</h1>
 <p>Now how do I get this running in kubernetes? :D How does this work in context of
 pods? Is there some autodetection of scraping targets?</p>
@@ -397,7 +397,7 @@ $ helm repo add prometheus-community https://prometheus-community.github.io/helm
 </code></pre></td></tr></table>
 </div>
 </div><p>and wait for all green
-<img src=/images/prometheus/9.png alt=img></p>
+<img src=/images/prometheus/9.webp alt=img></p>
 <div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2>
 <table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
 <pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
@@ -739,11 +739,11 @@ counter values per-pod.</p>
 </code></pre></td></tr></table>
 </div>
 </div><p>My pod is picked up on <code>localhost:9090/targets</code>, great success.</p>
-<p><img src=/images/prometheus/11.png alt=img></p>
+<p><img src=/images/prometheus/11.webp alt=img></p>
 <p>Naturally metrics also show up in Grafana</p>
-<p><img src=/images/prometheus/10.png alt=img></p>
+<p><img src=/images/prometheus/10.webp alt=img></p>
 <p>Killing pods/scaling deployment is nicely visible in metrics now.</p>
-<p><img src=/images/prometheus/12.png alt=img></p>
+<p><img src=/images/prometheus/12.webp alt=img></p>
 <h1 id=conclusion>Conclusion</h1>
 <p>Setting up Prometheus was actually quite straightforward. So is configuring the
 actual scraping. Application codebase doesn&rsquo;t need to know anything about my

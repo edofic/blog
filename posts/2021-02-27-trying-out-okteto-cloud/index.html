@@ -483,7 +483,7 @@ NOTES:
 </div>
 </div><h1 id=some-success>Some success</h1>
 <p>And somthing popped up in the UI (no refresh needed!)</p>
-<p><img src=/images/okteto/1_my_chart.png alt="my chart installed"></p>
+<p><img src=/images/okteto/1_my_chart.webp alt="my chart installed"></p>
 <p>I can see the status, I can destroy/redeploy&mldr;. How can I now try to open up
 the app? I created an ingress so let&rsquo;s see if I can use it.</p>
 <div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2>
@@ -500,7 +500,7 @@ tryingout   tryingout-edofic.cloud.okteto.net   35.238.195.0   80, 443   13m
 </div>
 </div><p>Oh wow, that actually worked we got a domain provisioned. Opening up this
 hostname gives my my error page - migrations haven&rsquo;t run yet.</p>
-<p><img src=/images/okteto/2_error_migrations.png alt="migrations error"></p>
+<p><img src=/images/okteto/2_error_migrations.webp alt="migrations error"></p>
 <p>I should probably do a helm post upgrade hook to run migrations&mldr;but I&rsquo;ll half
 ass it and do it manually now since I&rsquo;m trying to focus on okteto instead.</p>
 <p>Looking at buffalo generated Dockerfile to orient myself I came across this
@@ -642,7 +642,7 @@ to see if everyting stands up from scratch.</p>
 </code></pre></td></tr></table>
 </div>
 </div><p>And we have liftoff!</p>
-<p><img src=/images/okteto/3_up_in_cloud.png alt="app is up"></p>
+<p><img src=/images/okteto/3_up_in_cloud.webp alt="app is up"></p>
 <p>Now I think my app is properly&mldr;.err&mldr;well enough packaged and I can actually
 try out pipelines. I&rsquo;ll kill the helm chart once more so I can try the
 automation now.</p>
@@ -702,14 +702,14 @@ To github.com:edofic/trying-out.git
 </code></pre></td></tr></table>
 </div>
 </div><p>Time to set up the pipeline</p>
-<p><img src=/images/okteto/4_empty_namespace.png alt="deploy ui"></p>
+<p><img src=/images/okteto/4_empty_namespace.webp alt="deploy ui"></p>
 <p>UI is obvious enough&mldr;</p>
-<p><img src=/images/okteto/5_deploy.png alt="deploy setup"></p>
+<p><img src=/images/okteto/5_deploy.webp alt="deploy setup"></p>
 <p>Not much to configure&mldr;</p>
-<p><img src=/images/okteto/6_deploying.png alt=deploying></p>
+<p><img src=/images/okteto/6_deploying.webp alt=deploying></p>
 <p>Looks like it&rsquo;s running the same process as I was locally just before,
 promising.</p>
-<p><img src=/images/okteto/7_deployed.png alt=deployed></p>
+<p><img src=/images/okteto/7_deployed.webp alt=deployed></p>
 <p>Success!
 And out app is up again :D</p>
 <h1 id=development>Development</h1>
@@ -742,7 +742,7 @@ root@web-67456fb97b-85xcj:/src#
 </code></pre></td></tr></table>
 </div>
 </div><p>Amazingly the UI picked this up too</p>
-<p><img src=/images/okteto/8_in_development.png alt="in development"></p>
+<p><img src=/images/okteto/8_in_development.webp alt="in development"></p>
 <p>Let&rsquo;s run a development version</p>
 <div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2>
 <table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
@@ -881,7 +881,7 @@ locally and the file sync picked it up. Sweet.</p>
 </div><p>Nothing happened for 2min (maybe I&rsquo;m just too inpatient) so I&rsquo;ve hit redeploy in the UI. Did the trick - my changes are live. Much more quickly that with <code>okteto push</code></p>
 <h1 id=charts>Charts</h1>
 <p>Once more nice thing: you can deploy some helm charts from a catalog straight form the UI.</p>
-<p><img src=/images/okteto/9_deploy_charts.png alt=charts></p>
+<p><img src=/images/okteto/9_deploy_charts.webp alt=charts></p>
 <h1 id=conclusion>Conclusion</h1>
 <p>In case this wasn&rsquo;t clear from my other remarks and commands I&rsquo;ve ran: okteto
 gave my a fully fledged managed kubernetes namespace - this way I was able to
