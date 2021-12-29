@@ -18,11 +18,11 @@ based on the README.
 docker run --rm -it -p9090:9090 prom/prometheus:main
 ```
 
-![prometheus dashboard](/images/prometheus/1.png)
+![prometheus dashboard](/images/prometheus/1.webp)
 
 We've got lift off! And it's monitoring itself right out the gate:
 
-![prometheus monitoring itself](/images/prometheus/2.png)
+![prometheus monitoring itself](/images/prometheus/2.webp)
 
 # docker-compose
 
@@ -74,15 +74,15 @@ Running `docker-compose up -d` and we're off to the races.
 `http://localhost:9090` gives the same interface (but now with persistent
 storage) but there is now Grafana as well (on port 3000)
 
-![img](/images/prometheus/3.png)
+![img](/images/prometheus/3.webp)
 
 And it can easily be configured to point to the Prometheus instance.
 
-![img](/images/prometheus/5.png)
+![img](/images/prometheus/5.webp)
 
 Yaay, metrics in Grafana.
 
-![img](/images/prometheus/6.png)
+![img](/images/prometheus/6.webp)
 
 
 # My app
@@ -172,7 +172,7 @@ prometheus_1  | level=info ts=2021-06-27T09:05:57.511Z caller=main.go:995 msg="C
 
 and now "app" shows up in metrics in Grafana!
 
-![img](/images/prometheus/7.png)
+![img](/images/prometheus/7.webp)
 
 # Request counter
 
@@ -224,7 +224,7 @@ func (h *handleReq) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 
 gow picks up changes, and my curl requests do indeed show up in Grafana.
 
-![img](/images/prometheus/8.png)
+![img](/images/prometheus/8.webp)
 
 # Kuberetes
 
@@ -257,7 +257,7 @@ minikube dashboard
 ```
 
 and wait for all green
-![img](/images/prometheus/9.png)
+![img](/images/prometheus/9.webp)
 
 
 ```
@@ -460,15 +460,15 @@ spec:
 
 My pod is picked up on `localhost:9090/targets`, great success.
 
-![img](/images/prometheus/11.png)
+![img](/images/prometheus/11.webp)
 
 Naturally metrics also show up in Grafana
 
-![img](/images/prometheus/10.png)
+![img](/images/prometheus/10.webp)
 
 Killing pods/scaling deployment is nicely visible in metrics now.
 
-![img](/images/prometheus/12.png)
+![img](/images/prometheus/12.webp)
 
 # Conclusion
 

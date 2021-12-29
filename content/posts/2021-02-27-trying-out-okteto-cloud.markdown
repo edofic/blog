@@ -297,7 +297,7 @@ NOTES:
 
 And somthing popped up in the UI (no refresh needed!)
 
-![my chart installed](/images/okteto/1_my_chart.png)
+![my chart installed](/images/okteto/1_my_chart.webp)
 
 I can see the status, I can destroy/redeploy.... How can I now try to open up
 the app? I created an ingress so let's see if I can use it.
@@ -311,7 +311,7 @@ tryingout   tryingout-edofic.cloud.okteto.net   35.238.195.0   80, 443   13m
 Oh wow, that actually worked we got a domain provisioned.  Opening up this
 hostname gives my my error page - migrations haven't run yet.
 
-![migrations error](/images/okteto/2_error_migrations.png)
+![migrations error](/images/okteto/2_error_migrations.webp)
 
 I should probably do a helm post upgrade hook to run migrations...but I'll half
 ass it and do it manually now since I'm trying to focus on okteto instead.
@@ -404,7 +404,7 @@ helm upgrade --install movies chart --set tag=${OKTETO_GIT_COMMIT}
 
 And we have liftoff!
 
-![app is up](/images/okteto/3_up_in_cloud.png)
+![app is up](/images/okteto/3_up_in_cloud.webp)
 
 
 Now I think my app is properly....err...well enough packaged and I can actually
@@ -444,20 +444,20 @@ To github.com:edofic/trying-out.git
 
 Time to set up the pipeline
 
-![deploy ui](/images/okteto/4_empty_namespace.png)
+![deploy ui](/images/okteto/4_empty_namespace.webp)
 
 UI is obvious enough...
 
-![deploy setup](/images/okteto/5_deploy.png)
+![deploy setup](/images/okteto/5_deploy.webp)
 
 Not much to configure...
 
-![deploying](/images/okteto/6_deploying.png)
+![deploying](/images/okteto/6_deploying.webp)
 
 Looks like it's running the same process as I was locally just before,
 promising.
 
-![deployed](/images/okteto/7_deployed.png)
+![deployed](/images/okteto/7_deployed.webp)
 
 Success!
 And out app is up again :D
@@ -482,7 +482,7 @@ root@web-67456fb97b-85xcj:/src#
 
 Amazingly the UI picked this up too
 
-![in development](/images/okteto/8_in_development.png)
+![in development](/images/okteto/8_in_development.webp)
 
 Let's run a development version
 
@@ -581,7 +581,7 @@ Nothing happened for 2min (maybe I'm just too inpatient) so I've hit redeploy in
 
 Once more nice thing: you can deploy some helm charts from a catalog straight form the UI.
 
-![charts](/images/okteto/9_deploy_charts.png)
+![charts](/images/okteto/9_deploy_charts.webp)
 
 # Conclusion
 

@@ -25,7 +25,7 @@ enterprise offerings but the base product is free).
 After clicking the fetching [Getting Started](https://rancher.com/quick-start/)
 button I'm presented with these rather short instructions:
 
-![getting started](/images/rancher/01.png)
+![getting started](/images/rancher/01.webp)
 
 Ok, prerequisites first. I spun up a new VM on [Digital
 Ocean](https://www.digitalocean.com/) and selected Ubuntu 20.04 (which is on the
@@ -61,11 +61,11 @@ r
 I navigate to port 80 of my new VM from my laptop and I'm greeted with a first
 time setup. Nice :)
 
-![initial setup](/images/rancher/02.png)
+![initial setup](/images/rancher/02.webp)
 
 Let's go with multiple clusters, to see what this is all about.
 
-![global dashboard](/images/rancher/03.png)
+![global dashboard](/images/rancher/03.webp)
 
 Huh. Apparently we got a local K3s cluster as well. I'm guessing "local" means
 it's running on the same VM (there is no real other option anyway).
@@ -76,7 +76,7 @@ yes](https://rancher.com/docs/rancher/v2.x/en/installation/install-rancher-on-k8
 
 What happens if I click on "local"?
 
-![04.png](/images/rancher/04.png)
+![04.png](/images/rancher/04.webp)
 
 Vaguely reminiscent of [K8s Web
 UI](https://kubernetes.io/docs/tasks/access-application-cluster/web-ui-dashboard/). Looks useful.
@@ -86,7 +86,7 @@ UI](https://kubernetes.io/docs/tasks/access-application-cluster/web-ui-dashboard
 But I'm not interested in a dashboard for a K3s instance - I want to try setting
 up some clusters :D Let's try clicking add cluster.
 
-![05.png](/images/rancher/05.png)
+![05.png](/images/rancher/05.webp)
 
 That's quite a list of providers already. Quite intriguing one is "Existing
 nodes". Also interesting to me is the ability to connect managed clusters. You
@@ -98,7 +98,7 @@ haven't checked what is supported upfront.
 But I did do some digging at this point and apparently you can install extra
 (even 3rd party) providers to extend this. E.g. I've found [this tutorial](https://jmrobles.medium.com/how-to-create-a-kubernetes-cluster-with-rancher-on-hetzner-3b2f7f0c037a) for setting up a cluster on [Hetzner](https://www.hetzner.com/) - which is another provider I sometimes use for my projects. Liking this extensibility a lot.
 
-![06.png](/images/rancher/06.png)
+![06.png](/images/rancher/06.webp)
 
 First I need to configure a template for my nodes (since this is the first
 time and I don't have any?). I'm going with something small as I don't have
@@ -107,7 +107,7 @@ plans for any substantial workloads on this cluster.
 Note: I was also prompted to configure DO integration at this point by providing
 an API token - no magic integration but super straightforward.
 
-![07.png](/images/rancher/07.png)
+![07.png](/images/rancher/07.webp)
 
 Time to setup my node pools now. If I'm reading this right I'm configuring how
 many VMs of what template to run and what services to run on them. There's even
@@ -115,25 +115,25 @@ validation (green checkmarks) that I have a setup that yields a functional
 cluster. I won't bother with other options, let's just take defaults out for a
 spin.
 
-![08.png](/images/rancher/08.png)
+![08.png](/images/rancher/08.webp)
 
 And now we wait....
 
 Meanwhile in DO console I can see droplets coming up
 
-![09.png](/images/rancher/09.png)
+![09.png](/images/rancher/09.webp)
 
 After about 10min the cluster reports as "active". Great success!
 
-![11.png](/images/rancher/11.png)
+![11.png](/images/rancher/11.webp)
 
 Clicking that I get an overview of my new nodes
 
-![12.png](/images/rancher/12.png)
+![12.png](/images/rancher/12.webp)
 
 And some management too
 
-![13.png](/images/rancher/13.png)
+![13.png](/images/rancher/13.webp)
 
 Doesn't seem much...but stop to think about it for a moment. This abstracts over
 the underlying compute provider which is great if you're running multiple
@@ -142,11 +142,11 @@ clusters on a mix (e.g. AWS + on prem).
 I can also pick "namespaces" from the menu and get an overview of k8s namespaces
 on my cluster.
 
-![14.png](/images/rancher/14.png)
+![14.png](/images/rancher/14.webp)
 
 And yes - there is still the dashboard.
 
-![15.png](/images/rancher/15.png)
+![15.png](/images/rancher/15.webp)
 
 One interesting difference pops out: we're not running K3s anymore but
 [RKE](https://rancher.com/products/rke/) - Rancher Kubernetes Engine.
@@ -165,11 +165,11 @@ but that a different beast altogether).
 With a few more clicks I got a metrics stack installed in the cluster and now
 have more detailed stats.
 
-![16.png](/images/rancher/16.png)
+![16.png](/images/rancher/16.webp)
 
 And a configured grafana instance too!
 
-![17.png](/images/rancher/17.png)
+![17.png](/images/rancher/17.webp)
 
 I can get a kubeconfig file directly from the UI and use it to connect to my new
 cluster like any other cluster
@@ -188,54 +188,54 @@ sb4    Ready    controlplane,etcd,worker   10m   v1.20.5
 But if I cannot be bothered and just want to poke around a bit there is even a
 convenient web-based shell
 
-![18.png](/images/rancher/18.png)
+![18.png](/images/rancher/18.webp)
 
 # Apps
 
 Moving on the last element I see in the UI - Apps
 
-![19.png](/images/rancher/19.png)
+![19.png](/images/rancher/19.webp)
 
 Looks like some form of prepackaged software.
 
-![20.png](/images/rancher/20.png)
+![20.png](/images/rancher/20.webp)
 
 Digging deeper confirms this is in fact a UI for [helm](https://helm.sh/)
 charts.
 
-![21.png](/images/rancher/21.png)
+![21.png](/images/rancher/21.webp)
 
 Let's configure a Wordpress instance then. This should be a nice test if our
 cluster is in fact fully functional and provides all we could possibly want
 
-![22.png](/images/rancher/22.png)
+![22.png](/images/rancher/22.webp)
 
 Takes a moment to deploy the chart. I can now zoom in and see the actual
 deployment in action
 
-![23.png](/images/rancher/23.png)
+![23.png](/images/rancher/23.webp)
 
 Few more minutes and we're green.
 
-![24.png](/images/rancher/24.png)
+![24.png](/images/rancher/24.webp)
 
 A quick `/etc/hosts` edit later I'm accessing my WP instance. I'm pointing my
 browser at one of the nodes where I'm hitting an ingress controller that routes
 to an internal service based on the virtual host (hence `/etc/hosts` edit) that
 routes to the actual pod running somewhere in the cluster.
 
-![25.png](/images/rancher/25.png)
+![25.png](/images/rancher/25.webp)
 
 # Removing a cluster
 
 That was enough fun. Let's tear the cluster down to see if it cleans up after
 itself.
 
-![26.png](/images/rancher/26.png)
+![26.png](/images/rancher/26.webp)
 
 Entered a "Removing" state
 
-![27.png](/images/rancher/27.png)
+![27.png](/images/rancher/27.webp)
 
 and few moments later is gone. So are all the traces from my DO dashboard.
 

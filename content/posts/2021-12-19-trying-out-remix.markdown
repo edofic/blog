@@ -16,7 +16,7 @@ of course because it's outside my comfort zone - so maybe I'll learn something.
 There's a code example right on the home page but I'm having hard time building
 a mental model from just that. Luckily there is also a bit [Get started](https://remix.run/docs/en/v1/tutorials/blog) button which takes me to a tutorial. Great, let's follow that.
 
-![following initial instructions](/images/remix/1.png)
+![following initial instructions](/images/remix/1.webp)
 
 Few more commands
 ```bash
@@ -25,7 +25,7 @@ npm run dev
 ```
 And we're up.
 
-![localhost shows dmeo app](/images/remix/2.png)
+![localhost shows dmeo app](/images/remix/2.webp)
 
 Then there is text that really speaks to me
 
@@ -114,7 +114,7 @@ docs](https://remix.run/docs/en/v1/tutorials/blog#your-first-route) :shrug:
 
 # Baby's first code
 
-![localhost shows dmeo app](/images/remix/3.png)
+![localhost shows dmeo app](/images/remix/3.webp)
 
 Confused for a moment...apparently docs are not up to date, the links are now in
 `app/routes/index.tsx`. Oh well, I'll manage. I added the `li` as instructed
@@ -133,7 +133,7 @@ import { Link } from "remix";
 ```
 It works!
 
-![link to posts](/images/remix/4.png)
+![link to posts](/images/remix/4.webp)
 
 Then created `app/routes/posts/index.tsx` as
 
@@ -188,7 +188,7 @@ export default function Posts() {
 
 And it show up as expected.
 
-![link to posts](/images/remix/5.png)
+![link to posts](/images/remix/5.webp)
 
 Then the tutorial moves on to refactoring, extracting data and fetching from an
 external data source but I'm more interested in this mechanics as it seems to me
@@ -253,7 +253,7 @@ export default function PostSlug() {
 
 And sure enough I can now click on one of the posts and it renders
 
-![rendered post](/images/remix/6.png)
+![rendered post](/images/remix/6.webp)
 
 So what is happening here?
 
@@ -333,7 +333,7 @@ Then in `$slug.tsg`
 
 And a cryptic error appears
 
-![application error](/images/remix/7.png)
+![application error](/images/remix/7.webp)
 
 What is slug doing here? Sprinkling in some logging I notice that `year`
 actually holds data from `$slug.txs` loader, not my footer loader. So I'm
