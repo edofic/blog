@@ -1,47 +1,67 @@
-<!doctype html><html>
+<!DOCTYPE html>
+<html>
 <head>
 <title>Homework - functional style (outer sorting)</title>
-<meta charset=utf-8>
-<meta name=X-UA-Compatible content="IE=edge">
-<meta name=google-site-verification content>
-<meta content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=0" name=viewport>
+<meta charset="utf-8">
+<meta name="X-UA-Compatible" content="IE=edge">
+<meta name="google-site-verification" content="">
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+
+
+
+
 <style>body{max-width:800px;margin:auto;line-height:1.6;font-size:18px;color:#444;padding:0 10px}h1,h2,h3{line-height:1.2}.nav a,.nav a:visited,.nav a:hover,.nav a:active{color:inherit}.nav .title{margin:0}.nav-sub{display:inline-block}.nav-item{margin:5px}.nav-sub-right{display:inline-block;float:right}.nav-icon{margin-right:5px}.main img{display:block;max-width:100%;margin:auto}.main pre{overflow:auto}" media="screen"></style>
 </head>
-<body>
-<div class=nav>
-<a href=/><h2 class=title>Andraž Bajt's blog</h2></a>
-<div class=nav-sub>
-<a class=nav-item href=/about/>
-About Me
-</a>
-<a class=nav-item href=/>
-Archive
-</a>
-</div>
-<div class=nav-sub-right>
-<a class=nav-icon href=https://github.com/edofic target=_blank><img src=/icons/github.svg width=20 height=20></a>
-<a class=nav-icon href=https://www.linkedin.com/in/edofic target=_blank><img src=/icons/linkedin.svg width=20 height=20></a>
-<a class=nav-icon href=https://twitter.com/edofic target=_blank><img src=/icons/twitter.svg width=20 height=20></a>
-<a class=nav-icon href=/index.xml target=_blank><img src=/icons/rss.svg width=20 height=20></a>
-<a class=nav-icon href=mailto:blog@edofic.com target=_blank><img src=/icons/email.svg width=20 height=20></a>
-</div>
-</div>
-<hr>
-<div class=main>
-<h1>Homework - functional style (outer sorting)</h1>
-<time>2012-12-04</time>
-<hr>
-<p>I&rsquo;m attending
+    <body>
+        <div class="nav">
+            <a href="/"><h2 class="title">Andraž Bajt&#39;s blog</h2></a>
+            <div class="nav-sub">
+                
+                    <a class="nav-item" href="/about/">
+                        About Me
+                    </a>
+                
+                    <a class="nav-item" href="/">
+                        Archive
+                    </a>
+                
+            </div>
+            <div class="nav-sub-right">
+                
+                    <a class="nav-icon" href="https://github.com/edofic" target="_blank"><img src="/icons/github.svg" width="20" height="20"/></a>
+                
+                
+                    <a class="nav-icon" href="https://www.linkedin.com/in/edofic" target="_blank"><img src="/icons/linkedin.svg" width="20" height="20"/></a>
+                
+                
+                    <a class="nav-icon" href="https://twitter.com/edofic" target="_blank"><img src="/icons/twitter.svg" width="20" height="20"/></a>
+                
+                <a class="nav-icon" href="/index.xml" target="_blank"><img src="/icons/rss.svg" width="20" height="20"/></a>
+                
+                    <a class="nav-icon" href="mailto:blog@edofic.com" target="_blank"><img src="/icons/email.svg" width="20" height="20"/></a>
+                
+            </div>
+        </div>
+        <hr/>
+        <div class="main">
+    <h1>Homework - functional style (outer sorting)</h1>
+    
+        <time>2012-12-04</time>
+    
+    
+    
+    <hr/>
+    <p>I&rsquo;m attending
 Algorithms and data structures class this semester. Material it self is
 quite interesting and one TA is pretty cool too. But I don&rsquo;t like
 professor(makes whole experience very much worse) and I believe
 homeworks could be much better. Oh, and we didn&rsquo;t even mention
-functional approach&mldr;you know
-<a href=http://haskell.org/ title="Haskell (programming language)">Haskell</a>,
-<a href=http://www.scala-lang.org/ title="Scala (programming language)">Scala</a> and
+functional approach&hellip;you know
+<a href="http://haskell.org/" title="Haskell (programming language)">Haskell</a>,
+<a href="http://www.scala-lang.org/" title="Scala (programming language)">Scala</a> and
 the like. All we do is imperative, C-style code in Java. Enough ranting.
 This is how it saw the bright side.</p>
-<h3 id=le-problem>Le problem</h3>
+<h3 id="le-problem">Le problem</h3>
 <p>We were doing outer sorting. More specifically: balanced natural outer
 merge sort. I hope I translated this right(probably not). In it&rsquo;s
 essence the algorithm looks like this</p>
@@ -50,13 +70,13 @@ essence the algorithm looks like this</p>
 <li>you have the current element of each track in memory</li>
 <li>you write out squads(non-descending sub-sequence), this means you
 take the minimum element that is greater than last of if such
-element doesn&rsquo;t exist you take the <a href=http://en.wikipedia.org/wiki/Maximal_element title="Maximal element">minimal
+element doesn&rsquo;t exist you take the <a href="http://en.wikipedia.org/wiki/Maximal_element" title="Maximal element">minimal
 element</a>. </li>
 <li>every time a squad ends your write pointer hops to the next track.</li>
 <li>repeat until all elements are on single track(hopefully sorted in
 non-descending order)</li>
 </ul>
-<p><a href=http://commons.wikipedia.org/wiki/File%3ATapesticker.jpg><img src=http://upload.wikimedia.org/wikipedia/commons/thumb/a/ae/Tapesticker.jpg/300px-Tapesticker.jpg alt="Reel of 1/2"></a></p>
+<p><a href="http://commons.wikipedia.org/wiki/File%3ATapesticker.jpg"><img src="http://upload.wikimedia.org/wikipedia/commons/thumb/a/ae/Tapesticker.jpg/300px-Tapesticker.jpg" alt="Reel of 1/2"></a></p>
 <p>Quite simple right? TA&rsquo;s even provided us classes(talking Java here)
 InTrack and OutTrack to manage tracks and I/O. Well my problem is that I
 grew to dislike imperative style. Surely it may matter for performance,
@@ -69,28 +89,28 @@ up variable).
 Some additional explanation: all tracks should be in separate files(no
 overwriting - for automatic checking). N is number of tracks, prefix is
 track name prefix, and i is current iteration.</p>
-<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2>
-<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">4
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">5
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">6
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">7
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">8
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">9
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">9
 </span></code></pre></td>
-<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-java data-lang=java><span style=color:#66d9ef>int</span> i <span style=color:#f92672>=</span> 0<span style=color:#f92672>;</span>
-Iterable source <span style=color:#f92672>=</span> <span style=color:#66d9ef>new</span> InTrack<span style=color:#f92672>(</span>inName<span style=color:#f92672>);</span>
-MultiSink sink<span style=color:#f92672>;</span>
-<span style=color:#66d9ef>do</span><span style=color:#f92672>{</span>
-    sink <span style=color:#f92672>=</span> <span style=color:#66d9ef>new</span> MultiSink<span style=color:#f92672>(</span>prefix<span style=color:#f92672>,</span> i<span style=color:#f92672>,</span> N<span style=color:#f92672>,</span> up<span style=color:#f92672>);</span>
-    <span style=color:#66d9ef>for</span><span style=color:#f92672>(</span><span style=color:#66d9ef>int</span> n <span style=color:#f92672>:</span> source<span style=color:#f92672>)</span> sink<span style=color:#f92672>.</span><span style=color:#a6e22e>write</span><span style=color:#f92672>(</span>n<span style=color:#f92672>);</span>
-    source <span style=color:#f92672>=</span> <span style=color:#66d9ef>new</span> MultiSource<span style=color:#f92672>(</span>prefix<span style=color:#f92672>,</span> i<span style=color:#f92672>,</span> N<span style=color:#f92672>,</span> up<span style=color:#f92672>);</span>
-    i<span style=color:#f92672>++;</span>
-<span style=color:#f92672>}</span> <span style=color:#66d9ef>while</span> <span style=color:#f92672>(</span>sink<span style=color:#f92672>.</span><span style=color:#a6e22e>isMoreThanOneUsed</span><span style=color:#f92672>());</span>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code class="language-java" data-lang="java"><span style="color:#66d9ef">int</span> i <span style="color:#f92672">=</span> 0<span style="color:#f92672">;</span>
+Iterable source <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> InTrack<span style="color:#f92672">(</span>inName<span style="color:#f92672">);</span>
+MultiSink sink<span style="color:#f92672">;</span>
+<span style="color:#66d9ef">do</span><span style="color:#f92672">{</span>
+    sink <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> MultiSink<span style="color:#f92672">(</span>prefix<span style="color:#f92672">,</span> i<span style="color:#f92672">,</span> N<span style="color:#f92672">,</span> up<span style="color:#f92672">);</span>
+    <span style="color:#66d9ef">for</span><span style="color:#f92672">(</span><span style="color:#66d9ef">int</span> n <span style="color:#f92672">:</span> source<span style="color:#f92672">)</span> sink<span style="color:#f92672">.</span><span style="color:#a6e22e">write</span><span style="color:#f92672">(</span>n<span style="color:#f92672">);</span>
+    source <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> MultiSource<span style="color:#f92672">(</span>prefix<span style="color:#f92672">,</span> i<span style="color:#f92672">,</span> N<span style="color:#f92672">,</span> up<span style="color:#f92672">);</span>
+    i<span style="color:#f92672">++;</span>
+<span style="color:#f92672">}</span> <span style="color:#66d9ef">while</span> <span style="color:#f92672">(</span>sink<span style="color:#f92672">.</span><span style="color:#a6e22e">isMoreThanOneUsed</span><span style="color:#f92672">());</span>
 </code></pre></td></tr></table>
 </div>
 </div><p>I&rsquo;m probably not allowed to share my full solution because of
@@ -100,44 +120,44 @@ open files. And I have a similar sink. End-point switching is
 implemented in MultiSink and element choosing is in MultiSource. Both
 InTrack and MultiSource implement Iterable(and Iterator) so I can use
 them in a for-each loop. And code is as pretty as I can get it(remaining
-in java). All in all ~300 lines(with InTrack & stuff). After removing
+in java). All in all ~300 lines(with InTrack &amp; stuff). After removing
 uneeded utility methods and comments ~220 lines. Eww.. Thats way too
 much.</p>
-<h1 id=scala-to-the-rescue>Scala to the rescue</h1>
+<h1 id="scala-to-the-rescue">Scala to the rescue</h1>
 <p>Lets rewrite this in a functional matter using scala. And while I&rsquo;m at
 it, no vars or mutable collections. </p>
-<p><a href=http://en.wikipedia.org/wiki/File%3AScala_logo.png><img src=http://upload.wikimedia.org/wikipedia/en/thumb/8/85/Scala_logo.png/300px-Scala_logo.png alt="Scala (programming language)"></a></p>
+<p><a href="http://en.wikipedia.org/wiki/File%3AScala_logo.png"><img src="http://upload.wikimedia.org/wikipedia/en/thumb/8/85/Scala_logo.png/300px-Scala_logo.png" alt="Scala (programming language)"></a></p>
 <p>Input can be a collection right? Just implement Traversable. Not really.
 The whole point of tracks is they only hold one element in memory(or a
 few for efficiency but that&rsquo;s currently not my concern). So a track can
 be implemented as a
-<a href=http://en.wikipedia.org/wiki/Stream_%28computing%29 title="Stream (computing)">Stream</a>(linked
+<a href="http://en.wikipedia.org/wiki/Stream_%28computing%29" title="Stream (computing)">Stream</a>(linked
 list with a lazy val for tail).</p>
-<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2>
-<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">4
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">5
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">6
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">7
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">8
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">9
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">9
 </span></code></pre></td>
-<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-scala data-lang=scala><span style=color:#66d9ef>def</span> <span style=color:#a6e22e>Reader</span><span style=color:#f92672>(</span>filename<span style=color:#66d9ef>:</span> <span style=color:#66d9ef>String</span><span style=color:#f92672>)</span> <span style=color:#66d9ef>=</span> <span style=color:#f92672>{</span>
-  <span style=color:#66d9ef>val</span> sc <span style=color:#66d9ef>=</span> <span style=color:#66d9ef>new</span> <span style=color:#a6e22e>Scanner</span><span style=color:#f92672>(</span><span style=color:#66d9ef>new</span> <span style=color:#a6e22e>File</span><span style=color:#f92672>(</span>filename<span style=color:#f92672>))</span>
-  <span style=color:#66d9ef>def</span> loop<span style=color:#f92672>()</span><span style=color:#66d9ef>:</span> <span style=color:#66d9ef>Stream</span><span style=color:#f92672>[</span><span style=color:#66d9ef>Int</span><span style=color:#f92672>]</span> <span style=color:#66d9ef>=</span> <span style=color:#f92672>{</span>
-    <span style=color:#66d9ef>if</span> <span style=color:#f92672>(</span>sc<span style=color:#f92672>.</span>hasNextInt<span style=color:#f92672>){</span>
-      sc<span style=color:#f92672>.</span>nextInt<span style=color:#f92672>()</span> <span style=color:#f92672>#</span><span style=color:#66d9ef>:</span><span style=color:#66d9ef>:</span> <span style=color:#66d9ef>loop</span>
-    <span style=color:#f92672>}</span> <span style=color:#66d9ef>else</span> <span style=color:#a6e22e>Stream</span><span style=color:#f92672>.</span>empty<span style=color:#f92672>[</span><span style=color:#66d9ef>Int</span><span style=color:#f92672>]</span>
-  <span style=color:#f92672>}</span>
-  loop<span style=color:#f92672>()</span>
-<span style=color:#f92672>}</span>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code class="language-scala" data-lang="scala"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">Reader</span><span style="color:#f92672">(</span>filename<span style="color:#66d9ef">:</span> <span style="color:#66d9ef">String</span><span style="color:#f92672">)</span> <span style="color:#66d9ef">=</span> <span style="color:#f92672">{</span>
+  <span style="color:#66d9ef">val</span> sc <span style="color:#66d9ef">=</span> <span style="color:#66d9ef">new</span> <span style="color:#a6e22e">Scanner</span><span style="color:#f92672">(</span><span style="color:#66d9ef">new</span> <span style="color:#a6e22e">File</span><span style="color:#f92672">(</span>filename<span style="color:#f92672">))</span>
+  <span style="color:#66d9ef">def</span> loop<span style="color:#f92672">()</span><span style="color:#66d9ef">:</span> <span style="color:#66d9ef">Stream</span><span style="color:#f92672">[</span><span style="color:#66d9ef">Int</span><span style="color:#f92672">]</span> <span style="color:#66d9ef">=</span> <span style="color:#f92672">{</span>
+    <span style="color:#66d9ef">if</span> <span style="color:#f92672">(</span>sc<span style="color:#f92672">.</span>hasNextInt<span style="color:#f92672">){</span>
+      sc<span style="color:#f92672">.</span>nextInt<span style="color:#f92672">()</span> <span style="color:#f92672">#</span><span style="color:#66d9ef">:</span><span style="color:#66d9ef">:</span> <span style="color:#66d9ef">loop</span>
+    <span style="color:#f92672">}</span> <span style="color:#66d9ef">else</span> <span style="color:#a6e22e">Stream</span><span style="color:#f92672">.</span>empty<span style="color:#f92672">[</span><span style="color:#66d9ef">Int</span><span style="color:#f92672">]</span>
+  <span style="color:#f92672">}</span>
+  loop<span style="color:#f92672">()</span>
+<span style="color:#f92672">}</span>
 </code></pre></td></tr></table>
 </div>
-</div><p>This is the <a href=http://en.wikipedia.org/wiki/Constructor_%28object-oriented_programming%29 title="Constructor (object-oriented programming)">constructor
+</div><p>This is the <a href="http://en.wikipedia.org/wiki/Constructor_%28object-oriented_programming%29" title="Constructor (object-oriented programming)">constructor
 function</a>
 for the input stream. It just returns a recursive value that has a
 Scanner in its closure. As stream elements are immutable you get an iron
@@ -145,42 +165,42 @@ clad guarantee that sc will stay in sync.   And you get all collections
 stuff for free. Moving on, how to abstract over multiple streams? That
 should be a stream again right? I kinda feel my code is too complicated
 and that it could be done simpler but that&rsquo;s what I came up with</p>
-<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2>
-<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">11
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">12
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">13
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">14
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">15
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">16
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
 </span></code></pre></td>
-<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-scala data-lang=scala><span style=color:#66d9ef>def</span> <span style=color:#a6e22e>MultiReader</span><span style=color:#f92672>(</span>prefix<span style=color:#66d9ef>:</span> <span style=color:#66d9ef>String</span><span style=color:#f92672>,</span> phase<span style=color:#66d9ef>:</span> <span style=color:#66d9ef>Int</span><span style=color:#f92672>,</span> N<span style=color:#66d9ef>:</span> <span style=color:#66d9ef>Int</span><span style=color:#f92672>,</span> up<span style=color:#66d9ef>:</span> <span style=color:#66d9ef>Boolean</span><span style=color:#f92672>)</span> <span style=color:#66d9ef>=</span> <span style=color:#f92672>{</span>
-  <span style=color:#66d9ef>def</span> loop<span style=color:#f92672>(</span>last<span style=color:#66d9ef>:</span> <span style=color:#66d9ef>Int</span><span style=color:#f92672>,</span> sources<span style=color:#66d9ef>:</span> <span style=color:#66d9ef>Seq</span><span style=color:#f92672>[</span><span style=color:#66d9ef>Stream</span><span style=color:#f92672>[</span><span style=color:#66d9ef>Int</span><span style=color:#f92672>]])</span><span style=color:#66d9ef>:</span> <span style=color:#66d9ef>Stream</span><span style=color:#f92672>[</span><span style=color:#66d9ef>Int</span><span style=color:#f92672>]</span> <span style=color:#66d9ef>=</span> <span style=color:#f92672>{</span>
-    <span style=color:#66d9ef>val</span> nonEmpty <span style=color:#66d9ef>=</span> sources<span style=color:#f92672>.</span>filterNot<span style=color:#f92672>(</span><span style=color:#66d9ef>_</span><span style=color:#f92672>.</span>isEmpty<span style=color:#f92672>)</span>
-    <span style=color:#66d9ef>if</span><span style=color:#f92672>(</span>nonEmpty<span style=color:#f92672>.</span>length<span style=color:#f92672>==</span><span style=color:#ae81ff>0</span><span style=color:#f92672>)</span>
-      <span style=color:#a6e22e>Stream</span><span style=color:#f92672>.</span>empty<span style=color:#f92672>[</span><span style=color:#66d9ef>Int</span><span style=color:#f92672>]</span>
-    <span style=color:#66d9ef>else</span> <span style=color:#f92672>{</span>
-      <span style=color:#66d9ef>val</span> <span style=color:#f92672>(</span>low<span style=color:#f92672>,</span>high<span style=color:#f92672>)</span> <span style=color:#66d9ef>=</span> nonEmpty
-        <span style=color:#f92672>.</span>map<span style=color:#f92672>(</span><span style=color:#66d9ef>_</span><span style=color:#f92672>.</span>head<span style=color:#f92672>)</span>
-        <span style=color:#f92672>.</span>zipWithIndex
-        <span style=color:#f92672>.</span>partition<span style=color:#f92672>(</span>t <span style=color:#66d9ef>=&gt;</span> up <span style=color:#f92672>&amp;&amp;</span> t<span style=color:#f92672>.</span>_1 <span style=color:#f92672>&lt;</span> last <span style=color:#f92672>||</span> <span style=color:#f92672>!</span>up <span style=color:#f92672>&amp;&amp;</span> t<span style=color:#f92672>.</span>_1 <span style=color:#f92672>&gt;</span> last<span style=color:#f92672>)</span>
-      <span style=color:#66d9ef>val</span> <span style=color:#f92672>(</span>e<span style=color:#f92672>,</span>i<span style=color:#f92672>)</span> <span style=color:#66d9ef>=</span> <span style=color:#f92672>(</span><span style=color:#66d9ef>if</span><span style=color:#f92672>(</span>high<span style=color:#f92672>.</span>length<span style=color:#f92672>&gt;</span><span style=color:#ae81ff>0</span><span style=color:#f92672>)</span> high <span style=color:#66d9ef>else</span> low<span style=color:#f92672>).</span>minBy<span style=color:#f92672>(</span><span style=color:#66d9ef>_</span><span style=color:#f92672>.</span>_1<span style=color:#f92672>)</span>
-      e <span style=color:#f92672>#</span><span style=color:#66d9ef>:</span><span style=color:#66d9ef>:</span> <span style=color:#66d9ef>loop</span><span style=color:#f92672>(</span><span style=color:#66d9ef>e</span><span style=color:#f92672>,</span> <span style=color:#66d9ef>nonEmpty.updated</span><span style=color:#f92672>(</span><span style=color:#66d9ef>i</span><span style=color:#f92672>,</span> <span style=color:#66d9ef>nonEmpty</span><span style=color:#f92672>(</span><span style=color:#66d9ef>i</span><span style=color:#f92672>)</span><span style=color:#66d9ef>.tail</span><span style=color:#f92672>))</span>
-    <span style=color:#f92672>}</span>
-  <span style=color:#f92672>}</span>
-  loop<span style=color:#f92672>(</span><span style=color:#ae81ff>0</span><span style=color:#f92672>,</span> <span style=color:#f92672>(</span><span style=color:#ae81ff>0</span> until N<span style=color:#f92672>).</span>map<span style=color:#f92672>(</span>n <span style=color:#66d9ef>=&gt;</span> <span style=color:#a6e22e>Reader</span><span style=color:#f92672>(</span>prefix <span style=color:#f92672>+</span> <span style=color:#e6db74>&#34;-&#34;</span> <span style=color:#f92672>+</span> phase <span style=color:#f92672>+</span> <span style=color:#e6db74>&#34;-&#34;</span> <span style=color:#f92672>+</span> n<span style=color:#f92672>)))</span>
-<span style=color:#f92672>}</span>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code class="language-scala" data-lang="scala"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">MultiReader</span><span style="color:#f92672">(</span>prefix<span style="color:#66d9ef">:</span> <span style="color:#66d9ef">String</span><span style="color:#f92672">,</span> phase<span style="color:#66d9ef">:</span> <span style="color:#66d9ef">Int</span><span style="color:#f92672">,</span> N<span style="color:#66d9ef">:</span> <span style="color:#66d9ef">Int</span><span style="color:#f92672">,</span> up<span style="color:#66d9ef">:</span> <span style="color:#66d9ef">Boolean</span><span style="color:#f92672">)</span> <span style="color:#66d9ef">=</span> <span style="color:#f92672">{</span>
+  <span style="color:#66d9ef">def</span> loop<span style="color:#f92672">(</span>last<span style="color:#66d9ef">:</span> <span style="color:#66d9ef">Int</span><span style="color:#f92672">,</span> sources<span style="color:#66d9ef">:</span> <span style="color:#66d9ef">Seq</span><span style="color:#f92672">[</span><span style="color:#66d9ef">Stream</span><span style="color:#f92672">[</span><span style="color:#66d9ef">Int</span><span style="color:#f92672">]])</span><span style="color:#66d9ef">:</span> <span style="color:#66d9ef">Stream</span><span style="color:#f92672">[</span><span style="color:#66d9ef">Int</span><span style="color:#f92672">]</span> <span style="color:#66d9ef">=</span> <span style="color:#f92672">{</span>
+    <span style="color:#66d9ef">val</span> nonEmpty <span style="color:#66d9ef">=</span> sources<span style="color:#f92672">.</span>filterNot<span style="color:#f92672">(</span><span style="color:#66d9ef">_</span><span style="color:#f92672">.</span>isEmpty<span style="color:#f92672">)</span>
+    <span style="color:#66d9ef">if</span><span style="color:#f92672">(</span>nonEmpty<span style="color:#f92672">.</span>length<span style="color:#f92672">==</span><span style="color:#ae81ff">0</span><span style="color:#f92672">)</span>
+      <span style="color:#a6e22e">Stream</span><span style="color:#f92672">.</span>empty<span style="color:#f92672">[</span><span style="color:#66d9ef">Int</span><span style="color:#f92672">]</span>
+    <span style="color:#66d9ef">else</span> <span style="color:#f92672">{</span>
+      <span style="color:#66d9ef">val</span> <span style="color:#f92672">(</span>low<span style="color:#f92672">,</span>high<span style="color:#f92672">)</span> <span style="color:#66d9ef">=</span> nonEmpty
+        <span style="color:#f92672">.</span>map<span style="color:#f92672">(</span><span style="color:#66d9ef">_</span><span style="color:#f92672">.</span>head<span style="color:#f92672">)</span>
+        <span style="color:#f92672">.</span>zipWithIndex
+        <span style="color:#f92672">.</span>partition<span style="color:#f92672">(</span>t <span style="color:#66d9ef">=&gt;</span> up <span style="color:#f92672">&amp;&amp;</span> t<span style="color:#f92672">.</span>_1 <span style="color:#f92672">&lt;</span> last <span style="color:#f92672">||</span> <span style="color:#f92672">!</span>up <span style="color:#f92672">&amp;&amp;</span> t<span style="color:#f92672">.</span>_1 <span style="color:#f92672">&gt;</span> last<span style="color:#f92672">)</span>
+      <span style="color:#66d9ef">val</span> <span style="color:#f92672">(</span>e<span style="color:#f92672">,</span>i<span style="color:#f92672">)</span> <span style="color:#66d9ef">=</span> <span style="color:#f92672">(</span><span style="color:#66d9ef">if</span><span style="color:#f92672">(</span>high<span style="color:#f92672">.</span>length<span style="color:#f92672">&gt;</span><span style="color:#ae81ff">0</span><span style="color:#f92672">)</span> high <span style="color:#66d9ef">else</span> low<span style="color:#f92672">).</span>minBy<span style="color:#f92672">(</span><span style="color:#66d9ef">_</span><span style="color:#f92672">.</span>_1<span style="color:#f92672">)</span>
+      e <span style="color:#f92672">#</span><span style="color:#66d9ef">:</span><span style="color:#66d9ef">:</span> <span style="color:#66d9ef">loop</span><span style="color:#f92672">(</span><span style="color:#66d9ef">e</span><span style="color:#f92672">,</span> <span style="color:#66d9ef">nonEmpty.updated</span><span style="color:#f92672">(</span><span style="color:#66d9ef">i</span><span style="color:#f92672">,</span> <span style="color:#66d9ef">nonEmpty</span><span style="color:#f92672">(</span><span style="color:#66d9ef">i</span><span style="color:#f92672">)</span><span style="color:#66d9ef">.tail</span><span style="color:#f92672">))</span>
+    <span style="color:#f92672">}</span>
+  <span style="color:#f92672">}</span>
+  loop<span style="color:#f92672">(</span><span style="color:#ae81ff">0</span><span style="color:#f92672">,</span> <span style="color:#f92672">(</span><span style="color:#ae81ff">0</span> until N<span style="color:#f92672">).</span>map<span style="color:#f92672">(</span>n <span style="color:#66d9ef">=&gt;</span> <span style="color:#a6e22e">Reader</span><span style="color:#f92672">(</span>prefix <span style="color:#f92672">+</span> <span style="color:#e6db74">&#34;-&#34;</span> <span style="color:#f92672">+</span> phase <span style="color:#f92672">+</span> <span style="color:#e6db74">&#34;-&#34;</span> <span style="color:#f92672">+</span> n<span style="color:#f92672">)))</span>
+<span style="color:#f92672">}</span>
 </code></pre></td></tr></table>
 </div>
 </div><p>Let&rsquo;s walk through. Again the stream is recursive. It starts with a
@@ -195,67 +215,67 @@ mutable state. Solution is to return a new Writer containing a new state
 every time you write. Then the user must just be careful not to use
 stale Writers - not that big a deal.
 This is the Writer trait</p>
-<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2>
-<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">4
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
 </span></code></pre></td>
-<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-scala data-lang=scala><span style=color:#66d9ef>trait</span> <span style=color:#a6e22e>Writer</span><span style=color:#f92672>{</span>
-  <span style=color:#66d9ef>def</span> write<span style=color:#f92672>(</span>num<span style=color:#66d9ef>:</span> <span style=color:#66d9ef>Int</span><span style=color:#f92672>)</span><span style=color:#66d9ef>:</span> <span style=color:#66d9ef>Writer</span>
-  <span style=color:#66d9ef>def</span> moreThanOneUsed<span style=color:#66d9ef>:</span> <span style=color:#66d9ef>Boolean</span>
-<span style=color:#f92672>}</span>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code class="language-scala" data-lang="scala"><span style="color:#66d9ef">trait</span> <span style="color:#a6e22e">Writer</span><span style="color:#f92672">{</span>
+  <span style="color:#66d9ef">def</span> write<span style="color:#f92672">(</span>num<span style="color:#66d9ef">:</span> <span style="color:#66d9ef">Int</span><span style="color:#f92672">)</span><span style="color:#66d9ef">:</span> <span style="color:#66d9ef">Writer</span>
+  <span style="color:#66d9ef">def</span> moreThanOneUsed<span style="color:#66d9ef">:</span> <span style="color:#66d9ef">Boolean</span>
+<span style="color:#f92672">}</span>
 </code></pre></td></tr></table>
 </div>
 </div><p>Very simple interface. And here&rsquo;s the recursive constructor function</p>
-<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2>
-<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">11
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">12
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">13
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">14
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">15
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">16
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">17
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">18
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">19
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">20
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">21
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">19
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">20
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">21
 </span></code></pre></td>
-<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-scala data-lang=scala><span style=color:#66d9ef>def</span> <span style=color:#a6e22e>Writer</span><span style=color:#f92672>(</span>prefix<span style=color:#66d9ef>:</span> <span style=color:#66d9ef>String</span><span style=color:#f92672>,</span> phase<span style=color:#66d9ef>:</span> <span style=color:#66d9ef>Int</span><span style=color:#f92672>,</span> N<span style=color:#66d9ef>:</span> <span style=color:#66d9ef>Int</span><span style=color:#f92672>,</span> up<span style=color:#66d9ef>:</span> <span style=color:#66d9ef>Boolean</span><span style=color:#f92672>)</span><span style=color:#66d9ef>:</span> <span style=color:#66d9ef>Writer</span> <span style=color:#f92672>=</span> <span style=color:#f92672>{</span>
-  <span style=color:#66d9ef>val</span> tracks <span style=color:#66d9ef>=</span> <span style=color:#f92672>(</span><span style=color:#ae81ff>0</span> until N<span style=color:#f92672>).</span>map <span style=color:#f92672>{</span> n <span style=color:#66d9ef>=&gt;</span>
-    <span style=color:#66d9ef>new</span> <span style=color:#a6e22e>PrintWriter</span><span style=color:#f92672>(</span><span style=color:#66d9ef>new</span> <span style=color:#a6e22e>BufferedWriter</span><span style=color:#f92672>(</span><span style=color:#66d9ef>new</span> <span style=color:#a6e22e>FileWriter</span><span style=color:#f92672>(</span>prefix<span style=color:#f92672>+</span><span style=color:#e6db74>&#34;-&#34;</span><span style=color:#f92672>+</span>phase<span style=color:#f92672>+</span><span style=color:#e6db74>&#34;-&#34;</span><span style=color:#f92672>+</span>n<span style=color:#f92672>)))</span>
-  <span style=color:#f92672>}</span>
-  <span style=color:#66d9ef>def</span> mkWriter<span style=color:#f92672>(</span>i<span style=color:#66d9ef>:</span> <span style=color:#66d9ef>Int</span><span style=color:#f92672>,</span> last<span style=color:#66d9ef>:</span> <span style=color:#66d9ef>Int</span><span style=color:#f92672>,</span> used<span style=color:#66d9ef>:</span> <span style=color:#66d9ef>Boolean</span><span style=color:#f92672>)</span><span style=color:#66d9ef>:</span> <span style=color:#66d9ef>Writer</span> <span style=color:#f92672>=</span> <span style=color:#66d9ef>new</span> <span style=color:#a6e22e>Writer</span> <span style=color:#f92672>{</span>
-    <span style=color:#66d9ef>def</span> write<span style=color:#f92672>(</span>num<span style=color:#66d9ef>:</span> <span style=color:#66d9ef>Int</span><span style=color:#f92672>)</span> <span style=color:#66d9ef>=</span> <span style=color:#f92672>{</span>
-      <span style=color:#66d9ef>val</span> <span style=color:#f92672>(</span>ni<span style=color:#f92672>,</span>nu<span style=color:#f92672>)</span> <span style=color:#66d9ef>=</span>
-        <span style=color:#66d9ef>if</span> <span style=color:#f92672>(</span>up <span style=color:#f92672>&amp;&amp;</span> num <span style=color:#f92672>&lt;</span> last <span style=color:#f92672>||</span> <span style=color:#f92672>!</span>up <span style=color:#f92672>&amp;&amp;</span> num <span style=color:#f92672>&gt;</span> last<span style=color:#f92672>)</span>
-          <span style=color:#f92672>((</span>i <span style=color:#f92672>+</span> <span style=color:#ae81ff>1</span><span style=color:#f92672>)</span> <span style=color:#f92672>%</span> tracks<span style=color:#f92672>.</span>length<span style=color:#f92672>,</span> <span style=color:#66d9ef>true</span><span style=color:#f92672>)</span>
-        <span style=color:#66d9ef>else</span>
-          <span style=color:#f92672>(</span>i<span style=color:#f92672>,</span> used<span style=color:#f92672>)</span>
-      tracks<span style=color:#f92672>(</span>ni<span style=color:#f92672>).</span>print<span style=color:#f92672>(</span>num<span style=color:#f92672>)</span>
-      tracks<span style=color:#f92672>(</span>ni<span style=color:#f92672>).</span>print<span style=color:#f92672>(</span><span style=color:#e6db74>&#39; &#39;</span><span style=color:#f92672>)</span>
-      tracks<span style=color:#f92672>(</span>ni<span style=color:#f92672>).</span>flush<span style=color:#f92672>()</span>
-      mkWriter<span style=color:#f92672>(</span>ni<span style=color:#f92672>,</span> num<span style=color:#f92672>,</span> nu<span style=color:#f92672>)</span>
-    <span style=color:#f92672>}</span>
-    <span style=color:#66d9ef>def</span> moreThanOneUsed <span style=color:#66d9ef>=</span> used
-  <span style=color:#f92672>}</span>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code class="language-scala" data-lang="scala"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">Writer</span><span style="color:#f92672">(</span>prefix<span style="color:#66d9ef">:</span> <span style="color:#66d9ef">String</span><span style="color:#f92672">,</span> phase<span style="color:#66d9ef">:</span> <span style="color:#66d9ef">Int</span><span style="color:#f92672">,</span> N<span style="color:#66d9ef">:</span> <span style="color:#66d9ef">Int</span><span style="color:#f92672">,</span> up<span style="color:#66d9ef">:</span> <span style="color:#66d9ef">Boolean</span><span style="color:#f92672">)</span><span style="color:#66d9ef">:</span> <span style="color:#66d9ef">Writer</span> <span style="color:#f92672">=</span> <span style="color:#f92672">{</span>
+  <span style="color:#66d9ef">val</span> tracks <span style="color:#66d9ef">=</span> <span style="color:#f92672">(</span><span style="color:#ae81ff">0</span> until N<span style="color:#f92672">).</span>map <span style="color:#f92672">{</span> n <span style="color:#66d9ef">=&gt;</span>
+    <span style="color:#66d9ef">new</span> <span style="color:#a6e22e">PrintWriter</span><span style="color:#f92672">(</span><span style="color:#66d9ef">new</span> <span style="color:#a6e22e">BufferedWriter</span><span style="color:#f92672">(</span><span style="color:#66d9ef">new</span> <span style="color:#a6e22e">FileWriter</span><span style="color:#f92672">(</span>prefix<span style="color:#f92672">+</span><span style="color:#e6db74">&#34;-&#34;</span><span style="color:#f92672">+</span>phase<span style="color:#f92672">+</span><span style="color:#e6db74">&#34;-&#34;</span><span style="color:#f92672">+</span>n<span style="color:#f92672">)))</span>
+  <span style="color:#f92672">}</span>
+  <span style="color:#66d9ef">def</span> mkWriter<span style="color:#f92672">(</span>i<span style="color:#66d9ef">:</span> <span style="color:#66d9ef">Int</span><span style="color:#f92672">,</span> last<span style="color:#66d9ef">:</span> <span style="color:#66d9ef">Int</span><span style="color:#f92672">,</span> used<span style="color:#66d9ef">:</span> <span style="color:#66d9ef">Boolean</span><span style="color:#f92672">)</span><span style="color:#66d9ef">:</span> <span style="color:#66d9ef">Writer</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> <span style="color:#a6e22e">Writer</span> <span style="color:#f92672">{</span>
+    <span style="color:#66d9ef">def</span> write<span style="color:#f92672">(</span>num<span style="color:#66d9ef">:</span> <span style="color:#66d9ef">Int</span><span style="color:#f92672">)</span> <span style="color:#66d9ef">=</span> <span style="color:#f92672">{</span>
+      <span style="color:#66d9ef">val</span> <span style="color:#f92672">(</span>ni<span style="color:#f92672">,</span>nu<span style="color:#f92672">)</span> <span style="color:#66d9ef">=</span>
+        <span style="color:#66d9ef">if</span> <span style="color:#f92672">(</span>up <span style="color:#f92672">&amp;&amp;</span> num <span style="color:#f92672">&lt;</span> last <span style="color:#f92672">||</span> <span style="color:#f92672">!</span>up <span style="color:#f92672">&amp;&amp;</span> num <span style="color:#f92672">&gt;</span> last<span style="color:#f92672">)</span>
+          <span style="color:#f92672">((</span>i <span style="color:#f92672">+</span> <span style="color:#ae81ff">1</span><span style="color:#f92672">)</span> <span style="color:#f92672">%</span> tracks<span style="color:#f92672">.</span>length<span style="color:#f92672">,</span> <span style="color:#66d9ef">true</span><span style="color:#f92672">)</span>
+        <span style="color:#66d9ef">else</span>
+          <span style="color:#f92672">(</span>i<span style="color:#f92672">,</span> used<span style="color:#f92672">)</span>
+      tracks<span style="color:#f92672">(</span>ni<span style="color:#f92672">).</span>print<span style="color:#f92672">(</span>num<span style="color:#f92672">)</span>
+      tracks<span style="color:#f92672">(</span>ni<span style="color:#f92672">).</span>print<span style="color:#f92672">(</span><span style="color:#e6db74">&#39; &#39;</span><span style="color:#f92672">)</span>
+      tracks<span style="color:#f92672">(</span>ni<span style="color:#f92672">).</span>flush<span style="color:#f92672">()</span>
+      mkWriter<span style="color:#f92672">(</span>ni<span style="color:#f92672">,</span> num<span style="color:#f92672">,</span> nu<span style="color:#f92672">)</span>
+    <span style="color:#f92672">}</span>
+    <span style="color:#66d9ef">def</span> moreThanOneUsed <span style="color:#66d9ef">=</span> used
+  <span style="color:#f92672">}</span>
 
-  mkWriter<span style=color:#f92672>(</span><span style=color:#ae81ff>0</span><span style=color:#f92672>,</span> <span style=color:#66d9ef>if</span> <span style=color:#f92672>(</span>up<span style=color:#f92672>)</span> <span style=color:#a6e22e>Integer</span><span style=color:#f92672>.</span><span style=color:#a6e22e>MIN_VALUE</span> <span style=color:#66d9ef>else</span> <span style=color:#a6e22e>Integer</span><span style=color:#f92672>.</span><span style=color:#a6e22e>MAX_VALUE</span><span style=color:#f92672>,</span> used<span style=color:#66d9ef>=</span><span style=color:#66d9ef>false</span><span style=color:#f92672>)</span>
-<span style=color:#f92672>}</span>
+  mkWriter<span style="color:#f92672">(</span><span style="color:#ae81ff">0</span><span style="color:#f92672">,</span> <span style="color:#66d9ef">if</span> <span style="color:#f92672">(</span>up<span style="color:#f92672">)</span> <span style="color:#a6e22e">Integer</span><span style="color:#f92672">.</span><span style="color:#a6e22e">MIN_VALUE</span> <span style="color:#66d9ef">else</span> <span style="color:#a6e22e">Integer</span><span style="color:#f92672">.</span><span style="color:#a6e22e">MAX_VALUE</span><span style="color:#f92672">,</span> used<span style="color:#66d9ef">=</span><span style="color:#66d9ef">false</span><span style="color:#f92672">)</span>
+<span style="color:#f92672">}</span>
 </code></pre></td></tr></table>
 </div>
 </div><p>Creates all the tracks to be put in the closure. First writer has the
@@ -267,43 +287,51 @@ shouldn&rsquo;t be a problem. Especially since the whole process is bound by
 I/O. Anyway you could optimize by creating all possible states in
 advance and just passing a new reference each time.</p>
 <p>Putting it all together.</p>
-<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2>
-<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">4
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">5
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">6
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
 </span></code></pre></td>
-<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-scala data-lang=scala><span style=color:#66d9ef>def</span> loop<span style=color:#f92672>(</span>i<span style=color:#66d9ef>:</span> <span style=color:#66d9ef>Int</span><span style=color:#f92672>,</span> source<span style=color:#66d9ef>:</span> <span style=color:#66d9ef>Stream</span><span style=color:#f92672>[</span><span style=color:#66d9ef>Int</span><span style=color:#f92672>]){</span>
-  <span style=color:#66d9ef>val</span> sink <span style=color:#66d9ef>=</span> source<span style=color:#f92672>.</span>foldLeft<span style=color:#f92672>(</span><span style=color:#a6e22e>Writer</span><span style=color:#f92672>(</span>prefix<span style=color:#f92672>,</span> i<span style=color:#f92672>,</span> N<span style=color:#f92672>,</span> up<span style=color:#f92672>))(</span><span style=color:#66d9ef>_</span> write <span style=color:#66d9ef>_</span><span style=color:#f92672>)</span>
-  <span style=color:#66d9ef>if</span> <span style=color:#f92672>(</span>sink<span style=color:#f92672>.</span>moreThanOneUsed<span style=color:#f92672>)</span> loop<span style=color:#f92672>(</span>i<span style=color:#f92672>+</span><span style=color:#ae81ff>1</span><span style=color:#f92672>,</span> <span style=color:#a6e22e>MultiReader</span><span style=color:#f92672>(</span>prefix<span style=color:#f92672>,</span> i<span style=color:#f92672>,</span> N <span style=color:#f92672>,</span>up<span style=color:#f92672>))</span>
-<span style=color:#f92672>}</span>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code class="language-scala" data-lang="scala"><span style="color:#66d9ef">def</span> loop<span style="color:#f92672">(</span>i<span style="color:#66d9ef">:</span> <span style="color:#66d9ef">Int</span><span style="color:#f92672">,</span> source<span style="color:#66d9ef">:</span> <span style="color:#66d9ef">Stream</span><span style="color:#f92672">[</span><span style="color:#66d9ef">Int</span><span style="color:#f92672">]){</span>
+  <span style="color:#66d9ef">val</span> sink <span style="color:#66d9ef">=</span> source<span style="color:#f92672">.</span>foldLeft<span style="color:#f92672">(</span><span style="color:#a6e22e">Writer</span><span style="color:#f92672">(</span>prefix<span style="color:#f92672">,</span> i<span style="color:#f92672">,</span> N<span style="color:#f92672">,</span> up<span style="color:#f92672">))(</span><span style="color:#66d9ef">_</span> write <span style="color:#66d9ef">_</span><span style="color:#f92672">)</span>
+  <span style="color:#66d9ef">if</span> <span style="color:#f92672">(</span>sink<span style="color:#f92672">.</span>moreThanOneUsed<span style="color:#f92672">)</span> loop<span style="color:#f92672">(</span>i<span style="color:#f92672">+</span><span style="color:#ae81ff">1</span><span style="color:#f92672">,</span> <span style="color:#a6e22e">MultiReader</span><span style="color:#f92672">(</span>prefix<span style="color:#f92672">,</span> i<span style="color:#f92672">,</span> N <span style="color:#f92672">,</span>up<span style="color:#f92672">))</span>
+<span style="color:#f92672">}</span>
 
-loop<span style=color:#f92672>(</span><span style=color:#ae81ff>0</span><span style=color:#f92672>,</span> <span style=color:#a6e22e>Reader</span><span style=color:#f92672>(</span>inName<span style=color:#f92672>))</span>
+loop<span style="color:#f92672">(</span><span style="color:#ae81ff">0</span><span style="color:#f92672">,</span> <span style="color:#a6e22e">Reader</span><span style="color:#f92672">(</span>inName<span style="color:#f92672">))</span>
 </code></pre></td></tr></table>
 </div>
 </div><p>So you take an input stream, fold it over a writer writing in each step.
 And if you used more than one track you repeat with a new input stream.
 I find this solution to be MUCH MORE elegant. Not to mention it&rsquo;s just
 65 lines of scala. But it makes me really sad they don&rsquo;t even mention
-<a href=http://en.wikipedia.org/wiki/Functional_programming title="Functional programming">functional
+<a href="http://en.wikipedia.org/wiki/Functional_programming" title="Functional programming">functional
 programming</a>
 at algorithms course. I&rsquo;m probably gonna pay the professor and TA&rsquo;s a
 visit in near future.</p>
-<hr>
-<p>Last modified on 2012-12-04</p>
-<a href=/posts/2012-11-26-functional-compilers/>
-Previous Cool Monday - Functional compilers and atoms
-</a>
-<br>
-<a href=/posts/2012-12-10-dynamic-db/>
-Next Cool Monday - Exploration of dynamic db acces from scala
-</a>
-</div>
-<script src=/js/instantclick.min.js data-no-instant></script>
-<script data-no-instant>InstantClick.init("mousedown")</script>
-</body>
+
+    <hr/>
+    
+        <p>Last modified on 2012-12-04</p>
+    
+    
+        <a href="/posts/2012-11-26-functional-compilers/">
+            Previous Cool Monday - Functional compilers and atoms
+        </a>
+    
+    <br/>
+    
+    <a href="/posts/2012-12-10-dynamic-db/">
+        Next Cool Monday - Exploration of dynamic db acces from scala
+    </a>
+    
+
+        </div>
+        <script src="/js/instantclick.min.js" data-no-instant></script>
+        <script data-no-instant>InstantClick.init("mousedown");</script>
+    </body>
 </html>

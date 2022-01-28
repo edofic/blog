@@ -1,79 +1,99 @@
-<!doctype html><html>
+<!DOCTYPE html>
+<html>
 <head>
 <title>Cool Monday - Functional compilers and atoms</title>
-<meta charset=utf-8>
-<meta name=X-UA-Compatible content="IE=edge">
-<meta name=google-site-verification content>
-<meta content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=0" name=viewport>
+<meta charset="utf-8">
+<meta name="X-UA-Compatible" content="IE=edge">
+<meta name="google-site-verification" content="">
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+
+
+
+
 <style>body{max-width:800px;margin:auto;line-height:1.6;font-size:18px;color:#444;padding:0 10px}h1,h2,h3{line-height:1.2}.nav a,.nav a:visited,.nav a:hover,.nav a:active{color:inherit}.nav .title{margin:0}.nav-sub{display:inline-block}.nav-item{margin:5px}.nav-sub-right{display:inline-block;float:right}.nav-icon{margin-right:5px}.main img{display:block;max-width:100%;margin:auto}.main pre{overflow:auto}" media="screen"></style>
 </head>
-<body>
-<div class=nav>
-<a href=/><h2 class=title>Andraž Bajt's blog</h2></a>
-<div class=nav-sub>
-<a class=nav-item href=/about/>
-About Me
-</a>
-<a class=nav-item href=/>
-Archive
-</a>
-</div>
-<div class=nav-sub-right>
-<a class=nav-icon href=https://github.com/edofic target=_blank><img src=/icons/github.svg width=20 height=20></a>
-<a class=nav-icon href=https://www.linkedin.com/in/edofic target=_blank><img src=/icons/linkedin.svg width=20 height=20></a>
-<a class=nav-icon href=https://twitter.com/edofic target=_blank><img src=/icons/twitter.svg width=20 height=20></a>
-<a class=nav-icon href=/index.xml target=_blank><img src=/icons/rss.svg width=20 height=20></a>
-<a class=nav-icon href=mailto:blog@edofic.com target=_blank><img src=/icons/email.svg width=20 height=20></a>
-</div>
-</div>
-<hr>
-<div class=main>
-<h1>Cool Monday - Functional compilers and atoms</h1>
-<time>2012-11-26</time>
-<hr>
-<p>I&rsquo;ve seen
-<a href=http://skillsmatter.com/podcast/scala/functional-compilers-from-cfg-to-exe/ac-5896>this great
+    <body>
+        <div class="nav">
+            <a href="/"><h2 class="title">Andraž Bajt&#39;s blog</h2></a>
+            <div class="nav-sub">
+                
+                    <a class="nav-item" href="/about/">
+                        About Me
+                    </a>
+                
+                    <a class="nav-item" href="/">
+                        Archive
+                    </a>
+                
+            </div>
+            <div class="nav-sub-right">
+                
+                    <a class="nav-icon" href="https://github.com/edofic" target="_blank"><img src="/icons/github.svg" width="20" height="20"/></a>
+                
+                
+                    <a class="nav-icon" href="https://www.linkedin.com/in/edofic" target="_blank"><img src="/icons/linkedin.svg" width="20" height="20"/></a>
+                
+                
+                    <a class="nav-icon" href="https://twitter.com/edofic" target="_blank"><img src="/icons/twitter.svg" width="20" height="20"/></a>
+                
+                <a class="nav-icon" href="/index.xml" target="_blank"><img src="/icons/rss.svg" width="20" height="20"/></a>
+                
+                    <a class="nav-icon" href="mailto:blog@edofic.com" target="_blank"><img src="/icons/email.svg" width="20" height="20"/></a>
+                
+            </div>
+        </div>
+        <hr/>
+        <div class="main">
+    <h1>Cool Monday - Functional compilers and atoms</h1>
+    
+        <time>2012-11-26</time>
+    
+    
+    
+    <hr/>
+    <p>I&rsquo;ve seen
+<a href="http://skillsmatter.com/podcast/scala/functional-compilers-from-cfg-to-exe/ac-5896">this great
 talk</a>
 by Daniel Spiewak on Functional
-<a href=http://en.wikipedia.org/wiki/Compiler title=Compiler>Compilers</a>. He talks
-about lexical and <a href=http://en.wikipedia.org/wiki/Compiler title=Compiler>semantic
+<a href="http://en.wikipedia.org/wiki/Compiler" title="Compiler">Compilers</a>. He talks
+about lexical and <a href="http://en.wikipedia.org/wiki/Compiler" title="Compiler">semantic
 analysis</a>
 in particular.
 First, problems with traditional
-<a href=http://en.wikipedia.org/wiki/Lexical_analysis title="Lexical analysis">lexing</a>
+<a href="http://en.wikipedia.org/wiki/Lexical_analysis" title="Lexical analysis">lexing</a>
 with scanner. You can only have regular tokens or you have do do some
 dirty hacking and
-<a href=http://en.wikipedia.org/wiki/Stack_trace title="Stack trace">backtrace</a> the
+<a href="http://en.wikipedia.org/wiki/Stack_trace" title="Stack trace">backtrace</a> the
 scanner therefore losing linearity. And you can solve this with
-<a href=http://en.wikipedia.org/wiki/Scannerless_parsing title="Scannerless parsing">scannerless
+<a href="http://en.wikipedia.org/wiki/Scannerless_parsing" title="Scannerless parsing">scannerless
 parsing</a></p>
 <ul>
-<li>putting <a href=http://en.wikipedia.org/wiki/Regular_expression title="Regular expression">regular
+<li>putting <a href="http://en.wikipedia.org/wiki/Regular_expression" title="Regular expression">regular
 expressions</a>
 into your grammar. In fact this approach seems simpler to me, as the
-<a href=/posts/2012-08-29-creating-a-language-1>only proper parser I&rsquo;ve
+<a href="/posts/2012-08-29-creating-a-language-1">only proper parser I&rsquo;ve
 done</a>
 works this way. But this is not the interesting part.</li>
 </ul>
-<h3 id=semantic-analysis>Semantic analysis</h3>
-<p>This is where fun kicks in. After you parse the <a href=http://en.wikipedia.org/wiki/Source_code title="Source code">source
+<h3 id="semantic-analysis">Semantic analysis</h3>
+<p>This is where fun kicks in. After you parse the <a href="http://en.wikipedia.org/wiki/Source_code" title="Source code">source
 code</a> into an
-<a href=http://en.wikipedia.org/wiki/Abstract_syntax_tree title="Abstract syntax tree">AST</a>
+<a href="http://en.wikipedia.org/wiki/Abstract_syntax_tree" title="Abstract syntax tree">AST</a>
 you need to do a bunch of operations on it. Naming, typing(even
 optimization in later phases). If I want to stay functional(which
 usually I do) my instinct tells me to do recursive traversal and rewrite
 the tree. And that&rsquo;s exactly what my language does. But there is one
 huge problem. AST is not a tree. It&rsquo;s huge misnomer. AST is just a
-<a href=http://en.wikipedia.org/wiki/Spanning_tree title="Spanning tree">spanning
+<a href="http://en.wikipedia.org/wiki/Spanning_tree" title="Spanning tree">spanning
 tree</a> in the
 program graph. See, when you add stuff like let expressions, or
 types(what I&rsquo;m doing currently) you get problems</p>
-<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2>
-<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
 </span></code></pre></td>
-<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-haskell data-lang=haskell><span style=color:#66d9ef>let</span> a <span style=color:#f92672>=</span> <span style=color:#ae81ff>1</span>in f a
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code class="language-haskell" data-lang="haskell"><span style="color:#66d9ef">let</span> a <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span>in f a
 </code></pre></td></tr></table>
 </div>
 </div><p>There are edges between the siblings. Or going back up. Or skipping
@@ -86,7 +106,7 @@ lot of information and you have to be careful with you updates.
 There is one more solution. Vars. Works like a charm. Except that it&rsquo;s
 terrible to reason about quite the opposite of functional. But there
 exists a fix.</p>
-<h3 id=atoms>Atoms</h3>
+<h3 id="atoms">Atoms</h3>
 <p>Think write-once vars. But not quite. The idea is to have containers
 that can be written to but are only ever seen in a one state. Problem
 with vars is that they can be seen  in multiple states and you have to
@@ -98,69 +118,69 @@ not when you need to read them. And this is the problem in a compiler.
 You compute data coming from out of the scope and you need to store it.
 And some time later you need to read it. And you use atoms.  First some
 code, then explanation.</p>
-<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2>
-<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">11
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">12
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">13
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">14
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">15
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">16
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">17
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">18
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">19
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">20
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">21
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">22
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">23
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">24
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">25
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">26
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">27
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">28
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">19
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">20
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">21
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">22
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">23
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">24
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">25
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">26
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">27
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">28
 </span></code></pre></td>
-<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-scala data-lang=scala><span style=color:#66d9ef>class</span> <span style=color:#a6e22e>Atom</span><span style=color:#f92672>[</span><span style=color:#66d9ef>A</span><span style=color:#f92672>]</span> <span style=color:#f92672>{</span>
-  <span style=color:#66d9ef>private</span> <span style=color:#66d9ef>var</span> value<span style=color:#66d9ef>:</span> <span style=color:#66d9ef>A</span> <span style=color:#f92672>=</span> <span style=color:#66d9ef>_</span>
-  <span style=color:#66d9ef>private</span> <span style=color:#66d9ef>var</span> isSet <span style=color:#66d9ef>=</span> <span style=color:#66d9ef>false</span>
-  <span style=color:#66d9ef>private</span> <span style=color:#66d9ef>var</span> isForced <span style=color:#66d9ef>=</span> <span style=color:#66d9ef>false</span>
-  <span style=color:#66d9ef>protected</span> <span style=color:#66d9ef>def</span> populate<span style=color:#f92672>(){</span>
-    sys<span style=color:#f92672>.</span>error<span style=color:#f92672>(</span><span style=color:#e6db74>&#34;cannont self-populate atom&#34;</span><span style=color:#f92672>)</span>
-  <span style=color:#f92672>}</span>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code class="language-scala" data-lang="scala"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Atom</span><span style="color:#f92672">[</span><span style="color:#66d9ef">A</span><span style="color:#f92672">]</span> <span style="color:#f92672">{</span>
+  <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">var</span> value<span style="color:#66d9ef">:</span> <span style="color:#66d9ef">A</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">_</span>
+  <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">var</span> isSet <span style="color:#66d9ef">=</span> <span style="color:#66d9ef">false</span>
+  <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">var</span> isForced <span style="color:#66d9ef">=</span> <span style="color:#66d9ef">false</span>
+  <span style="color:#66d9ef">protected</span> <span style="color:#66d9ef">def</span> populate<span style="color:#f92672">(){</span>
+    sys<span style="color:#f92672">.</span>error<span style="color:#f92672">(</span><span style="color:#e6db74">&#34;cannont self-populate atom&#34;</span><span style="color:#f92672">)</span>
+  <span style="color:#f92672">}</span>
 
-  <span style=color:#66d9ef>def</span> update<span style=color:#f92672>(</span>a<span style=color:#66d9ef>:</span> <span style=color:#66d9ef>A</span><span style=color:#f92672>)</span> <span style=color:#f92672>{</span>
-    <span style=color:#66d9ef>if</span> <span style=color:#f92672>(!</span>isSet <span style=color:#f92672>||</span> <span style=color:#f92672>!</span>isForced<span style=color:#f92672>){</span>
-      value <span style=color:#66d9ef>=</span> a
-      isSet <span style=color:#66d9ef>=</span> <span style=color:#66d9ef>true</span>
-    <span style=color:#f92672>}</span>
-  <span style=color:#f92672>}</span>
+  <span style="color:#66d9ef">def</span> update<span style="color:#f92672">(</span>a<span style="color:#66d9ef">:</span> <span style="color:#66d9ef">A</span><span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+    <span style="color:#66d9ef">if</span> <span style="color:#f92672">(!</span>isSet <span style="color:#f92672">||</span> <span style="color:#f92672">!</span>isForced<span style="color:#f92672">){</span>
+      value <span style="color:#66d9ef">=</span> a
+      isSet <span style="color:#66d9ef">=</span> <span style="color:#66d9ef">true</span>
+    <span style="color:#f92672">}</span>
+  <span style="color:#f92672">}</span>
 
-  <span style=color:#66d9ef>def</span> apply<span style=color:#f92672>()</span><span style=color:#66d9ef>:</span> <span style=color:#66d9ef>A</span> <span style=color:#f92672>{</span>
-    <span style=color:#66d9ef>isForced</span> <span style=color:#f92672>=</span> <span style=color:#66d9ef>true</span>
-    <span style=color:#66d9ef>if</span> <span style=color:#f92672>(</span>isSet<span style=color:#f92672>)</span> <span style=color:#f92672>{</span>
+  <span style="color:#66d9ef">def</span> apply<span style="color:#f92672">()</span><span style="color:#66d9ef">:</span> <span style="color:#66d9ef">A</span> <span style="color:#f92672">{</span>
+    <span style="color:#66d9ef">isForced</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">true</span>
+    <span style="color:#66d9ef">if</span> <span style="color:#f92672">(</span>isSet<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
       value
-    <span style=color:#f92672>}</span> <span style=color:#66d9ef>else</span> <span style=color:#f92672>{</span>
-      populate<span style=color:#f92672>()</span>
-      <span style=color:#66d9ef>if</span> <span style=color:#f92672>(!</span>isSet<span style=color:#f92672>)</span> <span style=color:#f92672>{</span>
-        sys<span style=color:#f92672>.</span>error<span style=color:#f92672>(</span><span style=color:#e6db74>&#34;value not set&#34;</span><span style=color:#f92672>)</span>
-      <span style=color:#f92672>}</span>
+    <span style="color:#f92672">}</span> <span style="color:#66d9ef">else</span> <span style="color:#f92672">{</span>
+      populate<span style="color:#f92672">()</span>
+      <span style="color:#66d9ef">if</span> <span style="color:#f92672">(!</span>isSet<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+        sys<span style="color:#f92672">.</span>error<span style="color:#f92672">(</span><span style="color:#e6db74">&#34;value not set&#34;</span><span style="color:#f92672">)</span>
+      <span style="color:#f92672">}</span>
       value
-    <span style=color:#f92672>}</span>
-  <span style=color:#f92672>}</span>
-<span style=color:#f92672>}</span>
+    <span style="color:#f92672">}</span>
+  <span style="color:#f92672">}</span>
+<span style="color:#f92672">}</span>
 </code></pre></td></tr></table>
 </div>
-</div><p>Here is the workflow&mldr; you create an atom, you can write(update) to
+</div><p>Here is the workflow&hellip; you create an atom, you can write(update) to
 it-in fact writes are indempotent and you can do many successive writes
 as long as you don&rsquo;t read the value. Once written to isSet flag is set
 and atom can be read(apply method) setting the isForced flag. If the
@@ -171,17 +191,25 @@ assume it will only execute once. And if everything fails and atom isn&rsquo;t
 set you get an error. Yay no bothering with nulls any more.
 You can quickly see how atoms are great containers for storing computed
 information in the AST for passing it on to the later stages.</p>
-<hr>
-<p>Last modified on 2012-11-26</p>
-<a href=/posts/2012-11-23-nomadic-programming/>
-Previous Nomadic programming
-</a>
-<br>
-<a href=/posts/2012-12-04-hw-functional/>
-Next Homework - functional style (outer sorting)
-</a>
-</div>
-<script src=/js/instantclick.min.js data-no-instant></script>
-<script data-no-instant>InstantClick.init("mousedown")</script>
-</body>
+
+    <hr/>
+    
+        <p>Last modified on 2012-11-26</p>
+    
+    
+        <a href="/posts/2012-11-23-nomadic-programming/">
+            Previous Nomadic programming
+        </a>
+    
+    <br/>
+    
+    <a href="/posts/2012-12-04-hw-functional/">
+        Next Homework - functional style (outer sorting)
+    </a>
+    
+
+        </div>
+        <script src="/js/instantclick.min.js" data-no-instant></script>
+        <script data-no-instant>InstantClick.init("mousedown");</script>
+    </body>
 </html>

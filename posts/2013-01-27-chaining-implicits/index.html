@@ -1,43 +1,63 @@
-<!doctype html><html>
+<!DOCTYPE html>
+<html>
 <head>
 <title>Chaining implicit conversion in scala</title>
-<meta charset=utf-8>
-<meta name=X-UA-Compatible content="IE=edge">
-<meta name=google-site-verification content>
-<meta content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=0" name=viewport>
+<meta charset="utf-8">
+<meta name="X-UA-Compatible" content="IE=edge">
+<meta name="google-site-verification" content="">
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+
+
+
+
 <style>body{max-width:800px;margin:auto;line-height:1.6;font-size:18px;color:#444;padding:0 10px}h1,h2,h3{line-height:1.2}.nav a,.nav a:visited,.nav a:hover,.nav a:active{color:inherit}.nav .title{margin:0}.nav-sub{display:inline-block}.nav-item{margin:5px}.nav-sub-right{display:inline-block;float:right}.nav-icon{margin-right:5px}.main img{display:block;max-width:100%;margin:auto}.main pre{overflow:auto}" media="screen"></style>
 </head>
-<body>
-<div class=nav>
-<a href=/><h2 class=title>Andraž Bajt's blog</h2></a>
-<div class=nav-sub>
-<a class=nav-item href=/about/>
-About Me
-</a>
-<a class=nav-item href=/>
-Archive
-</a>
-</div>
-<div class=nav-sub-right>
-<a class=nav-icon href=https://github.com/edofic target=_blank><img src=/icons/github.svg width=20 height=20></a>
-<a class=nav-icon href=https://www.linkedin.com/in/edofic target=_blank><img src=/icons/linkedin.svg width=20 height=20></a>
-<a class=nav-icon href=https://twitter.com/edofic target=_blank><img src=/icons/twitter.svg width=20 height=20></a>
-<a class=nav-icon href=/index.xml target=_blank><img src=/icons/rss.svg width=20 height=20></a>
-<a class=nav-icon href=mailto:blog@edofic.com target=_blank><img src=/icons/email.svg width=20 height=20></a>
-</div>
-</div>
-<hr>
-<div class=main>
-<h1>Chaining implicit conversion in scala</h1>
-<time>2013-01-27</time>
-<hr>
-<p>Today I was hanging
+    <body>
+        <div class="nav">
+            <a href="/"><h2 class="title">Andraž Bajt&#39;s blog</h2></a>
+            <div class="nav-sub">
+                
+                    <a class="nav-item" href="/about/">
+                        About Me
+                    </a>
+                
+                    <a class="nav-item" href="/">
+                        Archive
+                    </a>
+                
+            </div>
+            <div class="nav-sub-right">
+                
+                    <a class="nav-icon" href="https://github.com/edofic" target="_blank"><img src="/icons/github.svg" width="20" height="20"/></a>
+                
+                
+                    <a class="nav-icon" href="https://www.linkedin.com/in/edofic" target="_blank"><img src="/icons/linkedin.svg" width="20" height="20"/></a>
+                
+                
+                    <a class="nav-icon" href="https://twitter.com/edofic" target="_blank"><img src="/icons/twitter.svg" width="20" height="20"/></a>
+                
+                <a class="nav-icon" href="/index.xml" target="_blank"><img src="/icons/rss.svg" width="20" height="20"/></a>
+                
+                    <a class="nav-icon" href="mailto:blog@edofic.com" target="_blank"><img src="/icons/email.svg" width="20" height="20"/></a>
+                
+            </div>
+        </div>
+        <hr/>
+        <div class="main">
+    <h1>Chaining implicit conversion in scala</h1>
+    
+        <time>2013-01-27</time>
+    
+    
+    
+    <hr/>
+    <p>Today I was hanging
 in the
-#<a href=http://www.scala-lang.org/ title="Scala (programming language)">scala</a>
-<a href=http://en.wikipedia.org/wiki/Internet_Relay_Chat title="Internet Relay Chat">IRC
+#<a href="http://www.scala-lang.org/" title="Scala (programming language)">scala</a>
+<a href="http://en.wikipedia.org/wiki/Internet_Relay_Chat" title="Internet Relay Chat">IRC
 channel</a>
 and somebody came along(forgot the nick, sorry) and asked about some
-<a href=http://en.wikipedia.org/wiki/Compilation_error title="Compilation error">compilation
+<a href="http://en.wikipedia.org/wiki/Compilation_error" title="Compilation error">compilation
 error</a>.
 I deduced he was trying to chain implicit conversions. And this doesn&rsquo;t
 work. Else compilation would take forever and would also compile some
@@ -45,48 +65,48 @@ wrong code by inserting long strings of implicits. But then somebody
 else responded(I think nick started with d) and gave a solution to
 implicit chaining. But I&rsquo;m not giving it away yet, you&rsquo;ll have to read a
 bit more.</p>
-<h3 id=the-problem>The problem</h3>
+<h3 id="the-problem">The problem</h3>
 <p>Let&rsquo;s say I have some
-<a href=http://en.wikipedia.org/wiki/Class_%28computer_programming%29 title="Class (computer programming)">classes</a>
+<a href="http://en.wikipedia.org/wiki/Class_%28computer_programming%29" title="Class (computer programming)">classes</a>
 that just add semantics to values(think labeled boxes)</p>
-<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2>
-<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
 </span></code></pre></td>
-<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-scala data-lang=scala><span style=color:#66d9ef>case</span> <span style=color:#66d9ef>class</span> <span style=color:#a6e22e>Foo</span><span style=color:#f92672>(</span>a<span style=color:#66d9ef>:</span> <span style=color:#66d9ef>Int</span><span style=color:#f92672>)</span>
-<span style=color:#66d9ef>case</span> <span style=color:#66d9ef>class</span> <span style=color:#a6e22e>Bar</span><span style=color:#f92672>(</span>b<span style=color:#66d9ef>:</span> <span style=color:#66d9ef>Int</span><span style=color:#f92672>)</span>
-<span style=color:#66d9ef>case</span> <span style=color:#66d9ef>class</span> <span style=color:#a6e22e>Baz</span><span style=color:#f92672>(</span>c<span style=color:#66d9ef>:</span> <span style=color:#66d9ef>Int</span><span style=color:#f92672>)</span>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code class="language-scala" data-lang="scala"><span style="color:#66d9ef">case</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Foo</span><span style="color:#f92672">(</span>a<span style="color:#66d9ef">:</span> <span style="color:#66d9ef">Int</span><span style="color:#f92672">)</span>
+<span style="color:#66d9ef">case</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Bar</span><span style="color:#f92672">(</span>b<span style="color:#66d9ef">:</span> <span style="color:#66d9ef">Int</span><span style="color:#f92672">)</span>
+<span style="color:#66d9ef">case</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Baz</span><span style="color:#f92672">(</span>c<span style="color:#66d9ef">:</span> <span style="color:#66d9ef">Int</span><span style="color:#f92672">)</span>
 </code></pre></td></tr></table>
 </div>
-</div><p>And because they look similar we may want to do some <a href=http://en.wikipedia.org/wiki/Type_conversion title="Type conversion">implicit
+</div><p>And because they look similar we may want to do some <a href="http://en.wikipedia.org/wiki/Type_conversion" title="Type conversion">implicit
 conversion</a>.
 Let&rsquo;s say that that&rsquo;s needed is conversion from Bar to Foo and from Baz
 to Bar.</p>
-<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2>
-<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
 </span></code></pre></td>
-<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-scala data-lang=scala><span style=color:#66d9ef>implicit</span> <span style=color:#66d9ef>def</span> bar2foo<span style=color:#f92672>(</span>bar<span style=color:#66d9ef>:</span> <span style=color:#66d9ef>Bar</span><span style=color:#f92672>)</span> <span style=color:#66d9ef>=</span> <span style=color:#a6e22e>Foo</span><span style=color:#f92672>(</span>bar<span style=color:#f92672>.</span>b<span style=color:#f92672>)</span>
-<span style=color:#66d9ef>implicit</span> <span style=color:#66d9ef>def</span> baz2bar<span style=color:#f92672>(</span>baz<span style=color:#66d9ef>:</span> <span style=color:#66d9ef>Baz</span><span style=color:#f92672>)</span> <span style=color:#66d9ef>=</span> <span style=color:#a6e22e>Bar</span><span style=color:#f92672>(</span>baz<span style=color:#f92672>.</span>c<span style=color:#f92672>)</span>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code class="language-scala" data-lang="scala"><span style="color:#66d9ef">implicit</span> <span style="color:#66d9ef">def</span> bar2foo<span style="color:#f92672">(</span>bar<span style="color:#66d9ef">:</span> <span style="color:#66d9ef">Bar</span><span style="color:#f92672">)</span> <span style="color:#66d9ef">=</span> <span style="color:#a6e22e">Foo</span><span style="color:#f92672">(</span>bar<span style="color:#f92672">.</span>b<span style="color:#f92672">)</span>
+<span style="color:#66d9ef">implicit</span> <span style="color:#66d9ef">def</span> baz2bar<span style="color:#f92672">(</span>baz<span style="color:#66d9ef">:</span> <span style="color:#66d9ef">Baz</span><span style="color:#f92672">)</span> <span style="color:#66d9ef">=</span> <span style="color:#a6e22e">Bar</span><span style="color:#f92672">(</span>baz<span style="color:#f92672">.</span>c<span style="color:#f92672">)</span>
 </code></pre></td></tr></table>
 </div>
 </div><p>On a level this also implies that Baz can be seen as Foo. But when you
 try it</p>
-<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2>
-<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
 </span></code></pre></td>
-<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-scala data-lang=scala>println<span style=color:#f92672>(</span>foo<span style=color:#f92672>.</span>a<span style=color:#f92672>)</span>
-println<span style=color:#f92672>(</span>bar<span style=color:#f92672>.</span>a<span style=color:#f92672>)</span>
-println<span style=color:#f92672>(</span>baz<span style=color:#f92672>.</span>a<span style=color:#f92672>)</span>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code class="language-scala" data-lang="scala">println<span style="color:#f92672">(</span>foo<span style="color:#f92672">.</span>a<span style="color:#f92672">)</span>
+println<span style="color:#f92672">(</span>bar<span style="color:#f92672">.</span>a<span style="color:#f92672">)</span>
+println<span style="color:#f92672">(</span>baz<span style="color:#f92672">.</span>a<span style="color:#f92672">)</span>
 </code></pre></td></tr></table>
 </div>
 </div><p>you get a compile error</p>
@@ -95,9 +115,9 @@ println(baz.a)
 ^
 one error found
 </code></pre>
-<h3 id=the-solution>The solution</h3>
+<h3 id="the-solution">The solution</h3>
 <p>As said, scala
-<a href=http://en.wikipedia.org/wiki/Compiler title=Compiler>compiler</a> doesn&rsquo;t try
+<a href="http://en.wikipedia.org/wiki/Compiler" title="Compiler">compiler</a> doesn&rsquo;t try
 to traverse the graph of implicit conversions and therefore doesn&rsquo;t
 figure out how to insert needed conversions here. But here lies a handy
 catch. What if the conversion wasn&rsquo;t from Bar to Foo but from something
@@ -106,12 +126,12 @@ intended and is (probably) not a dead end. Good news: scala lets you
 express that. It&rsquo;s called a view bound. You make the method generic and
 limit input type to something that can be seen(implicitly converted to)
 as a Bar. Here&rsquo;s the code.</p>
-<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2>
-<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
 </span></code></pre></td>
-<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-scala data-lang=scala><span style=color:#66d9ef>implicit</span> <span style=color:#66d9ef>def</span> bar2foo<span style=color:#f92672>[</span><span style=color:#66d9ef>T</span> <span style=color:#66d9ef>&lt;%</span> <span style=color:#66d9ef>Bar</span><span style=color:#f92672>](</span>bar<span style=color:#66d9ef>:</span> <span style=color:#66d9ef>T</span><span style=color:#f92672>)</span> <span style=color:#66d9ef>=</span> <span style=color:#a6e22e>Foo</span><span style=color:#f92672>(</span>bar<span style=color:#f92672>.</span>b<span style=color:#f92672>)</span>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code class="language-scala" data-lang="scala"><span style="color:#66d9ef">implicit</span> <span style="color:#66d9ef">def</span> bar2foo<span style="color:#f92672">[</span><span style="color:#66d9ef">T</span> <span style="color:#66d9ef">&lt;%</span> <span style="color:#66d9ef">Bar</span><span style="color:#f92672">](</span>bar<span style="color:#66d9ef">:</span> <span style="color:#66d9ef">T</span><span style="color:#f92672">)</span> <span style="color:#66d9ef">=</span> <span style="color:#a6e22e">Foo</span><span style="color:#f92672">(</span>bar<span style="color:#f92672">.</span>b<span style="color:#f92672">)</span>
 </code></pre></td></tr></table>
 </div>
 </div><p>All the magic lies in the <code>&lt;%</code> operator. That&rsquo;s the view bound. When you
@@ -123,22 +143,30 @@ property from baz but it&rsquo;s not available. So it checks the conversions
 and sees that a conversion from Baz to Bar exists in the scope and it
 satisfies the need for b. It inserts this conversions and compilation
 happily chucks along.</p>
-<p><img src=/images/chaining-implicits/all_the.jpg alt="Nest all the implicit conversions!"></p>
+<p><img src="/images/chaining-implicits/all_the.jpg" alt="Nest all the implicit conversions!"></p>
 <p>Please don&rsquo;t do that.
 Implicits can make code hard to read even without nesting. So use with
 care. Scala is a very powerful language but great power comes with great
 responsibility.</p>
-<hr>
-<p>Last modified on 2013-01-27</p>
-<a href=/posts/2013-01-27-generic-singletons/>
-Previous Generic singletons through dependent method types
-</a>
-<br>
-<a href=/posts/2013-01-27-750-words/>
-Next 750 words
-</a>
-</div>
-<script src=/js/instantclick.min.js data-no-instant></script>
-<script data-no-instant>InstantClick.init("mousedown")</script>
-</body>
+
+    <hr/>
+    
+        <p>Last modified on 2013-01-27</p>
+    
+    
+        <a href="/posts/2013-01-27-generic-singletons/">
+            Previous Generic singletons through dependent method types
+        </a>
+    
+    <br/>
+    
+    <a href="/posts/2013-01-27-750-words/">
+        Next 750 words
+    </a>
+    
+
+        </div>
+        <script src="/js/instantclick.min.js" data-no-instant></script>
+        <script data-no-instant>InstantClick.init("mousedown");</script>
+    </body>
 </html>

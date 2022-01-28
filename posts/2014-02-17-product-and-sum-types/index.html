@@ -1,215 +1,243 @@
-<!doctype html><html>
+<!DOCTYPE html>
+<html>
 <head>
 <title>Product and sum types (Go and Haskell)</title>
-<meta charset=utf-8>
-<meta name=X-UA-Compatible content="IE=edge">
-<meta name=google-site-verification content>
-<meta content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=0" name=viewport>
+<meta charset="utf-8">
+<meta name="X-UA-Compatible" content="IE=edge">
+<meta name="google-site-verification" content="">
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+
+
+
+
 <style>body{max-width:800px;margin:auto;line-height:1.6;font-size:18px;color:#444;padding:0 10px}h1,h2,h3{line-height:1.2}.nav a,.nav a:visited,.nav a:hover,.nav a:active{color:inherit}.nav .title{margin:0}.nav-sub{display:inline-block}.nav-item{margin:5px}.nav-sub-right{display:inline-block;float:right}.nav-icon{margin-right:5px}.main img{display:block;max-width:100%;margin:auto}.main pre{overflow:auto}" media="screen"></style>
 </head>
-<body>
-<div class=nav>
-<a href=/><h2 class=title>Andraž Bajt's blog</h2></a>
-<div class=nav-sub>
-<a class=nav-item href=/about/>
-About Me
-</a>
-<a class=nav-item href=/>
-Archive
-</a>
-</div>
-<div class=nav-sub-right>
-<a class=nav-icon href=https://github.com/edofic target=_blank><img src=/icons/github.svg width=20 height=20></a>
-<a class=nav-icon href=https://www.linkedin.com/in/edofic target=_blank><img src=/icons/linkedin.svg width=20 height=20></a>
-<a class=nav-icon href=https://twitter.com/edofic target=_blank><img src=/icons/twitter.svg width=20 height=20></a>
-<a class=nav-icon href=/index.xml target=_blank><img src=/icons/rss.svg width=20 height=20></a>
-<a class=nav-icon href=mailto:blog@edofic.com target=_blank><img src=/icons/email.svg width=20 height=20></a>
-</div>
-</div>
-<hr>
-<div class=main>
-<h1>Product and sum types (Go and Haskell)</h1>
-<time>2014-02-17</time>
-<hr>
-<p>Let&rsquo;s take a look at Go-language functions. They let you return more than one result. Like in</p>
-<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2>
-<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
+    <body>
+        <div class="nav">
+            <a href="/"><h2 class="title">Andraž Bajt&#39;s blog</h2></a>
+            <div class="nav-sub">
+                
+                    <a class="nav-item" href="/about/">
+                        About Me
+                    </a>
+                
+                    <a class="nav-item" href="/">
+                        Archive
+                    </a>
+                
+            </div>
+            <div class="nav-sub-right">
+                
+                    <a class="nav-icon" href="https://github.com/edofic" target="_blank"><img src="/icons/github.svg" width="20" height="20"/></a>
+                
+                
+                    <a class="nav-icon" href="https://www.linkedin.com/in/edofic" target="_blank"><img src="/icons/linkedin.svg" width="20" height="20"/></a>
+                
+                
+                    <a class="nav-icon" href="https://twitter.com/edofic" target="_blank"><img src="/icons/twitter.svg" width="20" height="20"/></a>
+                
+                <a class="nav-icon" href="/index.xml" target="_blank"><img src="/icons/rss.svg" width="20" height="20"/></a>
+                
+                    <a class="nav-icon" href="mailto:blog@edofic.com" target="_blank"><img src="/icons/email.svg" width="20" height="20"/></a>
+                
+            </div>
+        </div>
+        <hr/>
+        <div class="main">
+    <h1>Product and sum types (Go and Haskell)</h1>
+    
+        <time>2014-02-17</time>
+    
+    
+    
+    <hr/>
+    <p>Let&rsquo;s take a look at Go-language functions. They let you return more than one result. Like in</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
 </span></code></pre></td>
-<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-go data-lang=go><span style=color:#66d9ef>func</span> <span style=color:#a6e22e>foo</span>(<span style=color:#a6e22e>n</span> <span style=color:#66d9ef>int</span>) (<span style=color:#66d9ef>int</span>, <span style=color:#66d9ef>int</span>) {
-    <span style=color:#66d9ef>return</span> <span style=color:#a6e22e>n</span><span style=color:#f92672>+</span><span style=color:#ae81ff>1</span>, <span style=color:#a6e22e>n</span><span style=color:#f92672>+</span><span style=color:#ae81ff>2</span>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code class="language-go" data-lang="go"><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">foo</span>(<span style="color:#a6e22e">n</span> <span style="color:#66d9ef">int</span>) (<span style="color:#66d9ef">int</span>, <span style="color:#66d9ef">int</span>) {
+    <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">n</span><span style="color:#f92672">+</span><span style="color:#ae81ff">1</span>, <span style="color:#a6e22e">n</span><span style="color:#f92672">+</span><span style="color:#ae81ff">2</span>
 }
 </code></pre></td></tr></table>
 </div>
 </div><p>This function <code>foo</code> returns two numbers. But does it really? Pairs(and tuples in general) aren&rsquo;t a first class citizen in Go. Yes you can return them from function and you can even return a result of a function that returns the same signature as you but then you must immediately bind each result to separate variable.</p>
-<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2>
-<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
 </span></code></pre></td>
-<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-go data-lang=go><span style=color:#a6e22e>a</span>, <span style=color:#a6e22e>b</span> <span style=color:#f92672>:=</span> <span style=color:#a6e22e>foo</span>(<span style=color:#ae81ff>0</span>) <span style=color:#75715e>//this is legal
-</span><span style=color:#75715e></span><span style=color:#a6e22e>pair</span> <span style=color:#f92672>:=</span> <span style=color:#a6e22e>foo</span>(<span style=color:#ae81ff>0</span>) <span style=color:#75715e>//this is not
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code class="language-go" data-lang="go"><span style="color:#a6e22e">a</span>, <span style="color:#a6e22e">b</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">foo</span>(<span style="color:#ae81ff">0</span>) <span style="color:#75715e">//this is legal
+</span><span style="color:#75715e"></span><span style="color:#a6e22e">pair</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">foo</span>(<span style="color:#ae81ff">0</span>) <span style="color:#75715e">//this is not
 </span></code></pre></td></tr></table>
 </div>
 </div><p>I haven&rsquo;t checked but it seems pretty obvious that this multiple-results is just syntax sugar that passes in pointers to the variables you eventually bind to. So this gives you speed because there is little overhead but it abstracts poorly - just like Go in general.</p>
-<h3 id=product-types>Product types</h3>
+<h3 id="product-types">Product types</h3>
 <p>Product type is a fancy name for something like a tuple. Usually just a tuple that has a &ldquo;tag&rdquo; or a &ldquo;name&rdquo; so we can pattern match on that. And where does the product name come from? Let&rsquo;s for a moment consider a naive representation of types with with finite sets. This doesn&rsquo;t really work but it&rsquo;s enough for this analogy and generalizes nicely to real world.</p>
 <p>Consider type <code>A</code>(modelled by set A) and type <code>B</code>(and set B). Now you can get type <code>(A,B)</code> it&rsquo;s model being set <code>A x B</code> - the Cartesian <strong>product</strong>. Well this is just the intuition.</p>
 <p>More exactly: the cardinality of <code>(A,B)</code> is product of cardinalities of <code>A</code> and <code>B</code>.</p>
-<h3 id=sum-types>Sum types</h3>
-<p>The other thing from the title. We got out product. Now we want sums. Going back to the set model, we want a type that would be modelled by a set of cardinality that is the sum of cardinalities of both sets. Now you might be thinking union&mldr; But there is a problem with union as sets <code>A</code> and <code>B</code> might overlap. So we must tag each element to remember from which set it came. And then do union. We&rsquo;ll see an example later.</p>
+<h3 id="sum-types">Sum types</h3>
+<p>The other thing from the title. We got out product. Now we want sums. Going back to the set model, we want a type that would be modelled by a set of cardinality that is the sum of cardinalities of both sets. Now you might be thinking union&hellip; But there is a problem with union as sets <code>A</code> and <code>B</code> might overlap. So we must tag each element to remember from which set it came. And then do union. We&rsquo;ll see an example later.</p>
 <p>This can be done in Go. Kinda. But it&rsquo;s very cumbersome. We can model this with OO-like polymorphism. Which we have to model in Go with interface in structs.</p>
-<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2>
-<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">4
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">5
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">6
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">7
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">8
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">9
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">9
 </span></code></pre></td>
-<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-go data-lang=go><span style=color:#66d9ef>type</span> <span style=color:#a6e22e>AorB</span> <span style=color:#66d9ef>interface</span> {}
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code class="language-go" data-lang="go"><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">AorB</span> <span style="color:#66d9ef">interface</span> {}
 
-<span style=color:#66d9ef>type</span> <span style=color:#a6e22e>A</span> <span style=color:#66d9ef>struct</span> {
-    <span style=color:#a6e22e>Value</span> <span style=color:#66d9ef>int</span>
+<span style="color:#66d9ef">type</span> <span style="color:#a6e22e">A</span> <span style="color:#66d9ef">struct</span> {
+    <span style="color:#a6e22e">Value</span> <span style="color:#66d9ef">int</span>
 }
 
-<span style=color:#66d9ef>type</span> <span style=color:#a6e22e>B</span> <span style=color:#66d9ef>struct</span> {
-    <span style=color:#a6e22e>Value</span> <span style=color:#66d9ef>int</span>
+<span style="color:#66d9ef">type</span> <span style="color:#a6e22e">B</span> <span style="color:#66d9ef">struct</span> {
+    <span style="color:#a6e22e">Value</span> <span style="color:#66d9ef">int</span>
 }
 </code></pre></td></tr></table>
 </div>
 </div><p>But when we have a value of type <code>AorB</code> we have to try to cast and check for success. Urhg boilerplate.</p>
-<h3 id=enter-haskell>Enter Haskell</h3>
+<h3 id="enter-haskell">Enter Haskell</h3>
 <p>Can we do better? Sure. We can use Haskell and it&rsquo;s ADTs.</p>
 <p>ADT stands for <em>Algebraic Data Types</em> which just means we can express sum and product types. Great. Let&rsquo;s take a look at the syntax</p>
-<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2>
-<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">4
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">5
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
 </span></code></pre></td>
-<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-haskell data-lang=haskell><span style=color:#66d9ef>type</span> <span style=color:#66d9ef>Product1</span> a b <span style=color:#f92672>=</span> (a, b) <span style=color:#75715e>-- tuples are build in</span>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code class="language-haskell" data-lang="haskell"><span style="color:#66d9ef">type</span> <span style="color:#66d9ef">Product1</span> a b <span style="color:#f92672">=</span> (a, b) <span style="color:#75715e">-- tuples are build in</span>
 
-<span style=color:#66d9ef>data</span> <span style=color:#66d9ef>MyProduct</span> a b <span style=color:#f92672>=</span> <span style=color:#66d9ef>MyProduct</span> a b <span style=color:#75715e>-- or a custom tagged tuple</span>
+<span style="color:#66d9ef">data</span> <span style="color:#66d9ef">MyProduct</span> a b <span style="color:#f92672">=</span> <span style="color:#66d9ef">MyProduct</span> a b <span style="color:#75715e">-- or a custom tagged tuple</span>
 
-<span style=color:#66d9ef>data</span> <span style=color:#66d9ef>AorB</span> a b <span style=color:#f92672>=</span> <span style=color:#66d9ef>A</span> a <span style=color:#f92672>|</span> <span style=color:#66d9ef>B</span> b <span style=color:#75715e>-- generic product</span>
+<span style="color:#66d9ef">data</span> <span style="color:#66d9ef">AorB</span> a b <span style="color:#f92672">=</span> <span style="color:#66d9ef">A</span> a <span style="color:#f92672">|</span> <span style="color:#66d9ef">B</span> b <span style="color:#75715e">-- generic product</span>
 </code></pre></td></tr></table>
 </div>
 </div><p>Much simpler.</p>
-<h3 id=go-errors>Go errors</h3>
+<h3 id="go-errors">Go errors</h3>
 <p>A typical Go function has some side-effects and computes a value or returns an error. For example</p>
-<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2>
-<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">4
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">5
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">6
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">7
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">8
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">8
 </span></code></pre></td>
-<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-go data-lang=go><span style=color:#66d9ef>func</span> <span style=color:#a6e22e>f</span>(<span style=color:#a6e22e>parameter</span> <span style=color:#66d9ef>string</span>) (<span style=color:#a6e22e>Result</span>, <span style=color:#66d9ef>error</span>) {
-    <span style=color:#a6e22e>err</span> <span style=color:#f92672>:=</span> <span style=color:#a6e22e>launchMissiles</span>()
-    <span style=color:#66d9ef>if</span> <span style=color:#a6e22e>err</span> <span style=color:#f92672>!=</span> <span style=color:#66d9ef>nil</span> {
-        <span style=color:#66d9ef>return</span> <span style=color:#66d9ef>nil</span>, <span style=color:#a6e22e>err</span>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code class="language-go" data-lang="go"><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">f</span>(<span style="color:#a6e22e">parameter</span> <span style="color:#66d9ef">string</span>) (<span style="color:#a6e22e">Result</span>, <span style="color:#66d9ef">error</span>) {
+    <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">launchMissiles</span>()
+    <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+        <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">nil</span>, <span style="color:#a6e22e">err</span>
     }
-    <span style=color:#a6e22e>res</span> <span style=color:#f92672>:=</span> <span style=color:#f92672>...</span>.
-    <span style=color:#66d9ef>return</span> <span style=color:#a6e22e>res</span>, <span style=color:#66d9ef>nil</span>
+    <span style="color:#a6e22e">res</span> <span style="color:#f92672">:=</span> <span style="color:#f92672">...</span>.
+    <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">res</span>, <span style="color:#66d9ef">nil</span>
 }
 </code></pre></td></tr></table>
 </div>
 </div><p>You can clearly see that <code>f</code> is returning a product type. But is that really what we mean? No. The semantics is either <code>Result</code> either <code>error</code>. Error being set usually implies that <code>Result</code> isn&rsquo;t well defined.</p>
 <p>Let&rsquo;s translate this into Haskell just to ease up on syntax</p>
-<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2>
-<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">4
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">5
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">6
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">7
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">8
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">8
 </span></code></pre></td>
-<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-haskell data-lang=haskell><span style=color:#a6e22e>f</span> <span style=color:#f92672>::</span> <span style=color:#66d9ef>String</span> <span style=color:#f92672>-&gt;</span> <span style=color:#66d9ef>IO</span> (<span style=color:#66d9ef>Option</span> <span style=color:#66d9ef>Result</span>, <span style=color:#66d9ef>Option</span> <span style=color:#66d9ef>Error</span>)
-<span style=color:#a6e22e>f</span> parameter <span style=color:#f92672>=</span> <span style=color:#66d9ef>do</span>
-    err <span style=color:#f92672>&lt;-</span> launchMissiles
-    <span style=color:#66d9ef>case</span> err <span style=color:#66d9ef>of</span>
-        <span style=color:#f92672>|</span> <span style=color:#66d9ef>Just</span> <span style=color:#a6e22e>error</span> <span style=color:#f92672>-&gt;</span> return (<span style=color:#66d9ef>Nothing</span>, <span style=color:#66d9ef>Just</span> <span style=color:#a6e22e>error</span>)
-        <span style=color:#f92672>|</span> <span style=color:#66d9ef>Nothing</span>    <span style=color:#f92672>-&gt;</span> <span style=color:#66d9ef>do</span>
-            <span style=color:#f92672>...</span>
-            return (<span style=color:#66d9ef>Just</span> res, <span style=color:#66d9ef>Nothing</span>)
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code class="language-haskell" data-lang="haskell"><span style="color:#a6e22e">f</span> <span style="color:#f92672">::</span> <span style="color:#66d9ef">String</span> <span style="color:#f92672">-&gt;</span> <span style="color:#66d9ef">IO</span> (<span style="color:#66d9ef">Option</span> <span style="color:#66d9ef">Result</span>, <span style="color:#66d9ef">Option</span> <span style="color:#66d9ef">Error</span>)
+<span style="color:#a6e22e">f</span> parameter <span style="color:#f92672">=</span> <span style="color:#66d9ef">do</span>
+    err <span style="color:#f92672">&lt;-</span> launchMissiles
+    <span style="color:#66d9ef">case</span> err <span style="color:#66d9ef">of</span>
+        <span style="color:#f92672">|</span> <span style="color:#66d9ef">Just</span> <span style="color:#a6e22e">error</span> <span style="color:#f92672">-&gt;</span> return (<span style="color:#66d9ef">Nothing</span>, <span style="color:#66d9ef">Just</span> <span style="color:#a6e22e">error</span>)
+        <span style="color:#f92672">|</span> <span style="color:#66d9ef">Nothing</span>    <span style="color:#f92672">-&gt;</span> <span style="color:#66d9ef">do</span>
+            <span style="color:#f92672">...</span>
+            return (<span style="color:#66d9ef">Just</span> res, <span style="color:#66d9ef">Nothing</span>)
 </code></pre></td></tr></table>
 </div>
 </div><p>I said <em>ease up</em> but this is definitely more noisy. Why? Because we&rsquo;re doing it wrong. We&rsquo;re modelling sum types with product types.</p>
-<p><code>IO (Option Result, Option Error)</code> is a nasty type signature. What we really want is <code>IO (Either Error Result)</code>. <code>Either</code> is built-in generic product of two elements. It&rsquo;s usually used for this case: result or error.</p>
-<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2>
-<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">4
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">5
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">6
+<p><code>IO (Option Result, Option Error)</code> is a  nasty type signature. What we really want is <code>IO (Either Error Result)</code>. <code>Either</code> is built-in generic product of two elements. It&rsquo;s usually used for this case: result or error.</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
 </span></code></pre></td>
-<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-haskell data-lang=haskell><span style=color:#a6e22e>f</span> <span style=color:#f92672>::</span> <span style=color:#66d9ef>String</span> <span style=color:#f92672>-&gt;</span> <span style=color:#66d9ef>IO</span> (<span style=color:#66d9ef>Either</span> <span style=color:#66d9ef>Error</span> <span style=color:#66d9ef>Result</span>)
-<span style=color:#a6e22e>f</span> parameter <span style=color:#f92672>=</span> launchMissiles <span style=color:#f92672>&gt;&gt;=</span> next <span style=color:#66d9ef>where</span>
-    next (<span style=color:#66d9ef>Left</span> err) <span style=color:#f92672>=</span> return (<span style=color:#66d9ef>Left</span> <span style=color:#a6e22e>error</span>)
-    next (<span style=color:#66d9ef>Right</span> ()) <span style=color:#f92672>=</span> <span style=color:#66d9ef>do</span>
-        <span style=color:#f92672>...</span>
-        return <span style=color:#f92672>$</span> <span style=color:#66d9ef>Right</span> res
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code class="language-haskell" data-lang="haskell"><span style="color:#a6e22e">f</span> <span style="color:#f92672">::</span> <span style="color:#66d9ef">String</span> <span style="color:#f92672">-&gt;</span> <span style="color:#66d9ef">IO</span> (<span style="color:#66d9ef">Either</span> <span style="color:#66d9ef">Error</span> <span style="color:#66d9ef">Result</span>)
+<span style="color:#a6e22e">f</span> parameter <span style="color:#f92672">=</span> launchMissiles <span style="color:#f92672">&gt;&gt;=</span> next <span style="color:#66d9ef">where</span>
+    next (<span style="color:#66d9ef">Left</span> err) <span style="color:#f92672">=</span> return (<span style="color:#66d9ef">Left</span> <span style="color:#a6e22e">error</span>)
+    next (<span style="color:#66d9ef">Right</span> ()) <span style="color:#f92672">=</span> <span style="color:#66d9ef">do</span>
+        <span style="color:#f92672">...</span>
+        return <span style="color:#f92672">$</span> <span style="color:#66d9ef">Right</span> res
 </code></pre></td></tr></table>
 </div>
-</div><h3 id=monad-transformers>Monad transformers</h3>
+</div><h3 id="monad-transformers">Monad transformers</h3>
 <p>Maybe it&rsquo;s just me, but this is much better. But that part <code>next (Left err) = return (Left error)</code> feels weird. We&rsquo;re just repackaging. This is boilerplate. And what should you do with boilerplate? Extract it into a function. Luckily someone else already did it. What we want is <em>Either monad transformer</em>. A construct that lets us wrap up <code>m (Either a b)</code> for any monad <code>m</code> and handles errors automatically. If we fill in our types we get <code>EitherT IO Error Result</code>.
 Notice the lack of parentheses in the type. This makes me happy. Now let&rsquo;s write our function.</p>
-<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2>
-<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">4
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">5
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
 </span></code></pre></td>
-<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-haskell data-lang=haskell><span style=color:#a6e22e>f</span> <span style=color:#f92672>::</span> <span style=color:#66d9ef>String</span> <span style=color:#f92672>-&gt;</span> <span style=color:#66d9ef>EitherT</span> <span style=color:#66d9ef>IO</span> <span style=color:#66d9ef>Error</span> <span style=color:#66d9ef>Result</span>
-<span style=color:#a6e22e>f</span> parameter <span style=color:#f92672>=</span> <span style=color:#66d9ef>do</span>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code class="language-haskell" data-lang="haskell"><span style="color:#a6e22e">f</span> <span style="color:#f92672">::</span> <span style="color:#66d9ef">String</span> <span style="color:#f92672">-&gt;</span> <span style="color:#66d9ef">EitherT</span> <span style="color:#66d9ef">IO</span> <span style="color:#66d9ef">Error</span> <span style="color:#66d9ef">Result</span>
+<span style="color:#a6e22e">f</span> parameter <span style="color:#f92672">=</span> <span style="color:#66d9ef">do</span>
     launchMissiles
-    <span style=color:#f92672>...</span>
-    return <span style=color:#f92672>$</span> <span style=color:#66d9ef>Right</span> res
+    <span style="color:#f92672">...</span>
+    return <span style="color:#f92672">$</span> <span style="color:#66d9ef">Right</span> res
 </code></pre></td></tr></table>
 </div>
 </div><p><em>Much</em> cleaner. As I promised. In fact this is a bit java-esque. Looks like checked exceptions - we declared out error type in the signature and it looks like it&rsquo;s throwing because error handling is not to be seen in code. Well it isn&rsquo;t, it&rsquo;s more akin to the starting Go code just with all boilerplate extracted out. And thanks to the <em>do notation</em> the invocations of functions that handle errors are now invisible. How cool is that?</p>
-<h3 id=whats-happening>What&rsquo;s happening?</h3>
-<p>In fact the <em>do notation</em> is just syntax sugar for <code>>>=</code> operator(bind). Kind of overloaded semicolon - however weird this sounds. In between every line we have an implicit semicolon(or you can type it, it&rsquo;s optional) that gets translated into call of bind.</p>
+<h3 id="whats-happening">What&rsquo;s happening?</h3>
+<p>In fact the <em>do notation</em> is just syntax sugar for <code>&gt;&gt;=</code> operator(bind). Kind of overloaded semicolon - however weird this sounds. In between every line we have an implicit semicolon(or you can type it, it&rsquo;s optional) that gets translated into call of bind.</p>
 <p>Implementation of bind(for <code>Either</code>) evaluates it&rsquo;s first argument(first line) and pattern matches it. If it&rsquo;s a left(in our case Error) it returns left immediately(without even evaluating further lines as Haskell is lazy), if it&rsquo;s right it extracts the value &ldquo;puts it in scope&rdquo; and passes it on to further lines. In fact this is just <code>Either</code>, <code>EitherT</code> threads another monad(<code>m</code>) in between to enable other effects - in our case <code>IO</code>.</p>
-<hr>
-<p>Last modified on 2014-02-17</p>
-<a href=/posts/2014-01-08-hakyll/>
-Previous Hakyll
-</a>
-<br>
-<a href=/posts/2014-02-23-haskell-web/>
-Next Comparing Haskell Web Frameworks
-</a>
-</div>
-<script src=/js/instantclick.min.js data-no-instant></script>
-<script data-no-instant>InstantClick.init("mousedown")</script>
-</body>
+
+    <hr/>
+    
+        <p>Last modified on 2014-02-17</p>
+    
+    
+        <a href="/posts/2014-01-08-hakyll/">
+            Previous Hakyll
+        </a>
+    
+    <br/>
+    
+    <a href="/posts/2014-02-23-haskell-web/">
+        Next Comparing Haskell Web Frameworks
+    </a>
+    
+
+        </div>
+        <script src="/js/instantclick.min.js" data-no-instant></script>
+        <script data-no-instant>InstantClick.init("mousedown");</script>
+    </body>
 </html>

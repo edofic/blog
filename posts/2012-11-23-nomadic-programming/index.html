@@ -1,62 +1,82 @@
-<!doctype html><html>
+<!DOCTYPE html>
+<html>
 <head>
 <title>Nomadic programming</title>
-<meta charset=utf-8>
-<meta name=X-UA-Compatible content="IE=edge">
-<meta name=google-site-verification content>
-<meta content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=0" name=viewport>
+<meta charset="utf-8">
+<meta name="X-UA-Compatible" content="IE=edge">
+<meta name="google-site-verification" content="">
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+
+
+
+
 <style>body{max-width:800px;margin:auto;line-height:1.6;font-size:18px;color:#444;padding:0 10px}h1,h2,h3{line-height:1.2}.nav a,.nav a:visited,.nav a:hover,.nav a:active{color:inherit}.nav .title{margin:0}.nav-sub{display:inline-block}.nav-item{margin:5px}.nav-sub-right{display:inline-block;float:right}.nav-icon{margin-right:5px}.main img{display:block;max-width:100%;margin:auto}.main pre{overflow:auto}" media="screen"></style>
 </head>
-<body>
-<div class=nav>
-<a href=/><h2 class=title>Andraž Bajt's blog</h2></a>
-<div class=nav-sub>
-<a class=nav-item href=/about/>
-About Me
-</a>
-<a class=nav-item href=/>
-Archive
-</a>
-</div>
-<div class=nav-sub-right>
-<a class=nav-icon href=https://github.com/edofic target=_blank><img src=/icons/github.svg width=20 height=20></a>
-<a class=nav-icon href=https://www.linkedin.com/in/edofic target=_blank><img src=/icons/linkedin.svg width=20 height=20></a>
-<a class=nav-icon href=https://twitter.com/edofic target=_blank><img src=/icons/twitter.svg width=20 height=20></a>
-<a class=nav-icon href=/index.xml target=_blank><img src=/icons/rss.svg width=20 height=20></a>
-<a class=nav-icon href=mailto:blog@edofic.com target=_blank><img src=/icons/email.svg width=20 height=20></a>
-</div>
-</div>
-<hr>
-<div class=main>
-<h1>Nomadic programming</h1>
-<time>2012-11-23</time>
-<hr>
-<p>DISCLAIMER: This is about my opinion.
+    <body>
+        <div class="nav">
+            <a href="/"><h2 class="title">Andraž Bajt&#39;s blog</h2></a>
+            <div class="nav-sub">
+                
+                    <a class="nav-item" href="/about/">
+                        About Me
+                    </a>
+                
+                    <a class="nav-item" href="/">
+                        Archive
+                    </a>
+                
+            </div>
+            <div class="nav-sub-right">
+                
+                    <a class="nav-icon" href="https://github.com/edofic" target="_blank"><img src="/icons/github.svg" width="20" height="20"/></a>
+                
+                
+                    <a class="nav-icon" href="https://www.linkedin.com/in/edofic" target="_blank"><img src="/icons/linkedin.svg" width="20" height="20"/></a>
+                
+                
+                    <a class="nav-icon" href="https://twitter.com/edofic" target="_blank"><img src="/icons/twitter.svg" width="20" height="20"/></a>
+                
+                <a class="nav-icon" href="/index.xml" target="_blank"><img src="/icons/rss.svg" width="20" height="20"/></a>
+                
+                    <a class="nav-icon" href="mailto:blog@edofic.com" target="_blank"><img src="/icons/email.svg" width="20" height="20"/></a>
+                
+            </div>
+        </div>
+        <hr/>
+        <div class="main">
+    <h1>Nomadic programming</h1>
+    
+        <time>2012-11-23</time>
+    
+    
+    
+    <hr/>
+    <p>DISCLAIMER: This is about my opinion.
 And may or may not contain some boasting. And is also a bit of a brain
 dump.</p>
 <p>Yep, this is not a typo. Not monadic but
-<a href=http://en.wikipedia.org/wiki/Nomad title=Nomad>nomadic</a>. Although monads
+<a href="http://en.wikipedia.org/wiki/Nomad" title="Nomad">nomadic</a>. Although monads
 are cool too.
 A few days ago the
-<a href=http://en.wikipedia.org/wiki/Chief_technology_officer title="Chief technology officer">CTO</a>
+<a href="http://en.wikipedia.org/wiki/Chief_technology_officer" title="Chief technology officer">CTO</a>
 of a company I work for said it&rsquo;s time to specialize. He was talking
 about my career. Offering me a few things to try and then pick one. But
 this got me thinking.
 Today another CTO told me that I&rsquo;m &ldquo;essentially a good dev&rdquo; and that
 chosen
-<a href=http://en.wikipedia.org/wiki/Computer_software title="Computer software">software</a>
-stack doesn&rsquo;t matter. And I agree. (<a href=http://www.kalzumeus.com/2011/10/28/dont-call-yourself-a-programmer/>Patrick does
+<a href="http://en.wikipedia.org/wiki/Computer_software" title="Computer software">software</a>
+stack doesn&rsquo;t matter. And I agree. (<a href="http://www.kalzumeus.com/2011/10/28/dont-call-yourself-a-programmer/">Patrick does
 too</a>).</p>
-<p><a href=http://www.thatericalper.com/wp-content/uploads/2012/11/years.jpg><img src=http://www.thatericalper.com/wp-content/uploads/2012/11/years.jpg alt></a></p>
-<p>I&rsquo;m an <a href=http://en.wikipedia.org/wiki/Engineer title=Engineer>engineer</a> not
+<p><a href="http://www.thatericalper.com/wp-content/uploads/2012/11/years.jpg"><img src="http://www.thatericalper.com/wp-content/uploads/2012/11/years.jpg" alt=""></a></p>
+<p>I&rsquo;m an <a href="http://en.wikipedia.org/wiki/Engineer" title="Engineer">engineer</a> not
 a programmer(or god forbid, a
-<a href=http://en.wikipedia.org/wiki/Programmer title=Programmer>coder</a>). I solve
+<a href="http://en.wikipedia.org/wiki/Programmer" title="Programmer">coder</a>). I solve
 problems not just write code. It just happens that code is
-<a href=http://en.wikipedia.org/wiki/Solution title=Solution>solution</a> to most
+<a href="http://en.wikipedia.org/wiki/Solution" title="Solution">solution</a> to most
 problems I try to solve. World is increasingly more computer orientated.
 Now everything(literally!) has a processor inside. But processors are
 dumb. So you need people to program them. These people are the
-equivalent of the <a href=http://en.wikipedia.org/wiki/Factory title=Factory>factory
+equivalent of the <a href="http://en.wikipedia.org/wiki/Factory" title="Factory">factory
 workers</a> before robots
 started taking over. So now people need to migrate one level up on the
 abstraction ladder. Labor is now mental. Not everything is the same(like
@@ -81,7 +101,7 @@ software stack in a bit more. I&rsquo;m not saying you become an expert or the
 very best in the field but if you have the urge to learn you are not far
 behind. So a good engineer is the one who has the ability to learn and
 to produce real solutions with this knowledge.</p>
-<h3 id=nomads>Nomads</h3>
+<h3 id="nomads">Nomads</h3>
 <p>So where does nomadic programming fit into this philosophy? Going from
 language to language, from framework to framwork and changing software
 stacks. Not settling down. This (in my opinion) teaches you what can be
@@ -90,10 +110,10 @@ out the best solution. Learning all the time also keeps you on the
 bleeding edge and this is fun and engaging. Having new toys all the
 time! I can&rsquo;t image myself working with just one thing for the rest of
 my life. Meeting new languages and new framework is what I do in my
-<a href=http://en.wikipedia.org/wiki/Leisure title=Leisure>free time</a>. So when a
-customer says they need <a href=http://rubyonrails.org/ title="Ruby on Rails">Ruby on
+<a href="http://en.wikipedia.org/wiki/Leisure" title="Leisure">free time</a>. So when a
+customer says they need <a href="http://rubyonrails.org/" title="Ruby on Rails">Ruby on
 Rails</a> and I never used it
-before&mldr;.it&rsquo;s not a problem. I&rsquo;ve seen ruby, I know python and I know
+before&hellip;.it&rsquo;s not a problem. I&rsquo;ve seen ruby, I know python and I know
 how MVC is supposed to work. Putting it all together is not that hard.
 You can even hit the ground running and start working right away. Of
 course you&rsquo;ll be a bit slower in the start but you can catch up.  So no,
@@ -102,17 +122,25 @@ know! And I believe this will make me a better engineer. Or developer.
 Or person. And I believe that quality of their employees shoud matter to
 the employer. It is developers who create their products. </p>
 <p><strong>You should always strive to become better!</strong></p>
-<hr>
-<p>Last modified on 2012-11-23</p>
-<a href=/posts/2012-11-19-cerc/>
-Previous Cool Monday - CERC and my trip to Krakow
-</a>
-<br>
-<a href=/posts/2012-11-26-functional-compilers/>
-Next Cool Monday - Functional compilers and atoms
-</a>
-</div>
-<script src=/js/instantclick.min.js data-no-instant></script>
-<script data-no-instant>InstantClick.init("mousedown")</script>
-</body>
+
+    <hr/>
+    
+        <p>Last modified on 2012-11-23</p>
+    
+    
+        <a href="/posts/2012-11-19-cerc/">
+            Previous Cool Monday - CERC and my trip to Krakow
+        </a>
+    
+    <br/>
+    
+    <a href="/posts/2012-11-26-functional-compilers/">
+        Next Cool Monday - Functional compilers and atoms
+    </a>
+    
+
+        </div>
+        <script src="/js/instantclick.min.js" data-no-instant></script>
+        <script data-no-instant>InstantClick.init("mousedown");</script>
+    </body>
 </html>

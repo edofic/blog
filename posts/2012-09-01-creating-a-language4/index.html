@@ -1,40 +1,60 @@
-<!doctype html><html>
+<!DOCTYPE html>
+<html>
 <head>
 <title>Making a programming language Part 4 - Hello World</title>
-<meta charset=utf-8>
-<meta name=X-UA-Compatible content="IE=edge">
-<meta name=google-site-verification content>
-<meta content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=0" name=viewport>
+<meta charset="utf-8">
+<meta name="X-UA-Compatible" content="IE=edge">
+<meta name="google-site-verification" content="">
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+
+
+
+
 <style>body{max-width:800px;margin:auto;line-height:1.6;font-size:18px;color:#444;padding:0 10px}h1,h2,h3{line-height:1.2}.nav a,.nav a:visited,.nav a:hover,.nav a:active{color:inherit}.nav .title{margin:0}.nav-sub{display:inline-block}.nav-item{margin:5px}.nav-sub-right{display:inline-block;float:right}.nav-icon{margin-right:5px}.main img{display:block;max-width:100%;margin:auto}.main pre{overflow:auto}" media="screen"></style>
 </head>
-<body>
-<div class=nav>
-<a href=/><h2 class=title>Andraž Bajt's blog</h2></a>
-<div class=nav-sub>
-<a class=nav-item href=/about/>
-About Me
-</a>
-<a class=nav-item href=/>
-Archive
-</a>
-</div>
-<div class=nav-sub-right>
-<a class=nav-icon href=https://github.com/edofic target=_blank><img src=/icons/github.svg width=20 height=20></a>
-<a class=nav-icon href=https://www.linkedin.com/in/edofic target=_blank><img src=/icons/linkedin.svg width=20 height=20></a>
-<a class=nav-icon href=https://twitter.com/edofic target=_blank><img src=/icons/twitter.svg width=20 height=20></a>
-<a class=nav-icon href=/index.xml target=_blank><img src=/icons/rss.svg width=20 height=20></a>
-<a class=nav-icon href=mailto:blog@edofic.com target=_blank><img src=/icons/email.svg width=20 height=20></a>
-</div>
-</div>
-<hr>
-<div class=main>
-<h1>Making a programming language Part 4 - Hello World</h1>
-<time>2012-09-01</time>
-<hr>
-<p><a href=/posts/2012-08-29-creating-a-language-1>Table of
+    <body>
+        <div class="nav">
+            <a href="/"><h2 class="title">Andraž Bajt&#39;s blog</h2></a>
+            <div class="nav-sub">
+                
+                    <a class="nav-item" href="/about/">
+                        About Me
+                    </a>
+                
+                    <a class="nav-item" href="/">
+                        Archive
+                    </a>
+                
+            </div>
+            <div class="nav-sub-right">
+                
+                    <a class="nav-icon" href="https://github.com/edofic" target="_blank"><img src="/icons/github.svg" width="20" height="20"/></a>
+                
+                
+                    <a class="nav-icon" href="https://www.linkedin.com/in/edofic" target="_blank"><img src="/icons/linkedin.svg" width="20" height="20"/></a>
+                
+                
+                    <a class="nav-icon" href="https://twitter.com/edofic" target="_blank"><img src="/icons/twitter.svg" width="20" height="20"/></a>
+                
+                <a class="nav-icon" href="/index.xml" target="_blank"><img src="/icons/rss.svg" width="20" height="20"/></a>
+                
+                    <a class="nav-icon" href="mailto:blog@edofic.com" target="_blank"><img src="/icons/email.svg" width="20" height="20"/></a>
+                
+            </div>
+        </div>
+        <hr/>
+        <div class="main">
+    <h1>Making a programming language Part 4 - Hello World</h1>
+    
+        <time>2012-09-01</time>
+    
+    
+    
+    <hr/>
+    <p><a href="/posts/2012-08-29-creating-a-language-1">Table of
 contents</a>,
-<a href=https://github.com/edofic/scrat-lang>Whole project on github</a></p>
-<p>What good is a language if you cannot do a <a href=http://en.wikipedia.org/wiki/Hello_world_program title="Hello world program">Hello World
+<a href="https://github.com/edofic/scrat-lang">Whole project on github</a></p>
+<p>What good is a language if you cannot do a <a href="http://en.wikipedia.org/wiki/Hello_world_program" title="Hello world program">Hello World
 program</a>.
 Every tutorial on every language I ever read has a Hello World in it
 somewhere, even if it&rsquo;s a convoluted and sarcastic one.</p>
@@ -45,95 +65,95 @@ somewhere, even if it&rsquo;s a convoluted and sarcastic one.</p>
 </ul>
 <p>In that order. Since this is more of a math lang for now my first hello
 world can just print 1 - arguably the simplest number.</p>
-<h3 id=println>Println</h3>
+<h3 id="println">Println</h3>
 <p>This one is super easy. Just wrap scala&rsquo;s println. Here&rsquo;s the whole
 code</p>
-<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2>
-<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">4
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">5
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">6
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
 </span></code></pre></td>
-<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-scala data-lang=scala><span style=color:#66d9ef>lazy</span> <span style=color:#66d9ef>val</span> sprint<span style=color:#66d9ef>:</span> <span style=color:#66d9ef>FunctionVarArg</span> <span style=color:#f92672>=</span> <span style=color:#f92672>{</span>
-  <span style=color:#66d9ef>case</span> lst<span style=color:#66d9ef>:</span> <span style=color:#66d9ef>List</span><span style=color:#f92672>[</span><span style=color:#66d9ef>_</span><span style=color:#f92672>]</span> <span style=color:#66d9ef>=&gt;</span>
-    lst <span style=color:#f92672>--&gt;</span> mkString <span style=color:#f92672>--&gt;</span> println
-  <span style=color:#66d9ef>case</span> other <span style=color:#66d9ef>=&gt;</span>
-    <span style=color:#66d9ef>throw</span> <span style=color:#a6e22e>ScratInvalidTypeError</span><span style=color:#f92672>(</span><span style=color:#e6db74>&#34;expected a commaList but got &#34;</span> <span style=color:#f92672>+</span> other<span style=color:#f92672>)</span>
-<span style=color:#f92672>}</span>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code class="language-scala" data-lang="scala"><span style="color:#66d9ef">lazy</span> <span style="color:#66d9ef">val</span> sprint<span style="color:#66d9ef">:</span> <span style="color:#66d9ef">FunctionVarArg</span> <span style="color:#f92672">=</span> <span style="color:#f92672">{</span>
+  <span style="color:#66d9ef">case</span> lst<span style="color:#66d9ef">:</span> <span style="color:#66d9ef">List</span><span style="color:#f92672">[</span><span style="color:#66d9ef">_</span><span style="color:#f92672">]</span> <span style="color:#66d9ef">=&gt;</span>
+    lst <span style="color:#f92672">--&gt;</span> mkString <span style="color:#f92672">--&gt;</span> println
+  <span style="color:#66d9ef">case</span> other <span style="color:#66d9ef">=&gt;</span>
+    <span style="color:#66d9ef">throw</span> <span style="color:#a6e22e">ScratInvalidTypeError</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;expected a commaList but got &#34;</span> <span style="color:#f92672">+</span> other<span style="color:#f92672">)</span>
+<span style="color:#f92672">}</span>
 </code></pre></td></tr></table>
 </div>
 </div><p>And then I put this as &ldquo;println&rdquo; into StdLib&rsquo;s map = global namespace.
 Since I already have support for functions I just allowed them to do
 side effects(semantics-no code).<br>
-The <code>--></code> operator might have confused you. It&rsquo;s in an <a href=http://en.wikipedia.org/wiki/Type_conversion title="Type conversion">implicit
+The <code>--&gt;</code> operator might have confused you. It&rsquo;s in an <a href="http://en.wikipedia.org/wiki/Type_conversion" title="Type conversion">implicit
 conversion</a>
 I defined:</p>
-<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2>
-<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
 </span></code></pre></td>
-<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-scala data-lang=scala><span style=color:#66d9ef>implicit</span> <span style=color:#66d9ef>def</span> any2applyFunc<span style=color:#f92672>[</span><span style=color:#66d9ef>A</span><span style=color:#f92672>](</span>a<span style=color:#66d9ef>:</span> <span style=color:#66d9ef>A</span><span style=color:#f92672>)</span> <span style=color:#66d9ef>=</span> <span style=color:#66d9ef>new</span> <span style=color:#a6e22e>AnyRef</span> <span style=color:#f92672>{</span>
-  <span style=color:#66d9ef>def</span> <span style=color:#f92672>--&gt;[</span><span style=color:#66d9ef>B</span><span style=color:#f92672>](</span>f<span style=color:#66d9ef>:</span> <span style=color:#66d9ef>A</span> <span style=color:#f92672>=&gt;</span> B<span style=color:#f92672>)</span><span style=color:#66d9ef>:</span> <span style=color:#66d9ef>B</span> <span style=color:#f92672>=</span> f<span style=color:#f92672>(</span>a<span style=color:#f92672>)</span>
-<span style=color:#f92672>}</span>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code class="language-scala" data-lang="scala"><span style="color:#66d9ef">implicit</span> <span style="color:#66d9ef">def</span> any2applyFunc<span style="color:#f92672">[</span><span style="color:#66d9ef">A</span><span style="color:#f92672">](</span>a<span style="color:#66d9ef">:</span> <span style="color:#66d9ef">A</span><span style="color:#f92672">)</span> <span style="color:#66d9ef">=</span> <span style="color:#66d9ef">new</span> <span style="color:#a6e22e">AnyRef</span> <span style="color:#f92672">{</span>
+  <span style="color:#66d9ef">def</span> <span style="color:#f92672">--&gt;[</span><span style="color:#66d9ef">B</span><span style="color:#f92672">](</span>f<span style="color:#66d9ef">:</span> <span style="color:#66d9ef">A</span> <span style="color:#f92672">=&gt;</span> B<span style="color:#f92672">)</span><span style="color:#66d9ef">:</span> <span style="color:#66d9ef">B</span> <span style="color:#f92672">=</span> f<span style="color:#f92672">(</span>a<span style="color:#f92672">)</span>
+<span style="color:#f92672">}</span>
 </code></pre></td></tr></table>
 </div>
 </div><p>This is the so called <a href="http://www.artima.com/weblogs/viewpost.jsp?thread=179766">pimp my library pattern in
 scala</a>. It
-adds the <code>--></code> operator to all objects. This operator takes another
+adds the <code>--&gt;</code> operator to all objects. This operator takes another
 single argument function, applies it and returns the result.
 So I can have</p>
-<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2>
-<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
 </span></code></pre></td>
-<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-scala data-lang=scala>lst <span style=color:#f92672>--&gt;</span> mkString <span style=color:#f92672>--&gt;</span> println
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code class="language-scala" data-lang="scala">lst <span style="color:#f92672">--&gt;</span> mkString <span style="color:#f92672">--&gt;</span> println
 </code></pre></td></tr></table>
 </div>
 </div><p>instead of</p>
-<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2>
-<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
 </span></code></pre></td>
-<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-scala data-lang=scala>println<span style=color:#f92672>(</span>mkString<span style=color:#f92672>(</span>lst<span style=color:#f92672>))</span>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code class="language-scala" data-lang="scala">println<span style="color:#f92672">(</span>mkString<span style="color:#f92672">(</span>lst<span style="color:#f92672">))</span>
 </code></pre></td></tr></table>
 </div>
 </div><p>Think of it like
-<a href=http://haskell.org/ title="Haskell (programming language)">Haskell</a>&rsquo;s <code>$</code>
+<a href="http://haskell.org/" title="Haskell (programming language)">Haskell</a>&rsquo;s <code>$</code>
 operator even if it works in a different way. Oh yes, mkString is
 another function that I put into StdLib that takes a List(takes Any but
 does pattern matching) and returns <code>List.mkString</code></p>
 <p>And now I have my Hello Math World</p>
-<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2>
-<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
 </span></code></pre></td>
-<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-scala data-lang=scala>println<span style=color:#f92672>(</span><span style=color:#ae81ff>1</span><span style=color:#f92672>)</span>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code class="language-scala" data-lang="scala">println<span style="color:#f92672">(</span><span style="color:#ae81ff">1</span><span style="color:#f92672">)</span>
 </code></pre></td></tr></table>
 </div>
-</div><h3 id=strings>Strings</h3>
+</div><h3 id="strings">Strings</h3>
 <p>First I have to parse strings</p>
-<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2>
-<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">4
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
 </span></code></pre></td>
-<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-scala data-lang=scala><span style=color:#66d9ef>private</span> <span style=color:#66d9ef>def</span> string<span style=color:#66d9ef>:</span> <span style=color:#66d9ef>Parser</span><span style=color:#f92672>[</span><span style=color:#66d9ef>SString</span><span style=color:#f92672>]</span> <span style=color:#66d9ef>=</span> <span style=color:#e6db74>&#34;\&#34;.*?\&#34;&#34;</span><span style=color:#f92672>.</span>r <span style=color:#f92672>^^</span> <span style=color:#f92672>{</span> s <span style=color:#66d9ef>=&gt;</span>
-  <span style=color:#a6e22e>SString</span><span style=color:#f92672>(</span>s<span style=color:#f92672>.</span>substring<span style=color:#f92672>(</span><span style=color:#ae81ff>1</span><span style=color:#f92672>,</span> s<span style=color:#f92672>.</span>length <span style=color:#f92672>-</span> <span style=color:#ae81ff>1</span><span style=color:#f92672>))</span>
-<span style=color:#f92672>}</span>
-<span style=color:#66d9ef>private</span> <span style=color:#66d9ef>def</span> value<span style=color:#66d9ef>:</span> <span style=color:#66d9ef>Parser</span><span style=color:#f92672>[</span><span style=color:#66d9ef>Expression</span><span style=color:#f92672>]</span> <span style=color:#66d9ef>=</span> number <span style=color:#f92672>|</span> string <span style=color:#f92672>|</span> identifier
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code class="language-scala" data-lang="scala"><span style="color:#66d9ef">private</span> <span style="color:#66d9ef">def</span> string<span style="color:#66d9ef">:</span> <span style="color:#66d9ef">Parser</span><span style="color:#f92672">[</span><span style="color:#66d9ef">SString</span><span style="color:#f92672">]</span> <span style="color:#66d9ef">=</span> <span style="color:#e6db74">&#34;\&#34;.*?\&#34;&#34;</span><span style="color:#f92672">.</span>r <span style="color:#f92672">^^</span> <span style="color:#f92672">{</span> s <span style="color:#66d9ef">=&gt;</span>
+  <span style="color:#a6e22e">SString</span><span style="color:#f92672">(</span>s<span style="color:#f92672">.</span>substring<span style="color:#f92672">(</span><span style="color:#ae81ff">1</span><span style="color:#f92672">,</span> s<span style="color:#f92672">.</span>length <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span><span style="color:#f92672">))</span>
+<span style="color:#f92672">}</span>
+<span style="color:#66d9ef">private</span> <span style="color:#66d9ef">def</span> value<span style="color:#66d9ef">:</span> <span style="color:#66d9ef">Parser</span><span style="color:#f92672">[</span><span style="color:#66d9ef">Expression</span><span style="color:#f92672">]</span> <span style="color:#66d9ef">=</span> number <span style="color:#f92672">|</span> string <span style="color:#f92672">|</span> identifier
 </code></pre></td></tr></table>
 </div>
 </div><p>SString is just a case class wrapper for string that extends Expression
@@ -144,90 +164,98 @@ wrapped in &ldquo;&rdquo;. I even spend half an hour debugging my evaluator befo
 it dawned on me.
 I believe the evaluation of this is trivial.</p>
 <p>Now I have a REAL hello world:</p>
-<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2>
-<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
 </span></code></pre></td>
-<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-scala data-lang=scala>    println<span style=color:#f92672>(</span><span style=color:#e6db74>&#34;Hello world&#34;</span><span style=color:#f92672>)</span>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code class="language-scala" data-lang="scala">    println<span style="color:#f92672">(</span><span style="color:#e6db74">&#34;Hello world&#34;</span><span style="color:#f92672">)</span>
 </code></pre></td></tr></table>
 </div>
-</div><p>Well&mldr;no. Hello world is a program you run. I need an interpreter to
+</div><p>Well&hellip;no. Hello world is a program you run. I need an interpreter to
 run files.</p>
-<h3 id=interpreterhttpenwikipediaorgwikiinterpreter_28computing29-interpreter-computing><a href=http://en.wikipedia.org/wiki/Interpreter_%28computing%29 title="Interpreter (computing)">Interpreter</a></h3>
+<h3 id="interpreterhttpenwikipediaorgwikiinterpreter_28computing29-interpreter-computing"><a href="http://en.wikipedia.org/wiki/Interpreter_%28computing%29" title="Interpreter (computing)">Interpreter</a></h3>
 <p>Not quite that different from
-<a href=http://en.wikipedia.org/wiki/Read%E2%80%93eval%E2%80%93print_loop title="Read–eval–print loop">REPL</a>.
+<a href="http://en.wikipedia.org/wiki/Read%E2%80%93eval%E2%80%93print_loop" title="Read–eval–print loop">REPL</a>.
 In fact it&rsquo;s just REL: read, evaluate, loop. Printing is now only with
 explicit println calls. And I don&rsquo;t need to catch exceptions and return
 into the loop.  Whole code for the interpreter</p>
-<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2>
-<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">11
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">12
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">13
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">14
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">15
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">16
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">17
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">18
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">19
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">19
 </span></code></pre></td>
-<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-scala data-lang=scala><span style=color:#66d9ef>object</span> <span style=color:#a6e22e>Interpreter</span> <span style=color:#f92672>{</span>
-  <span style=color:#66d9ef>def</span> main<span style=color:#f92672>(</span>args<span style=color:#66d9ef>:</span> <span style=color:#66d9ef>Array</span><span style=color:#f92672>[</span><span style=color:#66d9ef>String</span><span style=color:#f92672>])</span> <span style=color:#66d9ef>=</span> <span style=color:#f92672>{</span>
-    <span style=color:#66d9ef>if</span> <span style=color:#f92672>(</span>args<span style=color:#f92672>.</span>length <span style=color:#f92672>!=</span> <span style=color:#ae81ff>1</span><span style=color:#f92672>)</span> <span style=color:#f92672>{</span>
-      println<span style=color:#f92672>(</span><span style=color:#e6db74>&#34;parameters: filename to interpret&#34;</span><span style=color:#f92672>)</span>
-    <span style=color:#f92672>}</span> <span style=color:#66d9ef>else</span> <span style=color:#f92672>{</span>
-      interpretFile<span style=color:#f92672>(</span><span style=color:#66d9ef>new</span> <span style=color:#a6e22e>File</span><span style=color:#f92672>(</span>args<span style=color:#f92672>(</span><span style=color:#ae81ff>0</span><span style=color:#f92672>)))</span>
-    <span style=color:#f92672>}</span>
-  <span style=color:#f92672>}</span>
-  <span style=color:#66d9ef>val</span> runtime <span style=color:#66d9ef>=</span> <span style=color:#66d9ef>new</span> <span style=color:#a6e22e>ScratRuntime</span>
-  <span style=color:#66d9ef>def</span> interpretFile<span style=color:#f92672>(</span>file<span style=color:#66d9ef>:</span> <span style=color:#66d9ef>File</span><span style=color:#f92672>)</span> <span style=color:#f92672>{</span>
-    <span style=color:#66d9ef>if</span> <span style=color:#f92672>(</span>file<span style=color:#f92672>.</span>canRead<span style=color:#f92672>)</span> <span style=color:#f92672>{</span>
-      <span style=color:#66d9ef>val</span> source <span style=color:#66d9ef>=</span> io<span style=color:#f92672>.</span><span style=color:#a6e22e>Source</span><span style=color:#f92672>.</span>fromFile<span style=color:#f92672>(</span>file<span style=color:#f92672>)</span>
-      source<span style=color:#f92672>.</span>getLines<span style=color:#f92672>().</span>foreach<span style=color:#f92672>(</span>runtime<span style=color:#f92672>.</span>eval<span style=color:#f92672>)</span>
-      source<span style=color:#f92672>.</span>close<span style=color:#f92672>()</span>
-    <span style=color:#f92672>}</span> <span style=color:#66d9ef>else</span> <span style=color:#f92672>{</span>
-      println<span style=color:#f92672>(</span><span style=color:#e6db74>&#34;cannot open file &#34;</span> <span style=color:#f92672>+</span> file<span style=color:#f92672>.</span>getPath<span style=color:#f92672>)</span>
-    <span style=color:#f92672>}</span>
-  <span style=color:#f92672>}</span>
-<span style=color:#f92672>}</span>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code class="language-scala" data-lang="scala"><span style="color:#66d9ef">object</span> <span style="color:#a6e22e">Interpreter</span> <span style="color:#f92672">{</span>
+  <span style="color:#66d9ef">def</span> main<span style="color:#f92672">(</span>args<span style="color:#66d9ef">:</span> <span style="color:#66d9ef">Array</span><span style="color:#f92672">[</span><span style="color:#66d9ef">String</span><span style="color:#f92672">])</span> <span style="color:#66d9ef">=</span> <span style="color:#f92672">{</span>
+    <span style="color:#66d9ef">if</span> <span style="color:#f92672">(</span>args<span style="color:#f92672">.</span>length <span style="color:#f92672">!=</span> <span style="color:#ae81ff">1</span><span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+      println<span style="color:#f92672">(</span><span style="color:#e6db74">&#34;parameters: filename to interpret&#34;</span><span style="color:#f92672">)</span>
+    <span style="color:#f92672">}</span> <span style="color:#66d9ef">else</span> <span style="color:#f92672">{</span>
+      interpretFile<span style="color:#f92672">(</span><span style="color:#66d9ef">new</span> <span style="color:#a6e22e">File</span><span style="color:#f92672">(</span>args<span style="color:#f92672">(</span><span style="color:#ae81ff">0</span><span style="color:#f92672">)))</span>
+    <span style="color:#f92672">}</span>
+  <span style="color:#f92672">}</span>
+  <span style="color:#66d9ef">val</span> runtime <span style="color:#66d9ef">=</span> <span style="color:#66d9ef">new</span> <span style="color:#a6e22e">ScratRuntime</span>
+  <span style="color:#66d9ef">def</span> interpretFile<span style="color:#f92672">(</span>file<span style="color:#66d9ef">:</span> <span style="color:#66d9ef">File</span><span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+    <span style="color:#66d9ef">if</span> <span style="color:#f92672">(</span>file<span style="color:#f92672">.</span>canRead<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+      <span style="color:#66d9ef">val</span> source <span style="color:#66d9ef">=</span> io<span style="color:#f92672">.</span><span style="color:#a6e22e">Source</span><span style="color:#f92672">.</span>fromFile<span style="color:#f92672">(</span>file<span style="color:#f92672">)</span>
+      source<span style="color:#f92672">.</span>getLines<span style="color:#f92672">().</span>foreach<span style="color:#f92672">(</span>runtime<span style="color:#f92672">.</span>eval<span style="color:#f92672">)</span>
+      source<span style="color:#f92672">.</span>close<span style="color:#f92672">()</span>
+    <span style="color:#f92672">}</span> <span style="color:#66d9ef">else</span> <span style="color:#f92672">{</span>
+      println<span style="color:#f92672">(</span><span style="color:#e6db74">&#34;cannot open file &#34;</span> <span style="color:#f92672">+</span> file<span style="color:#f92672">.</span>getPath<span style="color:#f92672">)</span>
+    <span style="color:#f92672">}</span>
+  <span style="color:#f92672">}</span>
+<span style="color:#f92672">}</span>
 </code></pre></td></tr></table>
 </div>
-</div><p><a href=http://cdn.memegenerator.net/instances/400x/26006910.jpg><img src=http://cdn.memegenerator.net/instances/400x/26006910.jpg alt></a><br>
-And now I can put my hello world in a file and run it. <br>
+</div><p><a href="http://cdn.memegenerator.net/instances/400x/26006910.jpg"><img src="http://cdn.memegenerator.net/instances/400x/26006910.jpg" alt=""></a><br>
+And now I can put my hello world in a file and run it.<br>
 But I needed to decide on the extension. I know it&rsquo;s silly but I didn&rsquo;t
 want to save the file until I had the extension in mind. And this mean
 naming the language. Being in &ldquo;logic mode&rdquo; I asked my awsome girlfriend
 who&rsquo;s more artsy type of a person and she immediately responded
 &ldquo;scrat&rdquo;(she&rsquo;s huge fan of
-<a href=http://en.wikipedia.org/wiki/List_of_Ice_Age_characters title="List of Ice Age characters">Scrat</a>
-the squirrel from <a href=http://en.wikipedia.org/wiki/Ice_age title="Ice age">Ice
+<a href="http://en.wikipedia.org/wiki/List_of_Ice_Age_characters" title="List of Ice Age characters">Scrat</a>
+the squirrel from <a href="http://en.wikipedia.org/wiki/Ice_age" title="Ice age">Ice
 Age</a>). And them some
 more funny names, but scrat stuck with me. So I named the file
 hello.scrat.</p>
-<p><strong>next: <a href=/posts/2012-09-02-creating-a-language-5>variables and decisions</a></strong></p>
-<hr>
-<p>Last modified on 2012-09-01</p>
-<a href=/posts/2012-08-31-creating-a-language3/>
-Previous Making a programming language Part 3 - adding features
-</a>
-<br>
-<a href=/posts/2012-09-02-creating-a-language-5/>
-Next Making a programming language Part 5 - variables and decisions
-</a>
-</div>
-<script src=/js/instantclick.min.js data-no-instant></script>
-<script data-no-instant>InstantClick.init("mousedown")</script>
-</body>
+<p><strong>next: <a href="/posts/2012-09-02-creating-a-language-5">variables and decisions</a></strong></p>
+
+    <hr/>
+    
+        <p>Last modified on 2012-09-01</p>
+    
+    
+        <a href="/posts/2012-08-31-creating-a-language3/">
+            Previous Making a programming language Part 3 - adding features
+        </a>
+    
+    <br/>
+    
+    <a href="/posts/2012-09-02-creating-a-language-5/">
+        Next Making a programming language Part 5 - variables and decisions
+    </a>
+    
+
+        </div>
+        <script src="/js/instantclick.min.js" data-no-instant></script>
+        <script data-no-instant>InstantClick.init("mousedown");</script>
+    </body>
 </html>

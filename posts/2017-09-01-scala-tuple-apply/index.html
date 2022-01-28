@@ -1,37 +1,57 @@
-<!doctype html><html>
+<!DOCTYPE html>
+<html>
 <head>
 <title>Implementing apply on tuples in Scala</title>
-<meta charset=utf-8>
-<meta name=X-UA-Compatible content="IE=edge">
-<meta name=google-site-verification content>
-<meta content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=0" name=viewport>
+<meta charset="utf-8">
+<meta name="X-UA-Compatible" content="IE=edge">
+<meta name="google-site-verification" content="">
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+
+
+
+
 <style>body{max-width:800px;margin:auto;line-height:1.6;font-size:18px;color:#444;padding:0 10px}h1,h2,h3{line-height:1.2}.nav a,.nav a:visited,.nav a:hover,.nav a:active{color:inherit}.nav .title{margin:0}.nav-sub{display:inline-block}.nav-item{margin:5px}.nav-sub-right{display:inline-block;float:right}.nav-icon{margin-right:5px}.main img{display:block;max-width:100%;margin:auto}.main pre{overflow:auto}" media="screen"></style>
 </head>
-<body>
-<div class=nav>
-<a href=/><h2 class=title>Andraž Bajt's blog</h2></a>
-<div class=nav-sub>
-<a class=nav-item href=/about/>
-About Me
-</a>
-<a class=nav-item href=/>
-Archive
-</a>
-</div>
-<div class=nav-sub-right>
-<a class=nav-icon href=https://github.com/edofic target=_blank><img src=/icons/github.svg width=20 height=20></a>
-<a class=nav-icon href=https://www.linkedin.com/in/edofic target=_blank><img src=/icons/linkedin.svg width=20 height=20></a>
-<a class=nav-icon href=https://twitter.com/edofic target=_blank><img src=/icons/twitter.svg width=20 height=20></a>
-<a class=nav-icon href=/index.xml target=_blank><img src=/icons/rss.svg width=20 height=20></a>
-<a class=nav-icon href=mailto:blog@edofic.com target=_blank><img src=/icons/email.svg width=20 height=20></a>
-</div>
-</div>
-<hr>
-<div class=main>
-<h1>Implementing apply on tuples in Scala</h1>
-<time>2017-09-01</time>
-<hr>
-<p>One of the first things you learn as a newcomer to Scala is the difference
+    <body>
+        <div class="nav">
+            <a href="/"><h2 class="title">Andraž Bajt&#39;s blog</h2></a>
+            <div class="nav-sub">
+                
+                    <a class="nav-item" href="/about/">
+                        About Me
+                    </a>
+                
+                    <a class="nav-item" href="/">
+                        Archive
+                    </a>
+                
+            </div>
+            <div class="nav-sub-right">
+                
+                    <a class="nav-icon" href="https://github.com/edofic" target="_blank"><img src="/icons/github.svg" width="20" height="20"/></a>
+                
+                
+                    <a class="nav-icon" href="https://www.linkedin.com/in/edofic" target="_blank"><img src="/icons/linkedin.svg" width="20" height="20"/></a>
+                
+                
+                    <a class="nav-icon" href="https://twitter.com/edofic" target="_blank"><img src="/icons/twitter.svg" width="20" height="20"/></a>
+                
+                <a class="nav-icon" href="/index.xml" target="_blank"><img src="/icons/rss.svg" width="20" height="20"/></a>
+                
+                    <a class="nav-icon" href="mailto:blog@edofic.com" target="_blank"><img src="/icons/email.svg" width="20" height="20"/></a>
+                
+            </div>
+        </div>
+        <hr/>
+        <div class="main">
+    <h1>Implementing apply on tuples in Scala</h1>
+    
+        <time>2017-09-01</time>
+    
+    
+    
+    <hr/>
+    <p>One of the first things you learn as a newcomer to Scala is the difference
 between a list and a tuple: a list must be homogeneous but a tuple can be
 heterogeneous. That is all elements of a list must have the same types but a
 tuple can contain things of different types.</p>
@@ -40,26 +60,26 @@ a tuple cannot. You can use <code>list(3)</code> but you can&rsquo;t do <code>tu
 do <code>tuple._4</code> (and there is that pesky off-by-one).</p>
 <p>So let&rsquo;s use the awesome powers of Scala to negate this and implement <code>apply</code>
 method on tuples.</p>
-<h2 id=first-steps>First steps</h2>
+<h2 id="first-steps">First steps</h2>
 <p>Let&rsquo;s start with with baby steps and not tackle full blown <code>apply</code> with integer
 index but instead do an approximation with special access constants. Something
 like</p>
-<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2>
-<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">4
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">5
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">6
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
 </span></code></pre></td>
-<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-scala data-lang=scala><span style=color:#66d9ef>val</span> t1 <span style=color:#66d9ef>=</span> <span style=color:#f92672>(</span><span style=color:#e6db74>&#34;1&#34;</span><span style=color:#f92672>,</span> <span style=color:#ae81ff>123</span><span style=color:#f92672>)</span>
-<span style=color:#66d9ef>val</span> t2 <span style=color:#66d9ef>=</span> <span style=color:#f92672>(</span><span style=color:#66d9ef>false</span><span style=color:#f92672>,</span> <span style=color:#ae81ff>1234</span><span style=color:#f92672>,</span> <span style=color:#e6db74>&#34;foobar&#34;</span><span style=color:#f92672>)</span>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code class="language-scala" data-lang="scala"><span style="color:#66d9ef">val</span> t1 <span style="color:#66d9ef">=</span> <span style="color:#f92672">(</span><span style="color:#e6db74">&#34;1&#34;</span><span style="color:#f92672">,</span> <span style="color:#ae81ff">123</span><span style="color:#f92672">)</span>
+<span style="color:#66d9ef">val</span> t2 <span style="color:#66d9ef">=</span> <span style="color:#f92672">(</span><span style="color:#66d9ef">false</span><span style="color:#f92672">,</span> <span style="color:#ae81ff">1234</span><span style="color:#f92672">,</span> <span style="color:#e6db74">&#34;foobar&#34;</span><span style="color:#f92672">)</span>
 
-println<span style=color:#f92672>(</span>t1<span style=color:#f92672>(</span>_2<span style=color:#f92672>))</span> <span style=color:#75715e>// prints 123
-</span><span style=color:#75715e></span>println<span style=color:#f92672>(</span>t2<span style=color:#f92672>(</span>_1<span style=color:#f92672>))</span> <span style=color:#75715e>// prints false
-</span><span style=color:#75715e></span>println<span style=color:#f92672>(</span>t2<span style=color:#f92672>(</span>_3<span style=color:#f92672>))</span> <span style=color:#75715e>// prints &#34;foobar&#34;
+println<span style="color:#f92672">(</span>t1<span style="color:#f92672">(</span>_2<span style="color:#f92672">))</span> <span style="color:#75715e">// prints 123
+</span><span style="color:#75715e"></span>println<span style="color:#f92672">(</span>t2<span style="color:#f92672">(</span>_1<span style="color:#f92672">))</span> <span style="color:#75715e">// prints false
+</span><span style="color:#75715e"></span>println<span style="color:#f92672">(</span>t2<span style="color:#f92672">(</span>_3<span style="color:#f92672">))</span> <span style="color:#75715e">// prints &#34;foobar&#34;
 </span></code></pre></td></tr></table>
 </div>
 </div><p>It&rsquo;s not a big step from regular tuple accessors but it&rsquo;s a big move since it
@@ -69,159 +89,159 @@ introduces a single polymorphic <code>apply</code>.</p>
 in the function that does the proper projection. The important part is that the
 implicit resolution also needs to compute the output type of the <code>apply</code>
 method.</p>
-<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2>
-<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">4
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">5
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
 </span></code></pre></td>
-<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-scala data-lang=scala><span style=color:#75715e>// this integer references can be avoided when/if SIP-23 is implemented
-</span><span style=color:#75715e></span><span style=color:#66d9ef>val</span> _1 <span style=color:#66d9ef>=</span> <span style=color:#ae81ff>1</span><span style=color:#66d9ef>:</span> <span style=color:#66d9ef>Integer</span>
-<span style=color:#66d9ef>val</span> _2 <span style=color:#66d9ef>=</span> <span style=color:#ae81ff>2</span><span style=color:#66d9ef>:</span> <span style=color:#66d9ef>Integer</span>
-<span style=color:#66d9ef>val</span> _3 <span style=color:#66d9ef>=</span> <span style=color:#ae81ff>3</span><span style=color:#66d9ef>:</span> <span style=color:#66d9ef>Integer</span>
-<span style=color:#75715e>// ... up to 22
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code class="language-scala" data-lang="scala"><span style="color:#75715e">// this integer references can be avoided when/if SIP-23 is implemented
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">val</span> _1 <span style="color:#66d9ef">=</span> <span style="color:#ae81ff">1</span><span style="color:#66d9ef">:</span> <span style="color:#66d9ef">Integer</span>
+<span style="color:#66d9ef">val</span> _2 <span style="color:#66d9ef">=</span> <span style="color:#ae81ff">2</span><span style="color:#66d9ef">:</span> <span style="color:#66d9ef">Integer</span>
+<span style="color:#66d9ef">val</span> _3 <span style="color:#66d9ef">=</span> <span style="color:#ae81ff">3</span><span style="color:#66d9ef">:</span> <span style="color:#66d9ef">Integer</span>
+<span style="color:#75715e">// ... up to 22
 </span></code></pre></td></tr></table>
 </div>
 </div><p>The type-class needs to correlate the tuple type (<code>T</code>), the output type (<code>A</code>)
 and the index (<code>N</code>). The instances just implement the obvious connection
 between indexes and tuple accessors.</p>
-<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2>
-<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">11
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">12
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">13
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">14
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">15
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">16
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">17
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">18
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">19
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">20
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">21
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">19
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">20
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">21
 </span></code></pre></td>
-<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-scala data-lang=scala><span style=color:#66d9ef>trait</span> <span style=color:#a6e22e>TupleGet</span><span style=color:#f92672>[</span><span style=color:#66d9ef>T</span>, <span style=color:#66d9ef>A</span>, <span style=color:#66d9ef>N</span> <span style=color:#66d9ef>&lt;:</span> <span style=color:#66d9ef>Integer</span><span style=color:#f92672>]</span> <span style=color:#f92672>{</span>
-  <span style=color:#66d9ef>def</span> get<span style=color:#f92672>(</span>t<span style=color:#66d9ef>:</span> <span style=color:#66d9ef>T</span><span style=color:#f92672>)</span><span style=color:#66d9ef>:</span> <span style=color:#66d9ef>A</span>
-<span style=color:#f92672>}</span>
-<span style=color:#66d9ef>object</span> <span style=color:#a6e22e>TupleGet</span> <span style=color:#f92672>{</span>
-  <span style=color:#66d9ef>implicit</span> <span style=color:#66d9ef>def</span> tuple2get1<span style=color:#f92672>[</span><span style=color:#66d9ef>A</span>, <span style=color:#66d9ef>B</span><span style=color:#f92672>]</span> <span style=color:#66d9ef>=</span> <span style=color:#66d9ef>new</span> <span style=color:#a6e22e>TupleGet</span><span style=color:#f92672>[(</span><span style=color:#66d9ef>A</span>, <span style=color:#66d9ef>B</span><span style=color:#f92672>)</span>, <span style=color:#66d9ef>A</span>, <span style=color:#66d9ef>_</span><span style=color:#960050;background-color:#1e0010>1</span><span style=color:#66d9ef>.</span><span style=color:#66d9ef>type</span><span style=color:#f92672>]</span> <span style=color:#f92672>{</span>
-    <span style=color:#66d9ef>def</span> get<span style=color:#f92672>(</span>t<span style=color:#66d9ef>:</span> <span style=color:#f92672>(</span><span style=color:#66d9ef>A</span><span style=color:#f92672>,</span> <span style=color:#66d9ef>B</span><span style=color:#f92672>))</span><span style=color:#66d9ef>:</span> <span style=color:#66d9ef>A</span> <span style=color:#f92672>=</span> t<span style=color:#f92672>.</span>_1
-  <span style=color:#f92672>}</span>
-  <span style=color:#66d9ef>implicit</span> <span style=color:#66d9ef>def</span> tuple2get2<span style=color:#f92672>[</span><span style=color:#66d9ef>A</span>, <span style=color:#66d9ef>B</span><span style=color:#f92672>]</span> <span style=color:#66d9ef>=</span> <span style=color:#66d9ef>new</span> <span style=color:#a6e22e>TupleGet</span><span style=color:#f92672>[(</span><span style=color:#66d9ef>A</span>, <span style=color:#66d9ef>B</span><span style=color:#f92672>)</span>, <span style=color:#66d9ef>B</span>, <span style=color:#66d9ef>_</span><span style=color:#960050;background-color:#1e0010>2</span><span style=color:#66d9ef>.</span><span style=color:#66d9ef>type</span><span style=color:#f92672>]</span> <span style=color:#f92672>{</span>
-    <span style=color:#66d9ef>def</span> get<span style=color:#f92672>(</span>t<span style=color:#66d9ef>:</span> <span style=color:#f92672>(</span><span style=color:#66d9ef>A</span><span style=color:#f92672>,</span> <span style=color:#66d9ef>B</span><span style=color:#f92672>))</span><span style=color:#66d9ef>:</span> <span style=color:#66d9ef>B</span> <span style=color:#f92672>=</span> t<span style=color:#f92672>.</span>_2
-  <span style=color:#f92672>}</span>
-  <span style=color:#66d9ef>implicit</span> <span style=color:#66d9ef>def</span> tuple3get1<span style=color:#f92672>[</span><span style=color:#66d9ef>A</span>, <span style=color:#66d9ef>B</span>, <span style=color:#66d9ef>C</span><span style=color:#f92672>]</span> <span style=color:#66d9ef>=</span> <span style=color:#66d9ef>new</span> <span style=color:#a6e22e>TupleGet</span><span style=color:#f92672>[(</span><span style=color:#66d9ef>A</span>, <span style=color:#66d9ef>B</span>, <span style=color:#66d9ef>C</span><span style=color:#f92672>)</span>, <span style=color:#66d9ef>A</span>, <span style=color:#66d9ef>_</span><span style=color:#960050;background-color:#1e0010>1</span><span style=color:#66d9ef>.</span><span style=color:#66d9ef>type</span><span style=color:#f92672>]</span> <span style=color:#f92672>{</span>
-    <span style=color:#66d9ef>def</span> get<span style=color:#f92672>(</span>t<span style=color:#66d9ef>:</span> <span style=color:#f92672>(</span><span style=color:#66d9ef>A</span><span style=color:#f92672>,</span> <span style=color:#66d9ef>B</span><span style=color:#f92672>,</span> C<span style=color:#f92672>))</span><span style=color:#66d9ef>:</span> <span style=color:#66d9ef>A</span> <span style=color:#f92672>=</span> t<span style=color:#f92672>.</span>_1
-  <span style=color:#f92672>}</span>
-  <span style=color:#66d9ef>implicit</span> <span style=color:#66d9ef>def</span> tuple3get2<span style=color:#f92672>[</span><span style=color:#66d9ef>A</span>, <span style=color:#66d9ef>B</span>, <span style=color:#66d9ef>C</span><span style=color:#f92672>]</span> <span style=color:#66d9ef>=</span> <span style=color:#66d9ef>new</span> <span style=color:#a6e22e>TupleGet</span><span style=color:#f92672>[(</span><span style=color:#66d9ef>A</span>, <span style=color:#66d9ef>B</span>, <span style=color:#66d9ef>C</span><span style=color:#f92672>)</span>, <span style=color:#66d9ef>B</span>, <span style=color:#66d9ef>_</span><span style=color:#960050;background-color:#1e0010>2</span><span style=color:#66d9ef>.</span><span style=color:#66d9ef>type</span><span style=color:#f92672>]</span> <span style=color:#f92672>{</span>
-    <span style=color:#66d9ef>def</span> get<span style=color:#f92672>(</span>t<span style=color:#66d9ef>:</span> <span style=color:#f92672>(</span><span style=color:#66d9ef>A</span><span style=color:#f92672>,</span> <span style=color:#66d9ef>B</span><span style=color:#f92672>,</span> C<span style=color:#f92672>))</span><span style=color:#66d9ef>:</span> <span style=color:#66d9ef>B</span> <span style=color:#f92672>=</span> t<span style=color:#f92672>.</span>_2
-  <span style=color:#f92672>}</span>
-  <span style=color:#66d9ef>implicit</span> <span style=color:#66d9ef>def</span> tuple3get3<span style=color:#f92672>[</span><span style=color:#66d9ef>A</span>, <span style=color:#66d9ef>B</span>, <span style=color:#66d9ef>C</span><span style=color:#f92672>]</span> <span style=color:#66d9ef>=</span> <span style=color:#66d9ef>new</span> <span style=color:#a6e22e>TupleGet</span><span style=color:#f92672>[(</span><span style=color:#66d9ef>A</span>, <span style=color:#66d9ef>B</span>, <span style=color:#66d9ef>C</span><span style=color:#f92672>)</span>, <span style=color:#66d9ef>C</span>, <span style=color:#66d9ef>_</span><span style=color:#960050;background-color:#1e0010>3</span><span style=color:#66d9ef>.</span><span style=color:#66d9ef>type</span><span style=color:#f92672>]</span> <span style=color:#f92672>{</span>
-    <span style=color:#66d9ef>def</span> get<span style=color:#f92672>(</span>t<span style=color:#66d9ef>:</span> <span style=color:#f92672>(</span><span style=color:#66d9ef>A</span><span style=color:#f92672>,</span> <span style=color:#66d9ef>B</span><span style=color:#f92672>,</span> C<span style=color:#f92672>))</span><span style=color:#66d9ef>:</span> <span style=color:#66d9ef>C</span> <span style=color:#f92672>=</span> t<span style=color:#f92672>.</span>_3
-  <span style=color:#f92672>}</span>
-  <span style=color:#75715e>// ...
-</span><span style=color:#75715e></span><span style=color:#f92672>}</span>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code class="language-scala" data-lang="scala"><span style="color:#66d9ef">trait</span> <span style="color:#a6e22e">TupleGet</span><span style="color:#f92672">[</span><span style="color:#66d9ef">T</span>, <span style="color:#66d9ef">A</span>, <span style="color:#66d9ef">N</span> <span style="color:#66d9ef">&lt;:</span> <span style="color:#66d9ef">Integer</span><span style="color:#f92672">]</span> <span style="color:#f92672">{</span>
+  <span style="color:#66d9ef">def</span> get<span style="color:#f92672">(</span>t<span style="color:#66d9ef">:</span> <span style="color:#66d9ef">T</span><span style="color:#f92672">)</span><span style="color:#66d9ef">:</span> <span style="color:#66d9ef">A</span>
+<span style="color:#f92672">}</span>
+<span style="color:#66d9ef">object</span> <span style="color:#a6e22e">TupleGet</span> <span style="color:#f92672">{</span>
+  <span style="color:#66d9ef">implicit</span> <span style="color:#66d9ef">def</span> tuple2get1<span style="color:#f92672">[</span><span style="color:#66d9ef">A</span>, <span style="color:#66d9ef">B</span><span style="color:#f92672">]</span> <span style="color:#66d9ef">=</span> <span style="color:#66d9ef">new</span> <span style="color:#a6e22e">TupleGet</span><span style="color:#f92672">[(</span><span style="color:#66d9ef">A</span>, <span style="color:#66d9ef">B</span><span style="color:#f92672">)</span>, <span style="color:#66d9ef">A</span>, <span style="color:#66d9ef">_</span><span style="color:#960050;background-color:#1e0010">1</span><span style="color:#66d9ef">.</span><span style="color:#66d9ef">type</span><span style="color:#f92672">]</span> <span style="color:#f92672">{</span>
+    <span style="color:#66d9ef">def</span> get<span style="color:#f92672">(</span>t<span style="color:#66d9ef">:</span> <span style="color:#f92672">(</span><span style="color:#66d9ef">A</span><span style="color:#f92672">,</span> <span style="color:#66d9ef">B</span><span style="color:#f92672">))</span><span style="color:#66d9ef">:</span> <span style="color:#66d9ef">A</span> <span style="color:#f92672">=</span> t<span style="color:#f92672">.</span>_1
+  <span style="color:#f92672">}</span>
+  <span style="color:#66d9ef">implicit</span> <span style="color:#66d9ef">def</span> tuple2get2<span style="color:#f92672">[</span><span style="color:#66d9ef">A</span>, <span style="color:#66d9ef">B</span><span style="color:#f92672">]</span> <span style="color:#66d9ef">=</span> <span style="color:#66d9ef">new</span> <span style="color:#a6e22e">TupleGet</span><span style="color:#f92672">[(</span><span style="color:#66d9ef">A</span>, <span style="color:#66d9ef">B</span><span style="color:#f92672">)</span>, <span style="color:#66d9ef">B</span>, <span style="color:#66d9ef">_</span><span style="color:#960050;background-color:#1e0010">2</span><span style="color:#66d9ef">.</span><span style="color:#66d9ef">type</span><span style="color:#f92672">]</span> <span style="color:#f92672">{</span>
+    <span style="color:#66d9ef">def</span> get<span style="color:#f92672">(</span>t<span style="color:#66d9ef">:</span> <span style="color:#f92672">(</span><span style="color:#66d9ef">A</span><span style="color:#f92672">,</span> <span style="color:#66d9ef">B</span><span style="color:#f92672">))</span><span style="color:#66d9ef">:</span> <span style="color:#66d9ef">B</span> <span style="color:#f92672">=</span> t<span style="color:#f92672">.</span>_2
+  <span style="color:#f92672">}</span>
+  <span style="color:#66d9ef">implicit</span> <span style="color:#66d9ef">def</span> tuple3get1<span style="color:#f92672">[</span><span style="color:#66d9ef">A</span>, <span style="color:#66d9ef">B</span>, <span style="color:#66d9ef">C</span><span style="color:#f92672">]</span> <span style="color:#66d9ef">=</span> <span style="color:#66d9ef">new</span> <span style="color:#a6e22e">TupleGet</span><span style="color:#f92672">[(</span><span style="color:#66d9ef">A</span>, <span style="color:#66d9ef">B</span>, <span style="color:#66d9ef">C</span><span style="color:#f92672">)</span>, <span style="color:#66d9ef">A</span>, <span style="color:#66d9ef">_</span><span style="color:#960050;background-color:#1e0010">1</span><span style="color:#66d9ef">.</span><span style="color:#66d9ef">type</span><span style="color:#f92672">]</span> <span style="color:#f92672">{</span>
+    <span style="color:#66d9ef">def</span> get<span style="color:#f92672">(</span>t<span style="color:#66d9ef">:</span> <span style="color:#f92672">(</span><span style="color:#66d9ef">A</span><span style="color:#f92672">,</span> <span style="color:#66d9ef">B</span><span style="color:#f92672">,</span> C<span style="color:#f92672">))</span><span style="color:#66d9ef">:</span> <span style="color:#66d9ef">A</span> <span style="color:#f92672">=</span> t<span style="color:#f92672">.</span>_1
+  <span style="color:#f92672">}</span>
+  <span style="color:#66d9ef">implicit</span> <span style="color:#66d9ef">def</span> tuple3get2<span style="color:#f92672">[</span><span style="color:#66d9ef">A</span>, <span style="color:#66d9ef">B</span>, <span style="color:#66d9ef">C</span><span style="color:#f92672">]</span> <span style="color:#66d9ef">=</span> <span style="color:#66d9ef">new</span> <span style="color:#a6e22e">TupleGet</span><span style="color:#f92672">[(</span><span style="color:#66d9ef">A</span>, <span style="color:#66d9ef">B</span>, <span style="color:#66d9ef">C</span><span style="color:#f92672">)</span>, <span style="color:#66d9ef">B</span>, <span style="color:#66d9ef">_</span><span style="color:#960050;background-color:#1e0010">2</span><span style="color:#66d9ef">.</span><span style="color:#66d9ef">type</span><span style="color:#f92672">]</span> <span style="color:#f92672">{</span>
+    <span style="color:#66d9ef">def</span> get<span style="color:#f92672">(</span>t<span style="color:#66d9ef">:</span> <span style="color:#f92672">(</span><span style="color:#66d9ef">A</span><span style="color:#f92672">,</span> <span style="color:#66d9ef">B</span><span style="color:#f92672">,</span> C<span style="color:#f92672">))</span><span style="color:#66d9ef">:</span> <span style="color:#66d9ef">B</span> <span style="color:#f92672">=</span> t<span style="color:#f92672">.</span>_2
+  <span style="color:#f92672">}</span>
+  <span style="color:#66d9ef">implicit</span> <span style="color:#66d9ef">def</span> tuple3get3<span style="color:#f92672">[</span><span style="color:#66d9ef">A</span>, <span style="color:#66d9ef">B</span>, <span style="color:#66d9ef">C</span><span style="color:#f92672">]</span> <span style="color:#66d9ef">=</span> <span style="color:#66d9ef">new</span> <span style="color:#a6e22e">TupleGet</span><span style="color:#f92672">[(</span><span style="color:#66d9ef">A</span>, <span style="color:#66d9ef">B</span>, <span style="color:#66d9ef">C</span><span style="color:#f92672">)</span>, <span style="color:#66d9ef">C</span>, <span style="color:#66d9ef">_</span><span style="color:#960050;background-color:#1e0010">3</span><span style="color:#66d9ef">.</span><span style="color:#66d9ef">type</span><span style="color:#f92672">]</span> <span style="color:#f92672">{</span>
+    <span style="color:#66d9ef">def</span> get<span style="color:#f92672">(</span>t<span style="color:#66d9ef">:</span> <span style="color:#f92672">(</span><span style="color:#66d9ef">A</span><span style="color:#f92672">,</span> <span style="color:#66d9ef">B</span><span style="color:#f92672">,</span> C<span style="color:#f92672">))</span><span style="color:#66d9ef">:</span> <span style="color:#66d9ef">C</span> <span style="color:#f92672">=</span> t<span style="color:#f92672">.</span>_3
+  <span style="color:#f92672">}</span>
+  <span style="color:#75715e">// ...
+</span><span style="color:#75715e"></span><span style="color:#f92672">}</span>
 </code></pre></td></tr></table>
 </div>
 </div><p>If you haven&rsquo;t seen types like <code>_1.type</code> before: this is precisely the type of
 the value <code>_1</code>. Only its exact copies can inhabit it at any time.</p>
 <p>Now we can write the extension <code>apply</code> method that uses this mechanism.</p>
-<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2>
-<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">4
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
 </span></code></pre></td>
-<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-scala data-lang=scala><span style=color:#66d9ef>implicit</span> <span style=color:#66d9ef>class</span> <span style=color:#a6e22e>TupleAccessor</span><span style=color:#f92672>[</span><span style=color:#66d9ef>T</span><span style=color:#f92672>](</span>tuple<span style=color:#66d9ef>:</span> <span style=color:#66d9ef>T</span><span style=color:#f92672>)</span> <span style=color:#f92672>{</span>
-  <span style=color:#66d9ef>def</span> apply<span style=color:#f92672>[</span><span style=color:#66d9ef>A</span><span style=color:#f92672>](</span>i<span style=color:#66d9ef>:</span> <span style=color:#66d9ef>Integer</span><span style=color:#f92672>)(</span><span style=color:#66d9ef>implicit</span> getter<span style=color:#66d9ef>:</span> <span style=color:#66d9ef>TupleGet</span><span style=color:#f92672>[</span><span style=color:#66d9ef>T</span>, <span style=color:#66d9ef>A</span>, <span style=color:#66d9ef>i.</span><span style=color:#66d9ef>type</span><span style=color:#f92672>])</span><span style=color:#66d9ef>:</span> <span style=color:#66d9ef>A</span> <span style=color:#f92672>=</span>
-    getter<span style=color:#f92672>.</span>get<span style=color:#f92672>(</span>tuple<span style=color:#f92672>)</span>
-<span style=color:#f92672>}</span>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code class="language-scala" data-lang="scala"><span style="color:#66d9ef">implicit</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">TupleAccessor</span><span style="color:#f92672">[</span><span style="color:#66d9ef">T</span><span style="color:#f92672">](</span>tuple<span style="color:#66d9ef">:</span> <span style="color:#66d9ef">T</span><span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+  <span style="color:#66d9ef">def</span> apply<span style="color:#f92672">[</span><span style="color:#66d9ef">A</span><span style="color:#f92672">](</span>i<span style="color:#66d9ef">:</span> <span style="color:#66d9ef">Integer</span><span style="color:#f92672">)(</span><span style="color:#66d9ef">implicit</span> getter<span style="color:#66d9ef">:</span> <span style="color:#66d9ef">TupleGet</span><span style="color:#f92672">[</span><span style="color:#66d9ef">T</span>, <span style="color:#66d9ef">A</span>, <span style="color:#66d9ef">i.</span><span style="color:#66d9ef">type</span><span style="color:#f92672">])</span><span style="color:#66d9ef">:</span> <span style="color:#66d9ef">A</span> <span style="color:#f92672">=</span>
+    getter<span style="color:#f92672">.</span>get<span style="color:#f92672">(</span>tuple<span style="color:#f92672">)</span>
+<span style="color:#f92672">}</span>
 </code></pre></td></tr></table>
 </div>
 </div><p>And it will work. But you need to use <code>_1</code> instead of regular <code>1</code> to give the
 implicit resolution mechanism sufficient clues. Not pretty enough.</p>
-<h2 id=enter-nats>Enter Nats</h2>
+<h2 id="enter-nats">Enter Nats</h2>
 <p>To integrate deeper with the language we need to lift the integers into the
 type level somehow.</p>
 <p>Since I don&rsquo;t feel like writing 22 instances let&rsquo;s start off with unary
 encoding.</p>
-<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2>
-<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
 </span></code></pre></td>
-<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-scala data-lang=scala><span style=color:#66d9ef>sealed</span> <span style=color:#66d9ef>trait</span> <span style=color:#a6e22e>TNat</span>
-<span style=color:#66d9ef>class</span> <span style=color:#a6e22e>TZero</span> <span style=color:#66d9ef>extends</span> <span style=color:#a6e22e>TNat</span>
-<span style=color:#66d9ef>class</span> <span style=color:#a6e22e>TSucc</span><span style=color:#f92672>[</span><span style=color:#66d9ef>A</span> <span style=color:#66d9ef>&lt;:</span> <span style=color:#66d9ef>TNat</span><span style=color:#f92672>]</span> <span style=color:#a6e22e>extends</span> <span style=color:#a6e22e>TNat</span>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code class="language-scala" data-lang="scala"><span style="color:#66d9ef">sealed</span> <span style="color:#66d9ef">trait</span> <span style="color:#a6e22e">TNat</span>
+<span style="color:#66d9ef">class</span> <span style="color:#a6e22e">TZero</span> <span style="color:#66d9ef">extends</span> <span style="color:#a6e22e">TNat</span>
+<span style="color:#66d9ef">class</span> <span style="color:#a6e22e">TSucc</span><span style="color:#f92672">[</span><span style="color:#66d9ef">A</span> <span style="color:#66d9ef">&lt;:</span> <span style="color:#66d9ef">TNat</span><span style="color:#f92672">]</span> <span style="color:#a6e22e">extends</span> <span style="color:#a6e22e">TNat</span>
 </code></pre></td></tr></table>
 </div>
 </div><p>And a corresponding value level representation that also keeps the type around
 with an implicit conversion from integers so this is all auto-magical.</p>
-<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2>
-<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">11
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">12
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">13
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">14
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">15
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">16
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">17
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">18
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">19
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">20
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">21
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">22
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">19
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">20
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">21
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">22
 </span></code></pre></td>
-<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-scala data-lang=scala><span style=color:#66d9ef>sealed</span> <span style=color:#66d9ef>trait</span> <span style=color:#a6e22e>Nat</span> <span style=color:#f92672>{</span>
-  <span style=color:#66d9ef>type</span> <span style=color:#66d9ef>N</span> <span style=color:#66d9ef>&lt;:</span> <span style=color:#66d9ef>TNat</span>
-<span style=color:#f92672>}</span>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code class="language-scala" data-lang="scala"><span style="color:#66d9ef">sealed</span> <span style="color:#66d9ef">trait</span> <span style="color:#a6e22e">Nat</span> <span style="color:#f92672">{</span>
+  <span style="color:#66d9ef">type</span> <span style="color:#66d9ef">N</span> <span style="color:#66d9ef">&lt;:</span> <span style="color:#66d9ef">TNat</span>
+<span style="color:#f92672">}</span>
 
-<span style=color:#66d9ef>case</span> <span style=color:#66d9ef>object</span> <span style=color:#a6e22e>Zero</span> <span style=color:#66d9ef>extends</span> <span style=color:#a6e22e>Nat</span> <span style=color:#f92672>{</span>
-  <span style=color:#66d9ef>type</span> <span style=color:#66d9ef>N</span> <span style=color:#f92672>=</span> <span style=color:#a6e22e>TZero</span>
-<span style=color:#f92672>}</span>
+<span style="color:#66d9ef">case</span> <span style="color:#66d9ef">object</span> <span style="color:#a6e22e">Zero</span> <span style="color:#66d9ef">extends</span> <span style="color:#a6e22e">Nat</span> <span style="color:#f92672">{</span>
+  <span style="color:#66d9ef">type</span> <span style="color:#66d9ef">N</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">TZero</span>
+<span style="color:#f92672">}</span>
 
-<span style=color:#66d9ef>case</span> <span style=color:#66d9ef>class</span> <span style=color:#a6e22e>Succ</span><span style=color:#f92672>(</span>prev<span style=color:#66d9ef>:</span> <span style=color:#66d9ef>Nat</span><span style=color:#f92672>)</span> <span style=color:#66d9ef>extends</span> <span style=color:#a6e22e>Nat</span> <span style=color:#f92672>{</span>
-  <span style=color:#66d9ef>type</span> <span style=color:#66d9ef>N</span> <span style=color:#f92672>=</span> <span style=color:#a6e22e>TSucc</span><span style=color:#f92672>[</span><span style=color:#66d9ef>prev.N</span><span style=color:#f92672>]</span>
-<span style=color:#f92672>}</span>
+<span style="color:#66d9ef">case</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Succ</span><span style="color:#f92672">(</span>prev<span style="color:#66d9ef">:</span> <span style="color:#66d9ef">Nat</span><span style="color:#f92672">)</span> <span style="color:#66d9ef">extends</span> <span style="color:#a6e22e">Nat</span> <span style="color:#f92672">{</span>
+  <span style="color:#66d9ef">type</span> <span style="color:#66d9ef">N</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">TSucc</span><span style="color:#f92672">[</span><span style="color:#66d9ef">prev.N</span><span style="color:#f92672">]</span>
+<span style="color:#f92672">}</span>
 
-<span style=color:#66d9ef>object</span> <span style=color:#a6e22e>Nat</span> <span style=color:#f92672>{</span>
-  <span style=color:#66d9ef>implicit</span> <span style=color:#66d9ef>def</span> fromInt<span style=color:#f92672>(</span>n<span style=color:#66d9ef>:</span> <span style=color:#66d9ef>Int</span><span style=color:#f92672>)</span><span style=color:#66d9ef>:</span> <span style=color:#66d9ef>Nat</span> <span style=color:#f92672>=</span> <span style=color:#f92672>{</span>
-    assert<span style=color:#f92672>(</span>n <span style=color:#f92672>&gt;=</span> <span style=color:#ae81ff>0</span><span style=color:#f92672>)</span>
-    <span style=color:#66d9ef>if</span> <span style=color:#f92672>(</span>n <span style=color:#f92672>==</span> <span style=color:#ae81ff>0</span><span style=color:#f92672>)</span> <span style=color:#f92672>{</span>
-      <span style=color:#a6e22e>Zero</span>
-    <span style=color:#f92672>}</span> <span style=color:#66d9ef>else</span> <span style=color:#f92672>{</span>
-      <span style=color:#a6e22e>Succ</span><span style=color:#f92672>(</span>fromInt<span style=color:#f92672>(</span>n <span style=color:#f92672>-</span> <span style=color:#ae81ff>1</span><span style=color:#f92672>))</span>
-    <span style=color:#f92672>}</span>
-  <span style=color:#f92672>}</span>
-<span style=color:#f92672>}</span>
+<span style="color:#66d9ef">object</span> <span style="color:#a6e22e">Nat</span> <span style="color:#f92672">{</span>
+  <span style="color:#66d9ef">implicit</span> <span style="color:#66d9ef">def</span> fromInt<span style="color:#f92672">(</span>n<span style="color:#66d9ef">:</span> <span style="color:#66d9ef">Int</span><span style="color:#f92672">)</span><span style="color:#66d9ef">:</span> <span style="color:#66d9ef">Nat</span> <span style="color:#f92672">=</span> <span style="color:#f92672">{</span>
+    assert<span style="color:#f92672">(</span>n <span style="color:#f92672">&gt;=</span> <span style="color:#ae81ff">0</span><span style="color:#f92672">)</span>
+    <span style="color:#66d9ef">if</span> <span style="color:#f92672">(</span>n <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span><span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+      <span style="color:#a6e22e">Zero</span>
+    <span style="color:#f92672">}</span> <span style="color:#66d9ef">else</span> <span style="color:#f92672">{</span>
+      <span style="color:#a6e22e">Succ</span><span style="color:#f92672">(</span>fromInt<span style="color:#f92672">(</span>n <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span><span style="color:#f92672">))</span>
+    <span style="color:#f92672">}</span>
+  <span style="color:#f92672">}</span>
+<span style="color:#f92672">}</span>
 </code></pre></td></tr></table>
 </div>
 </div><p>The trick here is the type member that is defined to match the number itself.
@@ -230,153 +250,153 @@ rewrite the instances to use this.</p>
 <p>Except it doesn&rsquo;t work. This mechanism will generate the <code>Nats</code> but it&rsquo;s too
 weak - <code>N</code> will just be <code>n.N</code> and this is not enough information to power
 implicit resolution. If only there was a way to fully generate the types at
-compile time&mldr;</p>
-<h2 id=macros-to-the-rescue>Macros to the rescue</h2>
+compile time&hellip;</p>
+<h2 id="macros-to-the-rescue">Macros to the rescue</h2>
 <p>We can keep the <code>Nat</code> type and the implicit conversion into it but implement it
 as a macro that just generates <code>TNat</code>s directly (without recursion). This will
 give strong enough types to power implicit resolution.</p>
-<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2>
-<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">11
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">12
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">13
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">14
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
 </span></code></pre></td>
-<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-scala data-lang=scala><span style=color:#66d9ef>trait</span> <span style=color:#a6e22e>Nat</span> <span style=color:#f92672>{</span>
-  <span style=color:#66d9ef>type</span> <span style=color:#66d9ef>N</span> <span style=color:#66d9ef>&lt;:</span> <span style=color:#66d9ef>TNat</span>
-<span style=color:#f92672>}</span>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code class="language-scala" data-lang="scala"><span style="color:#66d9ef">trait</span> <span style="color:#a6e22e">Nat</span> <span style="color:#f92672">{</span>
+  <span style="color:#66d9ef">type</span> <span style="color:#66d9ef">N</span> <span style="color:#66d9ef">&lt;:</span> <span style="color:#66d9ef">TNat</span>
+<span style="color:#f92672">}</span>
 
-<span style=color:#66d9ef>object</span> <span style=color:#a6e22e>Nat</span> <span style=color:#f92672>{</span>
-  <span style=color:#66d9ef>def</span> fromIntImpl<span style=color:#f92672>(</span>c<span style=color:#66d9ef>:</span> <span style=color:#66d9ef>Context</span><span style=color:#f92672>)(</span>n<span style=color:#66d9ef>:</span> <span style=color:#66d9ef>c.Expr</span><span style=color:#f92672>[</span><span style=color:#66d9ef>Int</span><span style=color:#f92672>])</span><span style=color:#66d9ef>:</span> <span style=color:#66d9ef>c.Expr</span><span style=color:#f92672>[</span><span style=color:#66d9ef>Nat</span><span style=color:#f92672>]</span> <span style=color:#66d9ef>=</span> <span style=color:#f92672>{</span>
-    <span style=color:#66d9ef>import</span> c.universe._
-    <span style=color:#66d9ef>val</span> value <span style=color:#66d9ef>=</span> c<span style=color:#f92672>.</span>eval<span style=color:#f92672>(</span>n<span style=color:#f92672>)</span>
-    <span style=color:#66d9ef>val</span> type_ <span style=color:#66d9ef>=</span> <span style=color:#f92672>(</span><span style=color:#ae81ff>1</span> to value<span style=color:#f92672>).</span>foldLeft<span style=color:#f92672>(</span><span style=color:#e6db74>&#34;TZero&#34;</span><span style=color:#f92672>)(</span> <span style=color:#f92672>(</span>t<span style=color:#f92672>,</span> <span style=color:#66d9ef>_</span><span style=color:#f92672>)</span> <span style=color:#66d9ef>=&gt;</span> <span style=color:#e6db74>s&#34;TSucc[</span><span style=color:#e6db74>$t</span><span style=color:#e6db74>]&#34;</span><span style=color:#f92672>)</span>
-    c<span style=color:#f92672>.</span><span style=color:#a6e22e>Expr</span><span style=color:#f92672>[</span><span style=color:#66d9ef>Nat</span><span style=color:#f92672>](</span>c<span style=color:#f92672>.</span>parse<span style=color:#f92672>(</span><span style=color:#e6db74>s&#34;new Nat { type N = </span><span style=color:#e6db74>$type_</span><span style=color:#e6db74> }&#34;</span><span style=color:#f92672>))</span>
-  <span style=color:#f92672>}</span>
+<span style="color:#66d9ef">object</span> <span style="color:#a6e22e">Nat</span> <span style="color:#f92672">{</span>
+  <span style="color:#66d9ef">def</span> fromIntImpl<span style="color:#f92672">(</span>c<span style="color:#66d9ef">:</span> <span style="color:#66d9ef">Context</span><span style="color:#f92672">)(</span>n<span style="color:#66d9ef">:</span> <span style="color:#66d9ef">c.Expr</span><span style="color:#f92672">[</span><span style="color:#66d9ef">Int</span><span style="color:#f92672">])</span><span style="color:#66d9ef">:</span> <span style="color:#66d9ef">c.Expr</span><span style="color:#f92672">[</span><span style="color:#66d9ef">Nat</span><span style="color:#f92672">]</span> <span style="color:#66d9ef">=</span> <span style="color:#f92672">{</span>
+    <span style="color:#66d9ef">import</span> c.universe._
+    <span style="color:#66d9ef">val</span> value <span style="color:#66d9ef">=</span> c<span style="color:#f92672">.</span>eval<span style="color:#f92672">(</span>n<span style="color:#f92672">)</span>
+    <span style="color:#66d9ef">val</span> type_ <span style="color:#66d9ef">=</span> <span style="color:#f92672">(</span><span style="color:#ae81ff">1</span> to value<span style="color:#f92672">).</span>foldLeft<span style="color:#f92672">(</span><span style="color:#e6db74">&#34;TZero&#34;</span><span style="color:#f92672">)(</span> <span style="color:#f92672">(</span>t<span style="color:#f92672">,</span> <span style="color:#66d9ef">_</span><span style="color:#f92672">)</span> <span style="color:#66d9ef">=&gt;</span> <span style="color:#e6db74">s&#34;TSucc[</span><span style="color:#e6db74">$t</span><span style="color:#e6db74">]&#34;</span><span style="color:#f92672">)</span>
+    c<span style="color:#f92672">.</span><span style="color:#a6e22e">Expr</span><span style="color:#f92672">[</span><span style="color:#66d9ef">Nat</span><span style="color:#f92672">](</span>c<span style="color:#f92672">.</span>parse<span style="color:#f92672">(</span><span style="color:#e6db74">s&#34;new Nat { type N = </span><span style="color:#e6db74">$type_</span><span style="color:#e6db74"> }&#34;</span><span style="color:#f92672">))</span>
+  <span style="color:#f92672">}</span>
 
-  <span style=color:#66d9ef>implicit</span> <span style=color:#66d9ef>def</span> fromInt<span style=color:#f92672>(</span>n<span style=color:#66d9ef>:</span> <span style=color:#66d9ef>Int</span><span style=color:#f92672>)</span><span style=color:#66d9ef>:</span> <span style=color:#66d9ef>Nat</span> <span style=color:#f92672>=</span> macro fromIntImpl
-<span style=color:#f92672>}</span>
+  <span style="color:#66d9ef">implicit</span> <span style="color:#66d9ef">def</span> fromInt<span style="color:#f92672">(</span>n<span style="color:#66d9ef">:</span> <span style="color:#66d9ef">Int</span><span style="color:#f92672">)</span><span style="color:#66d9ef">:</span> <span style="color:#66d9ef">Nat</span> <span style="color:#f92672">=</span> macro fromIntImpl
+<span style="color:#f92672">}</span>
 </code></pre></td></tr></table>
 </div>
 </div><p>Now we can rewrite the instances.</p>
-<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2>
-<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">11
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">12
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">13
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">14
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">15
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">16
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">17
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">18
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">19
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">20
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">19
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">20
 </span></code></pre></td>
-<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-scala data-lang=scala><span style=color:#66d9ef>trait</span> <span style=color:#a6e22e>At</span><span style=color:#f92672>[</span><span style=color:#66d9ef>T</span>, <span style=color:#66d9ef>A</span>, <span style=color:#66d9ef>N</span> <span style=color:#66d9ef>&lt;:</span> <span style=color:#66d9ef>TNat</span><span style=color:#f92672>]</span> <span style=color:#f92672>{</span>
-  <span style=color:#66d9ef>def</span> apply<span style=color:#f92672>(</span>t<span style=color:#66d9ef>:</span> <span style=color:#66d9ef>T</span><span style=color:#f92672>)</span><span style=color:#66d9ef>:</span> <span style=color:#66d9ef>A</span>
-<span style=color:#f92672>}</span>
-<span style=color:#66d9ef>object</span> <span style=color:#a6e22e>At</span> <span style=color:#f92672>{</span>
-  <span style=color:#66d9ef>implicit</span> <span style=color:#66d9ef>def</span> tuple2_at0<span style=color:#f92672>[</span><span style=color:#66d9ef>A</span>, <span style=color:#66d9ef>B</span><span style=color:#f92672>]</span> <span style=color:#66d9ef>=</span> <span style=color:#66d9ef>new</span> <span style=color:#a6e22e>At</span><span style=color:#f92672>[(</span><span style=color:#66d9ef>A</span>, <span style=color:#66d9ef>B</span><span style=color:#f92672>)</span>, <span style=color:#66d9ef>A</span>, <span style=color:#66d9ef>TZero</span><span style=color:#f92672>]</span> <span style=color:#f92672>{</span>
-    <span style=color:#66d9ef>def</span> apply<span style=color:#f92672>(</span>t<span style=color:#66d9ef>:</span> <span style=color:#f92672>(</span><span style=color:#66d9ef>A</span><span style=color:#f92672>,</span> <span style=color:#66d9ef>B</span><span style=color:#f92672>))</span><span style=color:#66d9ef>:</span> <span style=color:#66d9ef>A</span> <span style=color:#f92672>=</span> t<span style=color:#f92672>.</span>_1
-  <span style=color:#f92672>}</span>
-  <span style=color:#66d9ef>implicit</span> <span style=color:#66d9ef>def</span> tuple2_at1<span style=color:#f92672>[</span><span style=color:#66d9ef>A</span>, <span style=color:#66d9ef>B</span><span style=color:#f92672>]</span> <span style=color:#66d9ef>=</span> <span style=color:#66d9ef>new</span> <span style=color:#a6e22e>At</span><span style=color:#f92672>[(</span><span style=color:#66d9ef>A</span>, <span style=color:#66d9ef>B</span><span style=color:#f92672>)</span>, <span style=color:#66d9ef>B</span>, <span style=color:#66d9ef>TSucc</span><span style=color:#f92672>[</span><span style=color:#66d9ef>TZero</span><span style=color:#f92672>]]</span> <span style=color:#f92672>{</span>
-    <span style=color:#66d9ef>def</span> apply<span style=color:#f92672>(</span>t<span style=color:#66d9ef>:</span> <span style=color:#f92672>(</span><span style=color:#66d9ef>A</span><span style=color:#f92672>,</span> <span style=color:#66d9ef>B</span><span style=color:#f92672>))</span><span style=color:#66d9ef>:</span> <span style=color:#66d9ef>B</span> <span style=color:#f92672>=</span> t<span style=color:#f92672>.</span>_2
-  <span style=color:#f92672>}</span>
-  <span style=color:#66d9ef>implicit</span> <span style=color:#66d9ef>def</span> tuple3_at0<span style=color:#f92672>[</span><span style=color:#66d9ef>A</span>, <span style=color:#66d9ef>B</span>, <span style=color:#66d9ef>C</span><span style=color:#f92672>]</span> <span style=color:#66d9ef>=</span> <span style=color:#66d9ef>new</span> <span style=color:#a6e22e>At</span><span style=color:#f92672>[(</span><span style=color:#66d9ef>A</span>, <span style=color:#66d9ef>B</span>, <span style=color:#66d9ef>C</span><span style=color:#f92672>)</span>, <span style=color:#66d9ef>A</span>, <span style=color:#66d9ef>TZero</span><span style=color:#f92672>]</span> <span style=color:#f92672>{</span>
-    <span style=color:#66d9ef>def</span> apply<span style=color:#f92672>(</span>t<span style=color:#66d9ef>:</span> <span style=color:#f92672>(</span><span style=color:#66d9ef>A</span><span style=color:#f92672>,</span> <span style=color:#66d9ef>B</span><span style=color:#f92672>,</span> C<span style=color:#f92672>))</span><span style=color:#66d9ef>:</span> <span style=color:#66d9ef>A</span> <span style=color:#f92672>=</span> t<span style=color:#f92672>.</span>_1
-  <span style=color:#f92672>}</span>
-  <span style=color:#66d9ef>implicit</span> <span style=color:#66d9ef>def</span> tuple3_at1<span style=color:#f92672>[</span><span style=color:#66d9ef>A</span>, <span style=color:#66d9ef>B</span>, <span style=color:#66d9ef>C</span><span style=color:#f92672>]</span> <span style=color:#66d9ef>=</span> <span style=color:#66d9ef>new</span> <span style=color:#a6e22e>At</span><span style=color:#f92672>[(</span><span style=color:#66d9ef>A</span>, <span style=color:#66d9ef>B</span>, <span style=color:#66d9ef>C</span><span style=color:#f92672>)</span>, <span style=color:#66d9ef>B</span>, <span style=color:#66d9ef>TSucc</span><span style=color:#f92672>[</span><span style=color:#66d9ef>TZero</span><span style=color:#f92672>]]</span> <span style=color:#f92672>{</span>
-    <span style=color:#66d9ef>def</span> apply<span style=color:#f92672>(</span>t<span style=color:#66d9ef>:</span> <span style=color:#f92672>(</span><span style=color:#66d9ef>A</span><span style=color:#f92672>,</span> <span style=color:#66d9ef>B</span><span style=color:#f92672>,</span> C<span style=color:#f92672>))</span><span style=color:#66d9ef>:</span> <span style=color:#66d9ef>B</span> <span style=color:#f92672>=</span> t<span style=color:#f92672>.</span>_2
-  <span style=color:#f92672>}</span>
-  <span style=color:#66d9ef>implicit</span> <span style=color:#66d9ef>def</span> tuple3_at2<span style=color:#f92672>[</span><span style=color:#66d9ef>A</span>, <span style=color:#66d9ef>B</span>, <span style=color:#66d9ef>C</span><span style=color:#f92672>]</span> <span style=color:#66d9ef>=</span> <span style=color:#66d9ef>new</span> <span style=color:#a6e22e>At</span><span style=color:#f92672>[(</span><span style=color:#66d9ef>A</span>, <span style=color:#66d9ef>B</span>, <span style=color:#66d9ef>C</span><span style=color:#f92672>)</span>, <span style=color:#66d9ef>C</span>, <span style=color:#66d9ef>TSucc</span><span style=color:#f92672>[</span><span style=color:#66d9ef>TSucc</span><span style=color:#f92672>[</span><span style=color:#66d9ef>TZero</span><span style=color:#f92672>]]]</span> <span style=color:#f92672>{</span>
-    <span style=color:#66d9ef>def</span> apply<span style=color:#f92672>(</span>t<span style=color:#66d9ef>:</span> <span style=color:#f92672>(</span><span style=color:#66d9ef>A</span><span style=color:#f92672>,</span> <span style=color:#66d9ef>B</span><span style=color:#f92672>,</span> C<span style=color:#f92672>))</span><span style=color:#66d9ef>:</span> <span style=color:#66d9ef>C</span> <span style=color:#f92672>=</span> t<span style=color:#f92672>.</span>_3
-  <span style=color:#f92672>}</span>
-<span style=color:#f92672>}</span>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code class="language-scala" data-lang="scala"><span style="color:#66d9ef">trait</span> <span style="color:#a6e22e">At</span><span style="color:#f92672">[</span><span style="color:#66d9ef">T</span>, <span style="color:#66d9ef">A</span>, <span style="color:#66d9ef">N</span> <span style="color:#66d9ef">&lt;:</span> <span style="color:#66d9ef">TNat</span><span style="color:#f92672">]</span> <span style="color:#f92672">{</span>
+  <span style="color:#66d9ef">def</span> apply<span style="color:#f92672">(</span>t<span style="color:#66d9ef">:</span> <span style="color:#66d9ef">T</span><span style="color:#f92672">)</span><span style="color:#66d9ef">:</span> <span style="color:#66d9ef">A</span>
+<span style="color:#f92672">}</span>
+<span style="color:#66d9ef">object</span> <span style="color:#a6e22e">At</span> <span style="color:#f92672">{</span>
+  <span style="color:#66d9ef">implicit</span> <span style="color:#66d9ef">def</span> tuple2_at0<span style="color:#f92672">[</span><span style="color:#66d9ef">A</span>, <span style="color:#66d9ef">B</span><span style="color:#f92672">]</span> <span style="color:#66d9ef">=</span> <span style="color:#66d9ef">new</span> <span style="color:#a6e22e">At</span><span style="color:#f92672">[(</span><span style="color:#66d9ef">A</span>, <span style="color:#66d9ef">B</span><span style="color:#f92672">)</span>, <span style="color:#66d9ef">A</span>, <span style="color:#66d9ef">TZero</span><span style="color:#f92672">]</span> <span style="color:#f92672">{</span>
+    <span style="color:#66d9ef">def</span> apply<span style="color:#f92672">(</span>t<span style="color:#66d9ef">:</span> <span style="color:#f92672">(</span><span style="color:#66d9ef">A</span><span style="color:#f92672">,</span> <span style="color:#66d9ef">B</span><span style="color:#f92672">))</span><span style="color:#66d9ef">:</span> <span style="color:#66d9ef">A</span> <span style="color:#f92672">=</span> t<span style="color:#f92672">.</span>_1
+  <span style="color:#f92672">}</span>
+  <span style="color:#66d9ef">implicit</span> <span style="color:#66d9ef">def</span> tuple2_at1<span style="color:#f92672">[</span><span style="color:#66d9ef">A</span>, <span style="color:#66d9ef">B</span><span style="color:#f92672">]</span> <span style="color:#66d9ef">=</span> <span style="color:#66d9ef">new</span> <span style="color:#a6e22e">At</span><span style="color:#f92672">[(</span><span style="color:#66d9ef">A</span>, <span style="color:#66d9ef">B</span><span style="color:#f92672">)</span>, <span style="color:#66d9ef">B</span>, <span style="color:#66d9ef">TSucc</span><span style="color:#f92672">[</span><span style="color:#66d9ef">TZero</span><span style="color:#f92672">]]</span> <span style="color:#f92672">{</span>
+    <span style="color:#66d9ef">def</span> apply<span style="color:#f92672">(</span>t<span style="color:#66d9ef">:</span> <span style="color:#f92672">(</span><span style="color:#66d9ef">A</span><span style="color:#f92672">,</span> <span style="color:#66d9ef">B</span><span style="color:#f92672">))</span><span style="color:#66d9ef">:</span> <span style="color:#66d9ef">B</span> <span style="color:#f92672">=</span> t<span style="color:#f92672">.</span>_2
+  <span style="color:#f92672">}</span>
+  <span style="color:#66d9ef">implicit</span> <span style="color:#66d9ef">def</span> tuple3_at0<span style="color:#f92672">[</span><span style="color:#66d9ef">A</span>, <span style="color:#66d9ef">B</span>, <span style="color:#66d9ef">C</span><span style="color:#f92672">]</span> <span style="color:#66d9ef">=</span> <span style="color:#66d9ef">new</span> <span style="color:#a6e22e">At</span><span style="color:#f92672">[(</span><span style="color:#66d9ef">A</span>, <span style="color:#66d9ef">B</span>, <span style="color:#66d9ef">C</span><span style="color:#f92672">)</span>, <span style="color:#66d9ef">A</span>, <span style="color:#66d9ef">TZero</span><span style="color:#f92672">]</span> <span style="color:#f92672">{</span>
+    <span style="color:#66d9ef">def</span> apply<span style="color:#f92672">(</span>t<span style="color:#66d9ef">:</span> <span style="color:#f92672">(</span><span style="color:#66d9ef">A</span><span style="color:#f92672">,</span> <span style="color:#66d9ef">B</span><span style="color:#f92672">,</span> C<span style="color:#f92672">))</span><span style="color:#66d9ef">:</span> <span style="color:#66d9ef">A</span> <span style="color:#f92672">=</span> t<span style="color:#f92672">.</span>_1
+  <span style="color:#f92672">}</span>
+  <span style="color:#66d9ef">implicit</span> <span style="color:#66d9ef">def</span> tuple3_at1<span style="color:#f92672">[</span><span style="color:#66d9ef">A</span>, <span style="color:#66d9ef">B</span>, <span style="color:#66d9ef">C</span><span style="color:#f92672">]</span> <span style="color:#66d9ef">=</span> <span style="color:#66d9ef">new</span> <span style="color:#a6e22e">At</span><span style="color:#f92672">[(</span><span style="color:#66d9ef">A</span>, <span style="color:#66d9ef">B</span>, <span style="color:#66d9ef">C</span><span style="color:#f92672">)</span>, <span style="color:#66d9ef">B</span>, <span style="color:#66d9ef">TSucc</span><span style="color:#f92672">[</span><span style="color:#66d9ef">TZero</span><span style="color:#f92672">]]</span> <span style="color:#f92672">{</span>
+    <span style="color:#66d9ef">def</span> apply<span style="color:#f92672">(</span>t<span style="color:#66d9ef">:</span> <span style="color:#f92672">(</span><span style="color:#66d9ef">A</span><span style="color:#f92672">,</span> <span style="color:#66d9ef">B</span><span style="color:#f92672">,</span> C<span style="color:#f92672">))</span><span style="color:#66d9ef">:</span> <span style="color:#66d9ef">B</span> <span style="color:#f92672">=</span> t<span style="color:#f92672">.</span>_2
+  <span style="color:#f92672">}</span>
+  <span style="color:#66d9ef">implicit</span> <span style="color:#66d9ef">def</span> tuple3_at2<span style="color:#f92672">[</span><span style="color:#66d9ef">A</span>, <span style="color:#66d9ef">B</span>, <span style="color:#66d9ef">C</span><span style="color:#f92672">]</span> <span style="color:#66d9ef">=</span> <span style="color:#66d9ef">new</span> <span style="color:#a6e22e">At</span><span style="color:#f92672">[(</span><span style="color:#66d9ef">A</span>, <span style="color:#66d9ef">B</span>, <span style="color:#66d9ef">C</span><span style="color:#f92672">)</span>, <span style="color:#66d9ef">C</span>, <span style="color:#66d9ef">TSucc</span><span style="color:#f92672">[</span><span style="color:#66d9ef">TSucc</span><span style="color:#f92672">[</span><span style="color:#66d9ef">TZero</span><span style="color:#f92672">]]]</span> <span style="color:#f92672">{</span>
+    <span style="color:#66d9ef">def</span> apply<span style="color:#f92672">(</span>t<span style="color:#66d9ef">:</span> <span style="color:#f92672">(</span><span style="color:#66d9ef">A</span><span style="color:#f92672">,</span> <span style="color:#66d9ef">B</span><span style="color:#f92672">,</span> C<span style="color:#f92672">))</span><span style="color:#66d9ef">:</span> <span style="color:#66d9ef">C</span> <span style="color:#f92672">=</span> t<span style="color:#f92672">.</span>_3
+  <span style="color:#f92672">}</span>
+<span style="color:#f92672">}</span>
 </code></pre></td></tr></table>
 </div>
 </div><p>And it works!</p>
-<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2>
-<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">11
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">12
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">13
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
 </span></code></pre></td>
-<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-scala data-lang=scala><span style=color:#66d9ef>object</span> <span style=color:#a6e22e>App</span> <span style=color:#f92672>{</span>
-  <span style=color:#66d9ef>implicit</span> <span style=color:#66d9ef>class</span> <span style=color:#a6e22e>TupleGet</span><span style=color:#f92672>[</span><span style=color:#66d9ef>T</span><span style=color:#f92672>](</span>t<span style=color:#66d9ef>:</span> <span style=color:#66d9ef>T</span><span style=color:#f92672>)</span> <span style=color:#f92672>{</span>
-    <span style=color:#66d9ef>def</span> apply<span style=color:#f92672>[</span><span style=color:#66d9ef>A</span><span style=color:#f92672>](</span>n<span style=color:#66d9ef>:</span> <span style=color:#66d9ef>Nat</span><span style=color:#f92672>)(</span><span style=color:#66d9ef>implicit</span> at<span style=color:#66d9ef>:</span> <span style=color:#66d9ef>At</span><span style=color:#f92672>[</span><span style=color:#66d9ef>T</span>, <span style=color:#66d9ef>A</span>, <span style=color:#66d9ef>n.N</span><span style=color:#f92672>])</span><span style=color:#66d9ef>:</span> <span style=color:#66d9ef>A</span> <span style=color:#f92672>=</span> at<span style=color:#f92672>(</span>t<span style=color:#f92672>)</span>
-  <span style=color:#f92672>}</span>
-  <span style=color:#66d9ef>def</span> main<span style=color:#f92672>(</span>args<span style=color:#66d9ef>:</span> <span style=color:#66d9ef>Array</span><span style=color:#f92672>[</span><span style=color:#66d9ef>String</span><span style=color:#f92672>])</span> <span style=color:#f92672>{</span>
-      <span style=color:#66d9ef>val</span> t1 <span style=color:#66d9ef>=</span> <span style=color:#f92672>(</span><span style=color:#e6db74>&#34;1&#34;</span><span style=color:#f92672>,</span> <span style=color:#ae81ff>123</span><span style=color:#f92672>)</span>
-      <span style=color:#66d9ef>val</span> t2 <span style=color:#66d9ef>=</span> <span style=color:#f92672>(</span><span style=color:#66d9ef>false</span><span style=color:#f92672>,</span> <span style=color:#ae81ff>1234</span><span style=color:#f92672>,</span> <span style=color:#e6db74>&#34;foobar&#34;</span><span style=color:#f92672>)</span>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code class="language-scala" data-lang="scala"><span style="color:#66d9ef">object</span> <span style="color:#a6e22e">App</span> <span style="color:#f92672">{</span>
+  <span style="color:#66d9ef">implicit</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">TupleGet</span><span style="color:#f92672">[</span><span style="color:#66d9ef">T</span><span style="color:#f92672">](</span>t<span style="color:#66d9ef">:</span> <span style="color:#66d9ef">T</span><span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+    <span style="color:#66d9ef">def</span> apply<span style="color:#f92672">[</span><span style="color:#66d9ef">A</span><span style="color:#f92672">](</span>n<span style="color:#66d9ef">:</span> <span style="color:#66d9ef">Nat</span><span style="color:#f92672">)(</span><span style="color:#66d9ef">implicit</span> at<span style="color:#66d9ef">:</span> <span style="color:#66d9ef">At</span><span style="color:#f92672">[</span><span style="color:#66d9ef">T</span>, <span style="color:#66d9ef">A</span>, <span style="color:#66d9ef">n.N</span><span style="color:#f92672">])</span><span style="color:#66d9ef">:</span> <span style="color:#66d9ef">A</span> <span style="color:#f92672">=</span> at<span style="color:#f92672">(</span>t<span style="color:#f92672">)</span>
+  <span style="color:#f92672">}</span>
+  <span style="color:#66d9ef">def</span> main<span style="color:#f92672">(</span>args<span style="color:#66d9ef">:</span> <span style="color:#66d9ef">Array</span><span style="color:#f92672">[</span><span style="color:#66d9ef">String</span><span style="color:#f92672">])</span> <span style="color:#f92672">{</span>
+      <span style="color:#66d9ef">val</span> t1 <span style="color:#66d9ef">=</span> <span style="color:#f92672">(</span><span style="color:#e6db74">&#34;1&#34;</span><span style="color:#f92672">,</span> <span style="color:#ae81ff">123</span><span style="color:#f92672">)</span>
+      <span style="color:#66d9ef">val</span> t2 <span style="color:#66d9ef">=</span> <span style="color:#f92672">(</span><span style="color:#66d9ef">false</span><span style="color:#f92672">,</span> <span style="color:#ae81ff">1234</span><span style="color:#f92672">,</span> <span style="color:#e6db74">&#34;foobar&#34;</span><span style="color:#f92672">)</span>
 
-      println<span style=color:#f92672>(</span>t1<span style=color:#f92672>(</span><span style=color:#ae81ff>0</span><span style=color:#f92672>))</span>
-      println<span style=color:#f92672>(</span>t2<span style=color:#f92672>(</span><span style=color:#ae81ff>1</span><span style=color:#f92672>))</span>
-      println<span style=color:#f92672>(</span>t2<span style=color:#f92672>(</span><span style=color:#ae81ff>2</span><span style=color:#f92672>))</span>
-  <span style=color:#f92672>}</span>
-<span style=color:#f92672>}</span>
+      println<span style="color:#f92672">(</span>t1<span style="color:#f92672">(</span><span style="color:#ae81ff">0</span><span style="color:#f92672">))</span>
+      println<span style="color:#f92672">(</span>t2<span style="color:#f92672">(</span><span style="color:#ae81ff">1</span><span style="color:#f92672">))</span>
+      println<span style="color:#f92672">(</span>t2<span style="color:#f92672">(</span><span style="color:#ae81ff">2</span><span style="color:#f92672">))</span>
+  <span style="color:#f92672">}</span>
+<span style="color:#f92672">}</span>
 </code></pre></td></tr></table>
 </div>
-</div><h2 id=simplifying>Simplifying</h2>
+</div><h2 id="simplifying">Simplifying</h2>
 <p>Since we already have a macro sitting in there why not have it do all the heavy
 lifting? We can cut bulk of the code and remove a lot of the complexity of the
 implicits if we just use a macro that transforms <code>a.apply(n)</code> into <code>a._${n + 1}</code>.</p>
-<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2>
-<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
 </span></code></pre></td>
-<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-scala data-lang=scala><span style=color:#66d9ef>def</span> tupleApplyImpl<span style=color:#f92672>(</span>c<span style=color:#66d9ef>:</span> <span style=color:#66d9ef>Context</span><span style=color:#f92672>)(</span>n<span style=color:#66d9ef>:</span> <span style=color:#66d9ef>c.Tree</span><span style=color:#f92672>)</span><span style=color:#66d9ef>:</span> <span style=color:#66d9ef>c.Tree</span> <span style=color:#f92672>=</span> <span style=color:#f92672>{</span>
-  <span style=color:#66d9ef>import</span> c.universe._
-  <span style=color:#66d9ef>val</span> value <span style=color:#66d9ef>=</span> c<span style=color:#f92672>.</span>eval<span style=color:#f92672>(</span>c<span style=color:#f92672>.</span><span style=color:#a6e22e>Expr</span><span style=color:#f92672>[</span><span style=color:#66d9ef>Int</span><span style=color:#f92672>](</span>n<span style=color:#f92672>))</span>
-  <span style=color:#66d9ef>val</span> q<span style=color:#e6db74>&#34;$_($tuple)&#34;</span> <span style=color:#66d9ef>=</span> c<span style=color:#f92672>.</span>prefix<span style=color:#f92672>.</span>tree
-  c<span style=color:#f92672>.</span>parse<span style=color:#f92672>(</span><span style=color:#e6db74>s&#34;</span><span style=color:#e6db74>${</span>tuple<span style=color:#f92672>.</span>toString<span style=color:#e6db74>}</span><span style=color:#e6db74>._</span><span style=color:#e6db74>${</span>value <span style=color:#f92672>+</span> <span style=color:#ae81ff>1</span><span style=color:#e6db74>}</span><span style=color:#e6db74>&#34;</span><span style=color:#f92672>)</span>
-<span style=color:#f92672>}</span>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code class="language-scala" data-lang="scala"><span style="color:#66d9ef">def</span> tupleApplyImpl<span style="color:#f92672">(</span>c<span style="color:#66d9ef">:</span> <span style="color:#66d9ef">Context</span><span style="color:#f92672">)(</span>n<span style="color:#66d9ef">:</span> <span style="color:#66d9ef">c.Tree</span><span style="color:#f92672">)</span><span style="color:#66d9ef">:</span> <span style="color:#66d9ef">c.Tree</span> <span style="color:#f92672">=</span> <span style="color:#f92672">{</span>
+  <span style="color:#66d9ef">import</span> c.universe._
+  <span style="color:#66d9ef">val</span> value <span style="color:#66d9ef">=</span> c<span style="color:#f92672">.</span>eval<span style="color:#f92672">(</span>c<span style="color:#f92672">.</span><span style="color:#a6e22e">Expr</span><span style="color:#f92672">[</span><span style="color:#66d9ef">Int</span><span style="color:#f92672">](</span>n<span style="color:#f92672">))</span>
+  <span style="color:#66d9ef">val</span> q<span style="color:#e6db74">&#34;$_($tuple)&#34;</span> <span style="color:#66d9ef">=</span> c<span style="color:#f92672">.</span>prefix<span style="color:#f92672">.</span>tree
+  c<span style="color:#f92672">.</span>parse<span style="color:#f92672">(</span><span style="color:#e6db74">s&#34;</span><span style="color:#e6db74">${</span>tuple<span style="color:#f92672">.</span>toString<span style="color:#e6db74">}</span><span style="color:#e6db74">._</span><span style="color:#e6db74">${</span>value <span style="color:#f92672">+</span> <span style="color:#ae81ff">1</span><span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span><span style="color:#f92672">)</span>
+<span style="color:#f92672">}</span>
 
-<span style=color:#66d9ef>implicit</span> <span style=color:#66d9ef>class</span> <span style=color:#a6e22e>TupleOps</span><span style=color:#f92672>[</span><span style=color:#66d9ef>T</span><span style=color:#f92672>](</span>tuple<span style=color:#66d9ef>:</span> <span style=color:#66d9ef>T</span><span style=color:#f92672>)</span> <span style=color:#f92672>{</span>
-  <span style=color:#66d9ef>def</span> apply<span style=color:#f92672>(</span>n<span style=color:#66d9ef>:</span> <span style=color:#66d9ef>Int</span><span style=color:#f92672>)</span><span style=color:#66d9ef>:</span> <span style=color:#66d9ef>Any</span> <span style=color:#f92672>=</span> macro tupleApplyImpl
-<span style=color:#f92672>}</span>
+<span style="color:#66d9ef">implicit</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">TupleOps</span><span style="color:#f92672">[</span><span style="color:#66d9ef">T</span><span style="color:#f92672">](</span>tuple<span style="color:#66d9ef">:</span> <span style="color:#66d9ef">T</span><span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+  <span style="color:#66d9ef">def</span> apply<span style="color:#f92672">(</span>n<span style="color:#66d9ef">:</span> <span style="color:#66d9ef">Int</span><span style="color:#f92672">)</span><span style="color:#66d9ef">:</span> <span style="color:#66d9ef">Any</span> <span style="color:#f92672">=</span> macro tupleApplyImpl
+<span style="color:#f92672">}</span>
 </code></pre></td></tr></table>
 </div>
 </div><p>This works but I think it&rsquo;s not the best idea. See, macros don&rsquo;t compose. You
@@ -388,44 +408,51 @@ out. This way you can re-use the indexing mechanism for other operations and
 you just have a single macro sitting in the background powering things instead
 of having a bunch of one-offs.</p>
 <p>In fact this is exactly what
-<a href=https://github.com/milessabin/shapeless/wiki>shapeless</a> already does! It uses
+<a href="https://github.com/milessabin/shapeless/wiki">shapeless</a> already does! It uses
 very similar ideas and pushes them much further. But most importantly, it
 already includes our <code>apply</code> so if you actually want to do this just import
 shapeless.</p>
-<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2>
-<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">4
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">5
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">6
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">7
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">8
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">8
 </span></code></pre></td>
-<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-scala data-lang=scala><span style=color:#66d9ef>import</span> shapeless.syntax.std.tuple._
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code class="language-scala" data-lang="scala"><span style="color:#66d9ef">import</span> shapeless.syntax.std.tuple._
 
-<span style=color:#66d9ef>val</span> t1 <span style=color:#66d9ef>=</span> <span style=color:#f92672>(</span><span style=color:#e6db74>&#34;1&#34;</span><span style=color:#f92672>,</span> <span style=color:#ae81ff>123</span><span style=color:#f92672>)</span>
-<span style=color:#66d9ef>val</span> t2 <span style=color:#66d9ef>=</span> <span style=color:#f92672>(</span><span style=color:#66d9ef>false</span><span style=color:#f92672>,</span> <span style=color:#ae81ff>1234</span><span style=color:#f92672>,</span> <span style=color:#e6db74>&#34;foobar&#34;</span><span style=color:#f92672>)</span>
+<span style="color:#66d9ef">val</span> t1 <span style="color:#66d9ef">=</span> <span style="color:#f92672">(</span><span style="color:#e6db74">&#34;1&#34;</span><span style="color:#f92672">,</span> <span style="color:#ae81ff">123</span><span style="color:#f92672">)</span>
+<span style="color:#66d9ef">val</span> t2 <span style="color:#66d9ef">=</span> <span style="color:#f92672">(</span><span style="color:#66d9ef">false</span><span style="color:#f92672">,</span> <span style="color:#ae81ff">1234</span><span style="color:#f92672">,</span> <span style="color:#e6db74">&#34;foobar&#34;</span><span style="color:#f92672">)</span>
 
-println<span style=color:#f92672>(</span>t1<span style=color:#f92672>.</span>apply<span style=color:#f92672>(</span><span style=color:#ae81ff>0</span><span style=color:#f92672>))</span>
-println<span style=color:#f92672>(</span>t2<span style=color:#f92672>.</span>apply<span style=color:#f92672>(</span><span style=color:#ae81ff>1</span><span style=color:#f92672>))</span>
-println<span style=color:#f92672>(</span>t2<span style=color:#f92672>.</span>apply<span style=color:#f92672>(</span><span style=color:#ae81ff>2</span><span style=color:#f92672>))</span>
+println<span style="color:#f92672">(</span>t1<span style="color:#f92672">.</span>apply<span style="color:#f92672">(</span><span style="color:#ae81ff">0</span><span style="color:#f92672">))</span>
+println<span style="color:#f92672">(</span>t2<span style="color:#f92672">.</span>apply<span style="color:#f92672">(</span><span style="color:#ae81ff">1</span><span style="color:#f92672">))</span>
+println<span style="color:#f92672">(</span>t2<span style="color:#f92672">.</span>apply<span style="color:#f92672">(</span><span style="color:#ae81ff">2</span><span style="color:#f92672">))</span>
 </code></pre></td></tr></table>
 </div>
 </div>
-<hr>
-<p>Last modified on 2017-09-01</p>
-<a href=/posts/2017-08-30-dockerless-services/>
-Previous Dockerless Services (with Nix)
-</a>
-<br>
-<a href=/posts/2018-01-24-nixos-install-pains/>
-Next NixOS install & labor pains
-</a>
-</div>
-<script src=/js/instantclick.min.js data-no-instant></script>
-<script data-no-instant>InstantClick.init("mousedown")</script>
-</body>
+    <hr/>
+    
+        <p>Last modified on 2017-09-01</p>
+    
+    
+        <a href="/posts/2017-08-30-dockerless-services/">
+            Previous Dockerless Services (with Nix)
+        </a>
+    
+    <br/>
+    
+    <a href="/posts/2018-01-24-nixos-install-pains/">
+        Next NixOS install &amp; labor pains
+    </a>
+    
+
+        </div>
+        <script src="/js/instantclick.min.js" data-no-instant></script>
+        <script data-no-instant>InstantClick.init("mousedown");</script>
+    </body>
 </html>

@@ -1,110 +1,130 @@
-<!doctype html><html>
+<!DOCTYPE html>
+<html>
 <head>
 <title>Cool Monday - Exploration of dynamic db acces from scala</title>
-<meta charset=utf-8>
-<meta name=X-UA-Compatible content="IE=edge">
-<meta name=google-site-verification content>
-<meta content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=0" name=viewport>
+<meta charset="utf-8">
+<meta name="X-UA-Compatible" content="IE=edge">
+<meta name="google-site-verification" content="">
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+
+
+
+
 <style>body{max-width:800px;margin:auto;line-height:1.6;font-size:18px;color:#444;padding:0 10px}h1,h2,h3{line-height:1.2}.nav a,.nav a:visited,.nav a:hover,.nav a:active{color:inherit}.nav .title{margin:0}.nav-sub{display:inline-block}.nav-item{margin:5px}.nav-sub-right{display:inline-block;float:right}.nav-icon{margin-right:5px}.main img{display:block;max-width:100%;margin:auto}.main pre{overflow:auto}" media="screen"></style>
 </head>
-<body>
-<div class=nav>
-<a href=/><h2 class=title>Andraž Bajt's blog</h2></a>
-<div class=nav-sub>
-<a class=nav-item href=/about/>
-About Me
-</a>
-<a class=nav-item href=/>
-Archive
-</a>
-</div>
-<div class=nav-sub-right>
-<a class=nav-icon href=https://github.com/edofic target=_blank><img src=/icons/github.svg width=20 height=20></a>
-<a class=nav-icon href=https://www.linkedin.com/in/edofic target=_blank><img src=/icons/linkedin.svg width=20 height=20></a>
-<a class=nav-icon href=https://twitter.com/edofic target=_blank><img src=/icons/twitter.svg width=20 height=20></a>
-<a class=nav-icon href=/index.xml target=_blank><img src=/icons/rss.svg width=20 height=20></a>
-<a class=nav-icon href=mailto:blog@edofic.com target=_blank><img src=/icons/email.svg width=20 height=20></a>
-</div>
-</div>
-<hr>
-<div class=main>
-<h1>Cool Monday - Exploration of dynamic db acces from scala</h1>
-<time>2012-12-10</time>
-<hr>
-<p>I use <a href=http://www.scala-lang.org/ title="Scala (programming language)">scala</a> on
+    <body>
+        <div class="nav">
+            <a href="/"><h2 class="title">Andraž Bajt&#39;s blog</h2></a>
+            <div class="nav-sub">
+                
+                    <a class="nav-item" href="/about/">
+                        About Me
+                    </a>
+                
+                    <a class="nav-item" href="/">
+                        Archive
+                    </a>
+                
+            </div>
+            <div class="nav-sub-right">
+                
+                    <a class="nav-icon" href="https://github.com/edofic" target="_blank"><img src="/icons/github.svg" width="20" height="20"/></a>
+                
+                
+                    <a class="nav-icon" href="https://www.linkedin.com/in/edofic" target="_blank"><img src="/icons/linkedin.svg" width="20" height="20"/></a>
+                
+                
+                    <a class="nav-icon" href="https://twitter.com/edofic" target="_blank"><img src="/icons/twitter.svg" width="20" height="20"/></a>
+                
+                <a class="nav-icon" href="/index.xml" target="_blank"><img src="/icons/rss.svg" width="20" height="20"/></a>
+                
+                    <a class="nav-icon" href="mailto:blog@edofic.com" target="_blank"><img src="/icons/email.svg" width="20" height="20"/></a>
+                
+            </div>
+        </div>
+        <hr/>
+        <div class="main">
+    <h1>Cool Monday - Exploration of dynamic db acces from scala</h1>
+    
+        <time>2012-12-10</time>
+    
+    
+    
+    <hr/>
+    <p>I use <a href="http://www.scala-lang.org/" title="Scala (programming language)">scala</a> on
 <a href="http://www.t-mobile.com/shop/phones/?capcode=AGE" title="Android phones">Android</a>
 and I don&rsquo;t like the integrated database
-<a href=http://en.wikipedia.org/wiki/Application_programming_interface title="Application programming interface">API</a>.
+<a href="http://en.wikipedia.org/wiki/Application_programming_interface" title="Application programming interface">API</a>.
 It&rsquo;s very verbose and very stateful. I had written my own
-<a href=http://en.wikipedia.org/wiki/Object-relational_mapping title="Object-relational mapping">ORM</a>(<a href=http://en.wikipedia.org/wiki/Data_access_object title="Data access object">DAO</a>
+<a href="http://en.wikipedia.org/wiki/Object-relational_mapping" title="Object-relational mapping">ORM</a>(<a href="http://en.wikipedia.org/wiki/Data_access_object" title="Data access object">DAO</a>
 would be a more appropriate tag) a while back, before I used scala but
 it&rsquo;s not enough anymore. So now I&rsquo;m on a quest for a better database
 API. My dream is something small that handles schema for me and is
-<a href=http://en.wikipedia.org/wiki/Type_safety title="Type safety">type-safe</a>. A
+<a href="http://en.wikipedia.org/wiki/Type_safety" title="Type safety">type-safe</a>. A
 nice
-<a href=http://en.wikipedia.org/wiki/Digital_subscriber_line title="Digital subscriber line">DSL</a>
+<a href="http://en.wikipedia.org/wiki/Digital_subscriber_line" title="Digital subscriber line">DSL</a>
 that is converted to
-<a href="http://www.iso.org/iso/catalogue_detail.htm?csnumber=45498" title=SQL>SQL</a>
-at <a href=http://en.wikipedia.org/wiki/Compile_time title="Compile time">compile
+<a href="http://www.iso.org/iso/catalogue_detail.htm?csnumber=45498" title="SQL">SQL</a>
+at <a href="http://en.wikipedia.org/wiki/Compile_time" title="Compile time">compile
 time</a>  and
 does code generation. So it&rsquo;s fast like hand writing everything. But
 reduces code footprint by an order of magnitude(at least).
-<a href=http://www.scala-lang.org/ title="Scala (programming language)">Scala</a>
-<a href=http://slick.typesafe.com/>SLICK</a> looks promising. It fits most
+<a href="http://www.scala-lang.org/" title="Scala (programming language)">Scala</a>
+<a href="http://slick.typesafe.com/">SLICK</a> looks promising. It fits most
 requirements. But it&rsquo;s kinda big for android projects(you need scala
 library too!) and has not yet hit a stable version so I wouldn&rsquo;t be
 comfortable shipping it. Will definitely give it a thorough test when
 scala 2.10 is stable and SLICK is released. Oh, and it needs a third
-party <a href=http://en.wikipedia.org/wiki/JDBC_driver title="JDBC driver">JDBC
+party <a href="http://en.wikipedia.org/wiki/JDBC_driver" title="JDBC driver">JDBC
  driver</a> for
 Android. This is another level of abstraction and therefore another
 source of slowness. I contemplated writing my own clone targeted at
 Android but   never came around to actually doing it(yet!). It seems
 like a herculean task for single developer working in spare time.</p>
-<h3 id=meanwhile>Meanwhile</h3>
-<p>Yesterday I stared thinking how <a href=http://en.wikipedia.org/wiki/Dynamic_programming_language title="Dynamic programming language">dynamic
+<h3 id="meanwhile">Meanwhile</h3>
+<p>Yesterday I stared thinking how <a href="http://en.wikipedia.org/wiki/Dynamic_programming_language" title="Dynamic programming language">dynamic
 languages</a>
 handle databases. And I got an idea. Scala has type Dynamic that does
 compilation magic to provide syntactic sugar for working with dynamic
 languages or objects. Here&rsquo;s an idea: do queries in plain SQL and
 perform extraction of data in a dynamic way. </p>
 <p>And how to do this? Just wrap up Cursor to provide necessary methods. </p>
-<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2>
-<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
 </span></code></pre></td>
-<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-scala data-lang=scala><span style=color:#66d9ef>class</span> <span style=color:#a6e22e>WrappedCursor</span><span style=color:#f92672>(</span>cursor<span style=color:#66d9ef>:</span> <span style=color:#66d9ef>Cursor</span><span style=color:#f92672>)</span> implements <span style=color:#a6e22e>Cursor</span><span style=color:#f92672>{</span>  <span style=color:#75715e>//delegated methods go here}
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code class="language-scala" data-lang="scala"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">WrappedCursor</span><span style="color:#f92672">(</span>cursor<span style="color:#66d9ef">:</span> <span style="color:#66d9ef">Cursor</span><span style="color:#f92672">)</span> implements <span style="color:#a6e22e">Cursor</span><span style="color:#f92672">{</span>  <span style="color:#75715e">//delegated methods go here}
 </span></code></pre></td></tr></table>
 </div>
 </div><p>Why I need this? Cake pattern of course, Dynamic cursor get&rsquo;s mixed in.</p>
-<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2>
-<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">11
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">12
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
 </span></code></pre></td>
-<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-scala data-lang=scala><span style=color:#66d9ef>trait</span> <span style=color:#a6e22e>DynamicCursor</span> <span style=color:#66d9ef>extends</span> <span style=color:#a6e22e>Dynamic</span><span style=color:#f92672>{</span> <span style=color:#66d9ef>this:</span> <span style=color:#66d9ef>Cursor</span> <span style=color:#f92672>=&gt;</span>
-    <span style=color:#66d9ef>def</span> selectDynamic<span style=color:#f92672>(</span>name<span style=color:#66d9ef>:</span> <span style=color:#66d9ef>String</span><span style=color:#f92672>)</span> <span style=color:#66d9ef>=</span> getColumn<span style=color:#f92672>(</span>getColumnIndex<span style=color:#f92672>(</span>name<span style=color:#f92672>))</span>
-    <span style=color:#66d9ef>def</span> getColumn<span style=color:#f92672>(</span>index<span style=color:#66d9ef>:</span> <span style=color:#66d9ef>Int</span><span style=color:#f92672>)</span> <span style=color:#66d9ef>=</span> getType<span style=color:#f92672>(</span>index<span style=color:#f92672>)</span> <span style=color:#66d9ef>match</span> <span style=color:#f92672>{</span>
-        <span style=color:#66d9ef>case</span> <span style=color:#a6e22e>Cursor</span><span style=color:#f92672>.</span><span style=color:#a6e22e>FIELD_TYPE_BLOB</span> <span style=color:#66d9ef>=&gt;</span> getBlob<span style=color:#f92672>(</span>index<span style=color:#f92672>)</span>
-        <span style=color:#66d9ef>case</span> <span style=color:#a6e22e>Cursor</span><span style=color:#f92672>.</span><span style=color:#a6e22e>FIELD_TYPE_FLOAT</span> <span style=color:#66d9ef>=&gt;</span> getDouble<span style=color:#f92672>(</span>index<span style=color:#f92672>)</span>
-        <span style=color:#66d9ef>case</span> <span style=color:#a6e22e>Cursor</span><span style=color:#f92672>.</span><span style=color:#a6e22e>FIELD_TYPE_INTEGER</span> <span style=color:#66d9ef>=&gt;</span> getLong<span style=color:#f92672>(</span>index<span style=color:#f92672>)</span>
-        <span style=color:#66d9ef>case</span> <span style=color:#a6e22e>Cursor</span><span style=color:#f92672>.</span><span style=color:#a6e22e>FIELD_TYPE_NULL</span> <span style=color:#66d9ef>=&gt;</span> <span style=color:#66d9ef>null</span>
-        <span style=color:#66d9ef>case</span> <span style=color:#a6e22e>Cursor</span><span style=color:#f92672>.</span><span style=color:#a6e22e>FIELD_TYPE_STRING</span> <span style=color:#66d9ef>=&gt;</span> getString<span style=color:#f92672>(</span>index<span style=color:#f92672>)</span>
-    <span style=color:#f92672>}</span>
-    <span style=color:#66d9ef>def</span> toSeq <span style=color:#66d9ef>=</span> <span style=color:#f92672>(</span><span style=color:#ae81ff>0</span> until getColumnCount<span style=color:#f92672>)</span> map getColumn
-<span style=color:#f92672>}</span>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code class="language-scala" data-lang="scala"><span style="color:#66d9ef">trait</span> <span style="color:#a6e22e">DynamicCursor</span> <span style="color:#66d9ef">extends</span> <span style="color:#a6e22e">Dynamic</span><span style="color:#f92672">{</span> <span style="color:#66d9ef">this:</span> <span style="color:#66d9ef">Cursor</span> <span style="color:#f92672">=&gt;</span>
+    <span style="color:#66d9ef">def</span> selectDynamic<span style="color:#f92672">(</span>name<span style="color:#66d9ef">:</span> <span style="color:#66d9ef">String</span><span style="color:#f92672">)</span> <span style="color:#66d9ef">=</span> getColumn<span style="color:#f92672">(</span>getColumnIndex<span style="color:#f92672">(</span>name<span style="color:#f92672">))</span>
+    <span style="color:#66d9ef">def</span> getColumn<span style="color:#f92672">(</span>index<span style="color:#66d9ef">:</span> <span style="color:#66d9ef">Int</span><span style="color:#f92672">)</span> <span style="color:#66d9ef">=</span> getType<span style="color:#f92672">(</span>index<span style="color:#f92672">)</span> <span style="color:#66d9ef">match</span> <span style="color:#f92672">{</span>
+        <span style="color:#66d9ef">case</span> <span style="color:#a6e22e">Cursor</span><span style="color:#f92672">.</span><span style="color:#a6e22e">FIELD_TYPE_BLOB</span> <span style="color:#66d9ef">=&gt;</span> getBlob<span style="color:#f92672">(</span>index<span style="color:#f92672">)</span>
+        <span style="color:#66d9ef">case</span> <span style="color:#a6e22e">Cursor</span><span style="color:#f92672">.</span><span style="color:#a6e22e">FIELD_TYPE_FLOAT</span> <span style="color:#66d9ef">=&gt;</span> getDouble<span style="color:#f92672">(</span>index<span style="color:#f92672">)</span>
+        <span style="color:#66d9ef">case</span> <span style="color:#a6e22e">Cursor</span><span style="color:#f92672">.</span><span style="color:#a6e22e">FIELD_TYPE_INTEGER</span> <span style="color:#66d9ef">=&gt;</span> getLong<span style="color:#f92672">(</span>index<span style="color:#f92672">)</span>
+        <span style="color:#66d9ef">case</span> <span style="color:#a6e22e">Cursor</span><span style="color:#f92672">.</span><span style="color:#a6e22e">FIELD_TYPE_NULL</span> <span style="color:#66d9ef">=&gt;</span> <span style="color:#66d9ef">null</span>
+        <span style="color:#66d9ef">case</span> <span style="color:#a6e22e">Cursor</span><span style="color:#f92672">.</span><span style="color:#a6e22e">FIELD_TYPE_STRING</span> <span style="color:#66d9ef">=&gt;</span> getString<span style="color:#f92672">(</span>index<span style="color:#f92672">)</span>
+    <span style="color:#f92672">}</span>
+    <span style="color:#66d9ef">def</span> toSeq <span style="color:#66d9ef">=</span> <span style="color:#f92672">(</span><span style="color:#ae81ff">0</span> until getColumnCount<span style="color:#f92672">)</span> map getColumn
+<span style="color:#f92672">}</span>
 
 </code></pre></td></tr></table>
 </div>
@@ -112,33 +132,33 @@ perform extraction of data in a dynamic way. </p>
 Cursor) is available from 11 on.    Key method here is getColumn that
 abstracts over types. So you can read a column and  do pattern matching
 on it. Or you are evil and use implicit conversions from Any to String,
-Long etc&mldr; Or use implicit conversion to &ldquo;converter&rdquo;</p>
-<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2>
-<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">4
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">5
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">6
+Long etc&hellip; Or use implicit conversion to &ldquo;converter&rdquo;</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
 </span></code></pre></td>
-<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-scala data-lang=scala><span style=color:#66d9ef>implicit</span> <span style=color:#66d9ef>class</span> <span style=color:#a6e22e>Converter</span><span style=color:#f92672>(</span><span style=color:#66d9ef>val</span> value<span style=color:#66d9ef>:</span> <span style=color:#66d9ef>Any</span><span style=color:#f92672>)</span> <span style=color:#66d9ef>extends</span> <span style=color:#a6e22e>AnyVal</span><span style=color:#f92672>{</span>
-    <span style=color:#66d9ef>def</span> blob <span style=color:#66d9ef>=</span> value<span style=color:#f92672>.</span>asInstanceOf<span style=color:#f92672>[</span><span style=color:#66d9ef>Array</span><span style=color:#f92672>[</span><span style=color:#66d9ef>Byte</span><span style=color:#f92672>]]</span>
-    <span style=color:#66d9ef>def</span> double <span style=color:#66d9ef>=</span> value<span style=color:#f92672>.</span>asInstanceOf<span style=color:#f92672>[</span><span style=color:#66d9ef>Double</span><span style=color:#f92672>]</span>
-    <span style=color:#66d9ef>def</span> long <span style=color:#66d9ef>=</span> value<span style=color:#f92672>.</span>asInstanceOf<span style=color:#f92672>[</span><span style=color:#66d9ef>Long</span><span style=color:#f92672>]</span>
-    <span style=color:#66d9ef>def</span> string <span style=color:#66d9ef>=</span> value<span style=color:#f92672>.</span>asInstanceOf<span style=color:#f92672>[</span><span style=color:#66d9ef>String</span><span style=color:#f92672>]</span>
-<span style=color:#f92672>}</span>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code class="language-scala" data-lang="scala"><span style="color:#66d9ef">implicit</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Converter</span><span style="color:#f92672">(</span><span style="color:#66d9ef">val</span> value<span style="color:#66d9ef">:</span> <span style="color:#66d9ef">Any</span><span style="color:#f92672">)</span> <span style="color:#66d9ef">extends</span> <span style="color:#a6e22e">AnyVal</span><span style="color:#f92672">{</span>
+    <span style="color:#66d9ef">def</span> blob <span style="color:#66d9ef">=</span> value<span style="color:#f92672">.</span>asInstanceOf<span style="color:#f92672">[</span><span style="color:#66d9ef">Array</span><span style="color:#f92672">[</span><span style="color:#66d9ef">Byte</span><span style="color:#f92672">]]</span>
+    <span style="color:#66d9ef">def</span> double <span style="color:#66d9ef">=</span> value<span style="color:#f92672">.</span>asInstanceOf<span style="color:#f92672">[</span><span style="color:#66d9ef">Double</span><span style="color:#f92672">]</span>
+    <span style="color:#66d9ef">def</span> long <span style="color:#66d9ef">=</span> value<span style="color:#f92672">.</span>asInstanceOf<span style="color:#f92672">[</span><span style="color:#66d9ef">Long</span><span style="color:#f92672">]</span>
+    <span style="color:#66d9ef">def</span> string <span style="color:#66d9ef">=</span> value<span style="color:#f92672">.</span>asInstanceOf<span style="color:#f92672">[</span><span style="color:#66d9ef">String</span><span style="color:#f92672">]</span>
+<span style="color:#f92672">}</span>
 </code></pre></td></tr></table>
 </div>
 </div><p>But the real deal is selectDynamic. This allows you to write code like
 this</p>
-<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2>
-<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
 </span></code></pre></td>
-<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-scala data-lang=scala><span style=color:#66d9ef>val</span> c <span style=color:#66d9ef>=</span> <span style=color:#66d9ef>new</span> <span style=color:#a6e22e>WrappedCursor</span><span style=color:#f92672>(</span>result<span style=color:#f92672>)</span> <span style=color:#66d9ef>with</span> <span style=color:#a6e22e>DynamicCursorc</span><span style=color:#f92672>.</span>someColumn<span style=color:#f92672>.</span>long
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code class="language-scala" data-lang="scala"><span style="color:#66d9ef">val</span> c <span style="color:#66d9ef">=</span> <span style="color:#66d9ef">new</span> <span style="color:#a6e22e">WrappedCursor</span><span style="color:#f92672">(</span>result<span style="color:#f92672">)</span> <span style="color:#66d9ef">with</span> <span style="color:#a6e22e">DynamicCursorc</span><span style="color:#f92672">.</span>someColumn<span style="color:#f92672">.</span>long
 </code></pre></td></tr></table>
 </div>
 </div><p>This compiles down to selectDynamic(&ldquo;someColumn&rdquo;) that calls getColumn
@@ -150,67 +170,75 @@ construct a Stream that will handle Cursor state and lazily evaluate and
 store these snapshots. Therefore you can abstract away all mutability
 and handle cursor as immutable collection.</p>
 <p>Said conversion to stream</p>
-<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2>
-<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">11
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">12
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">13
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
 </span></code></pre></td>
-<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-scala data-lang=scala><span style=color:#66d9ef>def</span> <span style=color:#a6e22e>CursorStream</span><span style=color:#f92672>(</span>cursor<span style=color:#66d9ef>:</span> <span style=color:#66d9ef>DynamicCursorRaw</span> <span style=color:#66d9ef>with</span> <span style=color:#66d9ef>Cursor</span><span style=color:#f92672>)</span> <span style=color:#66d9ef>=</span> <span style=color:#f92672>{</span>
-    <span style=color:#66d9ef>def</span> loop<span style=color:#f92672>()</span><span style=color:#66d9ef>:</span> <span style=color:#66d9ef>Stream</span><span style=color:#f92672>[</span><span style=color:#66d9ef>Seq</span><span style=color:#f92672>[</span><span style=color:#66d9ef>Any</span><span style=color:#f92672>]]</span> <span style=color:#66d9ef>=</span> <span style=color:#f92672>{</span>
-        <span style=color:#66d9ef>if</span><span style=color:#f92672>(</span>cursor<span style=color:#f92672>.</span>isAfterLast<span style=color:#f92672>)</span>
-            <span style=color:#a6e22e>Stream</span><span style=color:#f92672>.</span>empty<span style=color:#f92672>[</span><span style=color:#66d9ef>Seq</span><span style=color:#f92672>[</span><span style=color:#66d9ef>Any</span><span style=color:#f92672>]]</span>
-        <span style=color:#66d9ef>else</span> <span style=color:#f92672>{</span>
-            <span style=color:#66d9ef>val</span> snapshot <span style=color:#66d9ef>=</span> cursor<span style=color:#f92672>.</span>toSeq
-            cursor<span style=color:#f92672>.</span>moveToNext<span style=color:#f92672>()</span>
-            snapshot <span style=color:#f92672>#</span><span style=color:#66d9ef>:</span><span style=color:#66d9ef>:</span> <span style=color:#66d9ef>loop</span><span style=color:#f92672>()</span>
-        <span style=color:#f92672>}</span>
-    <span style=color:#f92672>}</span>
-    cursor<span style=color:#f92672>.</span>moveToFirst<span style=color:#f92672>()</span>
-    loop<span style=color:#f92672>()</span>
-<span style=color:#f92672>}</span>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code class="language-scala" data-lang="scala"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">CursorStream</span><span style="color:#f92672">(</span>cursor<span style="color:#66d9ef">:</span> <span style="color:#66d9ef">DynamicCursorRaw</span> <span style="color:#66d9ef">with</span> <span style="color:#66d9ef">Cursor</span><span style="color:#f92672">)</span> <span style="color:#66d9ef">=</span> <span style="color:#f92672">{</span>
+    <span style="color:#66d9ef">def</span> loop<span style="color:#f92672">()</span><span style="color:#66d9ef">:</span> <span style="color:#66d9ef">Stream</span><span style="color:#f92672">[</span><span style="color:#66d9ef">Seq</span><span style="color:#f92672">[</span><span style="color:#66d9ef">Any</span><span style="color:#f92672">]]</span> <span style="color:#66d9ef">=</span> <span style="color:#f92672">{</span>
+        <span style="color:#66d9ef">if</span><span style="color:#f92672">(</span>cursor<span style="color:#f92672">.</span>isAfterLast<span style="color:#f92672">)</span>
+            <span style="color:#a6e22e">Stream</span><span style="color:#f92672">.</span>empty<span style="color:#f92672">[</span><span style="color:#66d9ef">Seq</span><span style="color:#f92672">[</span><span style="color:#66d9ef">Any</span><span style="color:#f92672">]]</span>
+        <span style="color:#66d9ef">else</span> <span style="color:#f92672">{</span>
+            <span style="color:#66d9ef">val</span> snapshot <span style="color:#66d9ef">=</span> cursor<span style="color:#f92672">.</span>toSeq
+            cursor<span style="color:#f92672">.</span>moveToNext<span style="color:#f92672">()</span>
+            snapshot <span style="color:#f92672">#</span><span style="color:#66d9ef">:</span><span style="color:#66d9ef">:</span> <span style="color:#66d9ef">loop</span><span style="color:#f92672">()</span>
+        <span style="color:#f92672">}</span>
+    <span style="color:#f92672">}</span>
+    cursor<span style="color:#f92672">.</span>moveToFirst<span style="color:#f92672">()</span>
+    loop<span style="color:#f92672">()</span>
+<span style="color:#f92672">}</span>
 </code></pre></td></tr></table>
 </div>
 </div><p>And some more implicits to help</p>
-<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2>
-<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">4
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
 </span></code></pre></td>
-<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-scala data-lang=scala><span style=color:#66d9ef>implicit</span> <span style=color:#66d9ef>class</span> <span style=color:#a6e22e>RichCursorRaw</span><span style=color:#f92672>(</span>cursor<span style=color:#66d9ef>:</span> <span style=color:#66d9ef>Cursor</span><span style=color:#f92672>)</span> <span style=color:#66d9ef>extends</span> <span style=color:#a6e22e>AnyVal</span><span style=color:#f92672>{</span>
-    <span style=color:#66d9ef>def</span> dynamicRaw <span style=color:#66d9ef>=</span> <span style=color:#66d9ef>new</span> <span style=color:#a6e22e>WrappedCursor</span><span style=color:#f92672>(</span>cursor<span style=color:#f92672>)</span> <span style=color:#66d9ef>with</span> <span style=color:#a6e22e>DynamicCursorRaw</span>
-    <span style=color:#66d9ef>def</span> toStream <span style=color:#66d9ef>=</span> <span style=color:#a6e22e>CursorStream</span><span style=color:#f92672>(</span>dynamicRaw<span style=color:#f92672>)</span>
-<span style=color:#f92672>}</span>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code class="language-scala" data-lang="scala"><span style="color:#66d9ef">implicit</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">RichCursorRaw</span><span style="color:#f92672">(</span>cursor<span style="color:#66d9ef">:</span> <span style="color:#66d9ef">Cursor</span><span style="color:#f92672">)</span> <span style="color:#66d9ef">extends</span> <span style="color:#a6e22e">AnyVal</span><span style="color:#f92672">{</span>
+    <span style="color:#66d9ef">def</span> dynamicRaw <span style="color:#66d9ef">=</span> <span style="color:#66d9ef">new</span> <span style="color:#a6e22e">WrappedCursor</span><span style="color:#f92672">(</span>cursor<span style="color:#f92672">)</span> <span style="color:#66d9ef">with</span> <span style="color:#a6e22e">DynamicCursorRaw</span>
+    <span style="color:#66d9ef">def</span> toStream <span style="color:#66d9ef">=</span> <span style="color:#a6e22e">CursorStream</span><span style="color:#f92672">(</span>dynamicRaw<span style="color:#f92672">)</span>
+<span style="color:#f92672">}</span>
 </code></pre></td></tr></table>
 </div>
 </div><p>All the source is in the project on
-github <a href=https://github.com/edofic/dynamic-db-android>https://github.com/edofic/dynamic-db-android</a> (work
+github <a href="https://github.com/edofic/dynamic-db-android">https://github.com/edofic/dynamic-db-android</a> (work
 in progress).</p>
-<hr>
-<p>Last modified on 2012-12-10</p>
-<a href=/posts/2012-12-04-hw-functional/>
-Previous Homework - functional style (outer sorting)
-</a>
-<br>
-<a href=/posts/2013-01-27-union-types/>
-Next Union types in scala
-</a>
-</div>
-<script src=/js/instantclick.min.js data-no-instant></script>
-<script data-no-instant>InstantClick.init("mousedown")</script>
-</body>
+
+    <hr/>
+    
+        <p>Last modified on 2012-12-10</p>
+    
+    
+        <a href="/posts/2012-12-04-hw-functional/">
+            Previous Homework - functional style (outer sorting)
+        </a>
+    
+    <br/>
+    
+    <a href="/posts/2013-01-27-union-types/">
+        Next Union types in scala
+    </a>
+    
+
+        </div>
+        <script src="/js/instantclick.min.js" data-no-instant></script>
+        <script data-no-instant>InstantClick.init("mousedown");</script>
+    </body>
 </html>
