@@ -1,96 +1,22 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
-  <channel>
-    <title>trying-out on Andraž Bajt&#39;s blog</title>
-    <link>/tags/trying-out/</link>
-    <description>Recent content in trying-out on Andraž Bajt&#39;s blog</description>
-    <generator>Hugo -- gohugo.io</generator>
-    <language>en-us</language>
-    <copyright>Andraz Bajt</copyright>
-    <lastBuildDate>Sun, 19 Dec 2021 00:00:00 +0000</lastBuildDate><atom:link href="/tags/trying-out/index.xml" rel="self" type="application/rss+xml" />
-    <item>
-      <title>Trying Out Remix</title>
-      <link>/posts/2021-12-19-trying-out-remix/</link>
-      <pubDate>Sun, 19 Dec 2021 00:00:00 +0000</pubDate>
-      
-      <guid>/posts/2021-12-19-trying-out-remix/</guid>
-      <description>I came across Supporting Remix with full stack Cloudflare Pages on Cloudflare blog (yes I&amp;rsquo;m a CF fan) and Remix piqued my interest. Mostly because it addresses my concerns with &amp;ldquo;modern&amp;rdquo; web development: the wiring boilerplate is mostly gone, there is no 100 file setup to get a workable dev environment. And of course because it&amp;rsquo;s outside my comfort zone - so maybe I&amp;rsquo;ll learn something.
-Getting started There&amp;rsquo;s a code example right on the home page but I&amp;rsquo;m having hard time building a mental model from just that.</description>
-    </item>
-    
-    <item>
-      <title>Trying out Prometheus</title>
-      <link>/posts/2021-06-27-trying-out-prometheus/</link>
-      <pubDate>Sun, 27 Jun 2021 00:00:00 +0000</pubDate>
-      
-      <guid>/posts/2021-06-27-trying-out-prometheus/</guid>
-      <description>This time I&amp;rsquo;m trying out a monitoring solution: Prometheus.
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>trying-out on Andraž Bajt's blog</title><link>/tags/trying-out/</link><description>Recent content in trying-out on Andraž Bajt's blog</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><copyright>Andraz Bajt</copyright><lastBuildDate>Sun, 19 Dec 2021 00:00:00 +0000</lastBuildDate><atom:link href="/tags/trying-out/index.xml" rel="self" type="application/rss+xml"/><item><title>Trying Out Remix</title><link>/posts/2021-12-19-trying-out-remix/</link><pubDate>Sun, 19 Dec 2021 00:00:00 +0000</pubDate><guid>/posts/2021-12-19-trying-out-remix/</guid><description>I came across Supporting Remix with full stack Cloudflare Pages on Cloudflare blog (yes I&amp;rsquo;m a CF fan) and Remix piqued my interest. Mostly because it addresses my concerns with &amp;ldquo;modern&amp;rdquo; web development: the wiring boilerplate is mostly gone, there is no 100 file setup to get a workable dev environment. And of course because it&amp;rsquo;s outside my comfort zone - so maybe I&amp;rsquo;ll learn something.
+Getting started There&amp;rsquo;s a code example right on the home page but I&amp;rsquo;m having hard time building a mental model from just that.</description></item><item><title>Trying out Prometheus</title><link>/posts/2021-06-27-trying-out-prometheus/</link><pubDate>Sun, 27 Jun 2021 00:00:00 +0000</pubDate><guid>/posts/2021-06-27-trying-out-prometheus/</guid><description>This time I&amp;rsquo;m trying out a monitoring solution: Prometheus.
 All I know about it so far:
- pull based, server scrapes /metrics on workloads, human readable format scales well because of this popular in kuberetes space  Let&amp;rsquo;s try running the docker iamge based on the README.
-1  docker run --rm -it -p9090:9090 prom/prometheus:main   We&amp;rsquo;ve got lift off! And it&amp;rsquo;s monitoring itself right out the gate:
-docker-compose I want to add more services now and I don&amp;rsquo;t want to fiddle with docker run so time for a compose file.</description>
-    </item>
-    
-    <item>
-      <title>Trying out Microk8s</title>
-      <link>/posts/2021-04-15-trying-microk8s/</link>
-      <pubDate>Thu, 15 Apr 2021 00:00:00 +0000</pubDate>
-      
-      <guid>/posts/2021-04-15-trying-microk8s/</guid>
-      <description>In another &amp;ldquo;running kuberets&amp;rdquo; flavoured post I&amp;rsquo;ll be trying out microk8s
- High availability K8s. Low-ops, minimal production Kubernetes, for devs, cloud, clusters, workstations, Edge and IoT.
- In the past I&amp;rsquo;ve been using k3s for small (mostly single node) &amp;ldquo;clusters&amp;rdquo;. The pitch is very similar. The few differences I can point out now are:
- microk8s is a bit heavier - I don&amp;rsquo;t think it will run on 1G vps, let&amp;rsquo;s try it out microk8s has a better HA story - definately want to try this out k3s comes as a single &amp;ldquo;run everywhere&amp;rdquo; binary whereas microk8s requires snap  Setting up I&amp;rsquo;ll be using Hetzner Cloud to provision a few small VMs for my laboratory.</description>
-    </item>
-    
-    <item>
-      <title>Trying out Rancher</title>
-      <link>/posts/2021-04-14-trying-out-rancher/</link>
-      <pubDate>Wed, 14 Apr 2021 00:00:00 +0000</pubDate>
-      
-      <guid>/posts/2021-04-14-trying-out-rancher/</guid>
-      <description>This time it&amp;rsquo;s a bit different: this post has very little code and a lot of screenshots as I was primarily working with a GUI.
+pull based, server scrapes /metrics on workloads, human readable format scales well because of this popular in kuberetes space Let&amp;rsquo;s try running the docker iamge based on the README.
+1 docker run --rm -it -p9090:9090 prom/prometheus:main We&amp;rsquo;ve got lift off! And it&amp;rsquo;s monitoring itself right out the gate:
+docker-compose I want to add more services now and I don&amp;rsquo;t want to fiddle with docker run so time for a compose file.</description></item><item><title>Trying out Microk8s</title><link>/posts/2021-04-15-trying-microk8s/</link><pubDate>Thu, 15 Apr 2021 00:00:00 +0000</pubDate><guid>/posts/2021-04-15-trying-microk8s/</guid><description>In another &amp;ldquo;running kuberets&amp;rdquo; flavoured post I&amp;rsquo;ll be trying out microk8s
+High availability K8s. Low-ops, minimal production Kubernetes, for devs, cloud, clusters, workstations, Edge and IoT.
+In the past I&amp;rsquo;ve been using k3s for small (mostly single node) &amp;ldquo;clusters&amp;rdquo;. The pitch is very similar. The few differences I can point out now are:
+microk8s is a bit heavier - I don&amp;rsquo;t think it will run on 1G vps, let&amp;rsquo;s try it out microk8s has a better HA story - definately want to try this out k3s comes as a single &amp;ldquo;run everywhere&amp;rdquo; binary whereas microk8s requires snap Setting up I&amp;rsquo;ll be using Hetzner Cloud to provision a few small VMs for my laboratory.</description></item><item><title>Trying out Rancher</title><link>/posts/2021-04-14-trying-out-rancher/</link><pubDate>Wed, 14 Apr 2021 00:00:00 +0000</pubDate><guid>/posts/2021-04-14-trying-out-rancher/</guid><description>This time it&amp;rsquo;s a bit different: this post has very little code and a lot of screenshots as I was primarily working with a GUI.
 Reading about (and working with) K3s is almost impossible to not hear about Rancher - the company behind K3s. But what had me slightly confused is their primary product: Rancher (the software).
 The web page says
- Managed Kubernetes Cluster Operations
- but that doesn&amp;rsquo;t really tell me much.</description>
-    </item>
-    
-    <item>
-      <title>Trying out Okteto Cloud</title>
-      <link>/posts/2021-02-27-trying-out-okteto-cloud/</link>
-      <pubDate>Sat, 27 Feb 2021 00:00:00 +0000</pubDate>
-      
-      <guid>/posts/2021-02-27-trying-out-okteto-cloud/</guid>
-      <description>This is a part two of Trying out Okteto. I&amp;rsquo;ll be trying out okteto.com - &amp;ldquo;The Kubernetes development platform&amp;rdquo;.
+Managed Kubernetes Cluster Operations
+but that doesn&amp;rsquo;t really tell me much.</description></item><item><title>Trying out Okteto Cloud</title><link>/posts/2021-02-27-trying-out-okteto-cloud/</link><pubDate>Sat, 27 Feb 2021 00:00:00 +0000</pubDate><guid>/posts/2021-02-27-trying-out-okteto-cloud/</guid><description>This is a part two of Trying out Okteto. I&amp;rsquo;ll be trying out okteto.com - &amp;ldquo;The Kubernetes development platform&amp;rdquo;.
 At a first glance it looks like a hosted kubernetes solution + the CLI tool I already tested + some bells and whistles. Let&amp;rsquo;s find out what those are.
 First impressions Login with github. Boom I&amp;rsquo;m in, no extra sign up required. Big thumbs up.
-Looks like I got a managed namespace with 8G ram, 4cpus and 5G storage.</description>
-    </item>
-    
-    <item>
-      <title>Trying out Okteto (CLI)</title>
-      <link>/posts/2021-02-22-trying-out-okteto-cli/</link>
-      <pubDate>Mon, 22 Feb 2021 00:00:00 +0000</pubDate>
-      
-      <guid>/posts/2021-02-22-trying-out-okteto-cli/</guid>
-      <description>Today I&amp;rsquo;ll be giving Okteto a spin. From the docs
- Okteto: Tool to Develop Applications on Kubernetes
- Or my personal pitch:
- Okteto delivers on the &amp;ldquo;my other computer is the cloud&amp;rdquo; trope
- What does this mean? First of all: there is a distinction between
- Okteto Cloud &amp;amp; Okteto Enterprise: this is a server side solution that provides managed k8s namespaces, CD and other bells and whistles - will look into this in the future okteto - the tool: open source client to work with Okteto Cloud &amp;amp; Okteto Enterprise - but the core functionality works with any k8s cluster.</description>
-    </item>
-    
-    <item>
-      <title>Trying out Buffalo</title>
-      <link>/posts/2021-02-07-trying-out-buffalo/</link>
-      <pubDate>Sun, 07 Feb 2021 00:00:00 +0000</pubDate>
-      
-      <guid>/posts/2021-02-07-trying-out-buffalo/</guid>
-      <description>I&amp;rsquo;m trying out a new concept: my &amp;ldquo;I should check this out&amp;rdquo; list of tools and technologies has grown quite a bit so I got the idea that I could do short write ups of my experimentation and first impressions to give myself motivation to try these things out. Will see how this turns out, hopefully this will turn out a series :)
-Today I&amp;rsquo;ll be trying out Buffalo - a Go web framework.</description>
-    </item>
-    
-  </channel>
-</rss>
+Looks like I got a managed namespace with 8G ram, 4cpus and 5G storage.</description></item><item><title>Trying out Okteto (CLI)</title><link>/posts/2021-02-22-trying-out-okteto-cli/</link><pubDate>Mon, 22 Feb 2021 00:00:00 +0000</pubDate><guid>/posts/2021-02-22-trying-out-okteto-cli/</guid><description>Today I&amp;rsquo;ll be giving Okteto a spin. From the docs
+Okteto: Tool to Develop Applications on Kubernetes
+Or my personal pitch:
+Okteto delivers on the &amp;ldquo;my other computer is the cloud&amp;rdquo; trope
+What does this mean? First of all: there is a distinction between
+Okteto Cloud &amp;amp; Okteto Enterprise: this is a server side solution that provides managed k8s namespaces, CD and other bells and whistles - will look into this in the future okteto - the tool: open source client to work with Okteto Cloud &amp;amp; Okteto Enterprise - but the core functionality works with any k8s cluster.</description></item><item><title>Trying out Buffalo</title><link>/posts/2021-02-07-trying-out-buffalo/</link><pubDate>Sun, 07 Feb 2021 00:00:00 +0000</pubDate><guid>/posts/2021-02-07-trying-out-buffalo/</guid><description>I&amp;rsquo;m trying out a new concept: my &amp;ldquo;I should check this out&amp;rdquo; list of tools and technologies has grown quite a bit so I got the idea that I could do short write ups of my experimentation and first impressions to give myself motivation to try these things out. Will see how this turns out, hopefully this will turn out a series :)
+Today I&amp;rsquo;ll be trying out Buffalo - a Go web framework.</description></item></channel></rss>

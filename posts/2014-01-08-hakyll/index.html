@@ -1,84 +1,56 @@
-<!DOCTYPE html>
-<html>
+<!doctype html><html>
 <head>
 <title>Hakyll</title>
-<meta charset="utf-8">
-<meta name="X-UA-Compatible" content="IE=edge">
-<meta name="google-site-verification" content="">
-<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
-
-
-
-
+<meta charset=utf-8>
+<meta name=X-UA-Compatible content="IE=edge">
+<meta name=google-site-verification content>
+<meta content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=0" name=viewport>
 <style>body{max-width:800px;margin:auto;line-height:1.6;font-size:18px;color:#444;padding:0 10px}h1,h2,h3{line-height:1.2}.nav a,.nav a:visited,.nav a:hover,.nav a:active{color:inherit}.nav .title{margin:0}.nav-sub{display:inline-block}.nav-item{margin:5px}.nav-sub-right{display:inline-block;float:right}.nav-icon{margin-right:5px}.main img{display:block;max-width:100%;margin:auto}.main pre{overflow:auto}" media="screen"></style>
 </head>
-    <body>
-        <div class="nav">
-            <a href="/"><h2 class="title">Andraž Bajt&#39;s blog</h2></a>
-            <div class="nav-sub">
-                
-                    <a class="nav-item" href="/about/">
-                        About Me
-                    </a>
-                
-                    <a class="nav-item" href="/">
-                        Archive
-                    </a>
-                
-            </div>
-            <div class="nav-sub-right">
-                
-                    <a class="nav-icon" href="https://github.com/edofic" target="_blank"><img src="/icons/github.svg" width="20" height="20"/></a>
-                
-                
-                    <a class="nav-icon" href="https://www.linkedin.com/in/edofic" target="_blank"><img src="/icons/linkedin.svg" width="20" height="20"/></a>
-                
-                
-                    <a class="nav-icon" href="https://twitter.com/edofic" target="_blank"><img src="/icons/twitter.svg" width="20" height="20"/></a>
-                
-                <a class="nav-icon" href="/index.xml" target="_blank"><img src="/icons/rss.svg" width="20" height="20"/></a>
-                
-                    <a class="nav-icon" href="mailto:blog@edofic.com" target="_blank"><img src="/icons/email.svg" width="20" height="20"/></a>
-                
-            </div>
-        </div>
-        <hr/>
-        <div class="main">
-    <h1>Hakyll</h1>
-    
-        <time>2014-01-08</time>
-    
-    
-    
-    <hr/>
-    <p>Hello there. I think I&rsquo;m gonna resurrect this blog as I feel like writing again.
+<body>
+<div class=nav>
+<a href=/><h2 class=title>Andraž Bajt's blog</h2></a>
+<div class=nav-sub>
+<a class=nav-item href=/about/>
+About Me
+</a>
+<a class=nav-item href=/>
+Archive
+</a>
+</div>
+<div class=nav-sub-right>
+<a class=nav-icon href=https://github.com/edofic target=_blank><img src=/icons/github.svg width=20 height=20></a>
+<a class=nav-icon href=https://www.linkedin.com/in/edofic target=_blank><img src=/icons/linkedin.svg width=20 height=20></a>
+<a class=nav-icon href=https://twitter.com/edofic target=_blank><img src=/icons/twitter.svg width=20 height=20></a>
+<a class=nav-icon href=/index.xml target=_blank><img src=/icons/rss.svg width=20 height=20></a>
+<a class=nav-icon href=mailto:blog@edofic.com target=_blank><img src=/icons/email.svg width=20 height=20></a>
+</div>
+</div>
+<hr>
+<div class=main>
+<h1>Hakyll</h1>
+<time>2014-01-08</time>
+<hr>
+<p>Hello there. I think I&rsquo;m gonna resurrect this blog as I feel like writing again.
 I kinda have a general dislike for PHP and don&rsquo;t like Wordpress. I tried mucking about with Github Pages, but I&rsquo;m not a fan of Jekyll either. And then I forgot about this.</p>
-<h3 id="haskell">Haskell</h3>
-<p>A few weeks ago I rediscovered Haskell. I tried learning it once before but gave up. And insisted in Scala. This time I believe I got past the hardest part of the learning curve. And it&rsquo;s been awesome! I learned so much, even bought and start reading a book on abstract algebra. But most importantly, I&rsquo;ve written some software. Nothing fancy. Some <a href="http://projecteuler.net/">Project Euler</a> problems and some homeworks. But I got a feel for the language and I love it.</p>
-<h3 id="enter-hakyll">Enter Hakyll</h3>
+<h3 id=haskell>Haskell</h3>
+<p>A few weeks ago I rediscovered Haskell. I tried learning it once before but gave up. And insisted in Scala. This time I believe I got past the hardest part of the learning curve. And it&rsquo;s been awesome! I learned so much, even bought and start reading a book on abstract algebra. But most importantly, I&rsquo;ve written some software. Nothing fancy. Some <a href=http://projecteuler.net/>Project Euler</a> problems and some homeworks. But I got a feel for the language and I love it.</p>
+<h3 id=enter-hakyll>Enter Hakyll</h3>
 <p>I thing I googled &ldquo;jekyll haskell&rdquo; or something for fun and there is was. An implementation. I ought to try it out! And I did. Or am. Whatever.</p>
 <p>It&rsquo;s pretty sweet. You use this DSL to define your transformations that create HTML from different formats(currently writing this in markdown) and you compile it. You get this big binary that knows how to compile your site, package it and even watch sources, do live recompile and serve you on localhost. Superb for development. And it&rsquo;s fast. I like fast.</p>
-<h3 id="lets-use-this">Let&rsquo;s use this</h3>
-<p>So I&rsquo;m starting a new blog on this platform. As you can see(hopefully not anymore) I&rsquo;m in dire need of design, but this <a href="http://motherfuckingwebsite.com/">&ldquo;motherfucking website&rdquo;</a> look kind of appeals to me. Anyhow, I&rsquo;ve migrated the old posts. Copied from word press and it worked. Then I used pandoc to convert them to markdon. And then just some manual clean up to make everything nice. And now I&rsquo;m mighty impressed by the sheer speed.</p>
-
-    <hr/>
-    
-        <p>Last modified on 2014-01-08</p>
-    
-    
-        <a href="/posts/2013-10-18-virtual-machine-cpp/">
-            Previous Virtual machine in C&#43;&#43;
-        </a>
-    
-    <br/>
-    
-    <a href="/posts/2014-02-17-product-and-sum-types/">
-        Next Product and sum types (Go and Haskell)
-    </a>
-    
-
-        </div>
-        <script src="/js/instantclick.min.js" data-no-instant></script>
-        <script data-no-instant>InstantClick.init("mousedown");</script>
-    </body>
+<h3 id=lets-use-this>Let&rsquo;s use this</h3>
+<p>So I&rsquo;m starting a new blog on this platform. As you can see(hopefully not anymore) I&rsquo;m in dire need of design, but this <a href=http://motherfuckingwebsite.com/>&ldquo;motherfucking website&rdquo;</a> look kind of appeals to me. Anyhow, I&rsquo;ve migrated the old posts. Copied from word press and it worked. Then I used pandoc to convert them to markdon. And then just some manual clean up to make everything nice. And now I&rsquo;m mighty impressed by the sheer speed.</p>
+<hr>
+<p>Last modified on 2014-01-08</p>
+<a href=/posts/2013-10-18-virtual-machine-cpp/>
+Previous Virtual machine in C++
+</a>
+<br>
+<a href=/posts/2014-02-17-product-and-sum-types/>
+Next Product and sum types (Go and Haskell)
+</a>
+</div>
+<script src=/js/instantclick.min.js data-no-instant></script>
+<script data-no-instant>InstantClick.init("mousedown")</script>
+</body>
 </html>

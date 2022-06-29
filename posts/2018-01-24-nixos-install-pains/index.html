@@ -1,57 +1,37 @@
-<!DOCTYPE html>
-<html>
+<!doctype html><html>
 <head>
-<title>NixOS install &amp; labor pains</title>
-<meta charset="utf-8">
-<meta name="X-UA-Compatible" content="IE=edge">
-<meta name="google-site-verification" content="">
-<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
-
-
-
-
+<title>NixOS install & labor pains</title>
+<meta charset=utf-8>
+<meta name=X-UA-Compatible content="IE=edge">
+<meta name=google-site-verification content>
+<meta content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=0" name=viewport>
 <style>body{max-width:800px;margin:auto;line-height:1.6;font-size:18px;color:#444;padding:0 10px}h1,h2,h3{line-height:1.2}.nav a,.nav a:visited,.nav a:hover,.nav a:active{color:inherit}.nav .title{margin:0}.nav-sub{display:inline-block}.nav-item{margin:5px}.nav-sub-right{display:inline-block;float:right}.nav-icon{margin-right:5px}.main img{display:block;max-width:100%;margin:auto}.main pre{overflow:auto}" media="screen"></style>
 </head>
-    <body>
-        <div class="nav">
-            <a href="/"><h2 class="title">Andraž Bajt&#39;s blog</h2></a>
-            <div class="nav-sub">
-                
-                    <a class="nav-item" href="/about/">
-                        About Me
-                    </a>
-                
-                    <a class="nav-item" href="/">
-                        Archive
-                    </a>
-                
-            </div>
-            <div class="nav-sub-right">
-                
-                    <a class="nav-icon" href="https://github.com/edofic" target="_blank"><img src="/icons/github.svg" width="20" height="20"/></a>
-                
-                
-                    <a class="nav-icon" href="https://www.linkedin.com/in/edofic" target="_blank"><img src="/icons/linkedin.svg" width="20" height="20"/></a>
-                
-                
-                    <a class="nav-icon" href="https://twitter.com/edofic" target="_blank"><img src="/icons/twitter.svg" width="20" height="20"/></a>
-                
-                <a class="nav-icon" href="/index.xml" target="_blank"><img src="/icons/rss.svg" width="20" height="20"/></a>
-                
-                    <a class="nav-icon" href="mailto:blog@edofic.com" target="_blank"><img src="/icons/email.svg" width="20" height="20"/></a>
-                
-            </div>
-        </div>
-        <hr/>
-        <div class="main">
-    <h1>NixOS install &amp; labor pains</h1>
-    
-        <time>2018-01-24</time>
-    
-    
-    
-    <hr/>
-    <h1 id="the-back-story">The Back Story</h1>
+<body>
+<div class=nav>
+<a href=/><h2 class=title>Andraž Bajt's blog</h2></a>
+<div class=nav-sub>
+<a class=nav-item href=/about/>
+About Me
+</a>
+<a class=nav-item href=/>
+Archive
+</a>
+</div>
+<div class=nav-sub-right>
+<a class=nav-icon href=https://github.com/edofic target=_blank><img src=/icons/github.svg width=20 height=20></a>
+<a class=nav-icon href=https://www.linkedin.com/in/edofic target=_blank><img src=/icons/linkedin.svg width=20 height=20></a>
+<a class=nav-icon href=https://twitter.com/edofic target=_blank><img src=/icons/twitter.svg width=20 height=20></a>
+<a class=nav-icon href=/index.xml target=_blank><img src=/icons/rss.svg width=20 height=20></a>
+<a class=nav-icon href=mailto:blog@edofic.com target=_blank><img src=/icons/email.svg width=20 height=20></a>
+</div>
+</div>
+<hr>
+<div class=main>
+<h1>NixOS install & labor pains</h1>
+<time>2018-01-24</time>
+<hr>
+<h1 id=the-back-story>The Back Story</h1>
 <p>My first foray into world of Linux happened with Red Hat Linux 6 (original, not
 the enterprise one). It was magical but it didn&rsquo;t stick. See, I was a kid who
 liked video games. So it was back to Windows until I finally got serious about
@@ -63,10 +43,10 @@ dabbled a bit with Mint but ultimately landed on ArchLinux. I really like the
 learn it quickly. Because you just have to. Oh, and there is great
 documentation. And everything was great. Until I borked my system doing an
 upgrade or some other system package operation. A few times. Btrfs to the
-rescue!  But there must be a better way. (I was doing manual snapshots of the
+rescue! But there must be a better way. (I was doing manual snapshots of the
 root filesystem before any potentially destructive operation.</p>
 <p>Then I heard my colleagues talking about this amazing package manager called
-Nix and the derived distribution - <a href="https://nixos.org">NixOS</a>.  It&rsquo;s tag lines
+Nix and the derived distribution - <a href=https://nixos.org>NixOS</a>. It&rsquo;s tag lines
 are (respectively:</p>
 <blockquote>
 <p>The Purely Functional Package Manager</p>
@@ -75,7 +55,7 @@ are (respectively:</p>
 <blockquote>
 <p>The Purely Functional Linux Distribution</p>
 </blockquote>
-<h1 id="the-install">The Install</h1>
+<h1 id=the-install>The Install</h1>
 <p>Being the Haskell geek I am, I needed to give it a spin. I tried the Virtual
 Box image but it was weird. It has KDE and I couldn&rsquo;t really figure out how to
 alter it. So I decided to just try to do a fresh install in Virtual Box.</p>
@@ -90,7 +70,7 @@ minimal but I was happy and I built on it quickly. A few evenings of playing
 around later I just switched. I set up pretty much the same environment I had
 before so my work productivity didn&rsquo;t suffer a bit. If anything it was better -
 now I no longer feared system upgrades because rollback had my back.</p>
-<h1 id="the-crash">The Crash</h1>
+<h1 id=the-crash>The Crash</h1>
 <p>And then it happened. My hard drive failed and there were issues with the
 external backup as well. I managed to recover data but not the system. No
 biggie - NixOS is trivial to rebuild from the config file. Or so I thought. I
@@ -112,25 +92,17 @@ I decided to actually go this route to test out the procedure. Works like a
 charm. And I also did it when a bought a new computer. It&rsquo;s kind of creepy when
 after half an hour you are greeted by a familiar desktop on an unfamiliar
 hardware. Creepy but very cool.</p>
-
-    <hr/>
-    
-        <p>Last modified on 2018-01-24</p>
-    
-    
-        <a href="/posts/2017-09-01-scala-tuple-apply/">
-            Previous Implementing apply on tuples in Scala
-        </a>
-    
-    <br/>
-    
-    <a href="/posts/2018-01-25-jira-gsheet/">
-        Next Integrating Jira into Google Sheets
-    </a>
-    
-
-        </div>
-        <script src="/js/instantclick.min.js" data-no-instant></script>
-        <script data-no-instant>InstantClick.init("mousedown");</script>
-    </body>
+<hr>
+<p>Last modified on 2018-01-24</p>
+<a href=/posts/2017-09-01-scala-tuple-apply/>
+Previous Implementing apply on tuples in Scala
+</a>
+<br>
+<a href=/posts/2018-01-25-jira-gsheet/>
+Next Integrating Jira into Google Sheets
+</a>
+</div>
+<script src=/js/instantclick.min.js data-no-instant></script>
+<script data-no-instant>InstantClick.init("mousedown")</script>
+</body>
 </html>

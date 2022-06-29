@@ -1,0 +1,9 @@
+{
+	http_port 3000
+	auto_https off
+}
+
+localhost:3000 {
+	reverse_proxy /chat* localhost:8080
+	reverse_proxy * localhost:8000
+}

@@ -1,452 +1,424 @@
-<!DOCTYPE html>
-<html>
+<!doctype html><html>
 <head>
 <title>Approaches to designing a Haskell API</title>
-<meta charset="utf-8">
-<meta name="X-UA-Compatible" content="IE=edge">
-<meta name="google-site-verification" content="">
-<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
-
-
-
-
+<meta charset=utf-8>
+<meta name=X-UA-Compatible content="IE=edge">
+<meta name=google-site-verification content>
+<meta content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=0" name=viewport>
 <style>body{max-width:800px;margin:auto;line-height:1.6;font-size:18px;color:#444;padding:0 10px}h1,h2,h3{line-height:1.2}.nav a,.nav a:visited,.nav a:hover,.nav a:active{color:inherit}.nav .title{margin:0}.nav-sub{display:inline-block}.nav-item{margin:5px}.nav-sub-right{display:inline-block;float:right}.nav-icon{margin-right:5px}.main img{display:block;max-width:100%;margin:auto}.main pre{overflow:auto}" media="screen"></style>
 </head>
-    <body>
-        <div class="nav">
-            <a href="/"><h2 class="title">Andraž Bajt&#39;s blog</h2></a>
-            <div class="nav-sub">
-                
-                    <a class="nav-item" href="/about/">
-                        About Me
-                    </a>
-                
-                    <a class="nav-item" href="/">
-                        Archive
-                    </a>
-                
-            </div>
-            <div class="nav-sub-right">
-                
-                    <a class="nav-icon" href="https://github.com/edofic" target="_blank"><img src="/icons/github.svg" width="20" height="20"/></a>
-                
-                
-                    <a class="nav-icon" href="https://www.linkedin.com/in/edofic" target="_blank"><img src="/icons/linkedin.svg" width="20" height="20"/></a>
-                
-                
-                    <a class="nav-icon" href="https://twitter.com/edofic" target="_blank"><img src="/icons/twitter.svg" width="20" height="20"/></a>
-                
-                <a class="nav-icon" href="/index.xml" target="_blank"><img src="/icons/rss.svg" width="20" height="20"/></a>
-                
-                    <a class="nav-icon" href="mailto:blog@edofic.com" target="_blank"><img src="/icons/email.svg" width="20" height="20"/></a>
-                
-            </div>
-        </div>
-        <hr/>
-        <div class="main">
-    <h1>Approaches to designing a Haskell API</h1>
-    
-        <time>2014-10-05</time>
-    
-    
-    
-    <hr/>
-    <p>Recently I&rsquo;ve been thinking about the design of programming interfaces, especially in Haskell. But don&rsquo;t let the title misguide you; this is not supposed to be a tutorial or a guide but simply an showcase of different styles. Feel free to tell me I&rsquo;m wrong or missed something.</p>
-<h2 id="the-problem">The problem</h2>
+<body>
+<div class=nav>
+<a href=/><h2 class=title>Andraž Bajt's blog</h2></a>
+<div class=nav-sub>
+<a class=nav-item href=/about/>
+About Me
+</a>
+<a class=nav-item href=/>
+Archive
+</a>
+</div>
+<div class=nav-sub-right>
+<a class=nav-icon href=https://github.com/edofic target=_blank><img src=/icons/github.svg width=20 height=20></a>
+<a class=nav-icon href=https://www.linkedin.com/in/edofic target=_blank><img src=/icons/linkedin.svg width=20 height=20></a>
+<a class=nav-icon href=https://twitter.com/edofic target=_blank><img src=/icons/twitter.svg width=20 height=20></a>
+<a class=nav-icon href=/index.xml target=_blank><img src=/icons/rss.svg width=20 height=20></a>
+<a class=nav-icon href=mailto:blog@edofic.com target=_blank><img src=/icons/email.svg width=20 height=20></a>
+</div>
+</div>
+<hr>
+<div class=main>
+<h1>Approaches to designing a Haskell API</h1>
+<time>2014-10-05</time>
+<hr>
+<p>Recently I&rsquo;ve been thinking about the design of programming interfaces, especially in Haskell. But don&rsquo;t let the title misguide you; this is not supposed to be a tutorial or a guide but simply an showcase of different styles. Feel free to tell me I&rsquo;m wrong or missed something.</p>
+<h2 id=the-problem>The problem</h2>
 <p>Let&rsquo;s say we are writing an interface to RESTful web service. Our goal is to create type safe functions and descriptive models but all in all easy to use.</p>
 <p>The service should be simple so our examples are kept small. So let&rsquo;s have a single resource that supports <code>POST</code> and <code>GET</code> on single items. In pure Haskell it would look like</p>
-<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2">
-<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2>
+<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
+<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">4
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">5
 </span></code></pre></td>
-<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code class="language-haskell" data-lang="haskell"><span style="color:#66d9ef">newtype</span> <span style="color:#66d9ef">Id</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">Id</span> <span style="color:#66d9ef">Integer</span>
-<span style="color:#66d9ef">data</span> <span style="color:#66d9ef">Record</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">Record</span> { <span style="color:#f92672">...</span> }
+<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
+<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-haskell data-lang=haskell><span style=color:#66d9ef>newtype</span> <span style=color:#66d9ef>Id</span> <span style=color:#f92672>=</span> <span style=color:#66d9ef>Id</span> <span style=color:#66d9ef>Integer</span>
+<span style=color:#66d9ef>data</span> <span style=color:#66d9ef>Record</span> <span style=color:#f92672>=</span> <span style=color:#66d9ef>Record</span> { <span style=color:#f92672>...</span> }
 
-<span style="color:#a6e22e">get</span> <span style="color:#f92672">::</span> <span style="color:#66d9ef">Id</span> <span style="color:#f92672">-&gt;</span> <span style="color:#66d9ef">Record</span>
-<span style="color:#a6e22e">create</span> <span style="color:#f92672">::</span> <span style="color:#66d9ef">Record</span> <span style="color:#f92672">-&gt;</span> <span style="color:#66d9ef">Id</span>
+<span style=color:#a6e22e>get</span> <span style=color:#f92672>::</span> <span style=color:#66d9ef>Id</span> <span style=color:#f92672>-&gt;</span> <span style=color:#66d9ef>Record</span>
+<span style=color:#a6e22e>create</span> <span style=color:#f92672>::</span> <span style=color:#66d9ef>Record</span> <span style=color:#f92672>-&gt;</span> <span style=color:#66d9ef>Id</span>
 </code></pre></td></tr></table>
 </div>
 </div><p>But this functions couldn&rsquo;t possibly be pure since they should be talking to our service, so we have to adapt this interface.</p>
-<h2 id="the-oo-way">The OO way</h2>
+<h2 id=the-oo-way>The OO way</h2>
 <p>Our functions should at the very least take some sort of a client as an input. Let&rsquo;s define a client that does raw JSON requests to our service. This is just a rough sketch so we have something to work with</p>
-<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2">
-<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2>
+<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
+<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
 </span></code></pre></td>
-<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code class="language-haskell" data-lang="haskell"><span style="color:#66d9ef">type</span> <span style="color:#66d9ef">Client</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">Method</span> <span style="color:#f92672">-&gt;</span> <span style="color:#66d9ef">Path</span> <span style="color:#f92672">-&gt;</span> <span style="color:#66d9ef">Maybe</span> <span style="color:#66d9ef">RequestBody</span> <span style="color:#f92672">-&gt;</span> <span style="color:#66d9ef">IO</span> <span style="color:#66d9ef">Response</span>
+<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
+<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-haskell data-lang=haskell><span style=color:#66d9ef>type</span> <span style=color:#66d9ef>Client</span> <span style=color:#f92672>=</span> <span style=color:#66d9ef>Method</span> <span style=color:#f92672>-&gt;</span> <span style=color:#66d9ef>Path</span> <span style=color:#f92672>-&gt;</span> <span style=color:#66d9ef>Maybe</span> <span style=color:#66d9ef>RequestBody</span> <span style=color:#f92672>-&gt;</span> <span style=color:#66d9ef>IO</span> <span style=color:#66d9ef>Response</span>
 </code></pre></td></tr></table>
 </div>
 </div><p>Our API would now look like</p>
-<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2">
-<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
+<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2>
+<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
+<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">4
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">5
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">6
 </span></code></pre></td>
-<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code class="language-haskell" data-lang="haskell"><span style="color:#a6e22e">get</span> <span style="color:#f92672">::</span> <span style="color:#66d9ef">Client</span> <span style="color:#f92672">-&gt;</span> <span style="color:#66d9ef">Id</span> <span style="color:#f92672">-&gt;</span> <span style="color:#66d9ef">IO</span> <span style="color:#66d9ef">Record</span>
-<span style="color:#a6e22e">get</span> client id <span style="color:#f92672">=</span> fromJSON <span style="color:#f92672">&lt;$&gt;</span> client <span style="color:#e6db74">&#34;GET&#34;</span> (show id) <span style="color:#66d9ef">Nothing</span>
+<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
+<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-haskell data-lang=haskell><span style=color:#a6e22e>get</span> <span style=color:#f92672>::</span> <span style=color:#66d9ef>Client</span> <span style=color:#f92672>-&gt;</span> <span style=color:#66d9ef>Id</span> <span style=color:#f92672>-&gt;</span> <span style=color:#66d9ef>IO</span> <span style=color:#66d9ef>Record</span>
+<span style=color:#a6e22e>get</span> client id <span style=color:#f92672>=</span> fromJSON <span style=color:#f92672>&lt;$&gt;</span> client <span style=color:#e6db74>&#34;GET&#34;</span> (show id) <span style=color:#66d9ef>Nothing</span>
 
-<span style="color:#a6e22e">create</span> <span style="color:#f92672">::</span> <span style="color:#66d9ef">Client</span> <span style="color:#f92672">-&gt;</span> <span style="color:#66d9ef">Record</span> <span style="color:#f92672">-&gt;</span> <span style="color:#66d9ef">IO</span> <span style="color:#66d9ef">Id</span>
-<span style="color:#a6e22e">create</span> client record <span style="color:#f92672">=</span>
-  fromJSON <span style="color:#f92672">&lt;$&gt;</span> client <span style="color:#e6db74">&#34;POST&#34;</span> <span style="color:#e6db74">&#34;&#34;</span> <span style="color:#f92672">$</span> <span style="color:#66d9ef">Just</span> <span style="color:#f92672">$</span> toJSON record
+<span style=color:#a6e22e>create</span> <span style=color:#f92672>::</span> <span style=color:#66d9ef>Client</span> <span style=color:#f92672>-&gt;</span> <span style=color:#66d9ef>Record</span> <span style=color:#f92672>-&gt;</span> <span style=color:#66d9ef>IO</span> <span style=color:#66d9ef>Id</span>
+<span style=color:#a6e22e>create</span> client record <span style=color:#f92672>=</span>
+  fromJSON <span style=color:#f92672>&lt;$&gt;</span> client <span style=color:#e6db74>&#34;POST&#34;</span> <span style=color:#e6db74>&#34;&#34;</span> <span style=color:#f92672>$</span> <span style=color:#66d9ef>Just</span> <span style=color:#f92672>$</span> toJSON record
 </code></pre></td></tr></table>
 </div>
 </div><p>Which is actually not bad. We presume our service (or the network) will never fail, we push the burden of managing the client to the user and we clutter every function&rsquo;s signature with <code>Client</code> but we could do worse. On the up side we can now use this in a object-oriented-looking way.</p>
-<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2">
-<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2>
+<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
+<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
 </span></code></pre></td>
-<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code class="language-haskell" data-lang="haskell"><span style="color:#a6e22e">client</span> `get` someRecordId
+<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
+<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-haskell data-lang=haskell><span style=color:#a6e22e>client</span> `get` someRecordId
 </code></pre></td></tr></table>
 </div>
-</div><h2 id="monads">Monads</h2>
+</div><h2 id=monads>Monads</h2>
 <p>Everything is better with monads right? So we can define a monad to replace the client. What&rsquo;s the essence of the client? It carries some configuration and has the ability to perform IO. So we build a monad that can do these two things. And since I&rsquo;m lazy I&rsquo;ll just do</p>
-<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2">
-<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2>
+<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
+<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
 </span></code></pre></td>
-<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code class="language-haskell" data-lang="haskell"><span style="color:#66d9ef">type</span> <span style="color:#66d9ef">ClientM</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">ReaderT</span> <span style="color:#66d9ef">ClientConfig</span> <span style="color:#66d9ef">IO</span>
+<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
+<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-haskell data-lang=haskell><span style=color:#66d9ef>type</span> <span style=color:#66d9ef>ClientM</span> <span style=color:#f92672>=</span> <span style=color:#66d9ef>ReaderT</span> <span style=color:#66d9ef>ClientConfig</span> <span style=color:#66d9ef>IO</span>
 </code></pre></td></tr></table>
 </div>
 </div><p>But there is a problem. It is impossible to write an IO transformer so this new monad will have to be the base of the monad transformer stack. And this hurts modularity. Can we do better? Yes! Let&rsquo;s just do a monad class</p>
-<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2">
-<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2>
+<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
+<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
 </span></code></pre></td>
-<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code class="language-haskell" data-lang="haskell"><span style="color:#66d9ef">class</span> <span style="color:#66d9ef">Monad</span> m <span style="color:#f92672">=&gt;</span> <span style="color:#66d9ef">MonadClient</span> m <span style="color:#66d9ef">where</span>
-  rawRequest <span style="color:#f92672">::</span> <span style="color:#66d9ef">Method</span> <span style="color:#f92672">-&gt;</span> <span style="color:#66d9ef">Path</span> <span style="color:#f92672">-&gt;</span> <span style="color:#66d9ef">Maybe</span> <span style="color:#66d9ef">RequestBody</span> <span style="color:#f92672">-&gt;</span> m <span style="color:#66d9ef">Response</span>
+<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
+<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-haskell data-lang=haskell><span style=color:#66d9ef>class</span> <span style=color:#66d9ef>Monad</span> m <span style=color:#f92672>=&gt;</span> <span style=color:#66d9ef>MonadClient</span> m <span style=color:#66d9ef>where</span>
+  rawRequest <span style=color:#f92672>::</span> <span style=color:#66d9ef>Method</span> <span style=color:#f92672>-&gt;</span> <span style=color:#66d9ef>Path</span> <span style=color:#f92672>-&gt;</span> <span style=color:#66d9ef>Maybe</span> <span style=color:#66d9ef>RequestBody</span> <span style=color:#f92672>-&gt;</span> m <span style=color:#66d9ef>Response</span>
 </code></pre></td></tr></table>
 </div>
 </div><p>and we can provide a way to run this again with <code>Reader</code> and <code>IO</code>.</p>
-<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2">
-<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2>
+<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
+<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">4
 </span></code></pre></td>
-<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code class="language-haskell" data-lang="haskell"><span style="color:#66d9ef">instance</span> (<span style="color:#66d9ef">MonadReader</span> <span style="color:#66d9ef">ClientConfig</span> m, <span style="color:#66d9ef">MonadIO</span> m) <span style="color:#f92672">=&gt;</span> <span style="color:#66d9ef">MonadClient</span> m <span style="color:#66d9ef">where</span>
-  rawRequest method path body <span style="color:#f92672">=</span> <span style="color:#66d9ef">do</span>
-    conf <span style="color:#f92672">&lt;-</span> ask
-    liftIO <span style="color:#f92672">$</span> <span style="color:#f92672">...</span>
+<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
+<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-haskell data-lang=haskell><span style=color:#66d9ef>instance</span> (<span style=color:#66d9ef>MonadReader</span> <span style=color:#66d9ef>ClientConfig</span> m, <span style=color:#66d9ef>MonadIO</span> m) <span style=color:#f92672>=&gt;</span> <span style=color:#66d9ef>MonadClient</span> m <span style=color:#66d9ef>where</span>
+  rawRequest method path body <span style=color:#f92672>=</span> <span style=color:#66d9ef>do</span>
+    conf <span style=color:#f92672>&lt;-</span> ask
+    liftIO <span style=color:#f92672>$</span> <span style=color:#f92672>...</span>
 </code></pre></td></tr></table>
 </div>
 </div><p>But now we can do better. We can write an instance for running tests that doesn&rsquo;t perform IO but instead simulates the service locally.</p>
 <p>This is somewhat lighter for the user since he doesn&rsquo;t need to manage the client any more neither does he need to use the client for every request. He just need to put configuration and IO into his monad stack.</p>
-<h2 id="mtl">mtl?</h2>
-<p>Can we push the monad class approach further? Let&rsquo;s take a look at the <a href="http://hackage.haskell.org/package/mtl">mtl</a> library. It provides classes of operations for every monad. We can write a class for our whole service.</p>
-<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2">
-<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+<h2 id=mtl>mtl?</h2>
+<p>Can we push the monad class approach further? Let&rsquo;s take a look at the <a href=http://hackage.haskell.org/package/mtl>mtl</a> library. It provides classes of operations for every monad. We can write a class for our whole service.</p>
+<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2>
+<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
+<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
 </span></code></pre></td>
-<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code class="language-haskell" data-lang="haskell"><span style="color:#66d9ef">class</span> <span style="color:#66d9ef">MonadClient</span> m <span style="color:#66d9ef">where</span>
-  get <span style="color:#f92672">::</span> <span style="color:#66d9ef">Id</span> <span style="color:#f92672">-&gt;</span> m <span style="color:#66d9ef">Record</span>
-  create <span style="color:#f92672">::</span> <span style="color:#66d9ef">Record</span> <span style="color:#f92672">-&gt;</span> m <span style="color:#66d9ef">Id</span>
+<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
+<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-haskell data-lang=haskell><span style=color:#66d9ef>class</span> <span style=color:#66d9ef>MonadClient</span> m <span style=color:#66d9ef>where</span>
+  get <span style=color:#f92672>::</span> <span style=color:#66d9ef>Id</span> <span style=color:#f92672>-&gt;</span> m <span style=color:#66d9ef>Record</span>
+  create <span style=color:#f92672>::</span> <span style=color:#66d9ef>Record</span> <span style=color:#f92672>-&gt;</span> m <span style=color:#66d9ef>Id</span>
 </code></pre></td></tr></table>
 </div>
 </div><p>And now implement this in terms of our first (naive) implementation which is not directly exported any more. User only sees the class and gets an instance that will work with the configuration and ability to perform IO. This now makes it very easy to write an instance that uses <code>State</code> (or something similar) to simulate the service for testing without bothering with JSON and other implementation details of the actual service.</p>
-<p>But it also has a downside. Imagine a bigger service with multiple resources. The class will explode and become unwieldy. Also making the implementation harder. If the implementor wants to support another backend he now has a big instance to write. If he wants to add a method he now has several instances to fix. Sound a bit like the <a href="http://en.wikipedia.org/wiki/Expression_problem">expression problem</a>.</p>
-<h2 id="purity-to-the-rescue">Purity to the rescue</h2>
+<p>But it also has a downside. Imagine a bigger service with multiple resources. The class will explode and become unwieldy. Also making the implementation harder. If the implementor wants to support another backend he now has a big instance to write. If he wants to add a method he now has several instances to fix. Sound a bit like the <a href=http://en.wikipedia.org/wiki/Expression_problem>expression problem</a>.</p>
+<h2 id=purity-to-the-rescue>Purity to the rescue</h2>
 <p>A good way to structure your code is to separate pure functions from impure actions and minimize the latter.</p>
 <p>One way to do this is to make a pure <em>description</em> of requests and responses. Then define a uniform intermediate representation that works well with our protocol and the client that actually does the requests. Only the client needs to perform any effects, all other code can now be pure.</p>
-<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2">
-<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
+<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2>
+<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
+<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">11
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">12
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">13
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">14
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">15
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">16
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">17
 </span></code></pre></td>
-<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code class="language-haskell" data-lang="haskell"><span style="color:#66d9ef">data</span> <span style="color:#66d9ef">Request</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">RequestGet</span> <span style="color:#66d9ef">Id</span> <span style="color:#f92672">|</span> <span style="color:#66d9ef">RequestCreate</span> <span style="color:#66d9ef">Record</span>
-<span style="color:#66d9ef">data</span> <span style="color:#66d9ef">Resp</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">ResponseGet</span> <span style="color:#66d9ef">Record</span> <span style="color:#f92672">|</span> <span style="color:#66d9ef">ResponseCreate</span> <span style="color:#66d9ef">Id</span>
+<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
+<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-haskell data-lang=haskell><span style=color:#66d9ef>data</span> <span style=color:#66d9ef>Request</span> <span style=color:#f92672>=</span> <span style=color:#66d9ef>RequestGet</span> <span style=color:#66d9ef>Id</span> <span style=color:#f92672>|</span> <span style=color:#66d9ef>RequestCreate</span> <span style=color:#66d9ef>Record</span>
+<span style=color:#66d9ef>data</span> <span style=color:#66d9ef>Resp</span> <span style=color:#f92672>=</span> <span style=color:#66d9ef>ResponseGet</span> <span style=color:#66d9ef>Record</span> <span style=color:#f92672>|</span> <span style=color:#66d9ef>ResponseCreate</span> <span style=color:#66d9ef>Id</span>
 
-<span style="color:#66d9ef">data</span> <span style="color:#66d9ef">Raw</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">Raw</span> <span style="color:#66d9ef">Method</span> <span style="color:#66d9ef">Path</span> (<span style="color:#66d9ef">Maybe</span> <span style="color:#66d9ef">RequestBody</span>)
+<span style=color:#66d9ef>data</span> <span style=color:#66d9ef>Raw</span> <span style=color:#f92672>=</span> <span style=color:#66d9ef>Raw</span> <span style=color:#66d9ef>Method</span> <span style=color:#66d9ef>Path</span> (<span style=color:#66d9ef>Maybe</span> <span style=color:#66d9ef>RequestBody</span>)
 
-<span style="color:#a6e22e">toRaw</span> <span style="color:#f92672">::</span> <span style="color:#66d9ef">Request</span> <span style="color:#f92672">-&gt;</span> <span style="color:#66d9ef">Raw</span>
-<span style="color:#a6e22e">toRaw</span> (<span style="color:#66d9ef">RequestGet</span> id) <span style="color:#f92672">=</span> <span style="color:#66d9ef">Raw</span> <span style="color:#e6db74">&#34;GET&#34;</span> (show id) <span style="color:#66d9ef">Nothing</span>
-<span style="color:#a6e22e">toRaw</span> (<span style="color:#66d9ef">RequestCreate</span> record) <span style="color:#f92672">=</span> <span style="color:#66d9ef">Raw</span> <span style="color:#e6db74">&#34;POST&#34;</span> <span style="color:#e6db74">&#34;&#34;</span> <span style="color:#f92672">$</span> <span style="color:#66d9ef">Just</span> <span style="color:#f92672">$</span> toJSON record
+<span style=color:#a6e22e>toRaw</span> <span style=color:#f92672>::</span> <span style=color:#66d9ef>Request</span> <span style=color:#f92672>-&gt;</span> <span style=color:#66d9ef>Raw</span>
+<span style=color:#a6e22e>toRaw</span> (<span style=color:#66d9ef>RequestGet</span> id) <span style=color:#f92672>=</span> <span style=color:#66d9ef>Raw</span> <span style=color:#e6db74>&#34;GET&#34;</span> (show id) <span style=color:#66d9ef>Nothing</span>
+<span style=color:#a6e22e>toRaw</span> (<span style=color:#66d9ef>RequestCreate</span> record) <span style=color:#f92672>=</span> <span style=color:#66d9ef>Raw</span> <span style=color:#e6db74>&#34;POST&#34;</span> <span style=color:#e6db74>&#34;&#34;</span> <span style=color:#f92672>$</span> <span style=color:#66d9ef>Just</span> <span style=color:#f92672>$</span> toJSON record
 
-<span style="color:#a6e22e">fromResponse</span> <span style="color:#f92672">::</span> <span style="color:#66d9ef">Response</span> <span style="color:#f92672">-&gt;</span> <span style="color:#66d9ef">Resp</span>
-<span style="color:#f92672">...</span>
+<span style=color:#a6e22e>fromResponse</span> <span style=color:#f92672>::</span> <span style=color:#66d9ef>Response</span> <span style=color:#f92672>-&gt;</span> <span style=color:#66d9ef>Resp</span>
+<span style=color:#f92672>...</span>
 
-<span style="color:#a6e22e">client</span> <span style="color:#f92672">::</span> <span style="color:#66d9ef">Raw</span> <span style="color:#f92672">-&gt;</span> <span style="color:#66d9ef">IO</span> <span style="color:#66d9ef">Response</span>
-<span style="color:#f92672">...</span>
+<span style=color:#a6e22e>client</span> <span style=color:#f92672>::</span> <span style=color:#66d9ef>Raw</span> <span style=color:#f92672>-&gt;</span> <span style=color:#66d9ef>IO</span> <span style=color:#66d9ef>Response</span>
+<span style=color:#f92672>...</span>
 
-<span style="color:#a6e22e">request</span> <span style="color:#f92672">::</span> <span style="color:#66d9ef">Request</span> <span style="color:#f92672">-&gt;</span> <span style="color:#66d9ef">IO</span> <span style="color:#66d9ef">Resp</span>
-<span style="color:#a6e22e">request</span> r <span style="color:#f92672">=</span> fromResponse <span style="color:#f92672">&lt;$&gt;</span> client (toRaw r)
+<span style=color:#a6e22e>request</span> <span style=color:#f92672>::</span> <span style=color:#66d9ef>Request</span> <span style=color:#f92672>-&gt;</span> <span style=color:#66d9ef>IO</span> <span style=color:#66d9ef>Resp</span>
+<span style=color:#a6e22e>request</span> r <span style=color:#f92672>=</span> fromResponse <span style=color:#f92672>&lt;$&gt;</span> client (toRaw r)
 </code></pre></td></tr></table>
 </div>
 </div><p>But this is terrible. First of all the <code>fromResponse</code> function is hard to write. But most importantly the <code>request</code> function is horribly unsafe. We cannot ensure the response will match the request.</p>
-<h2 id="gadts">GADTs</h2>
+<h2 id=gadts>GADTs</h2>
 <p>To ensure this we need generalised algebraic datatypes.</p>
-<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2">
-<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
+<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2>
+<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
+<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">11
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">12
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">13
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">14
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">15
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">16
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">17
 </span></code></pre></td>
-<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code class="language-haskell" data-lang="haskell"><span style="color:#66d9ef">data</span> <span style="color:#66d9ef">Request</span> resp <span style="color:#66d9ef">where</span>
-  <span style="color:#66d9ef">RequestGet</span> <span style="color:#f92672">::</span> <span style="color:#66d9ef">Id</span> <span style="color:#f92672">-&gt;</span> <span style="color:#66d9ef">Request</span> <span style="color:#66d9ef">Record</span>
-  <span style="color:#66d9ef">RequestCreate</span> <span style="color:#f92672">::</span> <span style="color:#66d9ef">Record</span> <span style="color:#f92672">-&gt;</span> <span style="color:#66d9ef">Request</span> <span style="color:#66d9ef">Id</span>
+<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
+<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-haskell data-lang=haskell><span style=color:#66d9ef>data</span> <span style=color:#66d9ef>Request</span> resp <span style=color:#66d9ef>where</span>
+  <span style=color:#66d9ef>RequestGet</span> <span style=color:#f92672>::</span> <span style=color:#66d9ef>Id</span> <span style=color:#f92672>-&gt;</span> <span style=color:#66d9ef>Request</span> <span style=color:#66d9ef>Record</span>
+  <span style=color:#66d9ef>RequestCreate</span> <span style=color:#f92672>::</span> <span style=color:#66d9ef>Record</span> <span style=color:#f92672>-&gt;</span> <span style=color:#66d9ef>Request</span> <span style=color:#66d9ef>Id</span>
 
-<span style="color:#66d9ef">data</span> <span style="color:#66d9ef">Raw</span> a <span style="color:#f92672">=</span> <span style="color:#66d9ef">Raw</span> <span style="color:#66d9ef">Method</span> <span style="color:#66d9ef">Path</span> (<span style="color:#66d9ef">Maybe</span> <span style="color:#66d9ef">RequestBody</span>) (<span style="color:#66d9ef">JSON</span> <span style="color:#f92672">-&gt;</span> a)
+<span style=color:#66d9ef>data</span> <span style=color:#66d9ef>Raw</span> a <span style=color:#f92672>=</span> <span style=color:#66d9ef>Raw</span> <span style=color:#66d9ef>Method</span> <span style=color:#66d9ef>Path</span> (<span style=color:#66d9ef>Maybe</span> <span style=color:#66d9ef>RequestBody</span>) (<span style=color:#66d9ef>JSON</span> <span style=color:#f92672>-&gt;</span> a)
 
-<span style="color:#a6e22e">toRaw</span> <span style="color:#f92672">::</span> <span style="color:#66d9ef">Request</span> a <span style="color:#f92672">-&gt;</span> <span style="color:#66d9ef">Raw</span> a
-<span style="color:#a6e22e">toRaw</span> (<span style="color:#66d9ef">RequestGet</span> id) <span style="color:#f92672">=</span> <span style="color:#66d9ef">Raw</span> <span style="color:#e6db74">&#34;GET&#34;</span> (show id) <span style="color:#66d9ef">Nothing</span> fromJSON
-<span style="color:#a6e22e">toRaw</span> (<span style="color:#66d9ef">RequestCreate</span> record) <span style="color:#f92672">=</span> <span style="color:#66d9ef">Raw</span> <span style="color:#e6db74">&#34;POST&#34;</span> <span style="color:#e6db74">&#34;&#34;</span> (<span style="color:#66d9ef">Just</span> <span style="color:#f92672">$</span> toJSON record ) fromJSON
+<span style=color:#a6e22e>toRaw</span> <span style=color:#f92672>::</span> <span style=color:#66d9ef>Request</span> a <span style=color:#f92672>-&gt;</span> <span style=color:#66d9ef>Raw</span> a
+<span style=color:#a6e22e>toRaw</span> (<span style=color:#66d9ef>RequestGet</span> id) <span style=color:#f92672>=</span> <span style=color:#66d9ef>Raw</span> <span style=color:#e6db74>&#34;GET&#34;</span> (show id) <span style=color:#66d9ef>Nothing</span> fromJSON
+<span style=color:#a6e22e>toRaw</span> (<span style=color:#66d9ef>RequestCreate</span> record) <span style=color:#f92672>=</span> <span style=color:#66d9ef>Raw</span> <span style=color:#e6db74>&#34;POST&#34;</span> <span style=color:#e6db74>&#34;&#34;</span> (<span style=color:#66d9ef>Just</span> <span style=color:#f92672>$</span> toJSON record ) fromJSON
 
-<span style="color:#a6e22e">client</span> <span style="color:#f92672">::</span> <span style="color:#66d9ef">Raw</span> <span style="color:#f92672">-&gt;</span> <span style="color:#66d9ef">IO</span> <span style="color:#66d9ef">Response</span>
-<span style="color:#f92672">...</span>
+<span style=color:#a6e22e>client</span> <span style=color:#f92672>::</span> <span style=color:#66d9ef>Raw</span> <span style=color:#f92672>-&gt;</span> <span style=color:#66d9ef>IO</span> <span style=color:#66d9ef>Response</span>
+<span style=color:#f92672>...</span>
 
-<span style="color:#a6e22e">request</span> <span style="color:#f92672">::</span> <span style="color:#66d9ef">Request</span> a <span style="color:#f92672">-&gt;</span> <span style="color:#66d9ef">IO</span> a
-<span style="color:#a6e22e">request</span> r <span style="color:#f92672">=</span> parse <span style="color:#f92672">&lt;$&gt;</span> client raw <span style="color:#66d9ef">where</span>
-  raw<span style="color:#f92672">@</span>(<span style="color:#66d9ef">Raw</span> <span style="color:#66d9ef">_</span> <span style="color:#66d9ef">_</span> <span style="color:#66d9ef">_</span> parse) <span style="color:#f92672">=</span> toRaw
+<span style=color:#a6e22e>request</span> <span style=color:#f92672>::</span> <span style=color:#66d9ef>Request</span> a <span style=color:#f92672>-&gt;</span> <span style=color:#66d9ef>IO</span> a
+<span style=color:#a6e22e>request</span> r <span style=color:#f92672>=</span> parse <span style=color:#f92672>&lt;$&gt;</span> client raw <span style=color:#66d9ef>where</span>
+  raw<span style=color:#f92672>@</span>(<span style=color:#66d9ef>Raw</span> <span style=color:#66d9ef>_</span> <span style=color:#66d9ef>_</span> <span style=color:#66d9ef>_</span> parse) <span style=color:#f92672>=</span> toRaw
 
 </code></pre></td></tr></table>
 </div>
 </div><p>There are two things going on here. First we encode the type of response into the request so <code>request</code> can be safe. Second we use that type information that is locally available inside <code>toRaw</code> to pick the right instance for decoding JSON and put the specialised function into the raw representation.</p>
 <p>We now have it all: safety, modularity (we can write tests in terms of pure requests and responses), we can simply plug a new backend and even explicitly talk about requests since they are just plain old values.</p>
 <p>But we cannot statically determine the type of the request nor can we simply add a new type of request. Former being a philosophical remark and latter a real world requirement. We&rsquo;ve again hit the expression problem. If we add a request we need to modify existing code in all functions creating an intermediate representation (or working directly with requests). At least adding a new backed is very simple since it only depends on the intermediate representation.</p>
-<h2 id="type-classes-revisited">Type classes revisited</h2>
+<h2 id=type-classes-revisited>Type classes revisited</h2>
 <p>We want to be able to statically enforce types of requests. This is simply achieved if we define a single constructor type for every request instead of a sum type of all requests. But now we cannot have a function to convert it into an intermediate form. But we can have a type class. Moreover using multi param type classes and functional dependencies we can encode the type of result for each request and require the instances to parse the result from the intermediate form. Functional dependencies will ensure we can always compute the result type from the request type.</p>
-<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2">
-<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">19
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">20
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">21
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">22
+<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2>
+<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
+<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">11
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">12
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">13
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">14
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">15
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">16
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">17
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">18
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">19
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">20
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">21
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">22
 </span></code></pre></td>
-<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code class="language-haskell" data-lang="haskell"><span style="color:#66d9ef">data</span> <span style="color:#66d9ef">Get</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">Get</span> <span style="color:#66d9ef">Id</span>
-<span style="color:#66d9ef">data</span> <span style="color:#66d9ef">Create</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">Create</span> <span style="color:#66d9ef">Record</span>
+<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
+<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-haskell data-lang=haskell><span style=color:#66d9ef>data</span> <span style=color:#66d9ef>Get</span> <span style=color:#f92672>=</span> <span style=color:#66d9ef>Get</span> <span style=color:#66d9ef>Id</span>
+<span style=color:#66d9ef>data</span> <span style=color:#66d9ef>Create</span> <span style=color:#f92672>=</span> <span style=color:#66d9ef>Create</span> <span style=color:#66d9ef>Record</span>
 
-<span style="color:#66d9ef">data</span> <span style="color:#66d9ef">Raw</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">Raw</span> <span style="color:#66d9ef">Method</span> <span style="color:#66d9ef">Path</span> (<span style="color:#66d9ef">Maybe</span> <span style="color:#66d9ef">RequestBody</span>)
+<span style=color:#66d9ef>data</span> <span style=color:#66d9ef>Raw</span> <span style=color:#f92672>=</span> <span style=color:#66d9ef>Raw</span> <span style=color:#66d9ef>Method</span> <span style=color:#66d9ef>Path</span> (<span style=color:#66d9ef>Maybe</span> <span style=color:#66d9ef>RequestBody</span>)
 
-<span style="color:#66d9ef">class</span> <span style="color:#66d9ef">RequestRaw</span> req resp <span style="color:#66d9ef">where</span>
-  toRaw <span style="color:#f92672">::</span> req <span style="color:#f92672">-&gt;</span> <span style="color:#66d9ef">Raw</span>
-  fromResponse <span style="color:#f92672">::</span> <span style="color:#66d9ef">Response</span> <span style="color:#f92672">-&gt;</span> resp
+<span style=color:#66d9ef>class</span> <span style=color:#66d9ef>RequestRaw</span> req resp <span style=color:#66d9ef>where</span>
+  toRaw <span style=color:#f92672>::</span> req <span style=color:#f92672>-&gt;</span> <span style=color:#66d9ef>Raw</span>
+  fromResponse <span style=color:#f92672>::</span> <span style=color:#66d9ef>Response</span> <span style=color:#f92672>-&gt;</span> resp
 
-<span style="color:#66d9ef">instance</span> <span style="color:#66d9ef">RequestRaw</span> <span style="color:#66d9ef">Get</span> <span style="color:#66d9ef">Record</span> <span style="color:#66d9ef">where</span>
-  toRaw (<span style="color:#66d9ef">Get</span> id) <span style="color:#f92672">=</span> <span style="color:#66d9ef">Raw</span> <span style="color:#e6db74">&#34;GET&#34;</span> (show id) <span style="color:#66d9ef">Nothing</span>
-  fromResponse <span style="color:#f92672">=</span> fromJSON
+<span style=color:#66d9ef>instance</span> <span style=color:#66d9ef>RequestRaw</span> <span style=color:#66d9ef>Get</span> <span style=color:#66d9ef>Record</span> <span style=color:#66d9ef>where</span>
+  toRaw (<span style=color:#66d9ef>Get</span> id) <span style=color:#f92672>=</span> <span style=color:#66d9ef>Raw</span> <span style=color:#e6db74>&#34;GET&#34;</span> (show id) <span style=color:#66d9ef>Nothing</span>
+  fromResponse <span style=color:#f92672>=</span> fromJSON
 
-<span style="color:#66d9ef">instance</span> <span style="color:#66d9ef">RequestRaw</span> <span style="color:#66d9ef">Create</span> <span style="color:#66d9ef">Id</span> <span style="color:#66d9ef">where</span>
-  toRaw (<span style="color:#66d9ef">Create</span> record) <span style="color:#f92672">=</span> <span style="color:#66d9ef">Raw</span> <span style="color:#e6db74">&#34;POST&#34;</span> <span style="color:#e6db74">&#34;&#34;</span> (<span style="color:#66d9ef">Just</span> <span style="color:#f92672">$</span> toJSON record )
-  fromResponse <span style="color:#f92672">=</span> fromJSON
+<span style=color:#66d9ef>instance</span> <span style=color:#66d9ef>RequestRaw</span> <span style=color:#66d9ef>Create</span> <span style=color:#66d9ef>Id</span> <span style=color:#66d9ef>where</span>
+  toRaw (<span style=color:#66d9ef>Create</span> record) <span style=color:#f92672>=</span> <span style=color:#66d9ef>Raw</span> <span style=color:#e6db74>&#34;POST&#34;</span> <span style=color:#e6db74>&#34;&#34;</span> (<span style=color:#66d9ef>Just</span> <span style=color:#f92672>$</span> toJSON record )
+  fromResponse <span style=color:#f92672>=</span> fromJSON
 
-<span style="color:#a6e22e">client</span> <span style="color:#f92672">::</span> <span style="color:#66d9ef">Raw</span> <span style="color:#f92672">-&gt;</span> <span style="color:#66d9ef">IO</span> <span style="color:#66d9ef">Response</span>
-<span style="color:#f92672">...</span>
+<span style=color:#a6e22e>client</span> <span style=color:#f92672>::</span> <span style=color:#66d9ef>Raw</span> <span style=color:#f92672>-&gt;</span> <span style=color:#66d9ef>IO</span> <span style=color:#66d9ef>Response</span>
+<span style=color:#f92672>...</span>
 
-<span style="color:#a6e22e">request</span> <span style="color:#f92672">::</span> <span style="color:#66d9ef">RequestRaw</span> req resp <span style="color:#f92672">=&gt;</span> req <span style="color:#f92672">-&gt;</span> <span style="color:#66d9ef">IO</span> resop
-<span style="color:#a6e22e">request</span> r <span style="color:#f92672">=</span> fromResponse <span style="color:#f92672">&lt;$&gt;</span> client (toRaw r)
+<span style=color:#a6e22e>request</span> <span style=color:#f92672>::</span> <span style=color:#66d9ef>RequestRaw</span> req resp <span style=color:#f92672>=&gt;</span> req <span style=color:#f92672>-&gt;</span> <span style=color:#66d9ef>IO</span> resop
+<span style=color:#a6e22e>request</span> r <span style=color:#f92672>=</span> fromResponse <span style=color:#f92672>&lt;$&gt;</span> client (toRaw r)
 </code></pre></td></tr></table>
 </div>
 </div><p>I believe we achieved our goal. We can add a new request without modifying existing code by simply adding new instances. And we can still add new backends that only rely on the intermediate form. We still can have pure tests and as a bonus big APIs will not require giant functions anymore, we can even break them up into several modules.</p>
-<h2 id="free">Free</h2>
+<h2 id=free>Free</h2>
 <p>I added this section after reddit user <em>aaronlevin</em> reminded me I forgot about the <code>Free</code> monad.</p>
 <p>The essence of using free is building a pure description of <em>the whole program</em> and then writing an interpreter to run it. You can use <code>FreeT</code> transformer if you want to mix in some other effects.</p>
 <p>We start of by defining a functor that specifies our language. I defined the structure and derived the <code>Functor</code> instance since it&rsquo;s trivial.</p>
-<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2">
-<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2>
+<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
+<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
 </span></code></pre></td>
-<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code class="language-haskell" data-lang="haskell"><span style="color:#66d9ef">data</span> <span style="color:#66d9ef">ApiF</span> f <span style="color:#f92672">=</span> <span style="color:#66d9ef">RequestGet</span> <span style="color:#66d9ef">Id</span> (<span style="color:#66d9ef">Record</span> <span style="color:#f92672">-&gt;</span> f)
-            <span style="color:#f92672">|</span> <span style="color:#66d9ef">RequestCreate</span> <span style="color:#66d9ef">Record</span> (<span style="color:#66d9ef">Id</span> <span style="color:#f92672">-&gt;</span> f)
-            <span style="color:#66d9ef">deriving</span> <span style="color:#66d9ef">Functor</span>
+<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
+<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-haskell data-lang=haskell><span style=color:#66d9ef>data</span> <span style=color:#66d9ef>ApiF</span> f <span style=color:#f92672>=</span> <span style=color:#66d9ef>RequestGet</span> <span style=color:#66d9ef>Id</span> (<span style=color:#66d9ef>Record</span> <span style=color:#f92672>-&gt;</span> f)
+            <span style=color:#f92672>|</span> <span style=color:#66d9ef>RequestCreate</span> <span style=color:#66d9ef>Record</span> (<span style=color:#66d9ef>Id</span> <span style=color:#f92672>-&gt;</span> f)
+            <span style=color:#66d9ef>deriving</span> <span style=color:#66d9ef>Functor</span>
 </code></pre></td></tr></table>
 </div>
 </div><p>You can read this as follows: an API call is either a get request with an <code>Id</code> and a continuation that takes a <code>Record</code> or a create request with a <code>Record</code> and a continuation that takes an <code>Id</code>.</p>
 <p>And then by applying <code>Free</code> we get a monadic language for free. But this is a bit cumbersome to use so we&rsquo;ll define some helper functions..</p>
-<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2">
-<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">7
+<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2>
+<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
+<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">4
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">5
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">6
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">7
 </span></code></pre></td>
-<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code class="language-haskell" data-lang="haskell"><span style="color:#66d9ef">type</span> <span style="color:#66d9ef">Api</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">Free</span> <span style="color:#66d9ef">ApiF</span>
+<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
+<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-haskell data-lang=haskell><span style=color:#66d9ef>type</span> <span style=color:#66d9ef>Api</span> <span style=color:#f92672>=</span> <span style=color:#66d9ef>Free</span> <span style=color:#66d9ef>ApiF</span>
 
-<span style="color:#a6e22e">get</span> <span style="color:#f92672">::</span> <span style="color:#66d9ef">Id</span> <span style="color:#f92672">-&gt;</span> <span style="color:#66d9ef">Api</span> <span style="color:#66d9ef">Record</span>
-<span style="color:#a6e22e">get</span> id <span style="color:#f92672">=</span> <span style="color:#66d9ef">Free</span> <span style="color:#f92672">$</span> <span style="color:#66d9ef">RequestGet</span> id return
+<span style=color:#a6e22e>get</span> <span style=color:#f92672>::</span> <span style=color:#66d9ef>Id</span> <span style=color:#f92672>-&gt;</span> <span style=color:#66d9ef>Api</span> <span style=color:#66d9ef>Record</span>
+<span style=color:#a6e22e>get</span> id <span style=color:#f92672>=</span> <span style=color:#66d9ef>Free</span> <span style=color:#f92672>$</span> <span style=color:#66d9ef>RequestGet</span> id return
 
-<span style="color:#a6e22e">create</span> <span style="color:#f92672">::</span> <span style="color:#66d9ef">Record</span> <span style="color:#f92672">-&gt;</span> <span style="color:#66d9ef">Api</span> <span style="color:#66d9ef">Id</span>
-<span style="color:#a6e22e">create</span> record <span style="color:#f92672">=</span> <span style="color:#66d9ef">Free</span> <span style="color:#f92672">$</span> <span style="color:#66d9ef">RequestCreate</span> record return
+<span style=color:#a6e22e>create</span> <span style=color:#f92672>::</span> <span style=color:#66d9ef>Record</span> <span style=color:#f92672>-&gt;</span> <span style=color:#66d9ef>Api</span> <span style=color:#66d9ef>Id</span>
+<span style=color:#a6e22e>create</span> record <span style=color:#f92672>=</span> <span style=color:#66d9ef>Free</span> <span style=color:#f92672>$</span> <span style=color:#66d9ef>RequestCreate</span> record return
 </code></pre></td></tr></table>
 </div>
 </div><p><code>get</code> wraps a <code>RequestGet</code> and puts <code>return</code> as the continuation to lift the return value into the monad, <code>create</code> does the same for <code>RequestCreate</code>.</p>
 <p>Since we&rsquo;ve established that having an intermediate representation is a good thing let&rsquo;s create another free monad that defines a program in terms of raw requests. Then we can write an interpreter that converts the program into this language.</p>
-<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2">
-<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">7
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">8
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">9
+<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2>
+<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
+<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">4
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">5
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">6
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">7
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">8
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">9
 </span></code></pre></td>
-<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code class="language-haskell" data-lang="haskell"><span style="color:#66d9ef">data</span> <span style="color:#66d9ef">RawF</span> f <span style="color:#f92672">=</span> <span style="color:#66d9ef">Raw</span> <span style="color:#66d9ef">Method</span> <span style="color:#66d9ef">Path</span> (<span style="color:#66d9ef">Maybe</span> <span style="color:#66d9ef">RequestBody</span>) (<span style="color:#66d9ef">Response</span> <span style="color:#f92672">-&gt;</span> f) <span style="color:#66d9ef">deriving</span> <span style="color:#66d9ef">Functor</span>
-<span style="color:#66d9ef">type</span> <span style="color:#66d9ef">Raw</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">Free</span> <span style="color:#66d9ef">RawF</span>
+<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
+<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-haskell data-lang=haskell><span style=color:#66d9ef>data</span> <span style=color:#66d9ef>RawF</span> f <span style=color:#f92672>=</span> <span style=color:#66d9ef>Raw</span> <span style=color:#66d9ef>Method</span> <span style=color:#66d9ef>Path</span> (<span style=color:#66d9ef>Maybe</span> <span style=color:#66d9ef>RequestBody</span>) (<span style=color:#66d9ef>Response</span> <span style=color:#f92672>-&gt;</span> f) <span style=color:#66d9ef>deriving</span> <span style=color:#66d9ef>Functor</span>
+<span style=color:#66d9ef>type</span> <span style=color:#66d9ef>Raw</span> <span style=color:#f92672>=</span> <span style=color:#66d9ef>Free</span> <span style=color:#66d9ef>RawF</span>
 
-<span style="color:#a6e22e">toRaw</span> <span style="color:#f92672">::</span> <span style="color:#66d9ef">Api</span> a <span style="color:#f92672">-&gt;</span> <span style="color:#66d9ef">Raw</span> a
-<span style="color:#a6e22e">toRaw</span> (<span style="color:#66d9ef">Pure</span> a) <span style="color:#f92672">=</span> <span style="color:#66d9ef">Pure</span> a
-<span style="color:#a6e22e">toRaw</span> (<span style="color:#66d9ef">Free</span> (<span style="color:#66d9ef">RequestGet</span> id k)) <span style="color:#f92672">=</span>
-  <span style="color:#66d9ef">Free</span> <span style="color:#f92672">$</span> <span style="color:#66d9ef">Raw</span> <span style="color:#e6db74">&#34;GET&#34;</span> (show id) <span style="color:#66d9ef">Nothing</span> (toRaw <span style="color:#f92672">.</span> k <span style="color:#f92672">.</span> fromJSON)
-<span style="color:#a6e22e">toRaw</span> (<span style="color:#66d9ef">Free</span> (<span style="color:#66d9ef">RequestCreate</span> rec k)) <span style="color:#f92672">=</span>
-  <span style="color:#66d9ef">Free</span> <span style="color:#f92672">$</span> <span style="color:#66d9ef">Raw</span> <span style="color:#e6db74">&#34;POST&#34;</span> <span style="color:#e6db74">&#34;&#34;</span> (<span style="color:#66d9ef">Just</span> <span style="color:#f92672">$</span> toJSON rec) (toRaw <span style="color:#f92672">.</span> k <span style="color:#f92672">.</span> fromJSON)
+<span style=color:#a6e22e>toRaw</span> <span style=color:#f92672>::</span> <span style=color:#66d9ef>Api</span> a <span style=color:#f92672>-&gt;</span> <span style=color:#66d9ef>Raw</span> a
+<span style=color:#a6e22e>toRaw</span> (<span style=color:#66d9ef>Pure</span> a) <span style=color:#f92672>=</span> <span style=color:#66d9ef>Pure</span> a
+<span style=color:#a6e22e>toRaw</span> (<span style=color:#66d9ef>Free</span> (<span style=color:#66d9ef>RequestGet</span> id k)) <span style=color:#f92672>=</span>
+  <span style=color:#66d9ef>Free</span> <span style=color:#f92672>$</span> <span style=color:#66d9ef>Raw</span> <span style=color:#e6db74>&#34;GET&#34;</span> (show id) <span style=color:#66d9ef>Nothing</span> (toRaw <span style=color:#f92672>.</span> k <span style=color:#f92672>.</span> fromJSON)
+<span style=color:#a6e22e>toRaw</span> (<span style=color:#66d9ef>Free</span> (<span style=color:#66d9ef>RequestCreate</span> rec k)) <span style=color:#f92672>=</span>
+  <span style=color:#66d9ef>Free</span> <span style=color:#f92672>$</span> <span style=color:#66d9ef>Raw</span> <span style=color:#e6db74>&#34;POST&#34;</span> <span style=color:#e6db74>&#34;&#34;</span> (<span style=color:#66d9ef>Just</span> <span style=color:#f92672>$</span> toJSON rec) (toRaw <span style=color:#f92672>.</span> k <span style=color:#f92672>.</span> fromJSON)
 </code></pre></td></tr></table>
 </div>
 </div><p>And finally we can run this.</p>
-<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2">
-<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">19
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">20
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">21
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">22
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">23
+<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2>
+<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
+<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">11
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">12
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">13
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">14
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">15
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">16
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">17
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">18
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">19
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">20
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">21
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">22
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">23
 </span></code></pre></td>
-<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code class="language-haskell" data-lang="haskell"><span style="color:#a6e22e">client</span> <span style="color:#f92672">::</span> <span style="color:#66d9ef">Raw</span> <span style="color:#f92672">-&gt;</span> <span style="color:#66d9ef">IO</span> <span style="color:#66d9ef">Response</span>
-<span style="color:#f92672">...</span>
+<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
+<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-haskell data-lang=haskell><span style=color:#a6e22e>client</span> <span style=color:#f92672>::</span> <span style=color:#66d9ef>Raw</span> <span style=color:#f92672>-&gt;</span> <span style=color:#66d9ef>IO</span> <span style=color:#66d9ef>Response</span>
+<span style=color:#f92672>...</span>
 
-<span style="color:#a6e22e">runRaw</span> <span style="color:#f92672">::</span> <span style="color:#66d9ef">Raw</span> a <span style="color:#f92672">-&gt;</span> <span style="color:#66d9ef">IO</span> a
-<span style="color:#a6e22e">runRaw</span> (<span style="color:#66d9ef">Pure</span> a) <span style="color:#f92672">=</span> return a
-<span style="color:#a6e22e">runRaw</span> (<span style="color:#66d9ef">Free</span> (<span style="color:#66d9ef">Raw</span> method path body k)) <span style="color:#f92672">=</span> <span style="color:#66d9ef">do</span>
-  res <span style="color:#f92672">&lt;-</span> client method path body
-  runRaw <span style="color:#f92672">$</span> k res
+<span style=color:#a6e22e>runRaw</span> <span style=color:#f92672>::</span> <span style=color:#66d9ef>Raw</span> a <span style=color:#f92672>-&gt;</span> <span style=color:#66d9ef>IO</span> a
+<span style=color:#a6e22e>runRaw</span> (<span style=color:#66d9ef>Pure</span> a) <span style=color:#f92672>=</span> return a
+<span style=color:#a6e22e>runRaw</span> (<span style=color:#66d9ef>Free</span> (<span style=color:#66d9ef>Raw</span> method path body k)) <span style=color:#f92672>=</span> <span style=color:#66d9ef>do</span>
+  res <span style=color:#f92672>&lt;-</span> client method path body
+  runRaw <span style=color:#f92672>$</span> k res
 
-<span style="color:#a6e22e">runApi</span> <span style="color:#f92672">::</span> <span style="color:#66d9ef">Api</span> a <span style="color:#f92672">-&gt;</span> <span style="color:#66d9ef">IO</span> a
-<span style="color:#a6e22e">runApi</span> <span style="color:#f92672">=</span> runRaw <span style="color:#f92672">.</span> toRaw
+<span style=color:#a6e22e>runApi</span> <span style=color:#f92672>::</span> <span style=color:#66d9ef>Api</span> a <span style=color:#f92672>-&gt;</span> <span style=color:#66d9ef>IO</span> a
+<span style=color:#a6e22e>runApi</span> <span style=color:#f92672>=</span> runRaw <span style=color:#f92672>.</span> toRaw
 
-<span style="color:#66d9ef">Usage</span> <span style="color:#66d9ef">of</span> this is fairly straightforward
+<span style=color:#66d9ef>Usage</span> <span style=color:#66d9ef>of</span> this is fairly straightforward
 
 ```haskell
-<span style="color:#a6e22e">program</span> <span style="color:#f92672">::</span> <span style="color:#66d9ef">Api</span> <span style="color:#66d9ef">Bool</span>
-<span style="color:#a6e22e">program</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">do</span>
-  newId <span style="color:#f92672">&lt;-</span> create someRecord
-  newRecord <span style="color:#f92672">&lt;-</span> get newId
-  return <span style="color:#f92672">$</span> someRecord <span style="color:#f92672">==</span> newRecord
+<span style=color:#a6e22e>program</span> <span style=color:#f92672>::</span> <span style=color:#66d9ef>Api</span> <span style=color:#66d9ef>Bool</span>
+<span style=color:#a6e22e>program</span> <span style=color:#f92672>=</span> <span style=color:#66d9ef>do</span>
+  newId <span style=color:#f92672>&lt;-</span> create someRecord
+  newRecord <span style=color:#f92672>&lt;-</span> get newId
+  return <span style=color:#f92672>$</span> someRecord <span style=color:#f92672>==</span> newRecord
 
-<span style="color:#a6e22e">test</span> <span style="color:#f92672">::</span> <span style="color:#66d9ef">IO</span> <span style="color:#66d9ef">Bool</span>
-<span style="color:#a6e22e">test</span> <span style="color:#f92672">=</span> runApi program
+<span style=color:#a6e22e>test</span> <span style=color:#f92672>::</span> <span style=color:#66d9ef>IO</span> <span style=color:#66d9ef>Bool</span>
+<span style=color:#a6e22e>test</span> <span style=color:#f92672>=</span> runApi program
 </code></pre></td></tr></table>
 </div>
-</div><p>If I recall correctly the <a href="http://hackage.haskell.org/package/operational">operational package</a> defines some machinery that simplifies definition of our language and interpreters but I haven&rsquo;t used it yet so I&rsquo;m not familiar with the details.</p>
+</div><p>If I recall correctly the <a href=http://hackage.haskell.org/package/operational>operational package</a> defines some machinery that simplifies definition of our language and interpreters but I haven&rsquo;t used it yet so I&rsquo;m not familiar with the details.</p>
 <p>In either case you still have a closed set of operations that are defined by your functor. And modifying this functor requires modifying all existing interpreters for its free monad. But there are two more downsides. Some boilerplate is required to make usage of actions from our functor simple though this could probably be automated away. More importantly there are performance issues with <code>Free</code> in some cases.</p>
-<p>Monad laws require the instance of <code>Free</code> to define <code>&gt;&gt;=</code> in a way that is associative. And it does that. But if you look at the definition of <code>Free</code> you will see that it closely resembles linked list <code>[]</code> which also has an associative concatenation operation <code>++</code>. But <code>++</code> has performance problems if used in a certain way, namely repeatedly putting big lists on the left side. And <code>Free</code>&rsquo;s bind has this problem too. Everything is okay if you just use the <code>do</code> notation with simple actions as there will always the smallest possible instance on the left, but problems arise if you compose and nest instances of <code>Free</code>. And by problems I mean bind being linear in the size of the instance on the left. There is active work to mitigate this(e.g. <a href="http://hackage.haskell.org/package/category-extras-0.53.3/docs/Control-Monad-Codensity.html">Codensity</a> and <a href="http://homepages.cwi.nl/~ploeg/papers/zseq.pdf">Reflection without Remorse</a>) but it&rsquo;s out of the scope of this article.</p>
-<h2 id="conclusion">Conclusion</h2>
+<p>Monad laws require the instance of <code>Free</code> to define <code>>>=</code> in a way that is associative. And it does that. But if you look at the definition of <code>Free</code> you will see that it closely resembles linked list <code>[]</code> which also has an associative concatenation operation <code>++</code>. But <code>++</code> has performance problems if used in a certain way, namely repeatedly putting big lists on the left side. And <code>Free</code>&rsquo;s bind has this problem too. Everything is okay if you just use the <code>do</code> notation with simple actions as there will always the smallest possible instance on the left, but problems arise if you compose and nest instances of <code>Free</code>. And by problems I mean bind being linear in the size of the instance on the left. There is active work to mitigate this(e.g. <a href=http://hackage.haskell.org/package/category-extras-0.53.3/docs/Control-Monad-Codensity.html>Codensity</a> and <a href=http://homepages.cwi.nl/~ploeg/papers/zseq.pdf>Reflection without Remorse</a>) but it&rsquo;s out of the scope of this article.</p>
+<h2 id=conclusion>Conclusion</h2>
 <p>I would argue that each of these approaches (except unsafe ADTs) has its pros and cons and therefore its place in some implementation. If I missed anything or made an error please let me know - I&rsquo;ll be happy to update the post.</p>
-
-    <hr/>
-    
-        <p>Last modified on 2014-10-05</p>
-    
-    
-        <a href="/posts/2014-05-03-ghc-arch-static/">
-            Previous Static linking with GHC on ArchLinux
-        </a>
-    
-    <br/>
-    
-    <a href="/posts/2015-05-02-tagged-types/">
-        Next Cheap tagged types in Scala
-    </a>
-    
-
-        </div>
-        <script src="/js/instantclick.min.js" data-no-instant></script>
-        <script data-no-instant>InstantClick.init("mousedown");</script>
-    </body>
+<hr>
+<p>Last modified on 2014-10-05</p>
+<a href=/posts/2014-05-03-ghc-arch-static/>
+Previous Static linking with GHC on ArchLinux
+</a>
+<br>
+<a href=/posts/2015-05-02-tagged-types/>
+Next Cheap tagged types in Scala
+</a>
+</div>
+<script src=/js/instantclick.min.js data-no-instant></script>
+<script data-no-instant>InstantClick.init("mousedown")</script>
+</body>
 </html>

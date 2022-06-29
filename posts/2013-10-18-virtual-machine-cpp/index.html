@@ -1,96 +1,76 @@
-<!DOCTYPE html>
-<html>
+<!doctype html><html>
 <head>
-<title>Virtual machine in C&#43;&#43;</title>
-<meta charset="utf-8">
-<meta name="X-UA-Compatible" content="IE=edge">
-<meta name="google-site-verification" content="">
-<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
-
-
-
-
+<title>Virtual machine in C++</title>
+<meta charset=utf-8>
+<meta name=X-UA-Compatible content="IE=edge">
+<meta name=google-site-verification content>
+<meta content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=0" name=viewport>
 <style>body{max-width:800px;margin:auto;line-height:1.6;font-size:18px;color:#444;padding:0 10px}h1,h2,h3{line-height:1.2}.nav a,.nav a:visited,.nav a:hover,.nav a:active{color:inherit}.nav .title{margin:0}.nav-sub{display:inline-block}.nav-item{margin:5px}.nav-sub-right{display:inline-block;float:right}.nav-icon{margin-right:5px}.main img{display:block;max-width:100%;margin:auto}.main pre{overflow:auto}" media="screen"></style>
 </head>
-    <body>
-        <div class="nav">
-            <a href="/"><h2 class="title">Andraž Bajt&#39;s blog</h2></a>
-            <div class="nav-sub">
-                
-                    <a class="nav-item" href="/about/">
-                        About Me
-                    </a>
-                
-                    <a class="nav-item" href="/">
-                        Archive
-                    </a>
-                
-            </div>
-            <div class="nav-sub-right">
-                
-                    <a class="nav-icon" href="https://github.com/edofic" target="_blank"><img src="/icons/github.svg" width="20" height="20"/></a>
-                
-                
-                    <a class="nav-icon" href="https://www.linkedin.com/in/edofic" target="_blank"><img src="/icons/linkedin.svg" width="20" height="20"/></a>
-                
-                
-                    <a class="nav-icon" href="https://twitter.com/edofic" target="_blank"><img src="/icons/twitter.svg" width="20" height="20"/></a>
-                
-                <a class="nav-icon" href="/index.xml" target="_blank"><img src="/icons/rss.svg" width="20" height="20"/></a>
-                
-                    <a class="nav-icon" href="mailto:blog@edofic.com" target="_blank"><img src="/icons/email.svg" width="20" height="20"/></a>
-                
-            </div>
-        </div>
-        <hr/>
-        <div class="main">
-    <h1>Virtual machine in C&#43;&#43;</h1>
-    
-        <time>2013-10-18</time>
-    
-    
-    
-    <hr/>
-    <p>This is not a tutorial. This post
+<body>
+<div class=nav>
+<a href=/><h2 class=title>Andraž Bajt's blog</h2></a>
+<div class=nav-sub>
+<a class=nav-item href=/about/>
+About Me
+</a>
+<a class=nav-item href=/>
+Archive
+</a>
+</div>
+<div class=nav-sub-right>
+<a class=nav-icon href=https://github.com/edofic target=_blank><img src=/icons/github.svg width=20 height=20></a>
+<a class=nav-icon href=https://www.linkedin.com/in/edofic target=_blank><img src=/icons/linkedin.svg width=20 height=20></a>
+<a class=nav-icon href=https://twitter.com/edofic target=_blank><img src=/icons/twitter.svg width=20 height=20></a>
+<a class=nav-icon href=/index.xml target=_blank><img src=/icons/rss.svg width=20 height=20></a>
+<a class=nav-icon href=mailto:blog@edofic.com target=_blank><img src=/icons/email.svg width=20 height=20></a>
+</div>
+</div>
+<hr>
+<div class=main>
+<h1>Virtual machine in C++</h1>
+<time>2013-10-18</time>
+<hr>
+<p>This is not a tutorial. This post
 is a flashback I had today. It might be a bit fiction as my memory about
 events tends to be fuzzy at times. But I promise it at least resembles
 the real story.
-I was in <a href="http://en.wikipedia.org/wiki/Elementary_school" title="Elementary school">elementary
+I was in <a href=http://en.wikipedia.org/wiki/Elementary_school title="Elementary school">elementary
 school</a>
 and just found out about programming and was learning about c++. After
-reading &ldquo;<a href="http://en.wikipedia.org/wiki/C%2B%2B" title="C++">C++</a> na kolenih&rdquo;
+reading &ldquo;<a href=http://en.wikipedia.org/wiki/C%2B%2B title=C++>C++</a> na kolenih&rdquo;
 by Goran Bervar I was empowered by knowledge and tried to do all sorts
 of projects. Mostly in console. Stuff like subtitle format converter -
-<a href="http://en.wikipedia.org/wiki/Not_Invented_Here" title="Not Invented Here">NIH
+<a href=http://en.wikipedia.org/wiki/Not_Invented_Here title="Not Invented Here">NIH
 syndrome</a>.
 I was a bit frustrated because I couldn&rsquo;t find any books about windows
 programming in the library. Yes, library was may primary source of
 information, because
-my <a href="http://en.wikipedia.org/wiki/English_language" title="English language">English</a> was
+my <a href=http://en.wikipedia.org/wiki/English_language title="English language">English</a> was
 not nearly good enough for technical stuff.
 I might add here I worked on
-<a href="http://www.microsoft.com/WINDOWS" title="Windows">Windows</a> 98(and later XP)
-with <a href="http://www.bloodshed.net%2c/" title="Dev-C++">DevC++</a>. I found out about
-<a href="http://www.microsoft.com/visualstudio/en-us" title="Microsoft Visual Studio">Visual
+<a href=http://www.microsoft.com/WINDOWS title=Windows>Windows</a> 98(and later XP)
+with <a href=http://www.bloodshed.net%2c/ title=Dev-C++>DevC++</a>. I found out about
+<a href=http://www.microsoft.com/visualstudio/en-us title="Microsoft Visual Studio">Visual
 Studio</a>
 in a few years and did some Windows development.
 I digressed a bit. Then came the most optimistic idea. A <a href="http://www.symantec.com/theme.jsp?themeid=protect-virtual-environments" title="Virtual machine">virtual
 machine</a>.
 Something quite high level(instruction to print) an eventually an
-assembler. I now realize I was always <a href="/posts/2012-08-29-creating-a-language-1">into language
+assembler. I now realize I was always <a href=/posts/2012-08-29-creating-a-language-1>into language
 stuff</a>.
-So a designed a <a href="http://en.wikipedia.org/wiki/Machine_code" title="Machine code">machine
+So a designed a <a href=http://en.wikipedia.org/wiki/Machine_code title="Machine code">machine
 language</a> with
-just enough instructions to do <a href="http://en.wikipedia.org/wiki/Hello_world_program" title="Hello world program">Hello
+just enough instructions to do <a href=http://en.wikipedia.org/wiki/Hello_world_program title="Hello world program">Hello
 World</a>,
 that is PRINT and END.</p>
-<h3 id="implementation">Implementation</h3>
-<p>At first I thought about doing a monolithic structure - <a href="http://en.wikipedia.org/wiki/Switch_statement" title="Switch statement">switch
+<h3 id=implementation>Implementation</h3>
+<p>At first I thought about doing a monolithic structure - <a href=http://en.wikipedia.org/wiki/Switch_statement title="Switch statement">switch
 case</a>(in
-fact what I&rsquo;ve <a href="/posts/2012-08-29-creating-a-language-1">done with scrat
+fact what I&rsquo;ve <a href=/posts/2012-08-29-creating-a-language-1>done with scrat
 recently</a>).
 But I had some considerations. What if number of of instruction rises a
-lot? I&rsquo;ll be left maintaining <a href="http://en.wikipedia.org/wiki/Spaghetti_code" title="Spaghetti code">spaghetti
+lot? I&rsquo;ll be left maintaining <a href=http://en.wikipedia.org/wiki/Spaghetti_code title="Spaghetti code">spaghetti
 code</a>. Or
 at least I thought that&rsquo;s what spaghetti code looks like, but in
 retrospective I believe I had a good taste anyway. </p>
@@ -103,15 +83,15 @@ method to implement that instruction and looped. Even had registers. I
 think my current professor of Computer Architecture(this course brought
 back the memory) might actually be proud if he heard what I did back
 then. </p>
-<h3 id="pointers">Pointers</h3>
+<h3 id=pointers>Pointers</h3>
 <p>I was always quite comfortable with pointers. I don&rsquo;t now, they&rsquo;re
 mathematicky concept. I like such stuff. Or perhaps it was because I was
 young when I was introduced into the matter and wasn&rsquo;t spoiled with
 automatic memory management(which I quite like nowadays). </p>
-<p>So I tried with <a href="http://en.wikipedia.org/wiki/Function_pointer" title="Function pointer">function
+<p>So I tried with <a href=http://en.wikipedia.org/wiki/Function_pointer title="Function pointer">function
 pointers</a>.
 C is cool enough to let you have pointers to functions! And that means
-<a href="http://en.wikipedia.org/wiki/Higher-order_function" title="Higher-order function">higher order
+<a href=http://en.wikipedia.org/wiki/Higher-order_function title="Higher-order function">higher order
 functions</a>.
 But I didn&rsquo;t know about math enough to appreciate the concept as I do
 now. But still - I thought it&rsquo;s extremely cool. So I did a function that
@@ -122,15 +102,15 @@ Apart from the fact it doesn&rsquo;t work. </p>
 <p>Compiler said something along the lines of &ldquo;You cannot make a table of
 pointers to functions!&rdquo;. I was puzzled. Skip 10 years into the future.
 Today I was rethinking this and thought about casting the pointer. All
-the functions would be void-&gt;void so I can cast back no problem. A
-table of <a href="http://en.wikipedia.org/wiki/Pointer_%28computing%29" title="Pointer (computing)">void
+the functions would be void->void so I can cast back no problem. A
+table of <a href=http://en.wikipedia.org/wiki/Pointer_%28computing%29 title="Pointer (computing)">void
 pointers</a>
 and casting. Yay!</p>
 <p>Now 10 years back. I didn&rsquo;t think about casting the pointer. Type info
 was sacred to me!</p>
-<p>So I &ldquo;invented&rdquo; <a href="http://en.wikipedia.org/wiki/Function_object" title="Function object">function
+<p>So I &ldquo;invented&rdquo; <a href=http://en.wikipedia.org/wiki/Function_object title="Function object">function
 objects</a>.</p>
-<h3 id="objects">Objects</h3>
+<h3 id=objects>Objects</h3>
 <p>I swear to god I have not heard about function objects back then. It
 wasn&rsquo;t until this year reading Bloch&rsquo;s Efficient Java where he talks
 about strategy objects. I immediately recognized my idea. So now I had
@@ -140,25 +120,17 @@ Sweet. And it even worked. But sadly I dropped the project and went on
 to graphics. Learnt SDL and did Tic-Tac-Toe. And dreamed about doing a
 vector 3D engine(curves baby!). Which until this day I didn&rsquo;t try to
 implement. Maybe I&rsquo;ll try in near future. </p>
-
-    <hr/>
-    
-        <p>Last modified on 2013-10-18</p>
-    
-    
-        <a href="/posts/2013-09-04-better-scala-android/">
-            Previous Setting up for better Scala development on Android
-        </a>
-    
-    <br/>
-    
-    <a href="/posts/2014-01-08-hakyll/">
-        Next Hakyll
-    </a>
-    
-
-        </div>
-        <script src="/js/instantclick.min.js" data-no-instant></script>
-        <script data-no-instant>InstantClick.init("mousedown");</script>
-    </body>
+<hr>
+<p>Last modified on 2013-10-18</p>
+<a href=/posts/2013-09-04-better-scala-android/>
+Previous Setting up for better Scala development on Android
+</a>
+<br>
+<a href=/posts/2014-01-08-hakyll/>
+Next Hakyll
+</a>
+</div>
+<script src=/js/instantclick.min.js data-no-instant></script>
+<script data-no-instant>InstantClick.init("mousedown")</script>
+</body>
 </html>

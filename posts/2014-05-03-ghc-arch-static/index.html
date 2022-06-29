@@ -1,119 +1,91 @@
-<!DOCTYPE html>
-<html>
+<!doctype html><html>
 <head>
 <title>Static linking with GHC on ArchLinux</title>
-<meta charset="utf-8">
-<meta name="X-UA-Compatible" content="IE=edge">
-<meta name="google-site-verification" content="">
-<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
-
-
-
-
+<meta charset=utf-8>
+<meta name=X-UA-Compatible content="IE=edge">
+<meta name=google-site-verification content>
+<meta content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=0" name=viewport>
 <style>body{max-width:800px;margin:auto;line-height:1.6;font-size:18px;color:#444;padding:0 10px}h1,h2,h3{line-height:1.2}.nav a,.nav a:visited,.nav a:hover,.nav a:active{color:inherit}.nav .title{margin:0}.nav-sub{display:inline-block}.nav-item{margin:5px}.nav-sub-right{display:inline-block;float:right}.nav-icon{margin-right:5px}.main img{display:block;max-width:100%;margin:auto}.main pre{overflow:auto}" media="screen"></style>
 </head>
-    <body>
-        <div class="nav">
-            <a href="/"><h2 class="title">Andraž Bajt&#39;s blog</h2></a>
-            <div class="nav-sub">
-                
-                    <a class="nav-item" href="/about/">
-                        About Me
-                    </a>
-                
-                    <a class="nav-item" href="/">
-                        Archive
-                    </a>
-                
-            </div>
-            <div class="nav-sub-right">
-                
-                    <a class="nav-icon" href="https://github.com/edofic" target="_blank"><img src="/icons/github.svg" width="20" height="20"/></a>
-                
-                
-                    <a class="nav-icon" href="https://www.linkedin.com/in/edofic" target="_blank"><img src="/icons/linkedin.svg" width="20" height="20"/></a>
-                
-                
-                    <a class="nav-icon" href="https://twitter.com/edofic" target="_blank"><img src="/icons/twitter.svg" width="20" height="20"/></a>
-                
-                <a class="nav-icon" href="/index.xml" target="_blank"><img src="/icons/rss.svg" width="20" height="20"/></a>
-                
-                    <a class="nav-icon" href="mailto:blog@edofic.com" target="_blank"><img src="/icons/email.svg" width="20" height="20"/></a>
-                
-            </div>
-        </div>
-        <hr/>
-        <div class="main">
-    <h1>Static linking with GHC on ArchLinux</h1>
-    
-        <time>2014-05-03</time>
-    
-    
-    
-    <hr/>
-    <p>There are many reasons why to prefer dynamic linking to static but I&rsquo;ll not go through them. Sometimes you just want static linking, period. In my case it was to show that <a href="http://golang.org/">Go</a>&rsquo;s static executables without dependencies are not something special and other languages can do it as good as well - Haskell included.
+<body>
+<div class=nav>
+<a href=/><h2 class=title>Andraž Bajt's blog</h2></a>
+<div class=nav-sub>
+<a class=nav-item href=/about/>
+About Me
+</a>
+<a class=nav-item href=/>
+Archive
+</a>
+</div>
+<div class=nav-sub-right>
+<a class=nav-icon href=https://github.com/edofic target=_blank><img src=/icons/github.svg width=20 height=20></a>
+<a class=nav-icon href=https://www.linkedin.com/in/edofic target=_blank><img src=/icons/linkedin.svg width=20 height=20></a>
+<a class=nav-icon href=https://twitter.com/edofic target=_blank><img src=/icons/twitter.svg width=20 height=20></a>
+<a class=nav-icon href=/index.xml target=_blank><img src=/icons/rss.svg width=20 height=20></a>
+<a class=nav-icon href=mailto:blog@edofic.com target=_blank><img src=/icons/email.svg width=20 height=20></a>
+</div>
+</div>
+<hr>
+<div class=main>
+<h1>Static linking with GHC on ArchLinux</h1>
+<time>2014-05-03</time>
+<hr>
+<p>There are many reasons why to prefer dynamic linking to static but I&rsquo;ll not go through them. Sometimes you just want static linking, period. In my case it was to show that <a href=http://golang.org/>Go</a>&rsquo;s static executables without dependencies are not something special and other languages can do it as good as well - Haskell included.
 My compiler of choice is GHC and I&rsquo;m running ArchLinux. More on why this is important later.</p>
 <p>Firstly I&rsquo;ll need I file to test - <code>Main.hs</code></p>
-<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2">
-<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2>
+<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
+<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
 </span></code></pre></td>
-<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code class="language-haskell" data-lang="haskell"><span style="color:#66d9ef">module</span> Main <span style="color:#66d9ef">where</span>
+<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
+<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-haskell data-lang=haskell><span style=color:#66d9ef>module</span> Main <span style=color:#66d9ef>where</span>
 
-<span style="color:#a6e22e">main</span> <span style="color:#f92672">=</span> putStrLn <span style="color:#e6db74">&#34;Hello static world&#34;</span>
+<span style=color:#a6e22e>main</span> <span style=color:#f92672>=</span> putStrLn <span style=color:#e6db74>&#34;Hello static world&#34;</span>
 </code></pre></td></tr></table>
 </div>
 </div><p>Then a quick search supplied me with the command line to compile this statically</p>
-<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2">
-<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2>
+<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
+<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
 </span></code></pre></td>
-<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code class="language-bash" data-lang="bash">ghc -O -static -threaded -optl-static Main.hs
+<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
+<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-bash data-lang=bash>ghc -O -static -threaded -optl-static Main.hs
 </code></pre></td></tr></table>
 </div>
 </div><p><code>-O</code> is for optimizations, <code>-static</code> instructs GHC to do static compilation, <code>-threaded</code> includes <em>pthread</em> and <code>-optl-static</code> pushes <code>-static</code> flag to <code>ld</code>.</p>
 <p>But it didn&rsquo;t work. Instead I got a bunch of errors from <code>ld</code> telling me I&rsquo;m missing <code>librt</code> and <code>libgmp</code>. Running <code>locate librt</code> turned up results as well as <code>locate libgmp</code>. I was flabbergasted.</p>
 <p>Then I tried running the same thing on Ubuntu 12.04 LTS and it worked. The resulting binary also run on my Arch without problems. Now I was just sad. I tried searching online for my problem but apparently my google-fu is insufficient. I also tried setting <em>gold</em> as preferred linker but to no avail.</p>
-<h3 id="few-weeks-later">Few weeks later</h3>
+<h3 id=few-weeks-later>Few weeks later</h3>
 <p>Today I was playing around with C and when I got something working I decided to link it statically so I can send it off to a colleague who doesn&rsquo;t have all these obscure libraries installed. And I hit into a similar problem. Now it couldn&rsquo;t find <code>libgc</code> - a library I was using that worked like a charm when using dynamic linking.</p>
 <p>Apparently the problem didn&rsquo;t lie in GHC but in my linker. Time to put on my Sherlock Holmes hat and investigate.</p>
 <p>Turns out I&rsquo;m a bloody ignorant idiot. There are dynamic libraries(with <code>.so</code> extension) and there are static libraries(with <code>.a</code> extension). I remember knowing this once. And I had all dynamic libraries installed but not static. This was the root of my problems with GHC and now with GCC.</p>
 <p>More researching turned up that Arch shies away from providing static libraries in order to encourage dynamic linking. If you want static objects you&rsquo;ll have to build them from source.</p>
-<h3 id="solution">Solution</h3>
-<p>I build <code>libgmp</code> and then also <code>libc</code> in order to get <code>librt</code> out. It wasn&rsquo;t that long. But for your convenience here are the resulting files if you want them <a href="../files/libgmp.a">libgmp.a</a> <a href="../files/librt.a">librt.a</a></p>
+<h3 id=solution>Solution</h3>
+<p>I build <code>libgmp</code> and then also <code>libc</code> in order to get <code>librt</code> out. It wasn&rsquo;t that long. But for your convenience here are the resulting files if you want them <a href=../files/libgmp.a>libgmp.a</a> <a href=../files/librt.a>librt.a</a></p>
 <p>I dumped those into <code>/usr/local/lib</code> because I didn&rsquo;t want to pollute my global libraries. Now I just need to convince GHC to use them. Easy. Just set <code>LD_LIBRARY_PATH</code> to that path.</p>
-<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2">
-<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2>
+<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
+<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
 </span></code></pre></td>
-<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code class="language-bash" data-lang="bash">LD_LIBRARY_PATH<span style="color:#f92672">=</span>/usr/local/lib ghc -O -static -threaded -optl-static Main.hs
+<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
+<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-bash data-lang=bash>LD_LIBRARY_PATH<span style=color:#f92672>=</span>/usr/local/lib ghc -O -static -threaded -optl-static Main.hs
 </code></pre></td></tr></table>
 </div>
 </div><p>And it works. Now I&rsquo;m happy.</p>
-
-    <hr/>
-    
-        <p>Last modified on 2014-05-03</p>
-    
-    
-        <a href="/posts/2014-04-14-free-coroutines/">
-            Previous Coroutines for free
-        </a>
-    
-    <br/>
-    
-    <a href="/posts/2014-10-05-haskell-apis/">
-        Next Approaches to designing a Haskell API
-    </a>
-    
-
-        </div>
-        <script src="/js/instantclick.min.js" data-no-instant></script>
-        <script data-no-instant>InstantClick.init("mousedown");</script>
-    </body>
+<hr>
+<p>Last modified on 2014-05-03</p>
+<a href=/posts/2014-04-14-free-coroutines/>
+Previous Coroutines for free
+</a>
+<br>
+<a href=/posts/2014-10-05-haskell-apis/>
+Next Approaches to designing a Haskell API
+</a>
+</div>
+<script src=/js/instantclick.min.js data-no-instant></script>
+<script data-no-instant>InstantClick.init("mousedown")</script>
+</body>
 </html>

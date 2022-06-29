@@ -1,101 +1,81 @@
-<!DOCTYPE html>
-<html>
+<!doctype html><html>
 <head>
 <title>Making a programming language Part 7a - objects</title>
-<meta charset="utf-8">
-<meta name="X-UA-Compatible" content="IE=edge">
-<meta name="google-site-verification" content="">
-<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
-
-
-
-
+<meta charset=utf-8>
+<meta name=X-UA-Compatible content="IE=edge">
+<meta name=google-site-verification content>
+<meta content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=0" name=viewport>
 <style>body{max-width:800px;margin:auto;line-height:1.6;font-size:18px;color:#444;padding:0 10px}h1,h2,h3{line-height:1.2}.nav a,.nav a:visited,.nav a:hover,.nav a:active{color:inherit}.nav .title{margin:0}.nav-sub{display:inline-block}.nav-item{margin:5px}.nav-sub-right{display:inline-block;float:right}.nav-icon{margin-right:5px}.main img{display:block;max-width:100%;margin:auto}.main pre{overflow:auto}" media="screen"></style>
 </head>
-    <body>
-        <div class="nav">
-            <a href="/"><h2 class="title">Andraž Bajt&#39;s blog</h2></a>
-            <div class="nav-sub">
-                
-                    <a class="nav-item" href="/about/">
-                        About Me
-                    </a>
-                
-                    <a class="nav-item" href="/">
-                        Archive
-                    </a>
-                
-            </div>
-            <div class="nav-sub-right">
-                
-                    <a class="nav-icon" href="https://github.com/edofic" target="_blank"><img src="/icons/github.svg" width="20" height="20"/></a>
-                
-                
-                    <a class="nav-icon" href="https://www.linkedin.com/in/edofic" target="_blank"><img src="/icons/linkedin.svg" width="20" height="20"/></a>
-                
-                
-                    <a class="nav-icon" href="https://twitter.com/edofic" target="_blank"><img src="/icons/twitter.svg" width="20" height="20"/></a>
-                
-                <a class="nav-icon" href="/index.xml" target="_blank"><img src="/icons/rss.svg" width="20" height="20"/></a>
-                
-                    <a class="nav-icon" href="mailto:blog@edofic.com" target="_blank"><img src="/icons/email.svg" width="20" height="20"/></a>
-                
-            </div>
-        </div>
-        <hr/>
-        <div class="main">
-    <h1>Making a programming language Part 7a - objects</h1>
-    
-        <time>2012-09-27</time>
-    
-    
-    
-    <hr/>
-    <p><a href="/posts/2012-08-29-creating-a-language-1">Table of contents</a>, 
-<a href="https://github.com/edofic/scrat-lang">Whole project on github</a></p>
+<body>
+<div class=nav>
+<a href=/><h2 class=title>Andraž Bajt's blog</h2></a>
+<div class=nav-sub>
+<a class=nav-item href=/about/>
+About Me
+</a>
+<a class=nav-item href=/>
+Archive
+</a>
+</div>
+<div class=nav-sub-right>
+<a class=nav-icon href=https://github.com/edofic target=_blank><img src=/icons/github.svg width=20 height=20></a>
+<a class=nav-icon href=https://www.linkedin.com/in/edofic target=_blank><img src=/icons/linkedin.svg width=20 height=20></a>
+<a class=nav-icon href=https://twitter.com/edofic target=_blank><img src=/icons/twitter.svg width=20 height=20></a>
+<a class=nav-icon href=/index.xml target=_blank><img src=/icons/rss.svg width=20 height=20></a>
+<a class=nav-icon href=mailto:blog@edofic.com target=_blank><img src=/icons/email.svg width=20 height=20></a>
+</div>
+</div>
+<hr>
+<div class=main>
+<h1>Making a programming language Part 7a - objects</h1>
+<time>2012-09-27</time>
+<hr>
+<p><a href=/posts/2012-08-29-creating-a-language-1>Table of contents</a>, 
+<a href=https://github.com/edofic/scrat-lang>Whole project on github</a></p>
 <p>My goal in this post is for this to compile</p>
 <pre><code>func create(n){this}
 </code></pre>
 <p>and a call to it to return a reference to an
-<a href="http://en.wikipedia.org/wiki/Object_%28computer_science%29" title="Object (computer science)">object</a>
+<a href=http://en.wikipedia.org/wiki/Object_%28computer_science%29 title="Object (computer science)">object</a>
 that contains &ldquo;n&rdquo;. Functions are a bit different from the rest of the
 language. Not by
-<a href="http://en.wikipedia.org/wiki/Implementation" title="Implementation">implementation</a>
-or usage but by <a href="http://en.wikipedia.org/wiki/Thought" title="Thought">thought
+<a href=http://en.wikipedia.org/wiki/Implementation title=Implementation>implementation</a>
+or usage but by <a href=http://en.wikipedia.org/wiki/Thought title=Thought>thought
 process</a> behind
 designing them. I actually thought about objects and
-<a href="http://en.wikipedia.org/wiki/Function_%28mathematics%29" title="Function (mathematics)">functions</a>
+<a href=http://en.wikipedia.org/wiki/Function_%28mathematics%29 title="Function (mathematics)">functions</a>
 before implementing any of them. Considering my implementation of
 scopes(which I like) and shadowing I got this great idea that functions,
 scopes and objects are just many faces of the same thing. Or &ldquo;could be&rdquo;
 many faces of the same thing. Something a bit more powerful than a
 function being the &ldquo;thing&rdquo;. Let&rsquo;s see how that works. A function in this
-language needs a new <a href="http://en.wikipedia.org/wiki/Local_variable" title="Local variable">local
+language needs a new <a href=http://en.wikipedia.org/wiki/Local_variable title="Local variable">local
 scope</a> for
 every execution(not all functions, but this is a simplification because
-I don&rsquo;t care about performance, see <a href="/posts/2012-09-25-creating-a-language-6">previous
+I don&rsquo;t care about performance, see <a href=/posts/2012-09-25-creating-a-language-6>previous
 post</a>
 for details). New scope. New something. New. Bells should be ringing
 right now. I&rsquo;m creating objects. I could just as well pass the reference
 to that object. I even have the reference. It&rsquo;s current scope - &ldquo;this&rdquo;
-in scala code. So I just need a <a href="http://en.wikipedia.org/wiki/Language_construct" title="Language construct">language
+in scala code. So I just need a <a href=http://en.wikipedia.org/wiki/Language_construct title="Language construct">language
 construct</a>
 to access that. How about &ldquo;this&rdquo;.</p>
-<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2">
-<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2>
+<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
+<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
 </span></code></pre></td>
-<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code class="language-scala" data-lang="scala"><span style="color:#75715e">//in SScope body
-</span><span style="color:#75715e"></span>map<span style="color:#f92672">.</span>put<span style="color:#f92672">(</span><span style="color:#e6db74">&#34;this&#34;</span><span style="color:#f92672">,</span> <span style="color:#66d9ef">this</span><span style="color:#f92672">)</span>
+<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
+<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-scala data-lang=scala><span style=color:#75715e>//in SScope body
+</span><span style=color:#75715e></span>map<span style=color:#f92672>.</span>put<span style=color:#f92672>(</span><span style=color:#e6db74>&#34;this&#34;</span><span style=color:#f92672>,</span> <span style=color:#66d9ef>this</span><span style=color:#f92672>)</span>
 </code></pre></td></tr></table>
 </div>
 </div><p>Not even a language construct, just a magic variable. You can even
 shadow it. Anticlimactic? I hope so. The whole point of object is that
 it&rsquo;s just another view on function. I could end the post here but I want
 to show why this is awesome(and therefore why I&rsquo;m proud of it)</p>
-<h3 id="privates">Privates</h3>
+<h3 id=privates>Privates</h3>
 <p>You don&rsquo;t even need access modifiers, you can use shadowing and nesting</p>
 <pre><code>func private(n) {
     that = this
@@ -121,26 +101,18 @@ o.get()
 <p>Returns 3. Though knowledge of implementation is needed to execute such
 attack. <strong>update:</strong> I kinda sorta forgot to include how I made that
 dot-access thingy-o.get() to work. Continuation below</p>
-<p><strong>next: <a href="/posts/2012-10-08-creating-a-language-7b">using objects</a></strong></p>
-
-    <hr/>
-    
-        <p>Last modified on 2012-09-27</p>
-    
-    
-        <a href="/posts/2012-09-25-creating-a-language-6/">
-            Previous Making a programming language Part 6 - functions
-        </a>
-    
-    <br/>
-    
-    <a href="/posts/2012-09-29-creating-a-language-8/">
-        Next Making a programming language Part 8 - going faster
-    </a>
-    
-
-        </div>
-        <script src="/js/instantclick.min.js" data-no-instant></script>
-        <script data-no-instant>InstantClick.init("mousedown");</script>
-    </body>
+<p><strong>next: <a href=/posts/2012-10-08-creating-a-language-7b>using objects</a></strong></p>
+<hr>
+<p>Last modified on 2012-09-27</p>
+<a href=/posts/2012-09-25-creating-a-language-6/>
+Previous Making a programming language Part 6 - functions
+</a>
+<br>
+<a href=/posts/2012-09-29-creating-a-language-8/>
+Next Making a programming language Part 8 - going faster
+</a>
+</div>
+<script src=/js/instantclick.min.js data-no-instant></script>
+<script data-no-instant>InstantClick.init("mousedown")</script>
+</body>
 </html>

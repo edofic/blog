@@ -1,64 +1,44 @@
-<!DOCTYPE html>
-<html>
+<!doctype html><html>
 <head>
 <title>Speed is a feature; thoughts on modern web performance</title>
-<meta charset="utf-8">
-<meta name="X-UA-Compatible" content="IE=edge">
-<meta name="google-site-verification" content="">
-<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
-
-
-
-
+<meta charset=utf-8>
+<meta name=X-UA-Compatible content="IE=edge">
+<meta name=google-site-verification content>
+<meta content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=0" name=viewport>
 <style>body{max-width:800px;margin:auto;line-height:1.6;font-size:18px;color:#444;padding:0 10px}h1,h2,h3{line-height:1.2}.nav a,.nav a:visited,.nav a:hover,.nav a:active{color:inherit}.nav .title{margin:0}.nav-sub{display:inline-block}.nav-item{margin:5px}.nav-sub-right{display:inline-block;float:right}.nav-icon{margin-right:5px}.main img{display:block;max-width:100%;margin:auto}.main pre{overflow:auto}" media="screen"></style>
 </head>
-    <body>
-        <div class="nav">
-            <a href="/"><h2 class="title">Andraž Bajt&#39;s blog</h2></a>
-            <div class="nav-sub">
-                
-                    <a class="nav-item" href="/about/">
-                        About Me
-                    </a>
-                
-                    <a class="nav-item" href="/">
-                        Archive
-                    </a>
-                
-            </div>
-            <div class="nav-sub-right">
-                
-                    <a class="nav-icon" href="https://github.com/edofic" target="_blank"><img src="/icons/github.svg" width="20" height="20"/></a>
-                
-                
-                    <a class="nav-icon" href="https://www.linkedin.com/in/edofic" target="_blank"><img src="/icons/linkedin.svg" width="20" height="20"/></a>
-                
-                
-                    <a class="nav-icon" href="https://twitter.com/edofic" target="_blank"><img src="/icons/twitter.svg" width="20" height="20"/></a>
-                
-                <a class="nav-icon" href="/index.xml" target="_blank"><img src="/icons/rss.svg" width="20" height="20"/></a>
-                
-                    <a class="nav-icon" href="mailto:blog@edofic.com" target="_blank"><img src="/icons/email.svg" width="20" height="20"/></a>
-                
-            </div>
-        </div>
-        <hr/>
-        <div class="main">
-    <h1>Speed is a feature; thoughts on modern web performance</h1>
-    
-        <time>2021-12-29</time>
-    
-    
-    
-    <hr/>
-    <p>I&rsquo;m pretty sure that as computers got faster they got slower. As chips got
+<body>
+<div class=nav>
+<a href=/><h2 class=title>Andraž Bajt's blog</h2></a>
+<div class=nav-sub>
+<a class=nav-item href=/about/>
+About Me
+</a>
+<a class=nav-item href=/>
+Archive
+</a>
+</div>
+<div class=nav-sub-right>
+<a class=nav-icon href=https://github.com/edofic target=_blank><img src=/icons/github.svg width=20 height=20></a>
+<a class=nav-icon href=https://www.linkedin.com/in/edofic target=_blank><img src=/icons/linkedin.svg width=20 height=20></a>
+<a class=nav-icon href=https://twitter.com/edofic target=_blank><img src=/icons/twitter.svg width=20 height=20></a>
+<a class=nav-icon href=/index.xml target=_blank><img src=/icons/rss.svg width=20 height=20></a>
+<a class=nav-icon href=mailto:blog@edofic.com target=_blank><img src=/icons/email.svg width=20 height=20></a>
+</div>
+</div>
+<hr>
+<div class=main>
+<h1>Speed is a feature; thoughts on modern web performance</h1>
+<time>2021-12-29</time>
+<hr>
+<p>I&rsquo;m pretty sure that as computers got faster they got slower. As chips got
 faster the software slowed down. I&rsquo;m acutely aware that we do much more now but
 just the user interfaces really have no reason for slowing down.</p>
 <p>Why do I care? Because a fast web is a delight to browse. A fast app is a
 delight to use. The tool feels like an extension of your body. Where as a
 sluggish tool get&rsquo;s in the way. Feels like you&rsquo;re battling it instead of using
 it. This is one of the main reasons I still prefer vim over more &ldquo;modern&rdquo; IDEs.</p>
-<p>Turns out it&rsquo;s not just a feeling. Dan Luu <a href="https://danluu.com/input-lag/">measured input lag on different devices</a> and some old ones are much faster.</p>
+<p>Turns out it&rsquo;s not just a feeling. Dan Luu <a href=https://danluu.com/input-lag/>measured input lag on different devices</a> and some old ones are much faster.</p>
 <p>But that&rsquo;s not exactly what I have in mind. For a while I&rsquo;ve been working on
 backends for predominantly web applications, so the web is where my nagging
 feeling points at. And there it roughly breaks down into 3 problems</p>
@@ -67,15 +47,15 @@ feeling points at. And there it roughly breaks down into 3 problems</p>
 <li>we&rsquo;re serving too slow</li>
 <li>we&rsquo;re doing too much on the client</li>
 </ul>
-<h1 id="were-serving-too-much">We&rsquo;re serving too much</h1>
-<p>According to a <a href="https://www.seoptimer.com/blog/webpage-size/">random SEO site</a></p>
+<h1 id=were-serving-too-much>We&rsquo;re serving too much</h1>
+<p>According to a <a href=https://www.seoptimer.com/blog/webpage-size/>random SEO site</a></p>
 <blockquote>
 <p>Web page sizes have been growing steadily over the years. The first web page on the internet was only 4 KB in size. This was particularly because browsers back then did not support a lot of things that they do today. For example, it was not until 1993 that browsers began to support images. According to httparchive the average web page size in 2017 was 3 MB. This is a huge increase from the 1.6 MB average of 2014. It is predicted that the average page size will be 4 MB by 2019.</p>
 </blockquote>
 <p>The irony: in 2021 (when I' writing this) that very post weighs in at 5.3 MB.
 And takes about 5s to load on my (temporary) &ldquo;not great, not terrible&rdquo;
 connection.</p>
-<p>Pingdom did <a href="https://www.pingdom.com/blog/webpages-are-getting-larger-every-year-and-heres-why-it-matters/">an
+<p>Pingdom did <a href=https://www.pingdom.com/blog/webpages-are-getting-larger-every-year-and-heres-why-it-matters/>an
 analysis</a>
 of the top 1000 sites. The mean is just over 2MB. The catch: it&rsquo;s from 2018, my
 bet is everything blew up significantly since then.</p>
@@ -102,34 +82,34 @@ load for me, or about 20% improvement in page load. Let&rsquo;s look at the rest
 <p>And I suppose this is considered normal nowadays. I&rsquo;m the weirdo who optimizes
 his blog for size (last post comes in at ~900kb, most of it images, which
 reminds me I should probably set up image compression pipeline).</p>
-<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2">
-<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2>
+<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
+<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">11
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">12
 </span></code></pre></td>
-<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code class="language-sh" data-lang="sh">566K Jan  <span style="color:#ae81ff">4</span> 22:03 angular2.min.js
-563K Jan  <span style="color:#ae81ff">4</span> 22:05 angular2.0.0-beta.0-all.umd.min.js
-486K Jan  <span style="color:#ae81ff">4</span> 21:50 ember.1.13.8.min.js
-435K Jan  <span style="color:#ae81ff">4</span> 21:48 ember.2.2.0.min.js
-205K Jan  <span style="color:#ae81ff">4</span> 22:06 angular2.0.0-beta.0-Rx.min.js
-144K Jan  <span style="color:#ae81ff">4</span> 21:59 react-with-addons-0.14.5.min.js
-143K Jan  <span style="color:#ae81ff">4</span> 21:46 angular.1.4.5.min.js
-132K Jan  <span style="color:#ae81ff">4</span> 21:56 react-0.14.5.min.js
-121K Jan  <span style="color:#ae81ff">4</span> 21:35 angular.1.3.2.min.js
-5.3K Jan  <span style="color:#ae81ff">4</span> 22:00 redux-3.0.5.min.js
-706B Jan  <span style="color:#ae81ff">4</span> 21:57 react-dom-0.14.5.min.js
-63K  Oct <span style="color:#ae81ff">13</span> 03:02 vue-2.0.3.min.js
+<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
+<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-sh data-lang=sh>566K Jan  <span style=color:#ae81ff>4</span> 22:03 angular2.min.js
+563K Jan  <span style=color:#ae81ff>4</span> 22:05 angular2.0.0-beta.0-all.umd.min.js
+486K Jan  <span style=color:#ae81ff>4</span> 21:50 ember.1.13.8.min.js
+435K Jan  <span style=color:#ae81ff>4</span> 21:48 ember.2.2.0.min.js
+205K Jan  <span style=color:#ae81ff>4</span> 22:06 angular2.0.0-beta.0-Rx.min.js
+144K Jan  <span style=color:#ae81ff>4</span> 21:59 react-with-addons-0.14.5.min.js
+143K Jan  <span style=color:#ae81ff>4</span> 21:46 angular.1.4.5.min.js
+132K Jan  <span style=color:#ae81ff>4</span> 21:56 react-0.14.5.min.js
+121K Jan  <span style=color:#ae81ff>4</span> 21:35 angular.1.3.2.min.js
+5.3K Jan  <span style=color:#ae81ff>4</span> 22:00 redux-3.0.5.min.js
+706B Jan  <span style=color:#ae81ff>4</span> 21:57 react-dom-0.14.5.min.js
+63K  Oct <span style=color:#ae81ff>13</span> 03:02 vue-2.0.3.min.js
 </code></pre></td></tr></table>
 </div>
 </div><p>Add in other utility libraries and you&rsquo;re probably loading a megabyte of JS (if
@@ -142,13 +122,13 @@ Developers having super fast machines and speedy connections don&rsquo;t help. B
 we&rsquo;re probably so far gone that nobody bats an eye at 5s load times for simple
 pages anymore. Even more so with SPAs with the &ldquo;it&rsquo;s only on the first load&rdquo;
 apologism.</p>
-<h1 id="were-serving-too-slow">We&rsquo;re serving too slow</h1>
+<h1 id=were-serving-too-slow>We&rsquo;re serving too slow</h1>
 <p>How long does it take your server to respond to a request? For static assets?
 For an API call (if you&rsquo;re doing an SPA)?</p>
 <p>More importantly: do you even care? Do you have SLOs in place? Or at least some
 metrics?</p>
 <p>If you&rsquo;re working at a FAANG on some microservices then you&rsquo;re confused why
-someone would not care about this&hellip;but the majority of the internet is not
+someone would not care about this&mldr;but the majority of the internet is not
 FAANGs. And a random website does quite poorly. Let&rsquo;s look at our random
 website again (I promise I&rsquo;m not picking on them I just think it&rsquo;s quite
 representative).</p>
@@ -210,7 +190,7 @@ requests. This is now you&rsquo;re time to useful information on screen. Good nu
 are hard to get by here but from what first hand experience I have I can say
 response times can quickly creep up into seconds and nobody bats and eye since
 there is a spinner there and it&rsquo;s normal that things take a while to
-load&hellip;.right?</p>
+load&mldr;.right?</p>
 <p>Again there are a plethora of technical solutions but first you need to care. If
 you don&rsquo;t continuously measure response times and act when they creep up you&rsquo;re
 agreeing to slow responses and thus slow user experience. Again it&rsquo;s a question
@@ -218,7 +198,7 @@ of priority.</p>
 <p>I even think you can deliver a decent experience on pretty much any stack (no
 need to rewrite in rust 😉) it just comes down to paying some attention and
 taking performance into account when making day-to-day decisions.</p>
-<h1 id="were-doing-too-much-on-the-client">We&rsquo;re doing too much on the client</h1>
+<h1 id=were-doing-too-much-on-the-client>We&rsquo;re doing too much on the client</h1>
 <p>I&rsquo;ll admit this section is most hand-wavy because I don&rsquo;t do much frontend work
 but I still think it&rsquo;s (somewhat) valuable.</p>
 <p>This is specifically a problem of fat clients - single page applications. A
@@ -248,7 +228,7 @@ Knuth is</p>
 &ldquo;modern&rdquo; layered architectures. I think fat clients are still subject to all
 problems form above but the situation is exacerbated by the fact there is
 slowness on all layers so the effects compound.</p>
-<h1 id="conclusion">Conclusion</h1>
+<h1 id=conclusion>Conclusion</h1>
 <p>Speed is a feature. You have to work to get it. But it&rsquo;s usually neglected and
 downprioritized into oblivion. It&rsquo;s usually not the technology. Usually it&rsquo;s
 culture, it&rsquo;s accepting that this is fine.</p>
@@ -263,25 +243,17 @@ know NPS and all that jazz).</p>
 <p>Just care a little bit and don&rsquo;t be shy to talk about it. With some luck you may
 infect one or two more people. This way we can nudge the needle just a little
 bit. It&rsquo;s not too late.</p>
-
-    <hr/>
-    
-        <p>Last modified on 2021-12-29</p>
-    
-    
-        <a href="/posts/2021-12-19-trying-out-remix/">
-            Previous Trying Out Remix
-        </a>
-    
-    <br/>
-    
-    <a href="/posts/2022-01-18-tailwind-vs-pico/">
-        Next Tailwind CSS vs Pico CSS
-    </a>
-    
-
-        </div>
-        <script src="/js/instantclick.min.js" data-no-instant></script>
-        <script data-no-instant>InstantClick.init("mousedown");</script>
-    </body>
+<hr>
+<p>Last modified on 2021-12-29</p>
+<a href=/posts/2021-12-19-trying-out-remix/>
+Previous Trying Out Remix
+</a>
+<br>
+<a href=/posts/2022-01-18-tailwind-vs-pico/>
+Next Tailwind CSS vs Pico CSS
+</a>
+</div>
+<script src=/js/instantclick.min.js data-no-instant></script>
+<script data-no-instant>InstantClick.init("mousedown")</script>
+</body>
 </html>
