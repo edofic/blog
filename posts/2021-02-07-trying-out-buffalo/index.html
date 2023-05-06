@@ -1,474 +1,258 @@
-<!doctype html><html>
-<head>
-<title>Trying out Buffalo</title>
-<meta charset=utf-8>
-<meta name=X-UA-Compatible content="IE=edge">
-<meta name=google-site-verification content>
-<meta content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=0" name=viewport>
-<style>body{max-width:800px;margin:auto;line-height:1.6;font-size:18px;color:#444;padding:0 10px}h1,h2,h3{line-height:1.2}.nav a,.nav a:visited,.nav a:hover,.nav a:active{color:inherit}.nav .title{margin:0}.nav-sub{display:inline-block}.nav-item{margin:5px}.nav-sub-right{display:inline-block;float:right}.nav-icon{margin-right:5px}.main img{display:block;max-width:100%;margin:auto}.main pre{overflow:auto}" media="screen"></style>
-</head>
-<body>
-<div class=nav>
-<a href=/><h2 class=title>Andraž Bajt's blog</h2></a>
-<div class=nav-sub>
-<a class=nav-item href=/about/>
-About Me
-</a>
-<a class=nav-item href=/>
-Archive
-</a>
-</div>
-<div class=nav-sub-right>
-<a class=nav-icon href=https://github.com/edofic target=_blank><img src=/icons/github.svg width=20 height=20></a>
+<!doctype html><html><head><title>Trying out Buffalo</title><meta charset=utf-8><meta name=X-UA-Compatible content="IE=edge"><meta name=google-site-verification content><meta content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=0" name=viewport><style>body{max-width:800px;margin:auto;line-height:1.6;font-size:18px;color:#444;padding:0 10px}h1,h2,h3{line-height:1.2}.nav a,.nav a:visited,.nav a:hover,.nav a:active{color:inherit}.nav .title{margin:0}.nav-sub{display:inline-block}.nav-item{margin:5px}.nav-sub-right{display:inline-block;float:right}.nav-icon{margin-right:5px}.main img{display:block;max-width:100%;margin:auto}.main pre{overflow:auto}" media="screen"></style></head><body><div class=nav><a href=/><h2 class=title>Andraž Bajt's blog</h2></a><div class=nav-sub><a class=nav-item href=/about/>About Me</a>
+<a class=nav-item href=/>Archive</a></div><div class=nav-sub-right><a class=nav-icon href=https://github.com/edofic target=_blank><img src=/icons/github.svg width=20 height=20></a>
 <a class=nav-icon href=https://www.linkedin.com/in/edofic target=_blank><img src=/icons/linkedin.svg width=20 height=20></a>
 <a class=nav-icon href=https://twitter.com/edofic target=_blank><img src=/icons/twitter.svg width=20 height=20></a>
 <a class=nav-icon href=/index.xml target=_blank><img src=/icons/rss.svg width=20 height=20></a>
-<a class=nav-icon href=mailto:blog@edofic.com target=_blank><img src=/icons/email.svg width=20 height=20></a>
-</div>
-</div>
-<hr>
-<div class=main>
-<h1>Trying out Buffalo</h1>
-<time>2021-02-07</time>
-<a href=/tags/trying-out>trying-out</a>
-<hr>
-<p>I&rsquo;m trying out a new concept: my &ldquo;I should check this out&rdquo; list of tools and technologies has grown quite a bit so I got
+<a class=nav-icon href=mailto:blog@edofic.com target=_blank><img src=/icons/email.svg width=20 height=20></a></div></div><hr><div class=main><h1>Trying out Buffalo</h1><time>2021-02-07</time>
+<a href=/tags/trying-out>trying-out</a><hr><p>I&rsquo;m trying out a new concept: my &ldquo;I should check this out&rdquo; list of tools and technologies has grown quite a bit so I got
 the idea that I could do short write ups of my experimentation and first impressions to give myself motivation to try
-these things out. Will see how this turns out, hopefully this will turn out a series :)</p>
-<p>Today I&rsquo;ll be trying out <a href=https://gobuffalo.io/en/>Buffalo</a> - a Go web framework. I believe this one distinguishes
+these things out. Will see how this turns out, hopefully this will turn out a series :)</p><p>Today I&rsquo;ll be trying out <a href=https://gobuffalo.io/en/>Buffalo</a> - a Go web framework. I believe this one distinguishes
 itself by focusing on developer productivity - a kind of &ldquo;Rails for Go&rdquo;. But apparently it&rsquo;s mostly some glue and
 tooling around a bunch of other established libraries. I very much like this approach. And yes, I agree that &ldquo;just use
-standard library&rdquo; is not (always) the right approach. Sometimes you just want to bootstrap a small project quickly.</p>
-<p>Let&rsquo;s see if it delivers on this promise.</p>
-<p><em>Disclaimer</em> this is not intended to be a review or a tutorial, just my first impressions, trying to convey the flavor I
-experience.</p>
-<p>Final code is available <a href=https://github.com/edofic/trying-out/tree/main/buffalo>on Github</a> if you want to read through
-anything.</p>
-<h1 id=getting-started>Getting started</h1>
-<p>I start by working through the docs - <a href=https://gobuffalo.io/en/docs/getting-started/installation/>Installation</a>.</p>
-<p>I need Go, or I need to update it at least (I use <a href=https://nixos.org/>NixOS</a>, following commands should work on most
-Linux distributions if you use <a href=https://nixos.org/download.html>Nix package manager</a>.</p>
-<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2>
-<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
-</span></code></pre></td>
-<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-bash data-lang=bash>nix-env -iA nixos.go
-</code></pre></td></tr></table>
-</div>
-</div><p>And some frontend stuff</p>
-<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2>
-<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
-</span></code></pre></td>
-<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-bash data-lang=bash>nix-env -iA nixos.nodejs
-nix-env -iA nixos.yarn
-</code></pre></td></tr></table>
-</div>
-</div><p>not bothering with sqlite at this point, I&rsquo;ll probably use a dockerized Postgres for development.</p>
-<p>I&rsquo;ll install the buffalo tooling using the prebuilt Linux binary.</p>
-<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2>
-<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
-</span></code></pre></td>
-<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-bash data-lang=bash>wget https://github.com/gobuffalo/buffalo/releases/download/v0.16.21/buffalo_0.16.21_Linux_x86_64.tar.gz
-tar -xf buffalo_0.16.21_Linux_x86_64.tar.gz
-mv ./buffalo ~/bin/
-</code></pre></td></tr></table>
-</div>
-</div><p>Does it work?</p>
-<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2>
-<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
-</span></code></pre></td>
-<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-bash data-lang=bash>buffalo
-</code></pre></td></tr></table>
-</div>
-</div><p>I get some output. Yay!</p>
-<p>Moving on to <a href=https://gobuffalo.io/en/docs/getting-started/new-project/>Generating a new project</a></p>
-<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2>
-<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
-</span></code></pre></td>
-<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-bash data-lang=bash>buffalo new trying-out
-</code></pre></td></tr></table>
-</div>
-</div><p>Command suggests we open up the <a href=https://github.com/edofic/trying-out/blob/main/buffalo/README.md>generated readme</a>.
-Apparently now we need to setup a database ourselves. let&rsquo;s go with dockerized Postgres</p>
-<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2>
-<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
-</span></code></pre></td>
-<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-bash data-lang=bash>docker run --name trying_out  -e POSTGRES_PASSWORD<span style=color:#f92672>=</span>postgres -d 5432:5432 postgres
-</code></pre></td></tr></table>
-</div>
-</div><p>Following the readme I check <code>database.yml</code> and to my delight the defaults perfectly match my choices so I can just run
-the tooling against my new Postgres server.</p>
-<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2>
-<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
-</span></code></pre></td>
-<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-bash data-lang=bash>cd trying_out
-vim database.yml
-buffalo pop create -a
-</code></pre></td></tr></table>
-</div>
-</div><p>Let&rsquo;s see the schema</p>
-<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2>
-<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">11
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">12
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">13
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">14
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">15
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">16
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">17
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">18
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">19
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">20
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">21
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">22
-</span></code></pre></td>
-<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-fallback data-lang=fallback> $ docker exec -it trying_out psql -U postgres
-psql (13.1 (Debian 13.1-1.pgdg100+1))
-Type &#34;help&#34; for help.
-
-postgres=# \l
-                                       List of databases
-          Name          |  Owner   | Encoding |  Collate   |   Ctype    |   Access privileges
-------------------------+----------+----------+------------+------------+-----------------------
- postgres               | postgres | UTF8     | en_US.utf8 | en_US.utf8 |
- template0              | postgres | UTF8     | en_US.utf8 | en_US.utf8 | =c/postgres          +
-                        |          |          |            |            | postgres=CTc/postgres
- template1              | postgres | UTF8     | en_US.utf8 | en_US.utf8 | =c/postgres          +
-                        |          |          |            |            | postgres=CTc/postgres
- trying_out_development | postgres | UTF8     | en_US.utf8 | en_US.utf8 |
- trying_out_production  | postgres | UTF8     | en_US.utf8 | en_US.utf8 |
- trying_out_test        | postgres | UTF8     | en_US.utf8 | en_US.utf8 |
-(6 rows)
-
-postgres=# \c trying_out_development
-You are now connected to database &#34;trying_out_development&#34; as user &#34;postgres&#34;.
-trying_out_development=# \dt
-Did not find any relations.
-</code></pre></td></tr></table>
-</div>
-</div><p>No tables yet&mldr; Back to readme: start the dev server and open it up in a browser.</p>
-<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2>
-<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
-</span></code></pre></td>
-<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-bash data-lang=bash>buffalo dev
-open http://127.0.0.1:3000
-</code></pre></td></tr></table>
-</div>
-</div><p>Liftoff! This gives me a development server with auto re-compilation.</p>
-<p>At this point I was a bit curious about the generated code: tried running <code>tree</code> - 1937 directories, 12700 files&mldr;.
-That&rsquo;s quite a bit, let&rsquo;s come back later since I have no good idea where to start.</p>
-<h1 id=generating-resources>Generating resources</h1>
-<p>Let&rsquo;s try to generate a few more things instead. At this point I&rsquo;m not following &ldquo;Getting started&rdquo; anymore and am trying
-to emulate a demo I saw on YouTube - rails-like generation of CRUD resources.</p>
-<p>The <code>buffalo</code> tool is pretty easy to use and discover commands, after a bit of faffing around with <code>-h</code> I get to</p>
-<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2>
-<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
-</span></code></pre></td>
-<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-bash data-lang=bash>buffalo generate resource users
-open http://localhost:3000/users
-</code></pre></td></tr></table>
-</div>
-</div><p>500, apparently i need to run migrations now to create the new tables</p>
-<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2>
-<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
-</span></code></pre></td>
-<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-bash data-lang=bash>buffalo pop migrate up
-</code></pre></td></tr></table>
-</div>
-</div><p>Yay I now have CRUD! but no fields xD. Not that I didn&rsquo;t have to restart or recompile anything, dev server from before
-picked up changes automatically.</p>
-<p>Let&rsquo;s revert</p>
-<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2>
-<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
-</span></code></pre></td>
-<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-bash data-lang=bash>buffalo pop migrate down <span style=color:#75715e># 1 step by default</span>
-</code></pre></td></tr></table>
-</div>
-</div><p>need to also manually remove the migration in /migrations and clean up routes in actions/app.go (figured this out by
-trial and error)</p>
-<p>At this point I consulted the docs - they are quite nicely structured, I quickly found <a href=https://gobuffalo.io/en/docs/resources/#generating-resources>Generating
+standard library&rdquo; is not (always) the right approach. Sometimes you just want to bootstrap a small project quickly.</p><p>Let&rsquo;s see if it delivers on this promise.</p><p><em>Disclaimer</em> this is not intended to be a review or a tutorial, just my first impressions, trying to convey the flavor I
+experience.</p><p>Final code is available <a href=https://github.com/edofic/trying-out/tree/main/buffalo>on Github</a> if you want to read through
+anything.</p><h1 id=getting-started>Getting started</h1><p>I start by working through the docs - <a href=https://gobuffalo.io/en/docs/getting-started/installation/>Installation</a>.</p><p>I need Go, or I need to update it at least (I use <a href=https://nixos.org/>NixOS</a>, following commands should work on most
+Linux distributions if you use <a href=https://nixos.org/download.html>Nix package manager</a>.</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-bash data-lang=bash><span style=display:flex><span>nix-env -iA nixos.go
+</span></span></code></pre></td></tr></table></div></div><p>And some frontend stuff</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-bash data-lang=bash><span style=display:flex><span>nix-env -iA nixos.nodejs
+</span></span><span style=display:flex><span>nix-env -iA nixos.yarn
+</span></span></code></pre></td></tr></table></div></div><p>not bothering with sqlite at this point, I&rsquo;ll probably use a dockerized Postgres for development.</p><p>I&rsquo;ll install the buffalo tooling using the prebuilt Linux binary.</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-bash data-lang=bash><span style=display:flex><span>wget https://github.com/gobuffalo/buffalo/releases/download/v0.16.21/buffalo_0.16.21_Linux_x86_64.tar.gz
+</span></span><span style=display:flex><span>tar -xf buffalo_0.16.21_Linux_x86_64.tar.gz
+</span></span><span style=display:flex><span>mv ./buffalo ~/bin/
+</span></span></code></pre></td></tr></table></div></div><p>Does it work?</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-bash data-lang=bash><span style=display:flex><span>buffalo
+</span></span></code></pre></td></tr></table></div></div><p>I get some output. Yay!</p><p>Moving on to <a href=https://gobuffalo.io/en/docs/getting-started/new-project/>Generating a new project</a></p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-bash data-lang=bash><span style=display:flex><span>buffalo new trying-out
+</span></span></code></pre></td></tr></table></div></div><p>Command suggests we open up the <a href=https://github.com/edofic/trying-out/blob/main/buffalo/README.md>generated readme</a>.
+Apparently now we need to setup a database ourselves. let&rsquo;s go with dockerized Postgres</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-bash data-lang=bash><span style=display:flex><span>docker run --name trying_out  -e POSTGRES_PASSWORD<span style=color:#f92672>=</span>postgres -d 5432:5432 postgres
+</span></span></code></pre></td></tr></table></div></div><p>Following the readme I check <code>database.yml</code> and to my delight the defaults perfectly match my choices so I can just run
+the tooling against my new Postgres server.</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-bash data-lang=bash><span style=display:flex><span>cd trying_out
+</span></span><span style=display:flex><span>vim database.yml
+</span></span><span style=display:flex><span>buffalo pop create -a
+</span></span></code></pre></td></tr></table></div></div><p>Let&rsquo;s see the schema</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">11
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">12
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">13
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">14
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">15
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">16
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">17
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">18
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">19
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">20
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">21
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">22
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-fallback data-lang=fallback><span style=display:flex><span> $ docker exec -it trying_out psql -U postgres
+</span></span><span style=display:flex><span>psql (13.1 (Debian 13.1-1.pgdg100+1))
+</span></span><span style=display:flex><span>Type &#34;help&#34; for help.
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>postgres=# \l
+</span></span><span style=display:flex><span>                                       List of databases
+</span></span><span style=display:flex><span>          Name          |  Owner   | Encoding |  Collate   |   Ctype    |   Access privileges
+</span></span><span style=display:flex><span>------------------------+----------+----------+------------+------------+-----------------------
+</span></span><span style=display:flex><span> postgres               | postgres | UTF8     | en_US.utf8 | en_US.utf8 |
+</span></span><span style=display:flex><span> template0              | postgres | UTF8     | en_US.utf8 | en_US.utf8 | =c/postgres          +
+</span></span><span style=display:flex><span>                        |          |          |            |            | postgres=CTc/postgres
+</span></span><span style=display:flex><span> template1              | postgres | UTF8     | en_US.utf8 | en_US.utf8 | =c/postgres          +
+</span></span><span style=display:flex><span>                        |          |          |            |            | postgres=CTc/postgres
+</span></span><span style=display:flex><span> trying_out_development | postgres | UTF8     | en_US.utf8 | en_US.utf8 |
+</span></span><span style=display:flex><span> trying_out_production  | postgres | UTF8     | en_US.utf8 | en_US.utf8 |
+</span></span><span style=display:flex><span> trying_out_test        | postgres | UTF8     | en_US.utf8 | en_US.utf8 |
+</span></span><span style=display:flex><span>(6 rows)
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>postgres=# \c trying_out_development
+</span></span><span style=display:flex><span>You are now connected to database &#34;trying_out_development&#34; as user &#34;postgres&#34;.
+</span></span><span style=display:flex><span>trying_out_development=# \dt
+</span></span><span style=display:flex><span>Did not find any relations.
+</span></span></code></pre></td></tr></table></div></div><p>No tables yet&mldr; Back to readme: start the dev server and open it up in a browser.</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-bash data-lang=bash><span style=display:flex><span>buffalo dev
+</span></span><span style=display:flex><span>open http://127.0.0.1:3000
+</span></span></code></pre></td></tr></table></div></div><p>Liftoff! This gives me a development server with auto re-compilation.</p><p>At this point I was a bit curious about the generated code: tried running <code>tree</code> - 1937 directories, 12700 files&mldr;.
+That&rsquo;s quite a bit, let&rsquo;s come back later since I have no good idea where to start.</p><h1 id=generating-resources>Generating resources</h1><p>Let&rsquo;s try to generate a few more things instead. At this point I&rsquo;m not following &ldquo;Getting started&rdquo; anymore and am trying
+to emulate a demo I saw on YouTube - rails-like generation of CRUD resources.</p><p>The <code>buffalo</code> tool is pretty easy to use and discover commands, after a bit of faffing around with <code>-h</code> I get to</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-bash data-lang=bash><span style=display:flex><span>buffalo generate resource users
+</span></span><span style=display:flex><span>open http://localhost:3000/users
+</span></span></code></pre></td></tr></table></div></div><p>500, apparently i need to run migrations now to create the new tables</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-bash data-lang=bash><span style=display:flex><span>buffalo pop migrate up
+</span></span></code></pre></td></tr></table></div></div><p>Yay I now have CRUD! but no fields xD. Not that I didn&rsquo;t have to restart or recompile anything, dev server from before
+picked up changes automatically.</p><p>Let&rsquo;s revert</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-bash data-lang=bash><span style=display:flex><span>buffalo pop migrate down <span style=color:#75715e># 1 step by default</span>
+</span></span></code></pre></td></tr></table></div></div><p>need to also manually remove the migration in /migrations and clean up routes in actions/app.go (figured this out by
+trial and error)</p><p>At this point I consulted the docs - they are quite nicely structured, I quickly found <a href=https://gobuffalo.io/en/docs/resources/#generating-resources>Generating
 resources</a> and now know how to generate resources with
-some actual fields</p>
-<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2>
-<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
-</span></code></pre></td>
-<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-bash data-lang=bash>buffalo generate resource users name email tier:int8
-</code></pre></td></tr></table>
-</div>
-</div><p>I added non-string column just for kicks so I can see how it looks when I need to specify the type.
-And manually run the migrations.</p>
-<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2>
-<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
-</span></code></pre></td>
-<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-bash data-lang=bash>buffalo pop migrate up
-</code></pre></td></tr></table>
-</div>
-</div><p>And we have functional crud!</p>
-<h2 id=create>Create</h2>
-<p><img src=/images/buffalo/new_user.png alt=new></p>
-<h2 id=list>List</h2>
-<p><img src=/images/buffalo/list_users.png alt=list></p>
-<h2 id=read>Read</h2>
-<p><img src=/images/buffalo/user_details.png alt=details></p>
-<h2 id=update>Update</h2>
-<p><img src=/images/buffalo/edit_user.png alt=edit></p>
-<h1 id=generated-code>Generated code</h1>
-<p>Now let&rsquo;s take a look at the generated code. First for our users. Apparently we generated action, model, and migrations.
-Let&rsquo;s start at the rear.</p>
-<h2 id=migrations>Migrations</h2>
-<p>Migrations seem quite straightforward (apparently a DSL of some sort to be able to run against
-different SQL dialects).</p>
-<p>up:</p>
-<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2>
-<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">4
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">5
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">6
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">7
-</span></code></pre></td>
-<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-fallback data-lang=fallback>create_table(&#34;users&#34;) {
-	t.Column(&#34;id&#34;, &#34;uuid&#34;, {primary: true})
-	t.Column(&#34;name&#34;, &#34;string&#34;, {})
-	t.Column(&#34;email&#34;, &#34;string&#34;, {})
-	t.Column(&#34;tier&#34;, &#34;int8&#34;, {})
-	t.Timestamps()
-}
-</code></pre></td></tr></table>
-</div>
-</div><p>down</p>
-<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2>
-<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
-</span></code></pre></td>
-<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-fallback data-lang=fallback>drop_table(&#34;users&#34;)
-</code></pre></td></tr></table>
-</div>
-</div><h2 id=model>Model</h2>
-<p>Apparently we also got test files for bot models and actions, complete with placeholder failing tests. NICE! There is
-even <code>buffalo test</code> which does exactly what you expect.</p>
-<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2>
-<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">11
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">12
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">13
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">14
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">15
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">16
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">17
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">18
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">19
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">20
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">21
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">22
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">23
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">24
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">25
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">26
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">27
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">28
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">29
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">30
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">31
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">32
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">33
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">34
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">35
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">36
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">37
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">38
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">39
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">40
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">41
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">42
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">43
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">44
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">45
-</span></code></pre></td>
-<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-go data-lang=go><span style=color:#75715e>// User is used by pop to map your users database table to your go code.
-</span><span style=color:#75715e></span><span style=color:#66d9ef>type</span> <span style=color:#a6e22e>User</span> <span style=color:#66d9ef>struct</span> {
-    <span style=color:#a6e22e>ID</span> <span style=color:#a6e22e>uuid</span>.<span style=color:#a6e22e>UUID</span> <span style=color:#e6db74>`json:&#34;id&#34; db:&#34;id&#34;`</span>
-    <span style=color:#a6e22e>Name</span> <span style=color:#66d9ef>string</span> <span style=color:#e6db74>`json:&#34;name&#34; db:&#34;name&#34;`</span>
-    <span style=color:#a6e22e>Email</span> <span style=color:#66d9ef>string</span> <span style=color:#e6db74>`json:&#34;email&#34; db:&#34;email&#34;`</span>
-    <span style=color:#a6e22e>Tier</span> <span style=color:#66d9ef>int8</span> <span style=color:#e6db74>`json:&#34;tier&#34; db:&#34;tier&#34;`</span>
-    <span style=color:#a6e22e>CreatedAt</span> <span style=color:#a6e22e>time</span>.<span style=color:#a6e22e>Time</span> <span style=color:#e6db74>`json:&#34;created_at&#34; db:&#34;created_at&#34;`</span>
-    <span style=color:#a6e22e>UpdatedAt</span> <span style=color:#a6e22e>time</span>.<span style=color:#a6e22e>Time</span> <span style=color:#e6db74>`json:&#34;updated_at&#34; db:&#34;updated_at&#34;`</span>
-}
-
-<span style=color:#75715e>// String is not required by pop and may be deleted
-</span><span style=color:#75715e></span><span style=color:#66d9ef>func</span> (<span style=color:#a6e22e>u</span> <span style=color:#a6e22e>User</span>) <span style=color:#a6e22e>String</span>() <span style=color:#66d9ef>string</span> {
-	<span style=color:#a6e22e>ju</span>, <span style=color:#a6e22e>_</span> <span style=color:#f92672>:=</span> <span style=color:#a6e22e>json</span>.<span style=color:#a6e22e>Marshal</span>(<span style=color:#a6e22e>u</span>)
-	<span style=color:#66d9ef>return</span> string(<span style=color:#a6e22e>ju</span>)
-}
-
-<span style=color:#75715e>// Users is not required by pop and may be deleted
-</span><span style=color:#75715e></span><span style=color:#66d9ef>type</span> <span style=color:#a6e22e>Users</span> []<span style=color:#a6e22e>User</span>
-
-<span style=color:#75715e>// String is not required by pop and may be deleted
-</span><span style=color:#75715e></span><span style=color:#66d9ef>func</span> (<span style=color:#a6e22e>u</span> <span style=color:#a6e22e>Users</span>) <span style=color:#a6e22e>String</span>() <span style=color:#66d9ef>string</span> {
-	<span style=color:#a6e22e>ju</span>, <span style=color:#a6e22e>_</span> <span style=color:#f92672>:=</span> <span style=color:#a6e22e>json</span>.<span style=color:#a6e22e>Marshal</span>(<span style=color:#a6e22e>u</span>)
-	<span style=color:#66d9ef>return</span> string(<span style=color:#a6e22e>ju</span>)
-}
-
-<span style=color:#75715e>// Validate gets run every time you call a &#34;pop.Validate*&#34; (pop.ValidateAndSave, pop.ValidateAndCreate, pop.ValidateAndUpdate) method.
-</span><span style=color:#75715e>// This method is not required and may be deleted.
-</span><span style=color:#75715e></span><span style=color:#66d9ef>func</span> (<span style=color:#a6e22e>u</span> <span style=color:#f92672>*</span><span style=color:#a6e22e>User</span>) <span style=color:#a6e22e>Validate</span>(<span style=color:#a6e22e>tx</span> <span style=color:#f92672>*</span><span style=color:#a6e22e>pop</span>.<span style=color:#a6e22e>Connection</span>) (<span style=color:#f92672>*</span><span style=color:#a6e22e>validate</span>.<span style=color:#a6e22e>Errors</span>, <span style=color:#66d9ef>error</span>) {
-	<span style=color:#66d9ef>return</span> <span style=color:#a6e22e>validate</span>.<span style=color:#a6e22e>Validate</span>(
-		<span style=color:#f92672>&amp;</span><span style=color:#a6e22e>validators</span>.<span style=color:#a6e22e>StringIsPresent</span>{<span style=color:#a6e22e>Field</span>: <span style=color:#a6e22e>u</span>.<span style=color:#a6e22e>Name</span>, <span style=color:#a6e22e>Name</span>: <span style=color:#e6db74>&#34;Name&#34;</span>},
-		<span style=color:#f92672>&amp;</span><span style=color:#a6e22e>validators</span>.<span style=color:#a6e22e>StringIsPresent</span>{<span style=color:#a6e22e>Field</span>: <span style=color:#a6e22e>u</span>.<span style=color:#a6e22e>Email</span>, <span style=color:#a6e22e>Name</span>: <span style=color:#e6db74>&#34;Email&#34;</span>},
-	), <span style=color:#66d9ef>nil</span>
-}
-
-<span style=color:#75715e>// ValidateCreate gets run every time you call &#34;pop.ValidateAndCreate&#34; method.
-</span><span style=color:#75715e>// This method is not required and may be deleted.
-</span><span style=color:#75715e></span><span style=color:#66d9ef>func</span> (<span style=color:#a6e22e>u</span> <span style=color:#f92672>*</span><span style=color:#a6e22e>User</span>) <span style=color:#a6e22e>ValidateCreate</span>(<span style=color:#a6e22e>tx</span> <span style=color:#f92672>*</span><span style=color:#a6e22e>pop</span>.<span style=color:#a6e22e>Connection</span>) (<span style=color:#f92672>*</span><span style=color:#a6e22e>validate</span>.<span style=color:#a6e22e>Errors</span>, <span style=color:#66d9ef>error</span>) {
-	<span style=color:#66d9ef>return</span> <span style=color:#a6e22e>validate</span>.<span style=color:#a6e22e>NewErrors</span>(), <span style=color:#66d9ef>nil</span>
-}
-
-<span style=color:#75715e>// ValidateUpdate gets run every time you call &#34;pop.ValidateAndUpdate&#34; method.
-</span><span style=color:#75715e>// This method is not required and may be deleted.
-</span><span style=color:#75715e></span><span style=color:#66d9ef>func</span> (<span style=color:#a6e22e>u</span> <span style=color:#f92672>*</span><span style=color:#a6e22e>User</span>) <span style=color:#a6e22e>ValidateUpdate</span>(<span style=color:#a6e22e>tx</span> <span style=color:#f92672>*</span><span style=color:#a6e22e>pop</span>.<span style=color:#a6e22e>Connection</span>) (<span style=color:#f92672>*</span><span style=color:#a6e22e>validate</span>.<span style=color:#a6e22e>Errors</span>, <span style=color:#66d9ef>error</span>) {
-	<span style=color:#66d9ef>return</span> <span style=color:#a6e22e>validate</span>.<span style=color:#a6e22e>NewErrors</span>(), <span style=color:#66d9ef>nil</span>
-}
-</code></pre></td></tr></table>
-</div>
-</div><p>This is in fact the whole model - copied here since it&rsquo;s quite terse. I very much like the fact a regular Go struct and
-not some smart active record as I prefer less magic.</p>
-<h2 id=actions>Actions</h2>
-<p>Action itself is actually quite hefty - comes in at 258 lines of code. <a href=https://github.com/edofic/trying-out/blob/main/buffalo/actions/users.go>Here it
+some actual fields</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-bash data-lang=bash><span style=display:flex><span>buffalo generate resource users name email tier:int8
+</span></span></code></pre></td></tr></table></div></div><p>I added non-string column just for kicks so I can see how it looks when I need to specify the type.
+And manually run the migrations.</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-bash data-lang=bash><span style=display:flex><span>buffalo pop migrate up
+</span></span></code></pre></td></tr></table></div></div><p>And we have functional crud!</p><h2 id=create>Create</h2><p><img src=/images/buffalo/new_user.png alt=new></p><h2 id=list>List</h2><p><img src=/images/buffalo/list_users.png alt=list></p><h2 id=read>Read</h2><p><img src=/images/buffalo/user_details.png alt=details></p><h2 id=update>Update</h2><p><img src=/images/buffalo/edit_user.png alt=edit></p><h1 id=generated-code>Generated code</h1><p>Now let&rsquo;s take a look at the generated code. First for our users. Apparently we generated action, model, and migrations.
+Let&rsquo;s start at the rear.</p><h2 id=migrations>Migrations</h2><p>Migrations seem quite straightforward (apparently a DSL of some sort to be able to run against
+different SQL dialects).</p><p>up:</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">4
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">5
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">6
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">7
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-fallback data-lang=fallback><span style=display:flex><span>create_table(&#34;users&#34;) {
+</span></span><span style=display:flex><span>	t.Column(&#34;id&#34;, &#34;uuid&#34;, {primary: true})
+</span></span><span style=display:flex><span>	t.Column(&#34;name&#34;, &#34;string&#34;, {})
+</span></span><span style=display:flex><span>	t.Column(&#34;email&#34;, &#34;string&#34;, {})
+</span></span><span style=display:flex><span>	t.Column(&#34;tier&#34;, &#34;int8&#34;, {})
+</span></span><span style=display:flex><span>	t.Timestamps()
+</span></span><span style=display:flex><span>}
+</span></span></code></pre></td></tr></table></div></div><p>down</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-fallback data-lang=fallback><span style=display:flex><span>drop_table(&#34;users&#34;)
+</span></span></code></pre></td></tr></table></div></div><h2 id=model>Model</h2><p>Apparently we also got test files for bot models and actions, complete with placeholder failing tests. NICE! There is
+even <code>buffalo test</code> which does exactly what you expect.</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">11
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">12
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">13
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">14
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">15
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">16
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">17
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">18
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">19
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">20
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">21
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">22
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">23
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">24
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">25
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">26
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">27
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">28
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">29
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">30
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">31
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">32
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">33
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">34
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">35
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">36
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">37
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">38
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">39
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">40
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">41
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">42
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">43
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">44
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">45
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-go data-lang=go><span style=display:flex><span><span style=color:#75715e>// User is used by pop to map your users database table to your go code.
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span><span style=color:#66d9ef>type</span> <span style=color:#a6e22e>User</span> <span style=color:#66d9ef>struct</span> {
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>ID</span> <span style=color:#a6e22e>uuid</span>.<span style=color:#a6e22e>UUID</span> <span style=color:#e6db74>`json:&#34;id&#34; db:&#34;id&#34;`</span>
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>Name</span> <span style=color:#66d9ef>string</span> <span style=color:#e6db74>`json:&#34;name&#34; db:&#34;name&#34;`</span>
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>Email</span> <span style=color:#66d9ef>string</span> <span style=color:#e6db74>`json:&#34;email&#34; db:&#34;email&#34;`</span>
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>Tier</span> <span style=color:#66d9ef>int8</span> <span style=color:#e6db74>`json:&#34;tier&#34; db:&#34;tier&#34;`</span>
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>CreatedAt</span> <span style=color:#a6e22e>time</span>.<span style=color:#a6e22e>Time</span> <span style=color:#e6db74>`json:&#34;created_at&#34; db:&#34;created_at&#34;`</span>
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>UpdatedAt</span> <span style=color:#a6e22e>time</span>.<span style=color:#a6e22e>Time</span> <span style=color:#e6db74>`json:&#34;updated_at&#34; db:&#34;updated_at&#34;`</span>
+</span></span><span style=display:flex><span>}
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e>// String is not required by pop and may be deleted
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span><span style=color:#66d9ef>func</span> (<span style=color:#a6e22e>u</span> <span style=color:#a6e22e>User</span>) <span style=color:#a6e22e>String</span>() <span style=color:#66d9ef>string</span> {
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>ju</span>, <span style=color:#a6e22e>_</span> <span style=color:#f92672>:=</span> <span style=color:#a6e22e>json</span>.<span style=color:#a6e22e>Marshal</span>(<span style=color:#a6e22e>u</span>)
+</span></span><span style=display:flex><span>	<span style=color:#66d9ef>return</span> string(<span style=color:#a6e22e>ju</span>)
+</span></span><span style=display:flex><span>}
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e>// Users is not required by pop and may be deleted
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span><span style=color:#66d9ef>type</span> <span style=color:#a6e22e>Users</span> []<span style=color:#a6e22e>User</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e>// String is not required by pop and may be deleted
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span><span style=color:#66d9ef>func</span> (<span style=color:#a6e22e>u</span> <span style=color:#a6e22e>Users</span>) <span style=color:#a6e22e>String</span>() <span style=color:#66d9ef>string</span> {
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>ju</span>, <span style=color:#a6e22e>_</span> <span style=color:#f92672>:=</span> <span style=color:#a6e22e>json</span>.<span style=color:#a6e22e>Marshal</span>(<span style=color:#a6e22e>u</span>)
+</span></span><span style=display:flex><span>	<span style=color:#66d9ef>return</span> string(<span style=color:#a6e22e>ju</span>)
+</span></span><span style=display:flex><span>}
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e>// Validate gets run every time you call a &#34;pop.Validate*&#34; (pop.ValidateAndSave, pop.ValidateAndCreate, pop.ValidateAndUpdate) method.
+</span></span></span><span style=display:flex><span><span style=color:#75715e>// This method is not required and may be deleted.
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span><span style=color:#66d9ef>func</span> (<span style=color:#a6e22e>u</span> <span style=color:#f92672>*</span><span style=color:#a6e22e>User</span>) <span style=color:#a6e22e>Validate</span>(<span style=color:#a6e22e>tx</span> <span style=color:#f92672>*</span><span style=color:#a6e22e>pop</span>.<span style=color:#a6e22e>Connection</span>) (<span style=color:#f92672>*</span><span style=color:#a6e22e>validate</span>.<span style=color:#a6e22e>Errors</span>, <span style=color:#66d9ef>error</span>) {
+</span></span><span style=display:flex><span>	<span style=color:#66d9ef>return</span> <span style=color:#a6e22e>validate</span>.<span style=color:#a6e22e>Validate</span>(
+</span></span><span style=display:flex><span>		<span style=color:#f92672>&amp;</span><span style=color:#a6e22e>validators</span>.<span style=color:#a6e22e>StringIsPresent</span>{<span style=color:#a6e22e>Field</span>: <span style=color:#a6e22e>u</span>.<span style=color:#a6e22e>Name</span>, <span style=color:#a6e22e>Name</span>: <span style=color:#e6db74>&#34;Name&#34;</span>},
+</span></span><span style=display:flex><span>		<span style=color:#f92672>&amp;</span><span style=color:#a6e22e>validators</span>.<span style=color:#a6e22e>StringIsPresent</span>{<span style=color:#a6e22e>Field</span>: <span style=color:#a6e22e>u</span>.<span style=color:#a6e22e>Email</span>, <span style=color:#a6e22e>Name</span>: <span style=color:#e6db74>&#34;Email&#34;</span>},
+</span></span><span style=display:flex><span>	), <span style=color:#66d9ef>nil</span>
+</span></span><span style=display:flex><span>}
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e>// ValidateCreate gets run every time you call &#34;pop.ValidateAndCreate&#34; method.
+</span></span></span><span style=display:flex><span><span style=color:#75715e>// This method is not required and may be deleted.
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span><span style=color:#66d9ef>func</span> (<span style=color:#a6e22e>u</span> <span style=color:#f92672>*</span><span style=color:#a6e22e>User</span>) <span style=color:#a6e22e>ValidateCreate</span>(<span style=color:#a6e22e>tx</span> <span style=color:#f92672>*</span><span style=color:#a6e22e>pop</span>.<span style=color:#a6e22e>Connection</span>) (<span style=color:#f92672>*</span><span style=color:#a6e22e>validate</span>.<span style=color:#a6e22e>Errors</span>, <span style=color:#66d9ef>error</span>) {
+</span></span><span style=display:flex><span>	<span style=color:#66d9ef>return</span> <span style=color:#a6e22e>validate</span>.<span style=color:#a6e22e>NewErrors</span>(), <span style=color:#66d9ef>nil</span>
+</span></span><span style=display:flex><span>}
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e>// ValidateUpdate gets run every time you call &#34;pop.ValidateAndUpdate&#34; method.
+</span></span></span><span style=display:flex><span><span style=color:#75715e>// This method is not required and may be deleted.
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span><span style=color:#66d9ef>func</span> (<span style=color:#a6e22e>u</span> <span style=color:#f92672>*</span><span style=color:#a6e22e>User</span>) <span style=color:#a6e22e>ValidateUpdate</span>(<span style=color:#a6e22e>tx</span> <span style=color:#f92672>*</span><span style=color:#a6e22e>pop</span>.<span style=color:#a6e22e>Connection</span>) (<span style=color:#f92672>*</span><span style=color:#a6e22e>validate</span>.<span style=color:#a6e22e>Errors</span>, <span style=color:#66d9ef>error</span>) {
+</span></span><span style=display:flex><span>	<span style=color:#66d9ef>return</span> <span style=color:#a6e22e>validate</span>.<span style=color:#a6e22e>NewErrors</span>(), <span style=color:#66d9ef>nil</span>
+</span></span><span style=display:flex><span>}
+</span></span></code></pre></td></tr></table></div></div><p>This is in fact the whole model - copied here since it&rsquo;s quite terse. I very much like the fact a regular Go struct and
+not some smart active record as I prefer less magic.</p><h2 id=actions>Actions</h2><p>Action itself is actually quite hefty - comes in at 258 lines of code. <a href=https://github.com/edofic/trying-out/blob/main/buffalo/actions/users.go>Here it
 is</a> in it&rsquo;s entirety if you want to read
-through, I&rsquo;ll just do a brief overview of my reading.</p>
-<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2>
-<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">11
-</span></code></pre></td>
-<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-go data-lang=go><span style=color:#66d9ef>type</span> <span style=color:#a6e22e>UsersResource</span> <span style=color:#66d9ef>struct</span>{
-  <span style=color:#a6e22e>buffalo</span>.<span style=color:#a6e22e>Resource</span>
-}
-
-<span style=color:#66d9ef>func</span> (<span style=color:#a6e22e>v</span> <span style=color:#a6e22e>UsersResource</span>) <span style=color:#a6e22e>List</span>(<span style=color:#a6e22e>c</span> <span style=color:#a6e22e>buffalo</span>.<span style=color:#a6e22e>Context</span>) <span style=color:#66d9ef>error</span>
-<span style=color:#66d9ef>func</span> (<span style=color:#a6e22e>v</span> <span style=color:#a6e22e>UsersResource</span>) <span style=color:#a6e22e>Show</span>(<span style=color:#a6e22e>c</span> <span style=color:#a6e22e>buffalo</span>.<span style=color:#a6e22e>Context</span>) <span style=color:#66d9ef>error</span>
-<span style=color:#66d9ef>func</span> (<span style=color:#a6e22e>v</span> <span style=color:#a6e22e>UsersResource</span>) <span style=color:#a6e22e>New</span>(<span style=color:#a6e22e>c</span> <span style=color:#a6e22e>buffalo</span>.<span style=color:#a6e22e>Context</span>) <span style=color:#66d9ef>error</span>
-<span style=color:#66d9ef>func</span> (<span style=color:#a6e22e>v</span> <span style=color:#a6e22e>UsersResource</span>) <span style=color:#a6e22e>Create</span>(<span style=color:#a6e22e>c</span> <span style=color:#a6e22e>buffalo</span>.<span style=color:#a6e22e>Context</span>) <span style=color:#66d9ef>error</span>
-<span style=color:#66d9ef>func</span> (<span style=color:#a6e22e>v</span> <span style=color:#a6e22e>UsersResource</span>) <span style=color:#a6e22e>Edit</span>(<span style=color:#a6e22e>c</span> <span style=color:#a6e22e>buffalo</span>.<span style=color:#a6e22e>Context</span>) <span style=color:#66d9ef>error</span>
-<span style=color:#66d9ef>func</span> (<span style=color:#a6e22e>v</span> <span style=color:#a6e22e>UsersResource</span>) <span style=color:#a6e22e>Update</span>(<span style=color:#a6e22e>c</span> <span style=color:#a6e22e>buffalo</span>.<span style=color:#a6e22e>Context</span>) <span style=color:#66d9ef>error</span>
-<span style=color:#66d9ef>func</span> (<span style=color:#a6e22e>v</span> <span style=color:#a6e22e>UsersResource</span>) <span style=color:#a6e22e>Destroy</span>(<span style=color:#a6e22e>c</span> <span style=color:#a6e22e>buffalo</span>.<span style=color:#a6e22e>Context</span>) <span style=color:#66d9ef>error</span>
-</code></pre></td></tr></table>
-</div>
-</div><p>There already is support for pagination, content negotiation (same content can be rendered as html/xml/json), model
+through, I&rsquo;ll just do a brief overview of my reading.</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">11
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-go data-lang=go><span style=display:flex><span><span style=color:#66d9ef>type</span> <span style=color:#a6e22e>UsersResource</span> <span style=color:#66d9ef>struct</span>{
+</span></span><span style=display:flex><span>  <span style=color:#a6e22e>buffalo</span>.<span style=color:#a6e22e>Resource</span>
+</span></span><span style=display:flex><span>}
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>func</span> (<span style=color:#a6e22e>v</span> <span style=color:#a6e22e>UsersResource</span>) <span style=color:#a6e22e>List</span>(<span style=color:#a6e22e>c</span> <span style=color:#a6e22e>buffalo</span>.<span style=color:#a6e22e>Context</span>) <span style=color:#66d9ef>error</span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>func</span> (<span style=color:#a6e22e>v</span> <span style=color:#a6e22e>UsersResource</span>) <span style=color:#a6e22e>Show</span>(<span style=color:#a6e22e>c</span> <span style=color:#a6e22e>buffalo</span>.<span style=color:#a6e22e>Context</span>) <span style=color:#66d9ef>error</span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>func</span> (<span style=color:#a6e22e>v</span> <span style=color:#a6e22e>UsersResource</span>) <span style=color:#a6e22e>New</span>(<span style=color:#a6e22e>c</span> <span style=color:#a6e22e>buffalo</span>.<span style=color:#a6e22e>Context</span>) <span style=color:#66d9ef>error</span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>func</span> (<span style=color:#a6e22e>v</span> <span style=color:#a6e22e>UsersResource</span>) <span style=color:#a6e22e>Create</span>(<span style=color:#a6e22e>c</span> <span style=color:#a6e22e>buffalo</span>.<span style=color:#a6e22e>Context</span>) <span style=color:#66d9ef>error</span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>func</span> (<span style=color:#a6e22e>v</span> <span style=color:#a6e22e>UsersResource</span>) <span style=color:#a6e22e>Edit</span>(<span style=color:#a6e22e>c</span> <span style=color:#a6e22e>buffalo</span>.<span style=color:#a6e22e>Context</span>) <span style=color:#66d9ef>error</span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>func</span> (<span style=color:#a6e22e>v</span> <span style=color:#a6e22e>UsersResource</span>) <span style=color:#a6e22e>Update</span>(<span style=color:#a6e22e>c</span> <span style=color:#a6e22e>buffalo</span>.<span style=color:#a6e22e>Context</span>) <span style=color:#66d9ef>error</span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>func</span> (<span style=color:#a6e22e>v</span> <span style=color:#a6e22e>UsersResource</span>) <span style=color:#a6e22e>Destroy</span>(<span style=color:#a6e22e>c</span> <span style=color:#a6e22e>buffalo</span>.<span style=color:#a6e22e>Context</span>) <span style=color:#66d9ef>error</span>
+</span></span></code></pre></td></tr></table></div></div><p>There already is support for pagination, content negotiation (same content can be rendered as html/xml/json), model
 validation on mutiation. Looks a bit verbose but if you read carefully the code is quite nice, idiomatic Go, with just
-some patterns repeating for all endpoints.</p>
-<p>I do have mixed feelings about it. On one hand it&rsquo;s nice to have everything spelled out like this - very easy to
+some patterns repeating for all endpoints.</p><p>I do have mixed feelings about it. On one hand it&rsquo;s nice to have everything spelled out like this - very easy to
 scaffold and jump in to make customizations. On the other hand I&rsquo;m afraid this will leave you with hard to maintain
-copy-pasta over a longer project.</p>
-<h2 id=templates>Templates</h2>
-<p>There is <a href=https://github.com/edofic/trying-out/tree/main/buffalo/templates/users>quite a bit going on here</a>. I&rsquo;ve never
+copy-pasta over a longer project.</p><h2 id=templates>Templates</h2><p>There is <a href=https://github.com/edofic/trying-out/tree/main/buffalo/templates/users>quite a bit going on here</a>. I&rsquo;ve never
 used <a href=https://github.com/gobuffalo/plush>Plush</a> but the syntax looks familiar and the templates look like regular
 Bootstrap. Basically this follows the same pattern: no surprises, no magic, human-editable code, going for max
-productivity.</p>
-<h2 id=other-generated-things>Other generated things</h2>
-<p>With slightly better understanding i can now try to read through the rest of it. Luckily we also got a generated
-<code>.gitignore</code> so I can ask git (<code>git ls-files</code>) for a list of important files.</p>
-<p>All in all (after I generated my users resource) I&rsquo;m looking at 50 files, 1387 lines of code. Not too much to actually
+productivity.</p><h2 id=other-generated-things>Other generated things</h2><p>With slightly better understanding i can now try to read through the rest of it. Luckily we also got a generated
+<code>.gitignore</code> so I can ask git (<code>git ls-files</code>) for a list of important files.</p><p>All in all (after I generated my users resource) I&rsquo;m looking at 50 files, 1387 lines of code. Not too much to actually
 read (or skim) through and get a feeling what&rsquo;s going on. And of course <a href=https://gobuffalo.io/en/docs/getting-started/directory-structure/>docs cover the important
-folders</a>.</p>
-<p>I&rsquo;ll just list a few things that have caught my eye</p>
-<ul>
-<li>sane multi-stage dockerfie</li>
-<li>sane gitignore</li>
-<li>go.mod</li>
-<li>main.go - very simple entry point that basically starts the server but leaves you with a place to customize. Again no
-magic, you can build this with regular <code>go build</code></li>
-<li>public assets (complete with favicon & robots.txt)</li>
-<li>assets pipeline (yarn & webpack based, apparently &ldquo;just works&rdquo; with the <code>buffalo</code> tool)</li>
-</ul>
-<h1 id=conclusion>Conclusion</h1>
-<p>I think Buffalo delivers on the promise: you can hit the ground running, yet there is very little magic and it&rsquo;s built
+folders</a>.</p><p>I&rsquo;ll just list a few things that have caught my eye</p><ul><li>sane multi-stage dockerfie</li><li>sane gitignore</li><li>go.mod</li><li>main.go - very simple entry point that basically starts the server but leaves you with a place to customize. Again no
+magic, you can build this with regular <code>go build</code></li><li>public assets (complete with favicon & robots.txt)</li><li>assets pipeline (yarn & webpack based, apparently &ldquo;just works&rdquo; with the <code>buffalo</code> tool)</li></ul><h1 id=conclusion>Conclusion</h1><p>I think Buffalo delivers on the promise: you can hit the ground running, yet there is very little magic and it&rsquo;s built
 upon other established libraries. But in order to achieve this it is opinionated and possibly restrictive. But this is
 fine - it&rsquo;s a trade off you can make: I&rsquo;ll glacdly pick up Buffalo when I have a need for a quick crud-y site (bye
 django&mldr;) but probably not for starting a new specialised backend/internal service. Then again, if it&rsquo;s curd-y
-database-backed thing&mldr;</p>
-<p>All in all I think it&rsquo;s a good option to have in one&rsquo;s toolbox and I&rsquo;ll probably be using it.</p>
-<hr>
-<p>Last modified on 2021-02-07</p>
-<a href=/posts/2020-10-17-attach-to-k8s/>
-Previous Attaching your local machine to a Kubernetes cluster
-</a>
-<br>
-<a href=/posts/2021-02-22-trying-out-okteto-cli/>
-Next Trying out Okteto (CLI)
-</a>
-</div>
-<script src=/js/instantclick.min.js data-no-instant></script>
-<script data-no-instant>InstantClick.init("mousedown")</script>
-</body>
-</html>
+database-backed thing&mldr;</p><p>All in all I think it&rsquo;s a good option to have in one&rsquo;s toolbox and I&rsquo;ll probably be using it.</p><hr><p>Last modified on 2021-02-07</p><a href=/posts/2020-10-17-attach-to-k8s/>Previous Attaching your local machine to a Kubernetes cluster</a><br><a href=/posts/2021-02-22-trying-out-okteto-cli/>Next Trying out Okteto (CLI)</a></div><script src=/js/instantclick.min.js data-no-instant></script>
+<script data-no-instant>InstantClick.init("mousedown")</script></body></html>

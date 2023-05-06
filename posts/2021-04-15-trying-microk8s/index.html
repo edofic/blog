@@ -1,931 +1,629 @@
-<!doctype html><html>
-<head>
-<title>Trying out Microk8s</title>
-<meta charset=utf-8>
-<meta name=X-UA-Compatible content="IE=edge">
-<meta name=google-site-verification content>
-<meta content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=0" name=viewport>
-<style>body{max-width:800px;margin:auto;line-height:1.6;font-size:18px;color:#444;padding:0 10px}h1,h2,h3{line-height:1.2}.nav a,.nav a:visited,.nav a:hover,.nav a:active{color:inherit}.nav .title{margin:0}.nav-sub{display:inline-block}.nav-item{margin:5px}.nav-sub-right{display:inline-block;float:right}.nav-icon{margin-right:5px}.main img{display:block;max-width:100%;margin:auto}.main pre{overflow:auto}" media="screen"></style>
-</head>
-<body>
-<div class=nav>
-<a href=/><h2 class=title>Andraž Bajt's blog</h2></a>
-<div class=nav-sub>
-<a class=nav-item href=/about/>
-About Me
-</a>
-<a class=nav-item href=/>
-Archive
-</a>
-</div>
-<div class=nav-sub-right>
-<a class=nav-icon href=https://github.com/edofic target=_blank><img src=/icons/github.svg width=20 height=20></a>
+<!doctype html><html><head><title>Trying out Microk8s</title><meta charset=utf-8><meta name=X-UA-Compatible content="IE=edge"><meta name=google-site-verification content><meta content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=0" name=viewport><style>body{max-width:800px;margin:auto;line-height:1.6;font-size:18px;color:#444;padding:0 10px}h1,h2,h3{line-height:1.2}.nav a,.nav a:visited,.nav a:hover,.nav a:active{color:inherit}.nav .title{margin:0}.nav-sub{display:inline-block}.nav-item{margin:5px}.nav-sub-right{display:inline-block;float:right}.nav-icon{margin-right:5px}.main img{display:block;max-width:100%;margin:auto}.main pre{overflow:auto}" media="screen"></style></head><body><div class=nav><a href=/><h2 class=title>Andraž Bajt's blog</h2></a><div class=nav-sub><a class=nav-item href=/about/>About Me</a>
+<a class=nav-item href=/>Archive</a></div><div class=nav-sub-right><a class=nav-icon href=https://github.com/edofic target=_blank><img src=/icons/github.svg width=20 height=20></a>
 <a class=nav-icon href=https://www.linkedin.com/in/edofic target=_blank><img src=/icons/linkedin.svg width=20 height=20></a>
 <a class=nav-icon href=https://twitter.com/edofic target=_blank><img src=/icons/twitter.svg width=20 height=20></a>
 <a class=nav-icon href=/index.xml target=_blank><img src=/icons/rss.svg width=20 height=20></a>
-<a class=nav-icon href=mailto:blog@edofic.com target=_blank><img src=/icons/email.svg width=20 height=20></a>
-</div>
-</div>
-<hr>
-<div class=main>
-<h1>Trying out Microk8s</h1>
-<time>2021-04-15</time>
-<a href=/tags/trying-out>trying-out</a>
-<hr>
-<p>In another &ldquo;running kuberets&rdquo; flavoured post I&rsquo;ll be trying out
-<a href=https://microk8s.io/>microk8s</a></p>
-<blockquote>
-<p>High availability K8s.
+<a class=nav-icon href=mailto:blog@edofic.com target=_blank><img src=/icons/email.svg width=20 height=20></a></div></div><hr><div class=main><h1>Trying out Microk8s</h1><time>2021-04-15</time>
+<a href=/tags/trying-out>trying-out</a><hr><p>In another &ldquo;running kuberets&rdquo; flavoured post I&rsquo;ll be trying out
+<a href=https://microk8s.io/>microk8s</a></p><blockquote><p>High availability K8s.
 Low-ops, minimal production Kubernetes,
-for devs, cloud, clusters, workstations, Edge and IoT.</p>
-</blockquote>
-<p>In the past I&rsquo;ve been using <a href=https://k3s.io/>k3s</a> for small (mostly single
+for devs, cloud, clusters, workstations, Edge and IoT.</p></blockquote><p>In the past I&rsquo;ve been using <a href=https://k3s.io/>k3s</a> for small (mostly single
 node) &ldquo;clusters&rdquo;. The pitch is very similar. The few differences I can point
-out now are:</p>
-<ul>
-<li>microk8s is a bit heavier - I don&rsquo;t think it will run on 1G vps, let&rsquo;s try it
-out</li>
-<li>microk8s has a better HA story - definately want to try this out</li>
-<li>k3s comes as a single &ldquo;run everywhere&rdquo; binary whereas microk8s requires
-<a href=https://snapcraft.io/docs/installing-snapd>snap</a></li>
-</ul>
-<h1 id=setting-up>Setting up</h1>
-<p>I&rsquo;ll be using <a href=https://www.hetzner.com/cloud>Hetzner Cloud</a> to provision a few
-small VMs for my laboratory. But I&rsquo;ll start with a single one.</p>
-<p>Specs: Ubuntu 20.04 (so we get snap out of the box), 40GB local NVMe storage, 2x
+out now are:</p><ul><li>microk8s is a bit heavier - I don&rsquo;t think it will run on 1G vps, let&rsquo;s try it
+out</li><li>microk8s has a better HA story - definately want to try this out</li><li>k3s comes as a single &ldquo;run everywhere&rdquo; binary whereas microk8s requires
+<a href=https://snapcraft.io/docs/installing-snapd>snap</a></li></ul><h1 id=setting-up>Setting up</h1><p>I&rsquo;ll be using <a href=https://www.hetzner.com/cloud>Hetzner Cloud</a> to provision a few
+small VMs for my laboratory. But I&rsquo;ll start with a single one.</p><p>Specs: Ubuntu 20.04 (so we get snap out of the box), 40GB local NVMe storage, 2x
 vCPU, 4GB ram. And a private network so I can connect future instances to it as
-well. A minute later I&rsquo;m in</p>
-<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2>
-<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
-</span></code></pre></td>
-<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-fallback data-lang=fallback>$ ssh root@162.55.52.75
-Last login: Wed Apr 14 10:14:55 2021 from 46.123.240.50
-root@microk8s-1:~#
-</code></pre></td></tr></table>
-</div>
-</div><p>Now let&rsquo;s follow the instructions on microk8s homepage</p>
-<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2>
-<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">4
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">5
-</span></code></pre></td>
-<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-fallback data-lang=fallback>root@microk8s-1:~# snap install microk8s --classic
-
-Command &#39;snap&#39; not found, but can be installed with:
-
-apt install snapd
-</code></pre></td></tr></table>
-</div>
-</div><p>Ok, apparently I need to still install snap first.</p>
-<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2>
-<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">4
-</span></code></pre></td>
-<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-fallback data-lang=fallback>apt update
-...
-apt install -y snapd
-...
-</code></pre></td></tr></table>
-</div>
-</div><h1 id=installation-and-setup>Installation and setup</h1>
-<p>Here we go again</p>
-<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2>
-<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">4
-</span></code></pre></td>
-<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-fallback data-lang=fallback>root@microk8s-1:~# snap install microk8s --classic
-...
-2021-04-14T10:18:14+02:00 INFO Waiting for automatic snapd restart...
-microk8s (1.20/stable) v1.20.5 from Canonical✓ installed
-</code></pre></td></tr></table>
-</div>
-</div><p>Step 2: wait for it :)</p>
-<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2>
-<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">11
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">12
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">13
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">14
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">15
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">16
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">17
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">18
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">19
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">20
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">21
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">22
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">23
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">24
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">25
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">26
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">27
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">28
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">29
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">30
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">31
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">32
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">33
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">34
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">35
-</span></code></pre></td>
-<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-go data-lang=go><span style=color:#a6e22e>microk8s</span> <span style=color:#a6e22e>status</span> <span style=color:#f92672>--</span><span style=color:#a6e22e>wait</span><span style=color:#f92672>-</span><span style=color:#a6e22e>ready</span>
-
-<span style=color:#a6e22e>microk8s</span> <span style=color:#a6e22e>is</span> <span style=color:#a6e22e>running</span>
-<span style=color:#a6e22e>high</span><span style=color:#f92672>-</span><span style=color:#a6e22e>availability</span>: <span style=color:#a6e22e>no</span>
-  <span style=color:#a6e22e>datastore</span> <span style=color:#a6e22e>master</span> <span style=color:#a6e22e>nodes</span>: <span style=color:#ae81ff>127.0.0.1</span>:<span style=color:#ae81ff>19001</span>
-  <span style=color:#a6e22e>datastore</span> <span style=color:#a6e22e>standby</span> <span style=color:#a6e22e>nodes</span>: <span style=color:#a6e22e>none</span>
-<span style=color:#a6e22e>addons</span>:
-  <span style=color:#a6e22e>enabled</span>:
-    <span style=color:#a6e22e>ha</span><span style=color:#f92672>-</span><span style=color:#a6e22e>cluster</span>           <span style=color:#960050;background-color:#1e0010>#</span> <span style=color:#a6e22e>Configure</span> <span style=color:#a6e22e>high</span> <span style=color:#a6e22e>availability</span> <span style=color:#a6e22e>on</span> <span style=color:#a6e22e>the</span> <span style=color:#a6e22e>current</span> <span style=color:#a6e22e>node</span>
-  <span style=color:#a6e22e>disabled</span>:
-    <span style=color:#a6e22e>ambassador</span>           <span style=color:#960050;background-color:#1e0010>#</span> <span style=color:#a6e22e>Ambassador</span> <span style=color:#a6e22e>API</span> <span style=color:#a6e22e>Gateway</span> <span style=color:#a6e22e>and</span> <span style=color:#a6e22e>Ingress</span>
-    <span style=color:#a6e22e>cilium</span>               <span style=color:#960050;background-color:#1e0010>#</span> <span style=color:#a6e22e>SDN</span>, <span style=color:#a6e22e>fast</span> <span style=color:#a6e22e>with</span> <span style=color:#a6e22e>full</span> <span style=color:#a6e22e>network</span> <span style=color:#a6e22e>policy</span>
-    <span style=color:#a6e22e>dashboard</span>            <span style=color:#960050;background-color:#1e0010>#</span> <span style=color:#a6e22e>The</span> <span style=color:#a6e22e>Kubernetes</span> <span style=color:#a6e22e>dashboard</span>
-    <span style=color:#a6e22e>dns</span>                  <span style=color:#960050;background-color:#1e0010>#</span> <span style=color:#a6e22e>CoreDNS</span>
-    <span style=color:#a6e22e>fluentd</span>              <span style=color:#960050;background-color:#1e0010>#</span> <span style=color:#a6e22e>Elasticsearch</span><span style=color:#f92672>-</span><span style=color:#a6e22e>Fluentd</span><span style=color:#f92672>-</span><span style=color:#a6e22e>Kibana</span> <span style=color:#a6e22e>logging</span> <span style=color:#a6e22e>and</span> <span style=color:#a6e22e>monitoring</span>
-    <span style=color:#a6e22e>gpu</span>                  <span style=color:#960050;background-color:#1e0010>#</span> <span style=color:#a6e22e>Automatic</span> <span style=color:#a6e22e>enablement</span> <span style=color:#a6e22e>of</span> <span style=color:#a6e22e>Nvidia</span> <span style=color:#a6e22e>CUDA</span>
-    <span style=color:#a6e22e>helm</span>                 <span style=color:#960050;background-color:#1e0010>#</span> <span style=color:#a6e22e>Helm</span> <span style=color:#ae81ff>2</span> <span style=color:#f92672>-</span> <span style=color:#a6e22e>the</span> <span style=color:#f92672>package</span> <span style=color:#a6e22e>manager</span> <span style=color:#66d9ef>for</span> <span style=color:#a6e22e>Kubernetes</span>
-    <span style=color:#a6e22e>helm3</span>                <span style=color:#960050;background-color:#1e0010>#</span> <span style=color:#a6e22e>Helm</span> <span style=color:#ae81ff>3</span> <span style=color:#f92672>-</span> <span style=color:#a6e22e>Kubernetes</span> <span style=color:#f92672>package</span> <span style=color:#a6e22e>manager</span>
-    <span style=color:#a6e22e>host</span><span style=color:#f92672>-</span><span style=color:#a6e22e>access</span>          <span style=color:#960050;background-color:#1e0010>#</span> <span style=color:#a6e22e>Allow</span> <span style=color:#a6e22e>Pods</span> <span style=color:#a6e22e>connecting</span> <span style=color:#a6e22e>to</span> <span style=color:#a6e22e>Host</span> <span style=color:#a6e22e>services</span> <span style=color:#a6e22e>smoothly</span>
-    <span style=color:#a6e22e>ingress</span>              <span style=color:#960050;background-color:#1e0010>#</span> <span style=color:#a6e22e>Ingress</span> <span style=color:#a6e22e>controller</span> <span style=color:#66d9ef>for</span> <span style=color:#a6e22e>external</span> <span style=color:#a6e22e>access</span>
-    <span style=color:#a6e22e>istio</span>                <span style=color:#960050;background-color:#1e0010>#</span> <span style=color:#a6e22e>Core</span> <span style=color:#a6e22e>Istio</span> <span style=color:#a6e22e>service</span> <span style=color:#a6e22e>mesh</span> <span style=color:#a6e22e>services</span>
-    <span style=color:#a6e22e>jaeger</span>               <span style=color:#960050;background-color:#1e0010>#</span> <span style=color:#a6e22e>Kubernetes</span> <span style=color:#a6e22e>Jaeger</span> <span style=color:#a6e22e>operator</span> <span style=color:#a6e22e>with</span> <span style=color:#a6e22e>its</span> <span style=color:#a6e22e>simple</span> <span style=color:#a6e22e>config</span>
-    <span style=color:#a6e22e>keda</span>                 <span style=color:#960050;background-color:#1e0010>#</span> <span style=color:#a6e22e>Kubernetes</span><span style=color:#f92672>-</span><span style=color:#a6e22e>based</span> <span style=color:#a6e22e>Event</span> <span style=color:#a6e22e>Driven</span> <span style=color:#a6e22e>Autoscaling</span>
-    <span style=color:#a6e22e>knative</span>              <span style=color:#960050;background-color:#1e0010>#</span> <span style=color:#a6e22e>The</span> <span style=color:#a6e22e>Knative</span> <span style=color:#a6e22e>framework</span> <span style=color:#a6e22e>on</span> <span style=color:#a6e22e>Kubernetes</span>.
-    <span style=color:#a6e22e>kubeflow</span>             <span style=color:#960050;background-color:#1e0010>#</span> <span style=color:#a6e22e>Kubeflow</span> <span style=color:#66d9ef>for</span> <span style=color:#a6e22e>easy</span> <span style=color:#a6e22e>ML</span> <span style=color:#a6e22e>deployments</span>
-    <span style=color:#a6e22e>linkerd</span>              <span style=color:#960050;background-color:#1e0010>#</span> <span style=color:#a6e22e>Linkerd</span> <span style=color:#a6e22e>is</span> <span style=color:#a6e22e>a</span> <span style=color:#a6e22e>service</span> <span style=color:#a6e22e>mesh</span> <span style=color:#66d9ef>for</span> <span style=color:#a6e22e>Kubernetes</span> <span style=color:#a6e22e>and</span> <span style=color:#a6e22e>other</span> <span style=color:#a6e22e>frameworks</span>
-    <span style=color:#a6e22e>metallb</span>              <span style=color:#960050;background-color:#1e0010>#</span> <span style=color:#a6e22e>Loadbalancer</span> <span style=color:#66d9ef>for</span> <span style=color:#a6e22e>your</span> <span style=color:#a6e22e>Kubernetes</span> <span style=color:#a6e22e>cluster</span>
-    <span style=color:#a6e22e>metrics</span><span style=color:#f92672>-</span><span style=color:#a6e22e>server</span>       <span style=color:#960050;background-color:#1e0010>#</span> <span style=color:#a6e22e>K8s</span> <span style=color:#a6e22e>Metrics</span> <span style=color:#a6e22e>Server</span> <span style=color:#66d9ef>for</span> <span style=color:#a6e22e>API</span> <span style=color:#a6e22e>access</span> <span style=color:#a6e22e>to</span> <span style=color:#a6e22e>service</span> <span style=color:#a6e22e>metrics</span>
-    <span style=color:#a6e22e>multus</span>               <span style=color:#960050;background-color:#1e0010>#</span> <span style=color:#a6e22e>Multus</span> <span style=color:#a6e22e>CNI</span> <span style=color:#a6e22e>enables</span> <span style=color:#a6e22e>attaching</span> <span style=color:#a6e22e>multiple</span> <span style=color:#a6e22e>network</span> <span style=color:#a6e22e>interfaces</span> <span style=color:#a6e22e>to</span> <span style=color:#a6e22e>pods</span>
-    <span style=color:#a6e22e>portainer</span>            <span style=color:#960050;background-color:#1e0010>#</span> <span style=color:#a6e22e>Portainer</span> <span style=color:#a6e22e>UI</span> <span style=color:#66d9ef>for</span> <span style=color:#a6e22e>your</span> <span style=color:#a6e22e>Kubernetes</span> <span style=color:#a6e22e>cluster</span>
-    <span style=color:#a6e22e>prometheus</span>           <span style=color:#960050;background-color:#1e0010>#</span> <span style=color:#a6e22e>Prometheus</span> <span style=color:#a6e22e>operator</span> <span style=color:#66d9ef>for</span> <span style=color:#a6e22e>monitoring</span> <span style=color:#a6e22e>and</span> <span style=color:#a6e22e>logging</span>
-    <span style=color:#a6e22e>rbac</span>                 <span style=color:#960050;background-color:#1e0010>#</span> <span style=color:#a6e22e>Role</span><span style=color:#f92672>-</span><span style=color:#a6e22e>Based</span> <span style=color:#a6e22e>Access</span> <span style=color:#a6e22e>Control</span> <span style=color:#66d9ef>for</span> <span style=color:#a6e22e>authorisation</span>
-    <span style=color:#a6e22e>registry</span>             <span style=color:#960050;background-color:#1e0010>#</span> <span style=color:#a6e22e>Private</span> <span style=color:#a6e22e>image</span> <span style=color:#a6e22e>registry</span> <span style=color:#a6e22e>exposed</span> <span style=color:#a6e22e>on</span> <span style=color:#a6e22e>localhost</span>:<span style=color:#ae81ff>32000</span>
-    <span style=color:#a6e22e>storage</span>              <span style=color:#960050;background-color:#1e0010>#</span> <span style=color:#a6e22e>Storage</span> <span style=color:#a6e22e>class</span>; <span style=color:#a6e22e>allocates</span> <span style=color:#a6e22e>storage</span> <span style=color:#a6e22e>from</span> <span style=color:#a6e22e>host</span> <span style=color:#a6e22e>directory</span>
-    <span style=color:#a6e22e>traefik</span>              <span style=color:#960050;background-color:#1e0010>#</span> <span style=color:#a6e22e>traefik</span> <span style=color:#a6e22e>Ingress</span> <span style=color:#a6e22e>controller</span> <span style=color:#66d9ef>for</span> <span style=color:#a6e22e>external</span> <span style=color:#a6e22e>access</span>
-</code></pre></td></tr></table>
-</div>
-</div><p>Well apparently this worked :D</p>
-<p>Step 3: enable services</p>
-<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2>
-<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">4
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">5
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">6
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">7
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">8
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">9
-</span></code></pre></td>
-<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-fallback data-lang=fallback>root@microk8s-1:~# microk8s enable dashboard dns helm3 metrics-server registry
-storage traefik
-Enabling Kubernetes Dashboard
-Enabling Metrics-Server
-...
-clusterrolebinding.rbac.authorization.k8s.io/traefik-ingress-controller created
-service/traefik-web-ui created
-ingress.networking.k8s.io/traefik-web-ui created
-traefik ingress controller has been installed on port 8080
-</code></pre></td></tr></table>
-</div>
-</div><p>I must say this already feels much smoother than k3s setup.</p>
-<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2>
-<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">11
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">12
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">13
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">14
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">15
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">16
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">17
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">18
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">19
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">20
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">21
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">22
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">23
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">24
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">25
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">26
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">27
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">28
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">29
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">30
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">31
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">32
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">33
-</span></code></pre></td>
-<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-go data-lang=go><span style=color:#a6e22e>microk8s</span> <span style=color:#a6e22e>is</span> <span style=color:#a6e22e>running</span>
-<span style=color:#a6e22e>high</span><span style=color:#f92672>-</span><span style=color:#a6e22e>availability</span>: <span style=color:#a6e22e>no</span>
-  <span style=color:#a6e22e>datastore</span> <span style=color:#a6e22e>master</span> <span style=color:#a6e22e>nodes</span>: <span style=color:#ae81ff>127.0.0.1</span>:<span style=color:#ae81ff>19001</span>
-  <span style=color:#a6e22e>datastore</span> <span style=color:#a6e22e>standby</span> <span style=color:#a6e22e>nodes</span>: <span style=color:#a6e22e>none</span>
-<span style=color:#a6e22e>addons</span>:
-  <span style=color:#a6e22e>enabled</span>:
-    <span style=color:#a6e22e>dashboard</span>            <span style=color:#960050;background-color:#1e0010>#</span> <span style=color:#a6e22e>The</span> <span style=color:#a6e22e>Kubernetes</span> <span style=color:#a6e22e>dashboard</span>
-    <span style=color:#a6e22e>dns</span>                  <span style=color:#960050;background-color:#1e0010>#</span> <span style=color:#a6e22e>CoreDNS</span>
-    <span style=color:#a6e22e>ha</span><span style=color:#f92672>-</span><span style=color:#a6e22e>cluster</span>           <span style=color:#960050;background-color:#1e0010>#</span> <span style=color:#a6e22e>Configure</span> <span style=color:#a6e22e>high</span> <span style=color:#a6e22e>availability</span> <span style=color:#a6e22e>on</span> <span style=color:#a6e22e>the</span> <span style=color:#a6e22e>current</span> <span style=color:#a6e22e>node</span>
-    <span style=color:#a6e22e>helm3</span>                <span style=color:#960050;background-color:#1e0010>#</span> <span style=color:#a6e22e>Helm</span> <span style=color:#ae81ff>3</span> <span style=color:#f92672>-</span> <span style=color:#a6e22e>Kubernetes</span> <span style=color:#f92672>package</span> <span style=color:#a6e22e>manager</span>
-    <span style=color:#a6e22e>metrics</span><span style=color:#f92672>-</span><span style=color:#a6e22e>server</span>       <span style=color:#960050;background-color:#1e0010>#</span> <span style=color:#a6e22e>K8s</span> <span style=color:#a6e22e>Metrics</span> <span style=color:#a6e22e>Server</span> <span style=color:#66d9ef>for</span> <span style=color:#a6e22e>API</span> <span style=color:#a6e22e>access</span> <span style=color:#a6e22e>to</span> <span style=color:#a6e22e>service</span> <span style=color:#a6e22e>metrics</span>
-    <span style=color:#a6e22e>registry</span>             <span style=color:#960050;background-color:#1e0010>#</span> <span style=color:#a6e22e>Private</span> <span style=color:#a6e22e>image</span> <span style=color:#a6e22e>registry</span> <span style=color:#a6e22e>exposed</span> <span style=color:#a6e22e>on</span> <span style=color:#a6e22e>localhost</span>:<span style=color:#ae81ff>32000</span>
-    <span style=color:#a6e22e>storage</span>              <span style=color:#960050;background-color:#1e0010>#</span> <span style=color:#a6e22e>Storage</span> <span style=color:#a6e22e>class</span>; <span style=color:#a6e22e>allocates</span> <span style=color:#a6e22e>storage</span> <span style=color:#a6e22e>from</span> <span style=color:#a6e22e>host</span> <span style=color:#a6e22e>directory</span>
-    <span style=color:#a6e22e>traefik</span>              <span style=color:#960050;background-color:#1e0010>#</span> <span style=color:#a6e22e>traefik</span> <span style=color:#a6e22e>Ingress</span> <span style=color:#a6e22e>controller</span> <span style=color:#66d9ef>for</span> <span style=color:#a6e22e>external</span> <span style=color:#a6e22e>access</span>
-  <span style=color:#a6e22e>disabled</span>:
-    <span style=color:#a6e22e>ambassador</span>           <span style=color:#960050;background-color:#1e0010>#</span> <span style=color:#a6e22e>Ambassador</span> <span style=color:#a6e22e>API</span> <span style=color:#a6e22e>Gateway</span> <span style=color:#a6e22e>and</span> <span style=color:#a6e22e>Ingress</span>
-    <span style=color:#a6e22e>cilium</span>               <span style=color:#960050;background-color:#1e0010>#</span> <span style=color:#a6e22e>SDN</span>, <span style=color:#a6e22e>fast</span> <span style=color:#a6e22e>with</span> <span style=color:#a6e22e>full</span> <span style=color:#a6e22e>network</span> <span style=color:#a6e22e>policy</span>
-    <span style=color:#a6e22e>fluentd</span>              <span style=color:#960050;background-color:#1e0010>#</span> <span style=color:#a6e22e>Elasticsearch</span><span style=color:#f92672>-</span><span style=color:#a6e22e>Fluentd</span><span style=color:#f92672>-</span><span style=color:#a6e22e>Kibana</span> <span style=color:#a6e22e>logging</span> <span style=color:#a6e22e>and</span> <span style=color:#a6e22e>monitoring</span>
-    <span style=color:#a6e22e>gpu</span>                  <span style=color:#960050;background-color:#1e0010>#</span> <span style=color:#a6e22e>Automatic</span> <span style=color:#a6e22e>enablement</span> <span style=color:#a6e22e>of</span> <span style=color:#a6e22e>Nvidia</span> <span style=color:#a6e22e>CUDA</span>
-    <span style=color:#a6e22e>helm</span>                 <span style=color:#960050;background-color:#1e0010>#</span> <span style=color:#a6e22e>Helm</span> <span style=color:#ae81ff>2</span> <span style=color:#f92672>-</span> <span style=color:#a6e22e>the</span> <span style=color:#f92672>package</span> <span style=color:#a6e22e>manager</span> <span style=color:#66d9ef>for</span> <span style=color:#a6e22e>Kubernetes</span>
-    <span style=color:#a6e22e>host</span><span style=color:#f92672>-</span><span style=color:#a6e22e>access</span>          <span style=color:#960050;background-color:#1e0010>#</span> <span style=color:#a6e22e>Allow</span> <span style=color:#a6e22e>Pods</span> <span style=color:#a6e22e>connecting</span> <span style=color:#a6e22e>to</span> <span style=color:#a6e22e>Host</span> <span style=color:#a6e22e>services</span> <span style=color:#a6e22e>smoothly</span>
-    <span style=color:#a6e22e>ingress</span>              <span style=color:#960050;background-color:#1e0010>#</span> <span style=color:#a6e22e>Ingress</span> <span style=color:#a6e22e>controller</span> <span style=color:#66d9ef>for</span> <span style=color:#a6e22e>external</span> <span style=color:#a6e22e>access</span>
-    <span style=color:#a6e22e>istio</span>                <span style=color:#960050;background-color:#1e0010>#</span> <span style=color:#a6e22e>Core</span> <span style=color:#a6e22e>Istio</span> <span style=color:#a6e22e>service</span> <span style=color:#a6e22e>mesh</span> <span style=color:#a6e22e>services</span>
-    <span style=color:#a6e22e>jaeger</span>               <span style=color:#960050;background-color:#1e0010>#</span> <span style=color:#a6e22e>Kubernetes</span> <span style=color:#a6e22e>Jaeger</span> <span style=color:#a6e22e>operator</span> <span style=color:#a6e22e>with</span> <span style=color:#a6e22e>its</span> <span style=color:#a6e22e>simple</span> <span style=color:#a6e22e>config</span>
-    <span style=color:#a6e22e>keda</span>                 <span style=color:#960050;background-color:#1e0010>#</span> <span style=color:#a6e22e>Kubernetes</span><span style=color:#f92672>-</span><span style=color:#a6e22e>based</span> <span style=color:#a6e22e>Event</span> <span style=color:#a6e22e>Driven</span> <span style=color:#a6e22e>Autoscaling</span>
-    <span style=color:#a6e22e>knative</span>              <span style=color:#960050;background-color:#1e0010>#</span> <span style=color:#a6e22e>The</span> <span style=color:#a6e22e>Knative</span> <span style=color:#a6e22e>framework</span> <span style=color:#a6e22e>on</span> <span style=color:#a6e22e>Kubernetes</span>.
-    <span style=color:#a6e22e>kubeflow</span>             <span style=color:#960050;background-color:#1e0010>#</span> <span style=color:#a6e22e>Kubeflow</span> <span style=color:#66d9ef>for</span> <span style=color:#a6e22e>easy</span> <span style=color:#a6e22e>ML</span> <span style=color:#a6e22e>deployments</span>
-    <span style=color:#a6e22e>linkerd</span>              <span style=color:#960050;background-color:#1e0010>#</span> <span style=color:#a6e22e>Linkerd</span> <span style=color:#a6e22e>is</span> <span style=color:#a6e22e>a</span> <span style=color:#a6e22e>service</span> <span style=color:#a6e22e>mesh</span> <span style=color:#66d9ef>for</span> <span style=color:#a6e22e>Kubernetes</span> <span style=color:#a6e22e>and</span> <span style=color:#a6e22e>other</span> <span style=color:#a6e22e>frameworks</span>
-    <span style=color:#a6e22e>metallb</span>              <span style=color:#960050;background-color:#1e0010>#</span> <span style=color:#a6e22e>Loadbalancer</span> <span style=color:#66d9ef>for</span> <span style=color:#a6e22e>your</span> <span style=color:#a6e22e>Kubernetes</span> <span style=color:#a6e22e>cluster</span>
-    <span style=color:#a6e22e>multus</span>               <span style=color:#960050;background-color:#1e0010>#</span> <span style=color:#a6e22e>Multus</span> <span style=color:#a6e22e>CNI</span> <span style=color:#a6e22e>enables</span> <span style=color:#a6e22e>attaching</span> <span style=color:#a6e22e>multiple</span> <span style=color:#a6e22e>network</span> <span style=color:#a6e22e>interfaces</span> <span style=color:#a6e22e>to</span> <span style=color:#a6e22e>pods</span>
-    <span style=color:#a6e22e>portainer</span>            <span style=color:#960050;background-color:#1e0010>#</span> <span style=color:#a6e22e>Portainer</span> <span style=color:#a6e22e>UI</span> <span style=color:#66d9ef>for</span> <span style=color:#a6e22e>your</span> <span style=color:#a6e22e>Kubernetes</span> <span style=color:#a6e22e>cluster</span>
-    <span style=color:#a6e22e>prometheus</span>           <span style=color:#960050;background-color:#1e0010>#</span> <span style=color:#a6e22e>Prometheus</span> <span style=color:#a6e22e>operator</span> <span style=color:#66d9ef>for</span> <span style=color:#a6e22e>monitoring</span> <span style=color:#a6e22e>and</span> <span style=color:#a6e22e>logging</span>
-    <span style=color:#a6e22e>rbac</span>                 <span style=color:#960050;background-color:#1e0010>#</span> <span style=color:#a6e22e>Role</span><span style=color:#f92672>-</span><span style=color:#a6e22e>Based</span> <span style=color:#a6e22e>Access</span> <span style=color:#a6e22e>Control</span> <span style=color:#66d9ef>for</span> <span style=color:#a6e22e>authorisation</span>
-</code></pre></td></tr></table>
-</div>
-</div><h1 id=using>Using</h1>
-<p>Step 4: start using (like k3s there is a <code>kubectl</code> packaged in)</p>
-<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2>
-<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">11
-</span></code></pre></td>
-<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-fallback data-lang=fallback>root@microk8s-1:~# microk8s kubectl get namespaces
-NAME                 STATUS   AGE
-kube-system          Active   7m5s
-kube-public          Active   7m4s
-kube-node-lease      Active   7m4s
-default              Active   7m4s
-container-registry   Active   3m43s
-traefik              Active   3m41s
-root@microk8s-1:~# microk8s kubectl get nodes
-NAME         STATUS   ROLES    AGE    VERSION
-microk8s-1   Ready    &lt;none&gt;   7m8s   v1.20.5-34+40f5951bd9888a
-</code></pre></td></tr></table>
-</div>
-</div><p>Now how do I connect to this from my laptop? Quick search says microk8s config`
-will outtput a kubeconfig file. And indeed it works</p>
-<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2>
-<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">4
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">5
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">6
-</span></code></pre></td>
-<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-fallback data-lang=fallback>andraz@amaterasu /tmp/temp
- $ export KUBECONFIG=$(pwd)/kubeconfig
-andraz@amaterasu /tmp/temp
- $ kubectl get nodes
-NAME         STATUS   ROLES    AGE   VERSION
-microk8s-1   Ready    &lt;none&gt;   12m   v1.20.5-34+40f5951bd9888a
-</code></pre></td></tr></table>
-</div>
-</div><p>Can we get a dashboard?</p>
-<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2>
-<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">4
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">5
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">6
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">7
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">8
-</span></code></pre></td>
-<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-fallback data-lang=fallback>
-andraz@amaterasu /tmp/temp
- $ k get service -A | grep dashboard
-kube-system          kubernetes-dashboard        ClusterIP   10.152.183.220   &lt;none&gt;        443/TCP                  12m
-kube-system          dashboard-metrics-scraper   ClusterIP   10.152.183.160   &lt;none&gt;        8000/TCP                 12m
-andraz@amaterasu /tmp/temp
- $ k proxy
-Starting to serve on 127.0.0.1:8001
-</code></pre></td></tr></table>
-</div>
-</div><p>And indded I get the Web UI available <a href=http://localhost:8001/api/v1/namespaces/kube-system/services/https:kubernetes-dashboard:/proxy/#/login>on
-localhost</a></p>
-<p>How about resource usage?</p>
-<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2>
-<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">4
-</span></code></pre></td>
-<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-fallback data-lang=fallback>root@microk8s-1:~# free -m
-              total        used        free      shared  buff/cache   available
-Mem:           3840        1154         331           1        2354        2524
-Swap:             0           0           0
-</code></pre></td></tr></table>
-</div>
-</div><p>microk8s comes in at about 1.1G. Slightly heavier than <a href=http://k3s.io/>k3</a>
+well. A minute later I&rsquo;m in</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-fallback data-lang=fallback><span style=display:flex><span>$ ssh root@162.55.52.75
+</span></span><span style=display:flex><span>Last login: Wed Apr 14 10:14:55 2021 from 46.123.240.50
+</span></span><span style=display:flex><span>root@microk8s-1:~#
+</span></span></code></pre></td></tr></table></div></div><p>Now let&rsquo;s follow the instructions on microk8s homepage</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">4
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">5
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-fallback data-lang=fallback><span style=display:flex><span>root@microk8s-1:~# snap install microk8s --classic
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>Command &#39;snap&#39; not found, but can be installed with:
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>apt install snapd
+</span></span></code></pre></td></tr></table></div></div><p>Ok, apparently I need to still install snap first.</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">4
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-fallback data-lang=fallback><span style=display:flex><span>apt update
+</span></span><span style=display:flex><span>...
+</span></span><span style=display:flex><span>apt install -y snapd
+</span></span><span style=display:flex><span>...
+</span></span></code></pre></td></tr></table></div></div><h1 id=installation-and-setup>Installation and setup</h1><p>Here we go again</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">4
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-fallback data-lang=fallback><span style=display:flex><span>root@microk8s-1:~# snap install microk8s --classic
+</span></span><span style=display:flex><span>...
+</span></span><span style=display:flex><span>2021-04-14T10:18:14+02:00 INFO Waiting for automatic snapd restart...
+</span></span><span style=display:flex><span>microk8s (1.20/stable) v1.20.5 from Canonical✓ installed
+</span></span></code></pre></td></tr></table></div></div><p>Step 2: wait for it :)</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">11
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">12
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">13
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">14
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">15
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">16
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">17
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">18
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">19
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">20
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">21
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">22
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">23
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">24
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">25
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">26
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">27
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">28
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">29
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">30
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">31
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">32
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">33
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">34
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">35
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-go data-lang=go><span style=display:flex><span><span style=color:#a6e22e>microk8s</span> <span style=color:#a6e22e>status</span> <span style=color:#f92672>--</span><span style=color:#a6e22e>wait</span><span style=color:#f92672>-</span><span style=color:#a6e22e>ready</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#a6e22e>microk8s</span> <span style=color:#a6e22e>is</span> <span style=color:#a6e22e>running</span>
+</span></span><span style=display:flex><span><span style=color:#a6e22e>high</span><span style=color:#f92672>-</span><span style=color:#a6e22e>availability</span>: <span style=color:#a6e22e>no</span>
+</span></span><span style=display:flex><span>  <span style=color:#a6e22e>datastore</span> <span style=color:#a6e22e>master</span> <span style=color:#a6e22e>nodes</span>: <span style=color:#ae81ff>127.0.0.1</span>:<span style=color:#ae81ff>19001</span>
+</span></span><span style=display:flex><span>  <span style=color:#a6e22e>datastore</span> <span style=color:#a6e22e>standby</span> <span style=color:#a6e22e>nodes</span>: <span style=color:#a6e22e>none</span>
+</span></span><span style=display:flex><span><span style=color:#a6e22e>addons</span>:
+</span></span><span style=display:flex><span>  <span style=color:#a6e22e>enabled</span>:
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>ha</span><span style=color:#f92672>-</span><span style=color:#a6e22e>cluster</span>           <span style=color:#960050;background-color:#1e0010>#</span> <span style=color:#a6e22e>Configure</span> <span style=color:#a6e22e>high</span> <span style=color:#a6e22e>availability</span> <span style=color:#a6e22e>on</span> <span style=color:#a6e22e>the</span> <span style=color:#a6e22e>current</span> <span style=color:#a6e22e>node</span>
+</span></span><span style=display:flex><span>  <span style=color:#a6e22e>disabled</span>:
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>ambassador</span>           <span style=color:#960050;background-color:#1e0010>#</span> <span style=color:#a6e22e>Ambassador</span> <span style=color:#a6e22e>API</span> <span style=color:#a6e22e>Gateway</span> <span style=color:#a6e22e>and</span> <span style=color:#a6e22e>Ingress</span>
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>cilium</span>               <span style=color:#960050;background-color:#1e0010>#</span> <span style=color:#a6e22e>SDN</span>, <span style=color:#a6e22e>fast</span> <span style=color:#a6e22e>with</span> <span style=color:#a6e22e>full</span> <span style=color:#a6e22e>network</span> <span style=color:#a6e22e>policy</span>
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>dashboard</span>            <span style=color:#960050;background-color:#1e0010>#</span> <span style=color:#a6e22e>The</span> <span style=color:#a6e22e>Kubernetes</span> <span style=color:#a6e22e>dashboard</span>
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>dns</span>                  <span style=color:#960050;background-color:#1e0010>#</span> <span style=color:#a6e22e>CoreDNS</span>
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>fluentd</span>              <span style=color:#960050;background-color:#1e0010>#</span> <span style=color:#a6e22e>Elasticsearch</span><span style=color:#f92672>-</span><span style=color:#a6e22e>Fluentd</span><span style=color:#f92672>-</span><span style=color:#a6e22e>Kibana</span> <span style=color:#a6e22e>logging</span> <span style=color:#a6e22e>and</span> <span style=color:#a6e22e>monitoring</span>
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>gpu</span>                  <span style=color:#960050;background-color:#1e0010>#</span> <span style=color:#a6e22e>Automatic</span> <span style=color:#a6e22e>enablement</span> <span style=color:#a6e22e>of</span> <span style=color:#a6e22e>Nvidia</span> <span style=color:#a6e22e>CUDA</span>
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>helm</span>                 <span style=color:#960050;background-color:#1e0010>#</span> <span style=color:#a6e22e>Helm</span> <span style=color:#ae81ff>2</span> <span style=color:#f92672>-</span> <span style=color:#a6e22e>the</span> <span style=color:#f92672>package</span> <span style=color:#a6e22e>manager</span> <span style=color:#66d9ef>for</span> <span style=color:#a6e22e>Kubernetes</span>
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>helm3</span>                <span style=color:#960050;background-color:#1e0010>#</span> <span style=color:#a6e22e>Helm</span> <span style=color:#ae81ff>3</span> <span style=color:#f92672>-</span> <span style=color:#a6e22e>Kubernetes</span> <span style=color:#f92672>package</span> <span style=color:#a6e22e>manager</span>
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>host</span><span style=color:#f92672>-</span><span style=color:#a6e22e>access</span>          <span style=color:#960050;background-color:#1e0010>#</span> <span style=color:#a6e22e>Allow</span> <span style=color:#a6e22e>Pods</span> <span style=color:#a6e22e>connecting</span> <span style=color:#a6e22e>to</span> <span style=color:#a6e22e>Host</span> <span style=color:#a6e22e>services</span> <span style=color:#a6e22e>smoothly</span>
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>ingress</span>              <span style=color:#960050;background-color:#1e0010>#</span> <span style=color:#a6e22e>Ingress</span> <span style=color:#a6e22e>controller</span> <span style=color:#66d9ef>for</span> <span style=color:#a6e22e>external</span> <span style=color:#a6e22e>access</span>
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>istio</span>                <span style=color:#960050;background-color:#1e0010>#</span> <span style=color:#a6e22e>Core</span> <span style=color:#a6e22e>Istio</span> <span style=color:#a6e22e>service</span> <span style=color:#a6e22e>mesh</span> <span style=color:#a6e22e>services</span>
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>jaeger</span>               <span style=color:#960050;background-color:#1e0010>#</span> <span style=color:#a6e22e>Kubernetes</span> <span style=color:#a6e22e>Jaeger</span> <span style=color:#a6e22e>operator</span> <span style=color:#a6e22e>with</span> <span style=color:#a6e22e>its</span> <span style=color:#a6e22e>simple</span> <span style=color:#a6e22e>config</span>
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>keda</span>                 <span style=color:#960050;background-color:#1e0010>#</span> <span style=color:#a6e22e>Kubernetes</span><span style=color:#f92672>-</span><span style=color:#a6e22e>based</span> <span style=color:#a6e22e>Event</span> <span style=color:#a6e22e>Driven</span> <span style=color:#a6e22e>Autoscaling</span>
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>knative</span>              <span style=color:#960050;background-color:#1e0010>#</span> <span style=color:#a6e22e>The</span> <span style=color:#a6e22e>Knative</span> <span style=color:#a6e22e>framework</span> <span style=color:#a6e22e>on</span> <span style=color:#a6e22e>Kubernetes</span>.
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>kubeflow</span>             <span style=color:#960050;background-color:#1e0010>#</span> <span style=color:#a6e22e>Kubeflow</span> <span style=color:#66d9ef>for</span> <span style=color:#a6e22e>easy</span> <span style=color:#a6e22e>ML</span> <span style=color:#a6e22e>deployments</span>
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>linkerd</span>              <span style=color:#960050;background-color:#1e0010>#</span> <span style=color:#a6e22e>Linkerd</span> <span style=color:#a6e22e>is</span> <span style=color:#a6e22e>a</span> <span style=color:#a6e22e>service</span> <span style=color:#a6e22e>mesh</span> <span style=color:#66d9ef>for</span> <span style=color:#a6e22e>Kubernetes</span> <span style=color:#a6e22e>and</span> <span style=color:#a6e22e>other</span> <span style=color:#a6e22e>frameworks</span>
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>metallb</span>              <span style=color:#960050;background-color:#1e0010>#</span> <span style=color:#a6e22e>Loadbalancer</span> <span style=color:#66d9ef>for</span> <span style=color:#a6e22e>your</span> <span style=color:#a6e22e>Kubernetes</span> <span style=color:#a6e22e>cluster</span>
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>metrics</span><span style=color:#f92672>-</span><span style=color:#a6e22e>server</span>       <span style=color:#960050;background-color:#1e0010>#</span> <span style=color:#a6e22e>K8s</span> <span style=color:#a6e22e>Metrics</span> <span style=color:#a6e22e>Server</span> <span style=color:#66d9ef>for</span> <span style=color:#a6e22e>API</span> <span style=color:#a6e22e>access</span> <span style=color:#a6e22e>to</span> <span style=color:#a6e22e>service</span> <span style=color:#a6e22e>metrics</span>
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>multus</span>               <span style=color:#960050;background-color:#1e0010>#</span> <span style=color:#a6e22e>Multus</span> <span style=color:#a6e22e>CNI</span> <span style=color:#a6e22e>enables</span> <span style=color:#a6e22e>attaching</span> <span style=color:#a6e22e>multiple</span> <span style=color:#a6e22e>network</span> <span style=color:#a6e22e>interfaces</span> <span style=color:#a6e22e>to</span> <span style=color:#a6e22e>pods</span>
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>portainer</span>            <span style=color:#960050;background-color:#1e0010>#</span> <span style=color:#a6e22e>Portainer</span> <span style=color:#a6e22e>UI</span> <span style=color:#66d9ef>for</span> <span style=color:#a6e22e>your</span> <span style=color:#a6e22e>Kubernetes</span> <span style=color:#a6e22e>cluster</span>
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>prometheus</span>           <span style=color:#960050;background-color:#1e0010>#</span> <span style=color:#a6e22e>Prometheus</span> <span style=color:#a6e22e>operator</span> <span style=color:#66d9ef>for</span> <span style=color:#a6e22e>monitoring</span> <span style=color:#a6e22e>and</span> <span style=color:#a6e22e>logging</span>
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>rbac</span>                 <span style=color:#960050;background-color:#1e0010>#</span> <span style=color:#a6e22e>Role</span><span style=color:#f92672>-</span><span style=color:#a6e22e>Based</span> <span style=color:#a6e22e>Access</span> <span style=color:#a6e22e>Control</span> <span style=color:#66d9ef>for</span> <span style=color:#a6e22e>authorisation</span>
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>registry</span>             <span style=color:#960050;background-color:#1e0010>#</span> <span style=color:#a6e22e>Private</span> <span style=color:#a6e22e>image</span> <span style=color:#a6e22e>registry</span> <span style=color:#a6e22e>exposed</span> <span style=color:#a6e22e>on</span> <span style=color:#a6e22e>localhost</span>:<span style=color:#ae81ff>32000</span>
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>storage</span>              <span style=color:#960050;background-color:#1e0010>#</span> <span style=color:#a6e22e>Storage</span> <span style=color:#a6e22e>class</span>; <span style=color:#a6e22e>allocates</span> <span style=color:#a6e22e>storage</span> <span style=color:#a6e22e>from</span> <span style=color:#a6e22e>host</span> <span style=color:#a6e22e>directory</span>
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>traefik</span>              <span style=color:#960050;background-color:#1e0010>#</span> <span style=color:#a6e22e>traefik</span> <span style=color:#a6e22e>Ingress</span> <span style=color:#a6e22e>controller</span> <span style=color:#66d9ef>for</span> <span style=color:#a6e22e>external</span> <span style=color:#a6e22e>access</span>
+</span></span></code></pre></td></tr></table></div></div><p>Well apparently this worked :D</p><p>Step 3: enable services</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">4
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">5
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">6
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">7
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">8
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">9
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-fallback data-lang=fallback><span style=display:flex><span>root@microk8s-1:~# microk8s enable dashboard dns helm3 metrics-server registry
+</span></span><span style=display:flex><span>storage traefik
+</span></span><span style=display:flex><span>Enabling Kubernetes Dashboard
+</span></span><span style=display:flex><span>Enabling Metrics-Server
+</span></span><span style=display:flex><span>...
+</span></span><span style=display:flex><span>clusterrolebinding.rbac.authorization.k8s.io/traefik-ingress-controller created
+</span></span><span style=display:flex><span>service/traefik-web-ui created
+</span></span><span style=display:flex><span>ingress.networking.k8s.io/traefik-web-ui created
+</span></span><span style=display:flex><span>traefik ingress controller has been installed on port 8080
+</span></span></code></pre></td></tr></table></div></div><p>I must say this already feels much smoother than k3s setup.</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">11
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">12
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">13
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">14
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">15
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">16
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">17
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">18
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">19
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">20
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">21
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">22
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">23
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">24
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">25
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">26
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">27
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">28
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">29
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">30
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">31
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">32
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">33
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-go data-lang=go><span style=display:flex><span><span style=color:#a6e22e>microk8s</span> <span style=color:#a6e22e>is</span> <span style=color:#a6e22e>running</span>
+</span></span><span style=display:flex><span><span style=color:#a6e22e>high</span><span style=color:#f92672>-</span><span style=color:#a6e22e>availability</span>: <span style=color:#a6e22e>no</span>
+</span></span><span style=display:flex><span>  <span style=color:#a6e22e>datastore</span> <span style=color:#a6e22e>master</span> <span style=color:#a6e22e>nodes</span>: <span style=color:#ae81ff>127.0.0.1</span>:<span style=color:#ae81ff>19001</span>
+</span></span><span style=display:flex><span>  <span style=color:#a6e22e>datastore</span> <span style=color:#a6e22e>standby</span> <span style=color:#a6e22e>nodes</span>: <span style=color:#a6e22e>none</span>
+</span></span><span style=display:flex><span><span style=color:#a6e22e>addons</span>:
+</span></span><span style=display:flex><span>  <span style=color:#a6e22e>enabled</span>:
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>dashboard</span>            <span style=color:#960050;background-color:#1e0010>#</span> <span style=color:#a6e22e>The</span> <span style=color:#a6e22e>Kubernetes</span> <span style=color:#a6e22e>dashboard</span>
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>dns</span>                  <span style=color:#960050;background-color:#1e0010>#</span> <span style=color:#a6e22e>CoreDNS</span>
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>ha</span><span style=color:#f92672>-</span><span style=color:#a6e22e>cluster</span>           <span style=color:#960050;background-color:#1e0010>#</span> <span style=color:#a6e22e>Configure</span> <span style=color:#a6e22e>high</span> <span style=color:#a6e22e>availability</span> <span style=color:#a6e22e>on</span> <span style=color:#a6e22e>the</span> <span style=color:#a6e22e>current</span> <span style=color:#a6e22e>node</span>
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>helm3</span>                <span style=color:#960050;background-color:#1e0010>#</span> <span style=color:#a6e22e>Helm</span> <span style=color:#ae81ff>3</span> <span style=color:#f92672>-</span> <span style=color:#a6e22e>Kubernetes</span> <span style=color:#f92672>package</span> <span style=color:#a6e22e>manager</span>
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>metrics</span><span style=color:#f92672>-</span><span style=color:#a6e22e>server</span>       <span style=color:#960050;background-color:#1e0010>#</span> <span style=color:#a6e22e>K8s</span> <span style=color:#a6e22e>Metrics</span> <span style=color:#a6e22e>Server</span> <span style=color:#66d9ef>for</span> <span style=color:#a6e22e>API</span> <span style=color:#a6e22e>access</span> <span style=color:#a6e22e>to</span> <span style=color:#a6e22e>service</span> <span style=color:#a6e22e>metrics</span>
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>registry</span>             <span style=color:#960050;background-color:#1e0010>#</span> <span style=color:#a6e22e>Private</span> <span style=color:#a6e22e>image</span> <span style=color:#a6e22e>registry</span> <span style=color:#a6e22e>exposed</span> <span style=color:#a6e22e>on</span> <span style=color:#a6e22e>localhost</span>:<span style=color:#ae81ff>32000</span>
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>storage</span>              <span style=color:#960050;background-color:#1e0010>#</span> <span style=color:#a6e22e>Storage</span> <span style=color:#a6e22e>class</span>; <span style=color:#a6e22e>allocates</span> <span style=color:#a6e22e>storage</span> <span style=color:#a6e22e>from</span> <span style=color:#a6e22e>host</span> <span style=color:#a6e22e>directory</span>
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>traefik</span>              <span style=color:#960050;background-color:#1e0010>#</span> <span style=color:#a6e22e>traefik</span> <span style=color:#a6e22e>Ingress</span> <span style=color:#a6e22e>controller</span> <span style=color:#66d9ef>for</span> <span style=color:#a6e22e>external</span> <span style=color:#a6e22e>access</span>
+</span></span><span style=display:flex><span>  <span style=color:#a6e22e>disabled</span>:
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>ambassador</span>           <span style=color:#960050;background-color:#1e0010>#</span> <span style=color:#a6e22e>Ambassador</span> <span style=color:#a6e22e>API</span> <span style=color:#a6e22e>Gateway</span> <span style=color:#a6e22e>and</span> <span style=color:#a6e22e>Ingress</span>
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>cilium</span>               <span style=color:#960050;background-color:#1e0010>#</span> <span style=color:#a6e22e>SDN</span>, <span style=color:#a6e22e>fast</span> <span style=color:#a6e22e>with</span> <span style=color:#a6e22e>full</span> <span style=color:#a6e22e>network</span> <span style=color:#a6e22e>policy</span>
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>fluentd</span>              <span style=color:#960050;background-color:#1e0010>#</span> <span style=color:#a6e22e>Elasticsearch</span><span style=color:#f92672>-</span><span style=color:#a6e22e>Fluentd</span><span style=color:#f92672>-</span><span style=color:#a6e22e>Kibana</span> <span style=color:#a6e22e>logging</span> <span style=color:#a6e22e>and</span> <span style=color:#a6e22e>monitoring</span>
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>gpu</span>                  <span style=color:#960050;background-color:#1e0010>#</span> <span style=color:#a6e22e>Automatic</span> <span style=color:#a6e22e>enablement</span> <span style=color:#a6e22e>of</span> <span style=color:#a6e22e>Nvidia</span> <span style=color:#a6e22e>CUDA</span>
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>helm</span>                 <span style=color:#960050;background-color:#1e0010>#</span> <span style=color:#a6e22e>Helm</span> <span style=color:#ae81ff>2</span> <span style=color:#f92672>-</span> <span style=color:#a6e22e>the</span> <span style=color:#f92672>package</span> <span style=color:#a6e22e>manager</span> <span style=color:#66d9ef>for</span> <span style=color:#a6e22e>Kubernetes</span>
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>host</span><span style=color:#f92672>-</span><span style=color:#a6e22e>access</span>          <span style=color:#960050;background-color:#1e0010>#</span> <span style=color:#a6e22e>Allow</span> <span style=color:#a6e22e>Pods</span> <span style=color:#a6e22e>connecting</span> <span style=color:#a6e22e>to</span> <span style=color:#a6e22e>Host</span> <span style=color:#a6e22e>services</span> <span style=color:#a6e22e>smoothly</span>
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>ingress</span>              <span style=color:#960050;background-color:#1e0010>#</span> <span style=color:#a6e22e>Ingress</span> <span style=color:#a6e22e>controller</span> <span style=color:#66d9ef>for</span> <span style=color:#a6e22e>external</span> <span style=color:#a6e22e>access</span>
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>istio</span>                <span style=color:#960050;background-color:#1e0010>#</span> <span style=color:#a6e22e>Core</span> <span style=color:#a6e22e>Istio</span> <span style=color:#a6e22e>service</span> <span style=color:#a6e22e>mesh</span> <span style=color:#a6e22e>services</span>
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>jaeger</span>               <span style=color:#960050;background-color:#1e0010>#</span> <span style=color:#a6e22e>Kubernetes</span> <span style=color:#a6e22e>Jaeger</span> <span style=color:#a6e22e>operator</span> <span style=color:#a6e22e>with</span> <span style=color:#a6e22e>its</span> <span style=color:#a6e22e>simple</span> <span style=color:#a6e22e>config</span>
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>keda</span>                 <span style=color:#960050;background-color:#1e0010>#</span> <span style=color:#a6e22e>Kubernetes</span><span style=color:#f92672>-</span><span style=color:#a6e22e>based</span> <span style=color:#a6e22e>Event</span> <span style=color:#a6e22e>Driven</span> <span style=color:#a6e22e>Autoscaling</span>
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>knative</span>              <span style=color:#960050;background-color:#1e0010>#</span> <span style=color:#a6e22e>The</span> <span style=color:#a6e22e>Knative</span> <span style=color:#a6e22e>framework</span> <span style=color:#a6e22e>on</span> <span style=color:#a6e22e>Kubernetes</span>.
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>kubeflow</span>             <span style=color:#960050;background-color:#1e0010>#</span> <span style=color:#a6e22e>Kubeflow</span> <span style=color:#66d9ef>for</span> <span style=color:#a6e22e>easy</span> <span style=color:#a6e22e>ML</span> <span style=color:#a6e22e>deployments</span>
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>linkerd</span>              <span style=color:#960050;background-color:#1e0010>#</span> <span style=color:#a6e22e>Linkerd</span> <span style=color:#a6e22e>is</span> <span style=color:#a6e22e>a</span> <span style=color:#a6e22e>service</span> <span style=color:#a6e22e>mesh</span> <span style=color:#66d9ef>for</span> <span style=color:#a6e22e>Kubernetes</span> <span style=color:#a6e22e>and</span> <span style=color:#a6e22e>other</span> <span style=color:#a6e22e>frameworks</span>
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>metallb</span>              <span style=color:#960050;background-color:#1e0010>#</span> <span style=color:#a6e22e>Loadbalancer</span> <span style=color:#66d9ef>for</span> <span style=color:#a6e22e>your</span> <span style=color:#a6e22e>Kubernetes</span> <span style=color:#a6e22e>cluster</span>
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>multus</span>               <span style=color:#960050;background-color:#1e0010>#</span> <span style=color:#a6e22e>Multus</span> <span style=color:#a6e22e>CNI</span> <span style=color:#a6e22e>enables</span> <span style=color:#a6e22e>attaching</span> <span style=color:#a6e22e>multiple</span> <span style=color:#a6e22e>network</span> <span style=color:#a6e22e>interfaces</span> <span style=color:#a6e22e>to</span> <span style=color:#a6e22e>pods</span>
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>portainer</span>            <span style=color:#960050;background-color:#1e0010>#</span> <span style=color:#a6e22e>Portainer</span> <span style=color:#a6e22e>UI</span> <span style=color:#66d9ef>for</span> <span style=color:#a6e22e>your</span> <span style=color:#a6e22e>Kubernetes</span> <span style=color:#a6e22e>cluster</span>
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>prometheus</span>           <span style=color:#960050;background-color:#1e0010>#</span> <span style=color:#a6e22e>Prometheus</span> <span style=color:#a6e22e>operator</span> <span style=color:#66d9ef>for</span> <span style=color:#a6e22e>monitoring</span> <span style=color:#a6e22e>and</span> <span style=color:#a6e22e>logging</span>
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>rbac</span>                 <span style=color:#960050;background-color:#1e0010>#</span> <span style=color:#a6e22e>Role</span><span style=color:#f92672>-</span><span style=color:#a6e22e>Based</span> <span style=color:#a6e22e>Access</span> <span style=color:#a6e22e>Control</span> <span style=color:#66d9ef>for</span> <span style=color:#a6e22e>authorisation</span>
+</span></span></code></pre></td></tr></table></div></div><h1 id=using>Using</h1><p>Step 4: start using (like k3s there is a <code>kubectl</code> packaged in)</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">11
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-fallback data-lang=fallback><span style=display:flex><span>root@microk8s-1:~# microk8s kubectl get namespaces
+</span></span><span style=display:flex><span>NAME                 STATUS   AGE
+</span></span><span style=display:flex><span>kube-system          Active   7m5s
+</span></span><span style=display:flex><span>kube-public          Active   7m4s
+</span></span><span style=display:flex><span>kube-node-lease      Active   7m4s
+</span></span><span style=display:flex><span>default              Active   7m4s
+</span></span><span style=display:flex><span>container-registry   Active   3m43s
+</span></span><span style=display:flex><span>traefik              Active   3m41s
+</span></span><span style=display:flex><span>root@microk8s-1:~# microk8s kubectl get nodes
+</span></span><span style=display:flex><span>NAME         STATUS   ROLES    AGE    VERSION
+</span></span><span style=display:flex><span>microk8s-1   Ready    &lt;none&gt;   7m8s   v1.20.5-34+40f5951bd9888a
+</span></span></code></pre></td></tr></table></div></div><p>Now how do I connect to this from my laptop? Quick search says microk8s config`
+will outtput a kubeconfig file. And indeed it works</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">4
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">5
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">6
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-fallback data-lang=fallback><span style=display:flex><span>andraz@amaterasu /tmp/temp
+</span></span><span style=display:flex><span> $ export KUBECONFIG=$(pwd)/kubeconfig
+</span></span><span style=display:flex><span>andraz@amaterasu /tmp/temp
+</span></span><span style=display:flex><span> $ kubectl get nodes
+</span></span><span style=display:flex><span>NAME         STATUS   ROLES    AGE   VERSION
+</span></span><span style=display:flex><span>microk8s-1   Ready    &lt;none&gt;   12m   v1.20.5-34+40f5951bd9888a
+</span></span></code></pre></td></tr></table></div></div><p>Can we get a dashboard?</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">4
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">5
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">6
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">7
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">8
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-fallback data-lang=fallback><span style=display:flex><span>
+</span></span><span style=display:flex><span>andraz@amaterasu /tmp/temp
+</span></span><span style=display:flex><span> $ k get service -A | grep dashboard
+</span></span><span style=display:flex><span>kube-system          kubernetes-dashboard        ClusterIP   10.152.183.220   &lt;none&gt;        443/TCP                  12m
+</span></span><span style=display:flex><span>kube-system          dashboard-metrics-scraper   ClusterIP   10.152.183.160   &lt;none&gt;        8000/TCP                 12m
+</span></span><span style=display:flex><span>andraz@amaterasu /tmp/temp
+</span></span><span style=display:flex><span> $ k proxy
+</span></span><span style=display:flex><span>Starting to serve on 127.0.0.1:8001
+</span></span></code></pre></td></tr></table></div></div><p>And indded I get the Web UI available <a href=http://localhost:8001/api/v1/namespaces/kube-system/services/https:kubernetes-dashboard:/proxy/#/login>on
+localhost</a></p><p>How about resource usage?</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">4
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-fallback data-lang=fallback><span style=display:flex><span>root@microk8s-1:~# free -m
+</span></span><span style=display:flex><span>              total        used        free      shared  buff/cache   available
+</span></span><span style=display:flex><span>Mem:           3840        1154         331           1        2354        2524
+</span></span><span style=display:flex><span>Swap:             0           0           0
+</span></span></code></pre></td></tr></table></div></div><p>microk8s comes in at about 1.1G. Slightly heavier than <a href=http://k3s.io/>k3</a>
 (around 0.8G) but lighter than <a href=https://rancher.com/products/rke/>RKE</a> (around
-1.7G).</p>
-<h1 id=deploying-workloads>Deploying workloads</h1>
-<p>Let&rsquo;s try to get a demo server up and running. I&rsquo;ll be using <code>nginx-hello</code> from
-<a href=https://github.com/nginxinc/NGINX-Demos>nginx-demos</a></p>
-<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2>
-<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">11
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">12
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">13
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">14
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">15
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">16
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">17
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">18
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">19
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">20
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">21
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">22
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">23
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">24
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">25
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">26
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">27
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">28
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">29
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">30
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">31
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">32
-</span></code></pre></td>
-<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-yaml data-lang=yaml><span style=color:#f92672>apiVersion</span>: <span style=color:#ae81ff>apps/v1</span>
-<span style=color:#f92672>kind</span>: <span style=color:#ae81ff>Deployment</span>
-<span style=color:#f92672>metadata</span>:
-  <span style=color:#f92672>name</span>: <span style=color:#ae81ff>hello</span>
-  <span style=color:#f92672>labels</span>:
-    <span style=color:#f92672>app</span>: <span style=color:#ae81ff>hello</span>
-<span style=color:#f92672>spec</span>:
-  <span style=color:#f92672>replicas</span>: <span style=color:#ae81ff>3</span>
-  <span style=color:#f92672>selector</span>:
-    <span style=color:#f92672>matchLabels</span>:
-      <span style=color:#f92672>app</span>: <span style=color:#ae81ff>hello</span>
-  <span style=color:#f92672>template</span>:
-    <span style=color:#f92672>metadata</span>:
-      <span style=color:#f92672>labels</span>:
-        <span style=color:#f92672>app</span>: <span style=color:#ae81ff>hello</span>
-    <span style=color:#f92672>spec</span>:
-      <span style=color:#f92672>containers</span>:
-      - <span style=color:#f92672>name</span>: <span style=color:#ae81ff>nginx</span>
-        <span style=color:#f92672>image</span>: <span style=color:#ae81ff>nginxdemos/hello:plain-text</span>
-        <span style=color:#f92672>ports</span>:
-        - <span style=color:#f92672>containerPort</span>: <span style=color:#ae81ff>80</span>
----
-<span style=color:#f92672>apiVersion</span>: <span style=color:#ae81ff>v1</span>
-<span style=color:#f92672>kind</span>: <span style=color:#ae81ff>Service</span>
-<span style=color:#f92672>metadata</span>:
-  <span style=color:#f92672>name</span>: <span style=color:#ae81ff>hello</span>
-<span style=color:#f92672>spec</span>:
-  <span style=color:#f92672>selector</span>:
-    <span style=color:#f92672>app</span>: <span style=color:#ae81ff>hello</span>
-  <span style=color:#f92672>ports</span>:
-    - <span style=color:#f92672>protocol</span>: <span style=color:#ae81ff>TCP</span>
-      <span style=color:#f92672>port</span>: <span style=color:#ae81ff>80</span>
-</code></pre></td></tr></table>
-</div>
-</div><p>After applying I can curl this though <code>kubectl proxy</code></p>
-<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2>
-<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">11
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">12
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">13
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">14
-</span></code></pre></td>
-<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-fallback data-lang=fallback>andraz@amaterasu /tmp/temp
- $ curl http://localhost:8001/api/v1/namespaces/default/services/http:hello:/proxy/
-Server address: 10.1.35.142:80
-Server name: hello-767b8bc964-f4xfs
-Date: 14/Apr/2021:15:55:14 +0000
-URI: /
-Request ID: 1218ef33c76f9bdc5616b8934f64898b
-andraz@amaterasu /tmp/temp
- $ curl http://localhost:8001/api/v1/namespaces/default/services/http:hello:/proxy/
-Server address: 10.1.35.141:80
-Server name: hello-767b8bc964-scq6z
-Date: 14/Apr/2021:15:55:16 +0000
-URI: /
-Request ID: a4cd09501f7fb10f457ef40ecc4f4d27
-</code></pre></td></tr></table>
-</div>
-</div><p>Note different server ips for subsequent requests. Multiple pods are in fact
-serving traffic.</p>
-<h1 id=setting-up-ingress>Setting up ingress</h1>
-<p>I did enable <code>traefik</code> ingress controller so this should be pretty
-straightforward.</p>
-<p>First of all I set up a domain record <code>*.microk8s.edofic.com</code> pointing directly
-to the IP of my single node.</p>
-<p>Let&rsquo;s try it out</p>
-<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2>
-<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
-</span></code></pre></td>
-<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-fallback data-lang=fallback> $ curl http://demo.microk8s.edofic.com
-curl: (7) Failed to connect to demo.microk8s.edofic.com port 80: Connection refused
-</code></pre></td></tr></table>
-</div>
-</div><p>huh, this should return 404. Let&rsquo;s see what traefik is actually listening to</p>
-<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2>
-<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">11
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">12
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">13
-</span></code></pre></td>
-<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-fallback data-lang=fallback>andraz@amaterasu /tmp/temp
- $ k get pod -A | grep traefik
-traefik              traefik-ingress-controller-l57tb             1/1     Running   0          8h
-andraz@amaterasu /tmp/temp
- $ k get pod -n traefik traefik-ingress-controller-l57tb -o json | jq &#39;.spec.containers[] | .ports&#39;
-[
-  {
-    &#34;containerPort&#34;: 8080,
-    &#34;hostPort&#34;: 8080,
-    &#34;name&#34;: &#34;http&#34;,
-    &#34;protocol&#34;: &#34;TCP&#34;
-  }
-]
-</code></pre></td></tr></table>
-</div>
-</div><p>Apparently it&rsquo;s 8080&mldr; I can live with this for now.</p>
-<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2>
-<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
-</span></code></pre></td>
-<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-fallback data-lang=fallback> $ curl http://demo.microk8s.edofic.com:8080
-404 page not found
-</code></pre></td></tr></table>
-</div>
-</div><p>Lift off! Now let&rsquo;s wire up some ingress</p>
-<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2>
-<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">11
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">12
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">13
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">14
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">15
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">16
-</span></code></pre></td>
-<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-yaml data-lang=yaml><span style=color:#f92672>apiVersion</span>: <span style=color:#ae81ff>networking.k8s.io/v1</span>
-<span style=color:#f92672>kind</span>: <span style=color:#ae81ff>Ingress</span>
-<span style=color:#f92672>metadata</span>:
-  <span style=color:#f92672>name</span>: <span style=color:#ae81ff>hello</span>
-<span style=color:#f92672>spec</span>:
-  <span style=color:#f92672>rules</span>:
-  - <span style=color:#f92672>host</span>: <span style=color:#e6db74>&#34;demo.microk8s.edofic.com&#34;</span>
-    <span style=color:#f92672>http</span>:
-      <span style=color:#f92672>paths</span>:
-      - <span style=color:#f92672>pathType</span>: <span style=color:#ae81ff>Prefix</span>
-        <span style=color:#f92672>path</span>: <span style=color:#e6db74>&#34;/&#34;</span>
-        <span style=color:#f92672>backend</span>:
-          <span style=color:#f92672>service</span>:
-            <span style=color:#f92672>name</span>: <span style=color:#ae81ff>hello</span>
-            <span style=color:#f92672>port</span>:
-              <span style=color:#f92672>number</span>: <span style=color:#ae81ff>80</span>
-</code></pre></td></tr></table>
-</div>
-</div><p>And apply. Should work now.</p>
-<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2>
-<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">4
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">5
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">6
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">7
-</span></code></pre></td>
-<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-fallback data-lang=fallback>
- $ curl http://demo.microk8s.edofic.com:8080
-Server address: 10.1.35.141:80
-Server name: hello-767b8bc964-scq6z
-Date: 14/Apr/2021:17:05:10 +0000
-URI: /
-Request ID: bebd6693485e5581305da8c3e68060de
-</code></pre></td></tr></table>
-</div>
-</div><p>And indeed it does.</p>
-<h1 id=storage>Storage</h1>
-<p>I&rsquo;ll skip over storage as I can see from the description in status that it&rsquo;sjj
+1.7G).</p><h1 id=deploying-workloads>Deploying workloads</h1><p>Let&rsquo;s try to get a demo server up and running. I&rsquo;ll be using <code>nginx-hello</code> from
+<a href=https://github.com/nginxinc/NGINX-Demos>nginx-demos</a></p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">11
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">12
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">13
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">14
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">15
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">16
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">17
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">18
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">19
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">20
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">21
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">22
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">23
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">24
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">25
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">26
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">27
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">28
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">29
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">30
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">31
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">32
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-yaml data-lang=yaml><span style=display:flex><span><span style=color:#f92672>apiVersion</span>: <span style=color:#ae81ff>apps/v1</span>
+</span></span><span style=display:flex><span><span style=color:#f92672>kind</span>: <span style=color:#ae81ff>Deployment</span>
+</span></span><span style=display:flex><span><span style=color:#f92672>metadata</span>:
+</span></span><span style=display:flex><span>  <span style=color:#f92672>name</span>: <span style=color:#ae81ff>hello</span>
+</span></span><span style=display:flex><span>  <span style=color:#f92672>labels</span>:
+</span></span><span style=display:flex><span>    <span style=color:#f92672>app</span>: <span style=color:#ae81ff>hello</span>
+</span></span><span style=display:flex><span><span style=color:#f92672>spec</span>:
+</span></span><span style=display:flex><span>  <span style=color:#f92672>replicas</span>: <span style=color:#ae81ff>3</span>
+</span></span><span style=display:flex><span>  <span style=color:#f92672>selector</span>:
+</span></span><span style=display:flex><span>    <span style=color:#f92672>matchLabels</span>:
+</span></span><span style=display:flex><span>      <span style=color:#f92672>app</span>: <span style=color:#ae81ff>hello</span>
+</span></span><span style=display:flex><span>  <span style=color:#f92672>template</span>:
+</span></span><span style=display:flex><span>    <span style=color:#f92672>metadata</span>:
+</span></span><span style=display:flex><span>      <span style=color:#f92672>labels</span>:
+</span></span><span style=display:flex><span>        <span style=color:#f92672>app</span>: <span style=color:#ae81ff>hello</span>
+</span></span><span style=display:flex><span>    <span style=color:#f92672>spec</span>:
+</span></span><span style=display:flex><span>      <span style=color:#f92672>containers</span>:
+</span></span><span style=display:flex><span>      - <span style=color:#f92672>name</span>: <span style=color:#ae81ff>nginx</span>
+</span></span><span style=display:flex><span>        <span style=color:#f92672>image</span>: <span style=color:#ae81ff>nginxdemos/hello:plain-text</span>
+</span></span><span style=display:flex><span>        <span style=color:#f92672>ports</span>:
+</span></span><span style=display:flex><span>        - <span style=color:#f92672>containerPort</span>: <span style=color:#ae81ff>80</span>
+</span></span><span style=display:flex><span>---
+</span></span><span style=display:flex><span><span style=color:#f92672>apiVersion</span>: <span style=color:#ae81ff>v1</span>
+</span></span><span style=display:flex><span><span style=color:#f92672>kind</span>: <span style=color:#ae81ff>Service</span>
+</span></span><span style=display:flex><span><span style=color:#f92672>metadata</span>:
+</span></span><span style=display:flex><span>  <span style=color:#f92672>name</span>: <span style=color:#ae81ff>hello</span>
+</span></span><span style=display:flex><span><span style=color:#f92672>spec</span>:
+</span></span><span style=display:flex><span>  <span style=color:#f92672>selector</span>:
+</span></span><span style=display:flex><span>    <span style=color:#f92672>app</span>: <span style=color:#ae81ff>hello</span>
+</span></span><span style=display:flex><span>  <span style=color:#f92672>ports</span>:
+</span></span><span style=display:flex><span>    - <span style=color:#f92672>protocol</span>: <span style=color:#ae81ff>TCP</span>
+</span></span><span style=display:flex><span>      <span style=color:#f92672>port</span>: <span style=color:#ae81ff>80</span>
+</span></span></code></pre></td></tr></table></div></div><p>After applying I can curl this though <code>kubectl proxy</code></p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">11
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">12
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">13
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">14
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-fallback data-lang=fallback><span style=display:flex><span>andraz@amaterasu /tmp/temp
+</span></span><span style=display:flex><span> $ curl http://localhost:8001/api/v1/namespaces/default/services/http:hello:/proxy/
+</span></span><span style=display:flex><span>Server address: 10.1.35.142:80
+</span></span><span style=display:flex><span>Server name: hello-767b8bc964-f4xfs
+</span></span><span style=display:flex><span>Date: 14/Apr/2021:15:55:14 +0000
+</span></span><span style=display:flex><span>URI: /
+</span></span><span style=display:flex><span>Request ID: 1218ef33c76f9bdc5616b8934f64898b
+</span></span><span style=display:flex><span>andraz@amaterasu /tmp/temp
+</span></span><span style=display:flex><span> $ curl http://localhost:8001/api/v1/namespaces/default/services/http:hello:/proxy/
+</span></span><span style=display:flex><span>Server address: 10.1.35.141:80
+</span></span><span style=display:flex><span>Server name: hello-767b8bc964-scq6z
+</span></span><span style=display:flex><span>Date: 14/Apr/2021:15:55:16 +0000
+</span></span><span style=display:flex><span>URI: /
+</span></span><span style=display:flex><span>Request ID: a4cd09501f7fb10f457ef40ecc4f4d27
+</span></span></code></pre></td></tr></table></div></div><p>Note different server ips for subsequent requests. Multiple pods are in fact
+serving traffic.</p><h1 id=setting-up-ingress>Setting up ingress</h1><p>I did enable <code>traefik</code> ingress controller so this should be pretty
+straightforward.</p><p>First of all I set up a domain record <code>*.microk8s.edofic.com</code> pointing directly
+to the IP of my single node.</p><p>Let&rsquo;s try it out</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-fallback data-lang=fallback><span style=display:flex><span> $ curl http://demo.microk8s.edofic.com
+</span></span><span style=display:flex><span>curl: (7) Failed to connect to demo.microk8s.edofic.com port 80: Connection refused
+</span></span></code></pre></td></tr></table></div></div><p>huh, this should return 404. Let&rsquo;s see what traefik is actually listening to</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">11
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">12
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">13
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-fallback data-lang=fallback><span style=display:flex><span>andraz@amaterasu /tmp/temp
+</span></span><span style=display:flex><span> $ k get pod -A | grep traefik
+</span></span><span style=display:flex><span>traefik              traefik-ingress-controller-l57tb             1/1     Running   0          8h
+</span></span><span style=display:flex><span>andraz@amaterasu /tmp/temp
+</span></span><span style=display:flex><span> $ k get pod -n traefik traefik-ingress-controller-l57tb -o json | jq &#39;.spec.containers[] | .ports&#39;
+</span></span><span style=display:flex><span>[
+</span></span><span style=display:flex><span>  {
+</span></span><span style=display:flex><span>    &#34;containerPort&#34;: 8080,
+</span></span><span style=display:flex><span>    &#34;hostPort&#34;: 8080,
+</span></span><span style=display:flex><span>    &#34;name&#34;: &#34;http&#34;,
+</span></span><span style=display:flex><span>    &#34;protocol&#34;: &#34;TCP&#34;
+</span></span><span style=display:flex><span>  }
+</span></span><span style=display:flex><span>]
+</span></span></code></pre></td></tr></table></div></div><p>Apparently it&rsquo;s 8080&mldr; I can live with this for now.</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-fallback data-lang=fallback><span style=display:flex><span> $ curl http://demo.microk8s.edofic.com:8080
+</span></span><span style=display:flex><span>404 page not found
+</span></span></code></pre></td></tr></table></div></div><p>Lift off! Now let&rsquo;s wire up some ingress</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">11
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">12
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">13
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">14
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">15
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">16
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-yaml data-lang=yaml><span style=display:flex><span><span style=color:#f92672>apiVersion</span>: <span style=color:#ae81ff>networking.k8s.io/v1</span>
+</span></span><span style=display:flex><span><span style=color:#f92672>kind</span>: <span style=color:#ae81ff>Ingress</span>
+</span></span><span style=display:flex><span><span style=color:#f92672>metadata</span>:
+</span></span><span style=display:flex><span>  <span style=color:#f92672>name</span>: <span style=color:#ae81ff>hello</span>
+</span></span><span style=display:flex><span><span style=color:#f92672>spec</span>:
+</span></span><span style=display:flex><span>  <span style=color:#f92672>rules</span>:
+</span></span><span style=display:flex><span>  - <span style=color:#f92672>host</span>: <span style=color:#e6db74>&#34;demo.microk8s.edofic.com&#34;</span>
+</span></span><span style=display:flex><span>    <span style=color:#f92672>http</span>:
+</span></span><span style=display:flex><span>      <span style=color:#f92672>paths</span>:
+</span></span><span style=display:flex><span>      - <span style=color:#f92672>pathType</span>: <span style=color:#ae81ff>Prefix</span>
+</span></span><span style=display:flex><span>        <span style=color:#f92672>path</span>: <span style=color:#e6db74>&#34;/&#34;</span>
+</span></span><span style=display:flex><span>        <span style=color:#f92672>backend</span>:
+</span></span><span style=display:flex><span>          <span style=color:#f92672>service</span>:
+</span></span><span style=display:flex><span>            <span style=color:#f92672>name</span>: <span style=color:#ae81ff>hello</span>
+</span></span><span style=display:flex><span>            <span style=color:#f92672>port</span>:
+</span></span><span style=display:flex><span>              <span style=color:#f92672>number</span>: <span style=color:#ae81ff>80</span>
+</span></span></code></pre></td></tr></table></div></div><p>And apply. Should work now.</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">4
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">5
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">6
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">7
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-fallback data-lang=fallback><span style=display:flex><span>
+</span></span><span style=display:flex><span> $ curl http://demo.microk8s.edofic.com:8080
+</span></span><span style=display:flex><span>Server address: 10.1.35.141:80
+</span></span><span style=display:flex><span>Server name: hello-767b8bc964-scq6z
+</span></span><span style=display:flex><span>Date: 14/Apr/2021:17:05:10 +0000
+</span></span><span style=display:flex><span>URI: /
+</span></span><span style=display:flex><span>Request ID: bebd6693485e5581305da8c3e68060de
+</span></span></code></pre></td></tr></table></div></div><p>And indeed it does.</p><h1 id=storage>Storage</h1><p>I&rsquo;ll skip over storage as I can see from the description in status that it&rsquo;sjj
 just a host path provisioner - pretty much the same as K3s. If you want fancier
-storage you need to bring your own (plenty of options).</p>
-<p>Storage classes confirm there is nothing fancy going on</p>
-<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2>
-<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">4
-</span></code></pre></td>
-<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-fallback data-lang=fallback> $ k get storageclass
-NAME                          PROVISIONER            RECLAIMPOLICY   VOLUMEBINDINGMODE   ALLOWVOLUMEEXPANSION   AGE
-microk8s-hostpath (default)   microk8s.io/hostpath   Delete          Immediate           false                  8h
-an
-</code></pre></td></tr></table>
-</div>
-</div><h1 id=scaling--high-availability>Scaling / high availability</h1>
-<p>So let&rsquo;s try out the magical HA setup! According to <a href=https://microk8s.io/docs/high-availability>the
+storage you need to bring your own (plenty of options).</p><p>Storage classes confirm there is nothing fancy going on</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">4
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-fallback data-lang=fallback><span style=display:flex><span> $ k get storageclass
+</span></span><span style=display:flex><span>NAME                          PROVISIONER            RECLAIMPOLICY   VOLUMEBINDINGMODE   ALLOWVOLUMEEXPANSION   AGE
+</span></span><span style=display:flex><span>microk8s-hostpath (default)   microk8s.io/hostpath   Delete          Immediate           false                  8h
+</span></span><span style=display:flex><span>an
+</span></span></code></pre></td></tr></table></div></div><h1 id=scaling--high-availability>Scaling / high availability</h1><p>So let&rsquo;s try out the magical HA setup! According to <a href=https://microk8s.io/docs/high-availability>the
 docs</a> it should be as simple as
 creating a token on the existing node and then issuing a single command on new
-nodes to join. But first I need to create some new nodes.</p>
-<p>I created two more VMs just like the first one and ran through the same steps on
-each one:</p>
-<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2>
-<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
-</span></code></pre></td>
-<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-fallback data-lang=fallback>apt update
-apt install -y snapd
-snap install microk8s --classic
-</code></pre></td></tr></table>
-</div>
-</div><p>Then on my inital node</p>
-<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2>
-<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">4
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">5
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">6
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">7
-</span></code></pre></td>
-<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-fallback data-lang=fallback>root@microk8s-1:~# microk8s add-node
-From the node you wish to join to this cluster, run the following:
-microk8s join 162.55.52.75:25000/0b9399975ac32273a17f210ae7e25802
-
-If the node you are adding is not reachable through the default interface you can use one of the following:
- microk8s join 162.55.52.75:25000/0b9399975ac32273a17f210ae7e25802
- microk8s join 10.0.0.2:25000/0b9399975ac32273a17f210ae7e25802
-</code></pre></td></tr></table>
-</div>
-</div><p>And follow the instructions (using the private IP). First on the second node.</p>
-<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2>
-<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">11
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">12
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">13
-</span></code></pre></td>
-<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-fallback data-lang=fallback>root@microk8s-2:~# microk8s join 10.0.0.2:25000/0b9399975ac32273a17f210ae7e25802
-Contacting cluster at 10.0.0.2
-Waiting for this node to finish joining the cluster. ..
-root@microk8s-2:~# microk8s status
-microk8s is running
-high-availability: no
-  datastore master nodes: 10.0.0.2:19001
-  datastore standby nodes: none
-...
-root@microk8s-2:~# microk8s kubectl get nodes
-NAME         STATUS   ROLES    AGE   VERSION
-microk8s-1   Ready    &lt;none&gt;   8h    v1.20.5-34+40f5951bd9888a
-microk8s-2   Ready    &lt;none&gt;   69s   v1.20.5-34+40f5951bd9888a
-</code></pre></td></tr></table>
-</div>
-</div><p>Apparently I have a two node cluster now. Let&rsquo;s join in the third node -
-microk8s should automatically switch to HA mode.</p>
-<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2>
-<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
-</span></code></pre></td>
-<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-fallback data-lang=fallback>root@microk8s-3:~# microk8s join 10.0.0.2:25000/0b9399975ac32273a17f210ae7e25802
-Contacting cluster at 10.0.0.2
-Failed to join cluster. Error code 500. Invalid token
-</code></pre></td></tr></table>
-</div>
-</div><p>Huh, looks like I need a new token. Fine.</p>
-<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2>
-<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
-</span></code></pre></td>
-<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-fallback data-lang=fallback>root@microk8s-3:~# microk8s join 10.0.0.2:25000/cab6b9f7f538bbb5c7e1a3a3f6239c50
-Contacting cluster at 10.0.0.2
-Waiting for this node to finish joining the cluster. ..
-</code></pre></td></tr></table>
-</div>
-</div><p>After this is done I can check (on any node, outputs agree now)</p>
-<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2>
-<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">4
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">5
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">6
-</span></code></pre></td>
-<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-fallback data-lang=fallback>root@microk8s-1:~# microk8s status
-microk8s is running
-high-availability: yes
-  datastore master nodes: 10.0.0.2:19001 10.0.0.3:19001 10.0.0.4:19001
-  datastore standby nodes: none
-...
-</code></pre></td></tr></table>
-</div>
-</div><p>Yay: <code>high-availability: yes</code>. It worked. Looking from my laptop I now also see
-three nodes.</p>
-<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2>
-<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">4
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">5
-</span></code></pre></td>
-<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-fallback data-lang=fallback> $ k get nodes
-NAME         STATUS   ROLES    AGE     VERSION
-microk8s-2   Ready    &lt;none&gt;   5m10s   v1.20.5-34+40f5951bd9888a
-microk8s-1   Ready    &lt;none&gt;   9h      v1.20.5-34+40f5951bd9888a
-microk8s-3   Ready    &lt;none&gt;   33s     v1.20.5-34+40f5951bd9888a
-</code></pre></td></tr></table>
-</div>
-</div><p>If I check pod placement I still see that everything is still runing on node 1</p>
-<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2>
-<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">4
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">5
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">6
-</span></code></pre></td>
-<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-fallback data-lang=fallback>andraz@amaterasu /tmp/temp
- $ k get pod -o wide
-NAME                     READY   STATUS    RESTARTS   AGE   IP            NODE         NOMINATED NODE   READINESS GATES
-hello-767b8bc964-scq6z   1/1     Running   0          92m   10.1.35.141   microk8s-1   &lt;none&gt;           &lt;none&gt;
-hello-767b8bc964-f4xfs   1/1     Running   0          92m   10.1.35.142   microk8s-1   &lt;none&gt;           &lt;none&gt;
-hello-767b8bc964-sf4ds   1/1     Running   0          92m   10.1.35.143   microk8s-1   &lt;none&gt;           &lt;none&gt;
-</code></pre></td></tr></table>
-</div>
-</div><p>But if I kill any pod it should quickly be rescheduled around the cluster</p>
-<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2>
-<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
-</span></code></pre></td>
-<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-fallback data-lang=fallback>andraz@amaterasu /tmp/temp
- $ k delete pod hello-767b8bc964-sf4ds
-pod &#34;hello-767b8bc964-sf4ds&#34; deleted
-andraz@amaterasu /tmp/temp
- $ k get pod -o wide
-NAME                     READY   STATUS    RESTARTS   AGE   IP             NODE         NOMINATED NODE   READINESS GATES
-hello-767b8bc964-scq6z   1/1     Running   0          92m   10.1.35.141    microk8s-1   &lt;none&gt;           &lt;none&gt;
-hello-767b8bc964-f4xfs   1/1     Running   0          92m   10.1.35.142    microk8s-1   &lt;none&gt;           &lt;none&gt;
-hello-767b8bc964-p9xw8   1/1     Running   0          9s    10.1.100.129   microk8s-2   &lt;none&gt;           &lt;none&gt;
-andraz@amaterasu /tmp/temp
-</code></pre></td></tr></table>
-</div>
-</div><p>Great, everything behaving as expected.</p>
-<h1 id=load-balancing>Load balancing</h1>
-<p>I want to try to kill my initial node to see HA in action but this will bork my
+nodes to join. But first I need to create some new nodes.</p><p>I created two more VMs just like the first one and ran through the same steps on
+each one:</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-fallback data-lang=fallback><span style=display:flex><span>apt update
+</span></span><span style=display:flex><span>apt install -y snapd
+</span></span><span style=display:flex><span>snap install microk8s --classic
+</span></span></code></pre></td></tr></table></div></div><p>Then on my inital node</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">4
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">5
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">6
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">7
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-fallback data-lang=fallback><span style=display:flex><span>root@microk8s-1:~# microk8s add-node
+</span></span><span style=display:flex><span>From the node you wish to join to this cluster, run the following:
+</span></span><span style=display:flex><span>microk8s join 162.55.52.75:25000/0b9399975ac32273a17f210ae7e25802
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>If the node you are adding is not reachable through the default interface you can use one of the following:
+</span></span><span style=display:flex><span> microk8s join 162.55.52.75:25000/0b9399975ac32273a17f210ae7e25802
+</span></span><span style=display:flex><span> microk8s join 10.0.0.2:25000/0b9399975ac32273a17f210ae7e25802
+</span></span></code></pre></td></tr></table></div></div><p>And follow the instructions (using the private IP). First on the second node.</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">11
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">12
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">13
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-fallback data-lang=fallback><span style=display:flex><span>root@microk8s-2:~# microk8s join 10.0.0.2:25000/0b9399975ac32273a17f210ae7e25802
+</span></span><span style=display:flex><span>Contacting cluster at 10.0.0.2
+</span></span><span style=display:flex><span>Waiting for this node to finish joining the cluster. ..
+</span></span><span style=display:flex><span>root@microk8s-2:~# microk8s status
+</span></span><span style=display:flex><span>microk8s is running
+</span></span><span style=display:flex><span>high-availability: no
+</span></span><span style=display:flex><span>  datastore master nodes: 10.0.0.2:19001
+</span></span><span style=display:flex><span>  datastore standby nodes: none
+</span></span><span style=display:flex><span>...
+</span></span><span style=display:flex><span>root@microk8s-2:~# microk8s kubectl get nodes
+</span></span><span style=display:flex><span>NAME         STATUS   ROLES    AGE   VERSION
+</span></span><span style=display:flex><span>microk8s-1   Ready    &lt;none&gt;   8h    v1.20.5-34+40f5951bd9888a
+</span></span><span style=display:flex><span>microk8s-2   Ready    &lt;none&gt;   69s   v1.20.5-34+40f5951bd9888a
+</span></span></code></pre></td></tr></table></div></div><p>Apparently I have a two node cluster now. Let&rsquo;s join in the third node -
+microk8s should automatically switch to HA mode.</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-fallback data-lang=fallback><span style=display:flex><span>root@microk8s-3:~# microk8s join 10.0.0.2:25000/0b9399975ac32273a17f210ae7e25802
+</span></span><span style=display:flex><span>Contacting cluster at 10.0.0.2
+</span></span><span style=display:flex><span>Failed to join cluster. Error code 500. Invalid token
+</span></span></code></pre></td></tr></table></div></div><p>Huh, looks like I need a new token. Fine.</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-fallback data-lang=fallback><span style=display:flex><span>root@microk8s-3:~# microk8s join 10.0.0.2:25000/cab6b9f7f538bbb5c7e1a3a3f6239c50
+</span></span><span style=display:flex><span>Contacting cluster at 10.0.0.2
+</span></span><span style=display:flex><span>Waiting for this node to finish joining the cluster. ..
+</span></span></code></pre></td></tr></table></div></div><p>After this is done I can check (on any node, outputs agree now)</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">4
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">5
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">6
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-fallback data-lang=fallback><span style=display:flex><span>root@microk8s-1:~# microk8s status
+</span></span><span style=display:flex><span>microk8s is running
+</span></span><span style=display:flex><span>high-availability: yes
+</span></span><span style=display:flex><span>  datastore master nodes: 10.0.0.2:19001 10.0.0.3:19001 10.0.0.4:19001
+</span></span><span style=display:flex><span>  datastore standby nodes: none
+</span></span><span style=display:flex><span>...
+</span></span></code></pre></td></tr></table></div></div><p>Yay: <code>high-availability: yes</code>. It worked. Looking from my laptop I now also see
+three nodes.</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">4
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">5
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-fallback data-lang=fallback><span style=display:flex><span> $ k get nodes
+</span></span><span style=display:flex><span>NAME         STATUS   ROLES    AGE     VERSION
+</span></span><span style=display:flex><span>microk8s-2   Ready    &lt;none&gt;   5m10s   v1.20.5-34+40f5951bd9888a
+</span></span><span style=display:flex><span>microk8s-1   Ready    &lt;none&gt;   9h      v1.20.5-34+40f5951bd9888a
+</span></span><span style=display:flex><span>microk8s-3   Ready    &lt;none&gt;   33s     v1.20.5-34+40f5951bd9888a
+</span></span></code></pre></td></tr></table></div></div><p>If I check pod placement I still see that everything is still runing on node 1</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">4
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">5
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">6
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-fallback data-lang=fallback><span style=display:flex><span>andraz@amaterasu /tmp/temp
+</span></span><span style=display:flex><span> $ k get pod -o wide
+</span></span><span style=display:flex><span>NAME                     READY   STATUS    RESTARTS   AGE   IP            NODE         NOMINATED NODE   READINESS GATES
+</span></span><span style=display:flex><span>hello-767b8bc964-scq6z   1/1     Running   0          92m   10.1.35.141   microk8s-1   &lt;none&gt;           &lt;none&gt;
+</span></span><span style=display:flex><span>hello-767b8bc964-f4xfs   1/1     Running   0          92m   10.1.35.142   microk8s-1   &lt;none&gt;           &lt;none&gt;
+</span></span><span style=display:flex><span>hello-767b8bc964-sf4ds   1/1     Running   0          92m   10.1.35.143   microk8s-1   &lt;none&gt;           &lt;none&gt;
+</span></span></code></pre></td></tr></table></div></div><p>But if I kill any pod it should quickly be rescheduled around the cluster</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-fallback data-lang=fallback><span style=display:flex><span>andraz@amaterasu /tmp/temp
+</span></span><span style=display:flex><span> $ k delete pod hello-767b8bc964-sf4ds
+</span></span><span style=display:flex><span>pod &#34;hello-767b8bc964-sf4ds&#34; deleted
+</span></span><span style=display:flex><span>andraz@amaterasu /tmp/temp
+</span></span><span style=display:flex><span> $ k get pod -o wide
+</span></span><span style=display:flex><span>NAME                     READY   STATUS    RESTARTS   AGE   IP             NODE         NOMINATED NODE   READINESS GATES
+</span></span><span style=display:flex><span>hello-767b8bc964-scq6z   1/1     Running   0          92m   10.1.35.141    microk8s-1   &lt;none&gt;           &lt;none&gt;
+</span></span><span style=display:flex><span>hello-767b8bc964-f4xfs   1/1     Running   0          92m   10.1.35.142    microk8s-1   &lt;none&gt;           &lt;none&gt;
+</span></span><span style=display:flex><span>hello-767b8bc964-p9xw8   1/1     Running   0          9s    10.1.100.129   microk8s-2   &lt;none&gt;           &lt;none&gt;
+</span></span><span style=display:flex><span>andraz@amaterasu /tmp/temp
+</span></span></code></pre></td></tr></table></div></div><p>Great, everything behaving as expected.</p><h1 id=load-balancing>Load balancing</h1><p>I want to try to kill my initial node to see HA in action but this will bork my
 ingress as the IP is hard coded. Luckily Hetzner also provides managed load
 balancers so I&rsquo;ll set one up. I can use labels to automatically pick up servers
 to use as targets, use health checks to see which ones take traffic and even
 expose port 80 and target 8080 internally via internal IPs. Yes I can target any
 server as traefik ingress controller is provisioned on all of them and will
-route traffic internally to wherever target pods are scheduled.</p>
-<p>So all I really need to do know is to update my domain record and my cluster is
-none the wiser.</p>
-<p>Mind the lack of port 8080</p>
-<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2>
-<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">4
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">5
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">6
-</span></code></pre></td>
-<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-fallback data-lang=fallback> $ curl http://demo.microk8s.edofic.com
-Server address: 10.1.35.142:80
-Server name: hello-767b8bc964-f4xfs
-Date: 14/Apr/2021:17:32:52 +0000
-URI: /
-Request ID: 237198f55f60c5cc4629750d1f4e3908
-</code></pre></td></tr></table>
-</div>
-</div><h1 id=deleting-the-initial-node>Deleting the initial node</h1>
-<p>With my setup now truly HA let&rsquo;s try to kill the initial node. I simulated this
-by doing a hard power off of <code>microk8s-1</code>.</p>
-<p>Load balancer needed a few moment to detecd the node is down and then it stoped
-routing traffic to it.</p>
-<p>Microk8s needed a bit more time. Initially <code>kutectl get node</code> still showed no.1
-as ready. But after a few minutes it turned <code>NotReady</code></p>
-<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2>
-<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">4
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">5
-</span></code></pre></td>
-<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-fallback data-lang=fallback>root@microk8s-2:~# microk8s kubectl get nodes
-NAME         STATUS     ROLES    AGE   VERSION
-microk8s-1   NotReady   &lt;none&gt;   9h    v1.20.5-34+40f5951bd9888a
-microk8s-2   Ready      &lt;none&gt;   36m   v1.20.5-34+40f5951bd9888a
-microk8s-3   Ready      &lt;none&gt;   32m   v1.20.5-34+40f5951bd9888a
-</code></pre></td></tr></table>
-</div>
-</div><p>However this means that my pods are still scheduled to node 1 so I get reduced
+route traffic internally to wherever target pods are scheduled.</p><p>So all I really need to do know is to update my domain record and my cluster is
+none the wiser.</p><p>Mind the lack of port 8080</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">4
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">5
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">6
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-fallback data-lang=fallback><span style=display:flex><span> $ curl http://demo.microk8s.edofic.com
+</span></span><span style=display:flex><span>Server address: 10.1.35.142:80
+</span></span><span style=display:flex><span>Server name: hello-767b8bc964-f4xfs
+</span></span><span style=display:flex><span>Date: 14/Apr/2021:17:32:52 +0000
+</span></span><span style=display:flex><span>URI: /
+</span></span><span style=display:flex><span>Request ID: 237198f55f60c5cc4629750d1f4e3908
+</span></span></code></pre></td></tr></table></div></div><h1 id=deleting-the-initial-node>Deleting the initial node</h1><p>With my setup now truly HA let&rsquo;s try to kill the initial node. I simulated this
+by doing a hard power off of <code>microk8s-1</code>.</p><p>Load balancer needed a few moment to detecd the node is down and then it stoped
+routing traffic to it.</p><p>Microk8s needed a bit more time. Initially <code>kutectl get node</code> still showed no.1
+as ready. But after a few minutes it turned <code>NotReady</code></p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">4
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">5
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-fallback data-lang=fallback><span style=display:flex><span>root@microk8s-2:~# microk8s kubectl get nodes
+</span></span><span style=display:flex><span>NAME         STATUS     ROLES    AGE   VERSION
+</span></span><span style=display:flex><span>microk8s-1   NotReady   &lt;none&gt;   9h    v1.20.5-34+40f5951bd9888a
+</span></span><span style=display:flex><span>microk8s-2   Ready      &lt;none&gt;   36m   v1.20.5-34+40f5951bd9888a
+</span></span><span style=display:flex><span>microk8s-3   Ready      &lt;none&gt;   32m   v1.20.5-34+40f5951bd9888a
+</span></span></code></pre></td></tr></table></div></div><p>However this means that my pods are still scheduled to node 1 so I get reduced
 availability of my service. However the service objects correctly routes so
-requests still go through. Not great though.</p>
-<p>Reading the docs I now need manual intervention to tell kubernetes that this
-node is not coming back.</p>
-<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2>
-<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">4
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">5
-</span></code></pre></td>
-<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-fallback data-lang=fallback>root@microk8s-2:~# microk8s remove-node microk8s-1 --force
-root@microk8s-2:~# microk8s kubectl get nodes
-NAME         STATUS   ROLES    AGE   VERSION
-microk8s-2   Ready    &lt;none&gt;   39m   v1.20.5-34+40f5951bd9888a
-microk8s-3   Ready    &lt;none&gt;   35m   v1.20.5-34+40f5951bd9888a
-</code></pre></td></tr></table>
-</div>
-</div><p>Better. How about my pods?</p>
-<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2>
-<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">4
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">5
-</span></code></pre></td>
-<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-fallback data-lang=fallback>root@microk8s-2:~# microk8s kubectl get pod -o wide
-NAME                     READY   STATUS    RESTARTS   AGE     IP             NODE         NOMINATED NODE   READINESS GATES
-hello-767b8bc964-p9xw8   1/1     Running   0          34m     10.1.100.129   microk8s-2   &lt;none&gt;           &lt;none&gt;
-hello-767b8bc964-5787w   1/1     Running   0          3m38s   10.1.151.68    microk8s-3   &lt;none&gt;           &lt;none&gt;
-hello-767b8bc964-bk5gd   1/1     Running   0          3m38s   10.1.151.65    microk8s-3   &lt;none&gt;           &lt;none&gt;
-</code></pre></td></tr></table>
-</div>
-</div><p>All rescheduled. So microk8s HA is not a silver bullet - it does not know about
+requests still go through. Not great though.</p><p>Reading the docs I now need manual intervention to tell kubernetes that this
+node is not coming back.</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">4
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">5
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-fallback data-lang=fallback><span style=display:flex><span>root@microk8s-2:~# microk8s remove-node microk8s-1 --force
+</span></span><span style=display:flex><span>root@microk8s-2:~# microk8s kubectl get nodes
+</span></span><span style=display:flex><span>NAME         STATUS   ROLES    AGE   VERSION
+</span></span><span style=display:flex><span>microk8s-2   Ready    &lt;none&gt;   39m   v1.20.5-34+40f5951bd9888a
+</span></span><span style=display:flex><span>microk8s-3   Ready    &lt;none&gt;   35m   v1.20.5-34+40f5951bd9888a
+</span></span></code></pre></td></tr></table></div></div><p>Better. How about my pods?</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">4
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">5
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-fallback data-lang=fallback><span style=display:flex><span>root@microk8s-2:~# microk8s kubectl get pod -o wide
+</span></span><span style=display:flex><span>NAME                     READY   STATUS    RESTARTS   AGE     IP             NODE         NOMINATED NODE   READINESS GATES
+</span></span><span style=display:flex><span>hello-767b8bc964-p9xw8   1/1     Running   0          34m     10.1.100.129   microk8s-2   &lt;none&gt;           &lt;none&gt;
+</span></span><span style=display:flex><span>hello-767b8bc964-5787w   1/1     Running   0          3m38s   10.1.151.68    microk8s-3   &lt;none&gt;           &lt;none&gt;
+</span></span><span style=display:flex><span>hello-767b8bc964-bk5gd   1/1     Running   0          3m38s   10.1.151.65    microk8s-3   &lt;none&gt;           &lt;none&gt;
+</span></span></code></pre></td></tr></table></div></div><p>All rescheduled. So microk8s HA is not a silver bullet - it does not know about
 underlying comput infrastructure. But it&rsquo;s really low-ops - just as the
-description claims :D</p>
-<h1 id=closing-thoughts>Closing thoughts</h1>
-<p>It&rsquo;s an interesting piece of technology. I definately see a use case where you
+description claims :D</p><h1 id=closing-thoughts>Closing thoughts</h1><p>It&rsquo;s an interesting piece of technology. I definately see a use case where you
 want to easily setup a cluster on a small number of manually managed machines.
-May come use in the future.</p>
-<hr>
-<p>Last modified on 2021-04-15</p>
-<a href=/posts/2021-04-14-trying-out-rancher/>
-Previous Trying out Rancher
-</a>
-<br>
-<a href=/posts/2021-06-27-trying-out-prometheus/>
-Next Trying out Prometheus
-</a>
-</div>
-<script src=/js/instantclick.min.js data-no-instant></script>
-<script data-no-instant>InstantClick.init("mousedown")</script>
-</body>
-</html>
+May come use in the future.</p><hr><p>Last modified on 2021-04-15</p><a href=/posts/2021-04-14-trying-out-rancher/>Previous Trying out Rancher</a><br><a href=/posts/2021-06-27-trying-out-prometheus/>Next Trying out Prometheus</a></div><script src=/js/instantclick.min.js data-no-instant></script>
+<script data-no-instant>InstantClick.init("mousedown")</script></body></html>

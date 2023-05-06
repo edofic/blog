@@ -1,0 +1,117 @@
+<!doctype html><html><head><title>(Re)Learning AWK with ChatGPT</title><meta charset=utf-8><meta name=X-UA-Compatible content="IE=edge"><meta name=google-site-verification content><meta content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=0" name=viewport><style>body{max-width:800px;margin:auto;line-height:1.6;font-size:18px;color:#444;padding:0 10px}h1,h2,h3{line-height:1.2}.nav a,.nav a:visited,.nav a:hover,.nav a:active{color:inherit}.nav .title{margin:0}.nav-sub{display:inline-block}.nav-item{margin:5px}.nav-sub-right{display:inline-block;float:right}.nav-icon{margin-right:5px}.main img{display:block;max-width:100%;margin:auto}.main pre{overflow:auto}" media="screen"></style></head><body><div class=nav><a href=/><h2 class=title>Andraž Bajt's blog</h2></a><div class=nav-sub><a class=nav-item href=/about/>About Me</a>
+<a class=nav-item href=/>Archive</a></div><div class=nav-sub-right><a class=nav-icon href=https://github.com/edofic target=_blank><img src=/icons/github.svg width=20 height=20></a>
+<a class=nav-icon href=https://www.linkedin.com/in/edofic target=_blank><img src=/icons/linkedin.svg width=20 height=20></a>
+<a class=nav-icon href=https://twitter.com/edofic target=_blank><img src=/icons/twitter.svg width=20 height=20></a>
+<a class=nav-icon href=/index.xml target=_blank><img src=/icons/rss.svg width=20 height=20></a>
+<a class=nav-icon href=mailto:blog@edofic.com target=_blank><img src=/icons/email.svg width=20 height=20></a></div></div><hr><div class=main><h1>(Re)Learning AWK with ChatGPT</h1><time>2023-03-31</time><hr><p><a href=https://en.wikipedia.org/wiki/AWK>awk</a> is the Swiss army knife of the command
+line. If you have a text-shaped problem then awk can probably be a solution.
+<a href="https://www.youtube.com/watch?v=Sg4U4r_AgJU">Here’s</a> a fabulous talk by Brian
+Kernighan (the k in awk) on why this may be the case.</p><p>But it’s also a tool that I use just rarely enough that I keep forgetting
+details. So everytime I reach for awk it’s a painful experience of not
+remembering and having to cobble together 3 different StackOverflow answers to
+get something resembling the script I want. Only to then realize I’ve been
+“holding it wrong” and there’s a better approach 🤦.</p><p>I still believe it’s supremely useful as it can do everything and is available
+everywhere so I keep inflicting this pain on myself.</p><h1 id=this-time-its-different>This time it’s different</h1><p><a href=https://chat.openai.com/>ChatGPT</a> changes this. It’s training data
+(presumably) already contains all of the StackOverflow answers that I was
+combing through and it can cobble them together for me. So let’s try to use it
+to cobble them together for me and try to learn more efficiently.</p><h2 id=tangent-chatgpt-cli>Tangent: chatgpt-cli</h2><p>Since I like to stay in my terminal while I do deep-focus work I want to also
+access ChatGPT from command line. I couldn’t find a client that I would like so
+I wrote my own:
+<a href=https://github.com/edofic/chatgpt-cli>github.com/edofic/chatgpt-cli</a>. It’s a
+one shot command that fires off you query and streams the result real-time back
+to your cli. But also allows you to ask follow up questions.</p><h2 id=so-awk>So&mldr; awk?</h2><p>Motivating example this time was multi-line search. Specifically I wanted to
+extract a section of a document (multiple lines) with known patterns for the
+first and the last line.</p><p>I remember doing this before&mldr; You create what amounts to a state machine. If a
+line matches pattern A you go to <code>print</code> state, in <code>print</code> state you match for
+pattern B, if match then exit, otherwise print the line.</p><p>But staring at a blank prompt and trying to transcribe this to awk syntax by
+heart got me thinking. I reached for ChatGPT</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">11
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">12
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">13
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">14
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">15
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">16
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">17
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">18
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">19
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">20
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">21
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">22
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">23
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">24
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-text data-lang=text><span style=display:flex><span>$ chatgpt-cli &#39;write an awk script that prints all lines 
+</span></span><span style=display:flex><span>              from a match of &#34;tags:&#34; to next empty line&#39;
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>Assuming the input file has lines with &#34;tags:&#34; and empty
+</span></span><span style=display:flex><span>lines separating the paragraphs, the following awk script
+</span></span><span style=display:flex><span>can be used to print all lines between a match of &#34;tags:&#34;
+</span></span><span style=display:flex><span>and the next empty line:
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>awk &#39;/tags:/{p=1}p;/^$/{p=0}&#39; input_file
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>Explanation:
+</span></span><span style=display:flex><span>- `/tags:/{p=1}`: If a line contains &#34;tags:&#34;, set the 
+</span></span><span style=display:flex><span>  variable &#34;p&#34; to 1
+</span></span><span style=display:flex><span>- `p;`: If the variable &#34;p&#34; is 1 (i.e., if we have found a 
+</span></span><span style=display:flex><span>   match of &#34;tags:&#34;), print the line
+</span></span><span style=display:flex><span>- `/^$/{p=0}`: If a line is empty (i.e., it contains only 
+</span></span><span style=display:flex><span>  the beginning-of-line and end-of-line markers), set the
+</span></span><span style=display:flex><span>  variable &#34;p&#34; to 0 to stop printing
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>This script will print all lines between the first
+</span></span><span style=display:flex><span>occurrence of &#34;tags:&#34; and the next empty line. If there are
+</span></span><span style=display:flex><span>multiple paragraphs with &#34;tags:&#34;, this script will print all
+</span></span><span style=display:flex><span>lines between each occurrence of &#34;tags:&#34; and the next empty
+</span></span><span style=display:flex><span>line in the paragraph.
+</span></span></code></pre></td></tr></table></div></div><p>This is exactly what I wanted. But it includes the explanation for all the
+syntax.</p><p>And it can do one think that an amalgamation of StackOverflow answers cant:
+follow up questions.</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">11
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">12
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">13
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">14
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">15
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">16
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">17
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">18
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-text data-lang=text><span style=display:flex><span>$ chatgpt-cli -c &#39;why does p; print the line? there is no 
+</span></span><span style=display:flex><span>                  print command&#39;
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>In awk, the `print` command is often used to output the
+</span></span><span style=display:flex><span>results of a script. However, awk also has an implied print
+</span></span><span style=display:flex><span>statement that activates when no explicit print statement is
+</span></span><span style=display:flex><span>used.
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>In the script `p;`, `p` is a variable that can have two
+</span></span><span style=display:flex><span>values: 0 or 1. When `p` is 0, nothing is printed. When `p`
+</span></span><span style=display:flex><span>is 1 (i.e., the regex search matches), the entire line is
+</span></span><span style=display:flex><span>printed as part of the implied print statement.
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>So, while there is no explicit `print` statement, the script
+</span></span><span style=display:flex><span>`p;` is equivalent to `print $0;`. The `$0` variable
+</span></span><span style=display:flex><span>represents the entire line, and since there is no explicit
+</span></span><span style=display:flex><span>print command to specify a different output, the default
+</span></span><span style=display:flex><span>`print` command is used to output the entire line.
+</span></span></code></pre></td></tr></table></div></div><h1 id=takeaway>Takeaway</h1><p>Key message here is not that you can use ChatGPT to generate awk scripts. It’s
+that in doing that you can also learn how these scripts work and how to do them
+yourself.</p><p>And at least for me that’s a much faster and frictionless solution that
+searching for answers and fitting them together.</p><hr><p>Last modified on 2023-03-31</p><a href=/posts/2022-06-29-hypermedia-driven-micro-frontends/>Previous Hypermedia driven micro frontends</a><br><a href=/blog/2023-05-06-graphql-sqlite/>Next GraphQL ❤️ SQLite</a></div><script src=/js/instantclick.min.js data-no-instant></script>
+<script data-no-instant>InstantClick.init("mousedown")</script></body></html>

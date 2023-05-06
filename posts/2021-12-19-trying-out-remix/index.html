@@ -1,608 +1,375 @@
-<!doctype html><html>
-<head>
-<title>Trying Out Remix</title>
-<meta charset=utf-8>
-<meta name=X-UA-Compatible content="IE=edge">
-<meta name=google-site-verification content>
-<meta content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=0" name=viewport>
-<style>body{max-width:800px;margin:auto;line-height:1.6;font-size:18px;color:#444;padding:0 10px}h1,h2,h3{line-height:1.2}.nav a,.nav a:visited,.nav a:hover,.nav a:active{color:inherit}.nav .title{margin:0}.nav-sub{display:inline-block}.nav-item{margin:5px}.nav-sub-right{display:inline-block;float:right}.nav-icon{margin-right:5px}.main img{display:block;max-width:100%;margin:auto}.main pre{overflow:auto}" media="screen"></style>
-</head>
-<body>
-<div class=nav>
-<a href=/><h2 class=title>Andraž Bajt's blog</h2></a>
-<div class=nav-sub>
-<a class=nav-item href=/about/>
-About Me
-</a>
-<a class=nav-item href=/>
-Archive
-</a>
-</div>
-<div class=nav-sub-right>
-<a class=nav-icon href=https://github.com/edofic target=_blank><img src=/icons/github.svg width=20 height=20></a>
+<!doctype html><html><head><title>Trying Out Remix</title><meta charset=utf-8><meta name=X-UA-Compatible content="IE=edge"><meta name=google-site-verification content><meta content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=0" name=viewport><style>body{max-width:800px;margin:auto;line-height:1.6;font-size:18px;color:#444;padding:0 10px}h1,h2,h3{line-height:1.2}.nav a,.nav a:visited,.nav a:hover,.nav a:active{color:inherit}.nav .title{margin:0}.nav-sub{display:inline-block}.nav-item{margin:5px}.nav-sub-right{display:inline-block;float:right}.nav-icon{margin-right:5px}.main img{display:block;max-width:100%;margin:auto}.main pre{overflow:auto}" media="screen"></style></head><body><div class=nav><a href=/><h2 class=title>Andraž Bajt's blog</h2></a><div class=nav-sub><a class=nav-item href=/about/>About Me</a>
+<a class=nav-item href=/>Archive</a></div><div class=nav-sub-right><a class=nav-icon href=https://github.com/edofic target=_blank><img src=/icons/github.svg width=20 height=20></a>
 <a class=nav-icon href=https://www.linkedin.com/in/edofic target=_blank><img src=/icons/linkedin.svg width=20 height=20></a>
 <a class=nav-icon href=https://twitter.com/edofic target=_blank><img src=/icons/twitter.svg width=20 height=20></a>
 <a class=nav-icon href=/index.xml target=_blank><img src=/icons/rss.svg width=20 height=20></a>
-<a class=nav-icon href=mailto:blog@edofic.com target=_blank><img src=/icons/email.svg width=20 height=20></a>
-</div>
-</div>
-<hr>
-<div class=main>
-<h1>Trying Out Remix</h1>
-<time>2021-12-19</time>
-<a href=/tags/trying-out>trying-out</a>
-<hr>
-<p>I came across <a href=https://blog.cloudflare.com/remix-on-cloudflare-pages/>Supporting Remix with full stack Cloudflare Pages</a> on Cloudflare blog (yes
+<a class=nav-icon href=mailto:blog@edofic.com target=_blank><img src=/icons/email.svg width=20 height=20></a></div></div><hr><div class=main><h1>Trying Out Remix</h1><time>2021-12-19</time>
+<a href=/tags/trying-out>trying-out</a><hr><p>I came across <a href=https://blog.cloudflare.com/remix-on-cloudflare-pages/>Supporting Remix with full stack Cloudflare Pages</a> on Cloudflare blog (yes
 I&rsquo;m a CF fan) and <a href=https://remix.run>Remix</a> piqued my interest. Mostly because
 it addresses my concerns with &ldquo;modern&rdquo; web development: the wiring boilerplate
 is mostly gone, there is no 100 file setup to get a workable dev environment. And
-of course because it&rsquo;s outside my comfort zone - so maybe I&rsquo;ll learn something.</p>
-<h1 id=getting-started>Getting started</h1>
-<p>There&rsquo;s a code example right on the home page but I&rsquo;m having hard time building
-a mental model from just that. Luckily there is also a bit <a href=https://remix.run/docs/en/v1/tutorials/blog>Get started</a> button which takes me to a tutorial. Great, let&rsquo;s follow that.</p>
-<p><img src=/images/remix/1.webp alt="following initial instructions"></p>
-<p>Few more commands</p>
-<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2>
-<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
-</span></code></pre></td>
-<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-bash data-lang=bash>cd my-remix-app
-npm run dev
-</code></pre></td></tr></table>
-</div>
-</div><p>And we&rsquo;re up.</p>
-<p><img src=/images/remix/2.webp alt="localhost shows dmeo app"></p>
-<p>Then there is text that really speaks to me</p>
-<blockquote>
-<p>If you want, take a minute and poke around the starter template, there&rsquo;s a
-lot of information in there.</p>
-</blockquote>
-<p>Oh yes I intend to do that 😄</p>
-<p>Let&rsquo;s make a git repo to keep track of changes. Conveniently there is aready a
-<code>gitignore</code>.</p>
-<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2>
-<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
-</span></code></pre></td>
-<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-bash data-lang=bash>git init
-git add .
-git commit -m <span style=color:#e6db74>&#34;Initial commit&#34;</span>
-</code></pre></td></tr></table>
-</div>
-</div><p>Let&rsquo;s now see what we have</p>
-<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2>
-<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">11
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">12
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">13
-</span></code></pre></td>
-<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-bash data-lang=bash> git ls-files
-.gitignore
-README.md
-app/entry.client.tsx
-app/entry.server.tsx
-app/root.tsx
-app/routes/index.tsx
-package-lock.json
-package.json
-public/favicon.ico
-remix.config.js
-remix.env.d.ts
-tsconfig.json
-</code></pre></td></tr></table>
-</div>
-</div><p>Honestly less than I expected. And I mean this in the best possible way. I like
+of course because it&rsquo;s outside my comfort zone - so maybe I&rsquo;ll learn something.</p><h1 id=getting-started>Getting started</h1><p>There&rsquo;s a code example right on the home page but I&rsquo;m having hard time building
+a mental model from just that. Luckily there is also a bit <a href=https://remix.run/docs/en/v1/tutorials/blog>Get started</a> button which takes me to a tutorial. Great, let&rsquo;s follow that.</p><p><img src=/images/remix/1.webp alt="following initial instructions"></p><p>Few more commands</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-bash data-lang=bash><span style=display:flex><span>cd my-remix-app
+</span></span><span style=display:flex><span>npm run dev
+</span></span></code></pre></td></tr></table></div></div><p>And we&rsquo;re up.</p><p><img src=/images/remix/2.webp alt="localhost shows dmeo app"></p><p>Then there is text that really speaks to me</p><blockquote><p>If you want, take a minute and poke around the starter template, there&rsquo;s a
+lot of information in there.</p></blockquote><p>Oh yes I intend to do that 😄</p><p>Let&rsquo;s make a git repo to keep track of changes. Conveniently there is aready a
+<code>gitignore</code>.</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-bash data-lang=bash><span style=display:flex><span>git init
+</span></span><span style=display:flex><span>git add .
+</span></span><span style=display:flex><span>git commit -m <span style=color:#e6db74>&#34;Initial commit&#34;</span>
+</span></span></code></pre></td></tr></table></div></div><p>Let&rsquo;s now see what we have</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">11
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">12
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">13
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-bash data-lang=bash><span style=display:flex><span> git ls-files
+</span></span><span style=display:flex><span>.gitignore
+</span></span><span style=display:flex><span>README.md
+</span></span><span style=display:flex><span>app/entry.client.tsx
+</span></span><span style=display:flex><span>app/entry.server.tsx
+</span></span><span style=display:flex><span>app/root.tsx
+</span></span><span style=display:flex><span>app/routes/index.tsx
+</span></span><span style=display:flex><span>package-lock.json
+</span></span><span style=display:flex><span>package.json
+</span></span><span style=display:flex><span>public/favicon.ico
+</span></span><span style=display:flex><span>remix.config.js
+</span></span><span style=display:flex><span>remix.env.d.ts
+</span></span><span style=display:flex><span>tsconfig.json
+</span></span></code></pre></td></tr></table></div></div><p>Honestly less than I expected. And I mean this in the best possible way. I like
 environments which I can understand to the point of being able to write manually
 from scratch. Yest I&rsquo;m looking at you <code>create-react-app</code> and other humongous
 frontend toolchains. I feel at home with Go where you have your dependencies
-file and a single <code>go</code> command.</p>
-<p>Back to source files; there&rsquo;s a typescript config but no webpack config (yay?)
-or similar. This is in the typescript config</p>
-<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2>
-<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
-</span></code></pre></td>
-<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-bash data-lang=bash>// Remix takes care of building everything in <span style=color:#e6db74>`</span>remix build<span style=color:#e6db74>`</span>.
-</code></pre></td></tr></table>
-</div>
-</div><p>Great! Let&rsquo;s find the entrypoint now to better understand this.</p>
-<p>Since I&rsquo;ve been instructed to use <code>npm run dev</code> this means that <code>package.json</code>
-will define the action.</p>
-<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2>
-<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">4
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">5
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">6
-</span></code></pre></td>
-<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-json data-lang=json>  <span style=color:#e6db74>&#34;scripts&#34;</span><span style=color:#960050;background-color:#1e0010>:</span> {
-    <span style=color:#f92672>&#34;build&#34;</span>: <span style=color:#e6db74>&#34;remix build&#34;</span>,
-    <span style=color:#f92672>&#34;dev&#34;</span>: <span style=color:#e6db74>&#34;remix dev&#34;</span>,
-    <span style=color:#f92672>&#34;postinstall&#34;</span>: <span style=color:#e6db74>&#34;remix setup node&#34;</span>,
-    <span style=color:#f92672>&#34;start&#34;</span>: <span style=color:#e6db74>&#34;remix-serve build&#34;</span>
-  }<span style=color:#960050;background-color:#1e0010>,</span>
-</code></pre></td></tr></table>
-</div>
-</div><p>And it does, no magic here.</p>
-<p>There is something the looks like remix configuration (<code>remix.config.js</code>)</p>
-<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2>
-<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">4
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">5
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">6
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">7
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">8
-</span></code></pre></td>
-<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-js data-lang=js><span style=color:#a6e22e>module</span>.<span style=color:#a6e22e>exports</span> <span style=color:#f92672>=</span> {
-  <span style=color:#a6e22e>appDirectory</span><span style=color:#f92672>:</span> <span style=color:#e6db74>&#34;app&#34;</span>,
-  <span style=color:#a6e22e>assetsBuildDirectory</span><span style=color:#f92672>:</span> <span style=color:#e6db74>&#34;public/build&#34;</span>,
-  <span style=color:#a6e22e>publicPath</span><span style=color:#f92672>:</span> <span style=color:#e6db74>&#34;/build/&#34;</span>,
-  <span style=color:#a6e22e>serverBuildDirectory</span><span style=color:#f92672>:</span> <span style=color:#e6db74>&#34;build&#34;</span>,
-  <span style=color:#a6e22e>devServerPort</span><span style=color:#f92672>:</span> <span style=color:#ae81ff>8002</span>,
-  <span style=color:#a6e22e>ignoredRouteFiles</span><span style=color:#f92672>:</span> [<span style=color:#e6db74>&#34;.*&#34;</span>]
-};
-</code></pre></td></tr></table>
-</div>
-</div><p>And apparently it points to <code>app</code> directory. Conveniently there I can find
+file and a single <code>go</code> command.</p><p>Back to source files; there&rsquo;s a typescript config but no webpack config (yay?)
+or similar. This is in the typescript config</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-bash data-lang=bash><span style=display:flex><span>// Remix takes care of building everything in <span style=color:#e6db74>`</span>remix build<span style=color:#e6db74>`</span>.
+</span></span></code></pre></td></tr></table></div></div><p>Great! Let&rsquo;s find the entrypoint now to better understand this.</p><p>Since I&rsquo;ve been instructed to use <code>npm run dev</code> this means that <code>package.json</code>
+will define the action.</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">4
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">5
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">6
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-json data-lang=json><span style=display:flex><span>  <span style=color:#e6db74>&#34;scripts&#34;</span><span style=color:#960050;background-color:#1e0010>:</span> {
+</span></span><span style=display:flex><span>    <span style=color:#f92672>&#34;build&#34;</span>: <span style=color:#e6db74>&#34;remix build&#34;</span>,
+</span></span><span style=display:flex><span>    <span style=color:#f92672>&#34;dev&#34;</span>: <span style=color:#e6db74>&#34;remix dev&#34;</span>,
+</span></span><span style=display:flex><span>    <span style=color:#f92672>&#34;postinstall&#34;</span>: <span style=color:#e6db74>&#34;remix setup node&#34;</span>,
+</span></span><span style=display:flex><span>    <span style=color:#f92672>&#34;start&#34;</span>: <span style=color:#e6db74>&#34;remix-serve build&#34;</span>
+</span></span><span style=display:flex><span>  }<span style=color:#960050;background-color:#1e0010>,</span>
+</span></span></code></pre></td></tr></table></div></div><p>And it does, no magic here.</p><p>There is something the looks like remix configuration (<code>remix.config.js</code>)</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">4
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">5
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">6
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">7
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">8
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-js data-lang=js><span style=display:flex><span><span style=color:#a6e22e>module</span>.<span style=color:#a6e22e>exports</span> <span style=color:#f92672>=</span> {
+</span></span><span style=display:flex><span>  <span style=color:#a6e22e>appDirectory</span><span style=color:#f92672>:</span> <span style=color:#e6db74>&#34;app&#34;</span>,
+</span></span><span style=display:flex><span>  <span style=color:#a6e22e>assetsBuildDirectory</span><span style=color:#f92672>:</span> <span style=color:#e6db74>&#34;public/build&#34;</span>,
+</span></span><span style=display:flex><span>  <span style=color:#a6e22e>publicPath</span><span style=color:#f92672>:</span> <span style=color:#e6db74>&#34;/build/&#34;</span>,
+</span></span><span style=display:flex><span>  <span style=color:#a6e22e>serverBuildDirectory</span><span style=color:#f92672>:</span> <span style=color:#e6db74>&#34;build&#34;</span>,
+</span></span><span style=display:flex><span>  <span style=color:#a6e22e>devServerPort</span><span style=color:#f92672>:</span> <span style=color:#ae81ff>8002</span>,
+</span></span><span style=display:flex><span>  <span style=color:#a6e22e>ignoredRouteFiles</span><span style=color:#f92672>:</span> [<span style=color:#e6db74>&#34;.*&#34;</span>]
+</span></span><span style=display:flex><span>};
+</span></span></code></pre></td></tr></table></div></div><p>And apparently it points to <code>app</code> directory. Conveniently there I can find
 <code>entry.client.tsx</code> and <code>entry.server.tsx</code> which I guess are my entrypoints. What
 I found slightly strange is <code>.tsx</code> (which I believe is JSX for typescript) for
-the <em>server</em>.</p>
-<p>Maybe time to read some <a href=https://remix.run/docs/en/v1/tutorials/blog#your-first-route>more
-docs</a> 🤷</p>
-<h1 id=babys-first-code>Baby&rsquo;s first code</h1>
-<p><img src=/images/remix/3.webp alt="localhost shows dmeo app"></p>
-<p>Confused for a moment&mldr;apparently docs are not up to date, the links are now in
-<code>app/routes/index.tsx</code>. Oh well, I&rsquo;ll manage. I added the <code>li</code> as instructed</p>
-<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2>
-<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
-</span></code></pre></td>
-<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-html data-lang=html>&lt;<span style=color:#f92672>li</span>&gt;
-  &lt;<span style=color:#f92672>Link</span> <span style=color:#a6e22e>to</span><span style=color:#f92672>=</span><span style=color:#e6db74>&#34;/posts&#34;</span>&gt;Posts&lt;/<span style=color:#f92672>Link</span>&gt;
-&lt;/<span style=color:#f92672>li</span>&gt;
-</code></pre></td></tr></table>
-</div>
-</div><p>and then of course it fails to compile as <code>Link</code> is not defined. Guessed the
-import based on imports in <code>root.tsx</code> to be</p>
-<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2>
-<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
-</span></code></pre></td>
-<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-ts data-lang=ts><span style=color:#66d9ef>import</span> { <span style=color:#a6e22e>Link</span> } <span style=color:#66d9ef>from</span> <span style=color:#e6db74>&#34;remix&#34;</span>;
-</code></pre></td></tr></table>
-</div>
-</div><p>It works!</p>
-<p><img src=/images/remix/4.webp alt="link to posts"></p>
-<p>Then created <code>app/routes/posts/index.tsx</code> as</p>
-<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2>
-<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">4
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">5
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">6
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">7
-</span></code></pre></td>
-<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-jsx data-lang=jsx><span style=color:#66d9ef>export</span> <span style=color:#66d9ef>default</span> <span style=color:#66d9ef>function</span> <span style=color:#a6e22e>Posts</span>() {
-  <span style=color:#66d9ef>return</span> (
-    &lt;<span style=color:#f92672>div</span>&gt;
-      &lt;<span style=color:#f92672>h1</span>&gt;<span style=color:#a6e22e>Posts</span>&lt;/<span style=color:#f92672>h1</span>&gt;
-    &lt;/<span style=color:#f92672>div</span>&gt;
-  );
-}
-</code></pre></td></tr></table>
-</div>
-</div><p>And non-surprisingly it shows up now. Time for some remix magic now.</p>
-<h1 id=loaders>Loaders</h1>
-<blockquote>
-<p>If your web dev background is primarily in the last few years, you&rsquo;re probably used to creating two things here: an API route to provide data and a frontend component that consumes it. In Remix your frontend component is also its own API route and it already knows how to talk to itself on the server from the browser. That is, you don&rsquo;t have to fetch it.</p>
-</blockquote>
-<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2>
-<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">11
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">12
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">13
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">14
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">15
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">16
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">17
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">18
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">19
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">20
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">21
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">22
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">23
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">24
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">25
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">26
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">27
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">28
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">29
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">30
-</span></code></pre></td>
-<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-jsx data-lang=jsx><span style=color:#66d9ef>import</span> { <span style=color:#a6e22e>Link</span>, <span style=color:#a6e22e>useLoaderData</span> } <span style=color:#a6e22e>from</span> <span style=color:#e6db74>&#34;remix&#34;</span>;
-
-<span style=color:#66d9ef>export</span> <span style=color:#66d9ef>const</span> <span style=color:#a6e22e>loader</span> <span style=color:#f92672>=</span> () =&gt; {
-  <span style=color:#66d9ef>return</span> [
-    {
-      <span style=color:#a6e22e>slug</span><span style=color:#f92672>:</span> <span style=color:#e6db74>&#34;my-first-post&#34;</span>,
-      <span style=color:#a6e22e>title</span><span style=color:#f92672>:</span> <span style=color:#e6db74>&#34;My First Post&#34;</span>
-    },
-    {
-      <span style=color:#a6e22e>slug</span><span style=color:#f92672>:</span> <span style=color:#e6db74>&#34;90s-mixtape&#34;</span>,
-      <span style=color:#a6e22e>title</span><span style=color:#f92672>:</span> <span style=color:#e6db74>&#34;A Mixtape I Made Just For You&#34;</span>
-    }
-  ];
-};
-
-<span style=color:#66d9ef>export</span> <span style=color:#66d9ef>default</span> <span style=color:#66d9ef>function</span> <span style=color:#a6e22e>Posts</span>() {
-  <span style=color:#66d9ef>const</span> <span style=color:#a6e22e>posts</span> <span style=color:#f92672>=</span> <span style=color:#a6e22e>useLoaderData</span>();
-  <span style=color:#66d9ef>return</span> (
-    &lt;<span style=color:#f92672>div</span>&gt;
-      &lt;<span style=color:#f92672>h1</span>&gt;<span style=color:#a6e22e>Posts</span>&lt;/<span style=color:#f92672>h1</span>&gt;
-      &lt;<span style=color:#f92672>ul</span>&gt;
-        {<span style=color:#a6e22e>posts</span>.<span style=color:#a6e22e>map</span>(<span style=color:#a6e22e>post</span> =&gt; (
-          &lt;<span style=color:#f92672>li</span> <span style=color:#a6e22e>key</span><span style=color:#f92672>=</span>{<span style=color:#a6e22e>post</span>.<span style=color:#a6e22e>slug</span>}&gt;
-            &lt;<span style=color:#f92672>Link</span> <span style=color:#a6e22e>to</span><span style=color:#f92672>=</span>{<span style=color:#a6e22e>post</span>.<span style=color:#a6e22e>slug</span>}&gt;{<span style=color:#a6e22e>post</span>.<span style=color:#a6e22e>title</span>}&lt;/<span style=color:#f92672>Link</span>&gt;
-          &lt;/<span style=color:#f92672>li</span>&gt;
-        ))}
-      &lt;/<span style=color:#f92672>ul</span>&gt;
-    &lt;/<span style=color:#f92672>div</span>&gt;
-  );
-}
-</code></pre></td></tr></table>
-</div>
-</div><p>And it show up as expected.</p>
-<p><img src=/images/remix/5.webp alt="link to posts"></p>
-<p>Then the tutorial moves on to refactoring, extracting data and fetching from an
+the <em>server</em>.</p><p>Maybe time to read some <a href=https://remix.run/docs/en/v1/tutorials/blog#your-first-route>more
+docs</a> 🤷</p><h1 id=babys-first-code>Baby&rsquo;s first code</h1><p><img src=/images/remix/3.webp alt="localhost shows dmeo app"></p><p>Confused for a moment&mldr;apparently docs are not up to date, the links are now in
+<code>app/routes/index.tsx</code>. Oh well, I&rsquo;ll manage. I added the <code>li</code> as instructed</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-html data-lang=html><span style=display:flex><span>&lt;<span style=color:#f92672>li</span>&gt;
+</span></span><span style=display:flex><span>  &lt;<span style=color:#f92672>Link</span> <span style=color:#a6e22e>to</span><span style=color:#f92672>=</span><span style=color:#e6db74>&#34;/posts&#34;</span>&gt;Posts&lt;/<span style=color:#f92672>Link</span>&gt;
+</span></span><span style=display:flex><span>&lt;/<span style=color:#f92672>li</span>&gt;
+</span></span></code></pre></td></tr></table></div></div><p>and then of course it fails to compile as <code>Link</code> is not defined. Guessed the
+import based on imports in <code>root.tsx</code> to be</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-ts data-lang=ts><span style=display:flex><span><span style=color:#66d9ef>import</span> { <span style=color:#a6e22e>Link</span> } <span style=color:#66d9ef>from</span> <span style=color:#e6db74>&#34;remix&#34;</span>;
+</span></span></code></pre></td></tr></table></div></div><p>It works!</p><p><img src=/images/remix/4.webp alt="link to posts"></p><p>Then created <code>app/routes/posts/index.tsx</code> as</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">4
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">5
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">6
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">7
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-jsx data-lang=jsx><span style=display:flex><span><span style=color:#66d9ef>export</span> <span style=color:#66d9ef>default</span> <span style=color:#66d9ef>function</span> <span style=color:#a6e22e>Posts</span>() {
+</span></span><span style=display:flex><span>  <span style=color:#66d9ef>return</span> (
+</span></span><span style=display:flex><span>    &lt;<span style=color:#f92672>div</span>&gt;
+</span></span><span style=display:flex><span>      &lt;<span style=color:#f92672>h1</span>&gt;<span style=color:#a6e22e>Posts</span>&lt;/<span style=color:#f92672>h1</span>&gt;
+</span></span><span style=display:flex><span>    &lt;/<span style=color:#f92672>div</span>&gt;
+</span></span><span style=display:flex><span>  );
+</span></span><span style=display:flex><span>}
+</span></span></code></pre></td></tr></table></div></div><p>And non-surprisingly it shows up now. Time for some remix magic now.</p><h1 id=loaders>Loaders</h1><blockquote><p>If your web dev background is primarily in the last few years, you&rsquo;re probably used to creating two things here: an API route to provide data and a frontend component that consumes it. In Remix your frontend component is also its own API route and it already knows how to talk to itself on the server from the browser. That is, you don&rsquo;t have to fetch it.</p></blockquote><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">11
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">12
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">13
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">14
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">15
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">16
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">17
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">18
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">19
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">20
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">21
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">22
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">23
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">24
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">25
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">26
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">27
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">28
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">29
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">30
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-jsx data-lang=jsx><span style=display:flex><span><span style=color:#66d9ef>import</span> { <span style=color:#a6e22e>Link</span>, <span style=color:#a6e22e>useLoaderData</span> } <span style=color:#a6e22e>from</span> <span style=color:#e6db74>&#34;remix&#34;</span>;
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>export</span> <span style=color:#66d9ef>const</span> <span style=color:#a6e22e>loader</span> <span style=color:#f92672>=</span> () =&gt; {
+</span></span><span style=display:flex><span>  <span style=color:#66d9ef>return</span> [
+</span></span><span style=display:flex><span>    {
+</span></span><span style=display:flex><span>      <span style=color:#a6e22e>slug</span><span style=color:#f92672>:</span> <span style=color:#e6db74>&#34;my-first-post&#34;</span>,
+</span></span><span style=display:flex><span>      <span style=color:#a6e22e>title</span><span style=color:#f92672>:</span> <span style=color:#e6db74>&#34;My First Post&#34;</span>
+</span></span><span style=display:flex><span>    },
+</span></span><span style=display:flex><span>    {
+</span></span><span style=display:flex><span>      <span style=color:#a6e22e>slug</span><span style=color:#f92672>:</span> <span style=color:#e6db74>&#34;90s-mixtape&#34;</span>,
+</span></span><span style=display:flex><span>      <span style=color:#a6e22e>title</span><span style=color:#f92672>:</span> <span style=color:#e6db74>&#34;A Mixtape I Made Just For You&#34;</span>
+</span></span><span style=display:flex><span>    }
+</span></span><span style=display:flex><span>  ];
+</span></span><span style=display:flex><span>};
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>export</span> <span style=color:#66d9ef>default</span> <span style=color:#66d9ef>function</span> <span style=color:#a6e22e>Posts</span>() {
+</span></span><span style=display:flex><span>  <span style=color:#66d9ef>const</span> <span style=color:#a6e22e>posts</span> <span style=color:#f92672>=</span> <span style=color:#a6e22e>useLoaderData</span>();
+</span></span><span style=display:flex><span>  <span style=color:#66d9ef>return</span> (
+</span></span><span style=display:flex><span>    &lt;<span style=color:#f92672>div</span>&gt;
+</span></span><span style=display:flex><span>      &lt;<span style=color:#f92672>h1</span>&gt;<span style=color:#a6e22e>Posts</span>&lt;/<span style=color:#f92672>h1</span>&gt;
+</span></span><span style=display:flex><span>      &lt;<span style=color:#f92672>ul</span>&gt;
+</span></span><span style=display:flex><span>        {<span style=color:#a6e22e>posts</span>.<span style=color:#a6e22e>map</span>(<span style=color:#a6e22e>post</span> =&gt; (
+</span></span><span style=display:flex><span>          &lt;<span style=color:#f92672>li</span> <span style=color:#a6e22e>key</span><span style=color:#f92672>=</span>{<span style=color:#a6e22e>post</span>.<span style=color:#a6e22e>slug</span>}&gt;
+</span></span><span style=display:flex><span>            &lt;<span style=color:#f92672>Link</span> <span style=color:#a6e22e>to</span><span style=color:#f92672>=</span>{<span style=color:#a6e22e>post</span>.<span style=color:#a6e22e>slug</span>}&gt;{<span style=color:#a6e22e>post</span>.<span style=color:#a6e22e>title</span>}&lt;/<span style=color:#f92672>Link</span>&gt;
+</span></span><span style=display:flex><span>          &lt;/<span style=color:#f92672>li</span>&gt;
+</span></span><span style=display:flex><span>        ))}
+</span></span><span style=display:flex><span>      &lt;/<span style=color:#f92672>ul</span>&gt;
+</span></span><span style=display:flex><span>    &lt;/<span style=color:#f92672>div</span>&gt;
+</span></span><span style=display:flex><span>  );
+</span></span><span style=display:flex><span>}
+</span></span></code></pre></td></tr></table></div></div><p>And it show up as expected.</p><p><img src=/images/remix/5.webp alt="link to posts"></p><p>Then the tutorial moves on to refactoring, extracting data and fetching from an
 external data source but I&rsquo;m more interested in this mechanics as it seems to me
-this is the meat and the potatoes of remix. So what is going on?</p>
-<p>Well apparently the <code>useLoaderData</code> hook is automatically tied to corresponding
+this is the meat and the potatoes of remix. So what is going on?</p><p>Well apparently the <code>useLoaderData</code> hook is automatically tied to corresponding
 exported <code>loader</code> in the same route. By convention instead of us manually wiring
 up routing, neat. But I have questions now 😄 Can I pass parameters? Is
-there <code>useQuery</code>-like magical caching and deduplication? Authentication? CORS?</p>
-<p>More interestingly: if I looks at network in devtools I don&rsquo;t see an XHR
+there <code>useQuery</code>-like magical caching and deduplication? Authentication? CORS?</p><p>More interestingly: if I looks at network in devtools I don&rsquo;t see an XHR
 request, meaning our data is pre-rendered on the server. Super neat! But if i
 navigate from index to posts I see a request to
 <code>http://localhost:3000/posts?_data=routes%2Fposts%2Findex</code> which directly
-returns my data.</p>
-<h1 id=routes>Routes</h1>
-<p><a href=https://remix.run/docs/en/v1/tutorials/blog#dynamic-route-params>Reading on</a>
-the tutorial actually explains how to parametrize aka how to do <code>dynamic route params</code>.</p>
-<p>It&rsquo;s again done by convention, not explicit config: file name is a placeholder
-for a parameter. Clever?</p>
-<p>I&rsquo;ll admit my knee jerk reaction to this is &ldquo;ugh, ugly. I want my router&rdquo;. But
+returns my data.</p><h1 id=routes>Routes</h1><p><a href=https://remix.run/docs/en/v1/tutorials/blog#dynamic-route-params>Reading on</a>
+the tutorial actually explains how to parametrize aka how to do <code>dynamic route params</code>.</p><p>It&rsquo;s again done by convention, not explicit config: file name is a placeholder
+for a parameter. Clever?</p><p>I&rsquo;ll admit my knee jerk reaction to this is &ldquo;ugh, ugly. I want my router&rdquo;. But
 it may work? I don&rsquo;t know, would actually need to do a larger project to
-evaluate properly. In any case there is a way to get an overview of the routes:</p>
-<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2>
-<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">4
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">5
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">6
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">7
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">8
-</span></code></pre></td>
-<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-jsx data-lang=jsx><span style=color:#a6e22e>$</span> <span style=color:#a6e22e>remix</span> <span style=color:#a6e22e>routes</span>
-&lt;<span style=color:#f92672>Routes</span>&gt;
-  &lt;<span style=color:#f92672>Route</span> <span style=color:#a6e22e>file</span><span style=color:#f92672>=</span><span style=color:#e6db74>&#34;root.tsx&#34;</span>&gt;
-    &lt;<span style=color:#f92672>Route</span> <span style=color:#a6e22e>path</span><span style=color:#f92672>=</span><span style=color:#e6db74>&#34;posts/:slug&#34;</span> <span style=color:#a6e22e>file</span><span style=color:#f92672>=</span><span style=color:#e6db74>&#34;routes/posts/$slug.tsx&#34;</span> /&gt;
-    &lt;<span style=color:#f92672>Route</span> <span style=color:#a6e22e>path</span><span style=color:#f92672>=</span><span style=color:#e6db74>&#34;posts&#34;</span> <span style=color:#a6e22e>index</span> <span style=color:#a6e22e>file</span><span style=color:#f92672>=</span><span style=color:#e6db74>&#34;routes/posts/index.tsx&#34;</span> /&gt;
-    &lt;<span style=color:#f92672>Route</span> <span style=color:#a6e22e>index</span> <span style=color:#a6e22e>file</span><span style=color:#f92672>=</span><span style=color:#e6db74>&#34;routes/index.tsx&#34;</span> /&gt;
-  &lt;/<span style=color:#f92672>Route</span>&gt;
-&lt;/<span style=color:#f92672>Routes</span>&gt;
-</code></pre></td></tr></table>
-</div>
-</div><p>So I can still have my cake (easily overview and discover routes) and eat it
-(not write the router) too.</p>
-<p>Ok, so how does this paramterized component look like?</p>
-<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2>
-<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">11
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">12
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">13
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">14
-</span></code></pre></td>
-<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-jsx data-lang=jsx><span style=color:#66d9ef>import</span> { <span style=color:#a6e22e>useLoaderData</span> } <span style=color:#a6e22e>from</span> <span style=color:#e6db74>&#34;remix&#34;</span>;
-
-<span style=color:#66d9ef>export</span> <span style=color:#66d9ef>const</span> <span style=color:#a6e22e>loader</span> <span style=color:#f92672>=</span> <span style=color:#66d9ef>async</span> ({ <span style=color:#a6e22e>params</span> }) =&gt; {
-  <span style=color:#66d9ef>return</span> <span style=color:#a6e22e>params</span>.<span style=color:#a6e22e>slug</span>;
-};
-
-<span style=color:#66d9ef>export</span> <span style=color:#66d9ef>default</span> <span style=color:#66d9ef>function</span> <span style=color:#a6e22e>PostSlug</span>() {
-  <span style=color:#66d9ef>const</span> <span style=color:#a6e22e>slug</span> <span style=color:#f92672>=</span> <span style=color:#a6e22e>useLoaderData</span>();
-  <span style=color:#66d9ef>return</span> (
-    &lt;<span style=color:#f92672>div</span>&gt;
-      &lt;<span style=color:#f92672>h1</span>&gt;<span style=color:#a6e22e>Some</span> <span style=color:#a6e22e>Post</span><span style=color:#f92672>:</span> {<span style=color:#a6e22e>slug</span>}&lt;/<span style=color:#f92672>h1</span>&gt;
-    &lt;/<span style=color:#f92672>div</span>&gt;
-  );
-}
-</code></pre></td></tr></table>
-</div>
-</div><p>And sure enough I can now click on one of the posts and it renders</p>
-<p><img src=/images/remix/6.webp alt="rendered post"></p>
-<p>So what is happening here?</p>
-<ul>
-<li>My url path <code>/posts/my-first-post</code> is matched against the <code>posts/:slug</code> route
-and my component is rendered</li>
-<li>then the <code>useLoaderData</code> hook fires and data for self url is requested -
+evaluate properly. In any case there is a way to get an overview of the routes:</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">4
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">5
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">6
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">7
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">8
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-jsx data-lang=jsx><span style=display:flex><span><span style=color:#a6e22e>$</span> <span style=color:#a6e22e>remix</span> <span style=color:#a6e22e>routes</span>
+</span></span><span style=display:flex><span>&lt;<span style=color:#f92672>Routes</span>&gt;
+</span></span><span style=display:flex><span>  &lt;<span style=color:#f92672>Route</span> <span style=color:#a6e22e>file</span><span style=color:#f92672>=</span><span style=color:#e6db74>&#34;root.tsx&#34;</span>&gt;
+</span></span><span style=display:flex><span>    &lt;<span style=color:#f92672>Route</span> <span style=color:#a6e22e>path</span><span style=color:#f92672>=</span><span style=color:#e6db74>&#34;posts/:slug&#34;</span> <span style=color:#a6e22e>file</span><span style=color:#f92672>=</span><span style=color:#e6db74>&#34;routes/posts/$slug.tsx&#34;</span> /&gt;
+</span></span><span style=display:flex><span>    &lt;<span style=color:#f92672>Route</span> <span style=color:#a6e22e>path</span><span style=color:#f92672>=</span><span style=color:#e6db74>&#34;posts&#34;</span> <span style=color:#a6e22e>index</span> <span style=color:#a6e22e>file</span><span style=color:#f92672>=</span><span style=color:#e6db74>&#34;routes/posts/index.tsx&#34;</span> /&gt;
+</span></span><span style=display:flex><span>    &lt;<span style=color:#f92672>Route</span> <span style=color:#a6e22e>index</span> <span style=color:#a6e22e>file</span><span style=color:#f92672>=</span><span style=color:#e6db74>&#34;routes/index.tsx&#34;</span> /&gt;
+</span></span><span style=display:flex><span>  &lt;/<span style=color:#f92672>Route</span>&gt;
+</span></span><span style=display:flex><span>&lt;/<span style=color:#f92672>Routes</span>&gt;
+</span></span></code></pre></td></tr></table></div></div><p>So I can still have my cake (easily overview and discover routes) and eat it
+(not write the router) too.</p><p>Ok, so how does this paramterized component look like?</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">11
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">12
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">13
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">14
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-jsx data-lang=jsx><span style=display:flex><span><span style=color:#66d9ef>import</span> { <span style=color:#a6e22e>useLoaderData</span> } <span style=color:#a6e22e>from</span> <span style=color:#e6db74>&#34;remix&#34;</span>;
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>export</span> <span style=color:#66d9ef>const</span> <span style=color:#a6e22e>loader</span> <span style=color:#f92672>=</span> <span style=color:#66d9ef>async</span> ({ <span style=color:#a6e22e>params</span> }) =&gt; {
+</span></span><span style=display:flex><span>  <span style=color:#66d9ef>return</span> <span style=color:#a6e22e>params</span>.<span style=color:#a6e22e>slug</span>;
+</span></span><span style=display:flex><span>};
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>export</span> <span style=color:#66d9ef>default</span> <span style=color:#66d9ef>function</span> <span style=color:#a6e22e>PostSlug</span>() {
+</span></span><span style=display:flex><span>  <span style=color:#66d9ef>const</span> <span style=color:#a6e22e>slug</span> <span style=color:#f92672>=</span> <span style=color:#a6e22e>useLoaderData</span>();
+</span></span><span style=display:flex><span>  <span style=color:#66d9ef>return</span> (
+</span></span><span style=display:flex><span>    &lt;<span style=color:#f92672>div</span>&gt;
+</span></span><span style=display:flex><span>      &lt;<span style=color:#f92672>h1</span>&gt;<span style=color:#a6e22e>Some</span> <span style=color:#a6e22e>Post</span><span style=color:#f92672>:</span> {<span style=color:#a6e22e>slug</span>}&lt;/<span style=color:#f92672>h1</span>&gt;
+</span></span><span style=display:flex><span>    &lt;/<span style=color:#f92672>div</span>&gt;
+</span></span><span style=display:flex><span>  );
+</span></span><span style=display:flex><span>}
+</span></span></code></pre></td></tr></table></div></div><p>And sure enough I can now click on one of the posts and it renders</p><p><img src=/images/remix/6.webp alt="rendered post"></p><p>So what is happening here?</p><ul><li>My url path <code>/posts/my-first-post</code> is matched against the <code>posts/:slug</code> route
+and my component is rendered</li><li>then the <code>useLoaderData</code> hook fires and data for self url is requested -
 more concretely when navigating on frontend a request to
 <code>posts/my-first-post?_data=routes%2Fposts%2F%24slug</code> is dispatched (I&rsquo;m
 assuming this is bypassed when server-side rendered and loader is called
-directly)</li>
-<li>server side matches this against routes again, picks up my page but since
+directly)</li><li>server side matches this against routes again, picks up my page but since
 we&rsquo;re requesting data it now calls the <code>loader</code> with query path parameters
 passed in as named values in <code>params</code>. The basic example is just returning a
 string here but it could be any json, probably with data from some external
-data source as well</li>
-<li>response from the loader is wired (via fetch/XHR or server side rendering) to
-the hook and the string returned from the loader is bound to <code>slug</code> constant.</li>
-</ul>
-<p>Now the analogy from the tutorial that loader is the controller and we&rsquo;re using
-react as a view layer makes sense 😀</p>
-<p>Then I followed the instructions to get markdown rendering up an running which
+data source as well</li><li>response from the loader is wired (via fetch/XHR or server side rendering) to
+the hook and the string returned from the loader is bound to <code>slug</code> constant.</li></ul><p>Now the analogy from the tutorial that loader is the controller and we&rsquo;re using
+react as a view layer makes sense 😀</p><p>Then I followed the instructions to get markdown rendering up an running which
 is well covered in the tutorial and standard javascript so I&rsquo;ll skip the
-details.</p>
-<h1 id=an-experiment>An experiment</h1>
-<p>But meanwhile I started wondering&mldr;can I put multiple components on screen and
+details.</p><h1 id=an-experiment>An experiment</h1><p>But meanwhile I started wondering&mldr;can I put multiple components on screen and
 each will automagically fetch it&rsquo;s data? I could peruse the docs some more&mldr;or
-I can just try it out.</p>
-<p>I created this <code>app/routes/footer.tsx</code></p>
-<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2>
-<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">11
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">12
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">13
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">14
-</span></code></pre></td>
-<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-tsx data-lang=tsx><span style=color:#66d9ef>import</span> { <span style=color:#a6e22e>useLoaderData</span> } <span style=color:#66d9ef>from</span> <span style=color:#e6db74>&#34;remix&#34;</span>;
-
-<span style=color:#66d9ef>export</span> <span style=color:#66d9ef>const</span> <span style=color:#a6e22e>loader</span> <span style=color:#f92672>=</span> <span style=color:#66d9ef>async</span> () <span style=color:#f92672>=&gt;</span> {
-  <span style=color:#66d9ef>return</span> <span style=color:#66d9ef>new</span> Date().<span style=color:#a6e22e>getFullYear</span>();
-};
-
-<span style=color:#66d9ef>export</span> <span style=color:#66d9ef>default</span> <span style=color:#66d9ef>function</span> <span style=color:#a6e22e>Footer() {</span>
-  <span style=color:#66d9ef>const</span> <span style=color:#a6e22e>year</span> <span style=color:#f92672>=</span> <span style=color:#a6e22e>useLoaderData</span>();
-  <span style=color:#66d9ef>return</span> (
-    &lt;<span style=color:#f92672>div</span>&gt;
-      <span style=color:#a6e22e>All</span> <span style=color:#a6e22e>rights</span> <span style=color:#a6e22e>reserved</span> <span style=color:#960050;background-color:#1e0010>©</span> { <span style=color:#a6e22e>year</span> }
-    &lt;/<span style=color:#f92672>div</span>&gt;
-  )
-}
-</code></pre></td></tr></table>
-</div>
-</div><p>Yes, very silly, calling a server to get current year, but I just want to test
-things out 😅</p>
-<p>One remark while I figure things out: tooling is quite responsive and helpful:
-change detection, auto-recompilation and reloading out of the box.</p>
-<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2>
-<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">4
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">5
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">6
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">7
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">8
-</span></code></pre></td>
-<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-fallback data-lang=fallback>Build failed with 1 error:
-route-module:/Users/andrazbajt/personal/playground/my-remix-app/app/routes/posts/$slug.tsx:3:9: error: No matching export in &#34;app/routes/footer.tsx&#34; for import &#34;Footer&#34;
-?? Rebuilt in 43ms
-GET /posts/ 200 - - 19.486 ms
-?? File changed: app/routes/posts/$slug.tsx
-?? Rebuilding...
-?? Rebuilt in 124ms
-GET /posts/ 200 - - 11.870 ms
-</code></pre></td></tr></table>
-</div>
-</div><p>Then in <code>$slug.tsg</code></p>
-<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2>
-<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">4
-</span></code></pre></td>
-<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-tsx data-lang=tsx>&lt;<span style=color:#f92672>div</span>&gt;
-  &lt;<span style=color:#f92672>div</span> <span style=color:#a6e22e>dangerouslySetInnerHTML</span><span style=color:#f92672>=</span>{{ <span style=color:#a6e22e>__html</span>: <span style=color:#66d9ef>post.html</span> }} /&gt;
-  &lt;<span style=color:#f92672>Footer</span>/&gt;
-&lt;/<span style=color:#f92672>div</span>&gt;
-</code></pre></td></tr></table>
-</div>
-</div><p>And a cryptic error appears</p>
-<p><img src=/images/remix/7.webp alt="application error"></p>
-<p>What is slug doing here? Sprinkling in some logging I notice that <code>year</code>
+I can just try it out.</p><p>I created this <code>app/routes/footer.tsx</code></p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">11
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">12
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">13
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">14
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-tsx data-lang=tsx><span style=display:flex><span><span style=color:#66d9ef>import</span> { <span style=color:#a6e22e>useLoaderData</span> } <span style=color:#66d9ef>from</span> <span style=color:#e6db74>&#34;remix&#34;</span>;
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>export</span> <span style=color:#66d9ef>const</span> <span style=color:#a6e22e>loader</span> <span style=color:#f92672>=</span> <span style=color:#66d9ef>async</span> () <span style=color:#f92672>=&gt;</span> {
+</span></span><span style=display:flex><span>  <span style=color:#66d9ef>return</span> <span style=color:#66d9ef>new</span> Date().<span style=color:#a6e22e>getFullYear</span>();
+</span></span><span style=display:flex><span>};
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>export</span> <span style=color:#66d9ef>default</span> <span style=color:#66d9ef>function</span> <span style=color:#a6e22e>Footer() {</span>
+</span></span><span style=display:flex><span>  <span style=color:#66d9ef>const</span> <span style=color:#a6e22e>year</span> <span style=color:#f92672>=</span> <span style=color:#a6e22e>useLoaderData</span>();
+</span></span><span style=display:flex><span>  <span style=color:#66d9ef>return</span> (
+</span></span><span style=display:flex><span>    &lt;<span style=color:#f92672>div</span>&gt;
+</span></span><span style=display:flex><span>      <span style=color:#a6e22e>All</span> <span style=color:#a6e22e>rights</span> <span style=color:#a6e22e>reserved</span> <span style=color:#960050;background-color:#1e0010>©</span> { <span style=color:#a6e22e>year</span> }
+</span></span><span style=display:flex><span>    &lt;/<span style=color:#f92672>div</span>&gt;
+</span></span><span style=display:flex><span>  )
+</span></span><span style=display:flex><span>}
+</span></span></code></pre></td></tr></table></div></div><p>Yes, very silly, calling a server to get current year, but I just want to test
+things out 😅</p><p>One remark while I figure things out: tooling is quite responsive and helpful:
+change detection, auto-recompilation and reloading out of the box.</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">4
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">5
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">6
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">7
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">8
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-fallback data-lang=fallback><span style=display:flex><span>Build failed with 1 error:
+</span></span><span style=display:flex><span>route-module:/Users/andrazbajt/personal/playground/my-remix-app/app/routes/posts/$slug.tsx:3:9: error: No matching export in &#34;app/routes/footer.tsx&#34; for import &#34;Footer&#34;
+</span></span><span style=display:flex><span>?? Rebuilt in 43ms
+</span></span><span style=display:flex><span>GET /posts/ 200 - - 19.486 ms
+</span></span><span style=display:flex><span>?? File changed: app/routes/posts/$slug.tsx
+</span></span><span style=display:flex><span>?? Rebuilding...
+</span></span><span style=display:flex><span>?? Rebuilt in 124ms
+</span></span><span style=display:flex><span>GET /posts/ 200 - - 11.870 ms
+</span></span></code></pre></td></tr></table></div></div><p>Then in <code>$slug.tsg</code></p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">4
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-tsx data-lang=tsx><span style=display:flex><span>&lt;<span style=color:#f92672>div</span>&gt;
+</span></span><span style=display:flex><span>  &lt;<span style=color:#f92672>div</span> <span style=color:#a6e22e>dangerouslySetInnerHTML</span><span style=color:#f92672>=</span>{{ <span style=color:#a6e22e>__html</span>: <span style=color:#66d9ef>post.html</span> }} /&gt;
+</span></span><span style=display:flex><span>  &lt;<span style=color:#f92672>Footer</span>/&gt;
+</span></span><span style=display:flex><span>&lt;/<span style=color:#f92672>div</span>&gt;
+</span></span></code></pre></td></tr></table></div></div><p>And a cryptic error appears</p><p><img src=/images/remix/7.webp alt="application error"></p><p>What is slug doing here? Sprinkling in some logging I notice that <code>year</code>
 actually holds data from <code>$slug.txs</code> loader, not my footer loader. So I&rsquo;m
-holding it wrong - back to the docs it is.</p>
-<h1 id=styles>Styles</h1>
-<p>Next interesting bit is that components and also include styles</p>
-<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2>
-<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">4
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">5
-</span></code></pre></td>
-<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-tsx data-lang=tsx><span style=color:#66d9ef>import</span> <span style=color:#a6e22e>adminStyles</span> <span style=color:#66d9ef>from</span> <span style=color:#e6db74>&#34;~/styles/admin.css&#34;</span>;
-
-<span style=color:#66d9ef>export</span> <span style=color:#66d9ef>const</span> <span style=color:#a6e22e>links</span> <span style=color:#f92672>=</span> () <span style=color:#f92672>=&gt;</span> {
-  <span style=color:#66d9ef>return</span> [{ <span style=color:#a6e22e>rel</span><span style=color:#f92672>:</span> <span style=color:#e6db74>&#34;stylesheet&#34;</span>, <span style=color:#a6e22e>href</span>: <span style=color:#66d9ef>adminStyles</span> }];
-};
-</code></pre></td></tr></table>
-</div>
-</div><p>and this gets picked up by <code>Links</code> component in <code>index.tsx</code>.</p>
-<h1 id=index-routes>Index routes</h1>
-<p>But the real fun begins with <code>index routes</code>. By adding this to
-<code>app/routes/admin.tsx</code></p>
-<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2>
-<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">4
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">5
-</span></code></pre></td>
-<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-tsx data-lang=tsx><span style=color:#66d9ef>import</span> { <span style=color:#a6e22e>Outlet</span> } <span style=color:#66d9ef>from</span> <span style=color:#e6db74>&#34;remix&#34;</span>;
-...
-&lt;<span style=color:#f92672>main</span>&gt;
-  &lt;<span style=color:#f92672>Outlet</span>/&gt;
-&lt;/<span style=color:#f92672>main</span>&gt;
-</code></pre></td></tr></table>
-</div>
-</div><p>things can now render <em>inside</em> this component. E.g. visiting <code>/admin/new</code> will
+holding it wrong - back to the docs it is.</p><h1 id=styles>Styles</h1><p>Next interesting bit is that components and also include styles</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">4
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">5
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-tsx data-lang=tsx><span style=display:flex><span><span style=color:#66d9ef>import</span> <span style=color:#a6e22e>adminStyles</span> <span style=color:#66d9ef>from</span> <span style=color:#e6db74>&#34;~/styles/admin.css&#34;</span>;
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>export</span> <span style=color:#66d9ef>const</span> <span style=color:#a6e22e>links</span> <span style=color:#f92672>=</span> () <span style=color:#f92672>=&gt;</span> {
+</span></span><span style=display:flex><span>  <span style=color:#66d9ef>return</span> [{ <span style=color:#a6e22e>rel</span><span style=color:#f92672>:</span> <span style=color:#e6db74>&#34;stylesheet&#34;</span>, <span style=color:#a6e22e>href</span>: <span style=color:#66d9ef>adminStyles</span> }];
+</span></span><span style=display:flex><span>};
+</span></span></code></pre></td></tr></table></div></div><p>and this gets picked up by <code>Links</code> component in <code>index.tsx</code>.</p><h1 id=index-routes>Index routes</h1><p>But the real fun begins with <code>index routes</code>. By adding this to
+<code>app/routes/admin.tsx</code></p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">4
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">5
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-tsx data-lang=tsx><span style=display:flex><span><span style=color:#66d9ef>import</span> { <span style=color:#a6e22e>Outlet</span> } <span style=color:#66d9ef>from</span> <span style=color:#e6db74>&#34;remix&#34;</span>;
+</span></span><span style=display:flex><span>...
+</span></span><span style=display:flex><span>&lt;<span style=color:#f92672>main</span>&gt;
+</span></span><span style=display:flex><span>  &lt;<span style=color:#f92672>Outlet</span>/&gt;
+</span></span><span style=display:flex><span>&lt;/<span style=color:#f92672>main</span>&gt;
+</span></span></code></pre></td></tr></table></div></div><p>things can now render <em>inside</em> this component. E.g. visiting <code>/admin/new</code> will
 render first <code>app/routes/admin.tsx</code> but inside the <code>Outlet</code> there will be
 <code>/app/routes/admin/new.tsx</code>. This time with working data fetching 😉 But
-does this mean I can only structure my data-fetching components hierarchically?</p>
-<p>Reading on I&rsquo;m slightly surprised to see that remix includes its own forms. How
+does this mean I can only structure my data-fetching components hierarchically?</p><p>Reading on I&rsquo;m slightly surprised to see that remix includes its own forms. How
 do they differ from plain old html <code>&lt;form></code>? I&rsquo;m guessing some automagical
-wiring to the backend, maybe shared validation logic 🤞</p>
-<p>And sure enough, there is wiring by convention</p>
-<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2>
-<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">11
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">12
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">13
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">14
-</span></code></pre></td>
-<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-tsx data-lang=tsx><span style=color:#66d9ef>import</span> { <span style=color:#a6e22e>redirect</span>, <span style=color:#a6e22e>Form</span> } <span style=color:#66d9ef>from</span> <span style=color:#e6db74>&#34;remix&#34;</span>;
-<span style=color:#66d9ef>import</span> { <span style=color:#a6e22e>createPost</span> } <span style=color:#66d9ef>from</span> <span style=color:#e6db74>&#34;~/post&#34;</span>;
-
-<span style=color:#66d9ef>export</span> <span style=color:#66d9ef>const</span> <span style=color:#a6e22e>action</span> <span style=color:#f92672>=</span> <span style=color:#66d9ef>async</span> ({ <span style=color:#a6e22e>request</span> }) <span style=color:#f92672>=&gt;</span> {
-  <span style=color:#66d9ef>const</span> <span style=color:#a6e22e>formData</span> <span style=color:#f92672>=</span> <span style=color:#66d9ef>await</span> <span style=color:#a6e22e>request</span>.<span style=color:#a6e22e>formData</span>();
-
-  <span style=color:#66d9ef>const</span> <span style=color:#a6e22e>title</span> <span style=color:#f92672>=</span> <span style=color:#a6e22e>formData</span>.<span style=color:#66d9ef>get</span>(<span style=color:#e6db74>&#34;title&#34;</span>);
-  <span style=color:#66d9ef>const</span> <span style=color:#a6e22e>slug</span> <span style=color:#f92672>=</span> <span style=color:#a6e22e>formData</span>.<span style=color:#66d9ef>get</span>(<span style=color:#e6db74>&#34;slug&#34;</span>);
-  <span style=color:#66d9ef>const</span> <span style=color:#a6e22e>markdown</span> <span style=color:#f92672>=</span> <span style=color:#a6e22e>formData</span>.<span style=color:#66d9ef>get</span>(<span style=color:#e6db74>&#34;markdown&#34;</span>);
-
-  <span style=color:#66d9ef>await</span> <span style=color:#a6e22e>createPost</span>({ <span style=color:#a6e22e>title</span>, <span style=color:#a6e22e>slug</span>, <span style=color:#a6e22e>markdown</span> });
-
-  <span style=color:#66d9ef>return</span> <span style=color:#a6e22e>redirect</span>(<span style=color:#e6db74>&#34;/admin&#34;</span>);
-};
-</code></pre></td></tr></table>
-</div>
-</div><p>So what happens when I submit this form? Feels very smooth, let&rsquo;s look under the
-cover.</p>
-<ul>
-<li>a <code>POST</code> request is made to
-<code>/admin/new?_data=routes%2Fadmin%2Fnew</code> with regular form data payload.</li>
-<li>but the response is interesting: status is set to <code>204 No Content</code> and there
-is an interesting header: <code>X-Remix-Redirect: /admin</code></li>
-<li>apparently the &ldquo;redirect&rdquo; is then actually just frontend navigation to new
+wiring to the backend, maybe shared validation logic 🤞</p><p>And sure enough, there is wiring by convention</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">11
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">12
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">13
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">14
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-tsx data-lang=tsx><span style=display:flex><span><span style=color:#66d9ef>import</span> { <span style=color:#a6e22e>redirect</span>, <span style=color:#a6e22e>Form</span> } <span style=color:#66d9ef>from</span> <span style=color:#e6db74>&#34;remix&#34;</span>;
+</span></span><span style=display:flex><span><span style=color:#66d9ef>import</span> { <span style=color:#a6e22e>createPost</span> } <span style=color:#66d9ef>from</span> <span style=color:#e6db74>&#34;~/post&#34;</span>;
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>export</span> <span style=color:#66d9ef>const</span> <span style=color:#a6e22e>action</span> <span style=color:#f92672>=</span> <span style=color:#66d9ef>async</span> ({ <span style=color:#a6e22e>request</span> }) <span style=color:#f92672>=&gt;</span> {
+</span></span><span style=display:flex><span>  <span style=color:#66d9ef>const</span> <span style=color:#a6e22e>formData</span> <span style=color:#f92672>=</span> <span style=color:#66d9ef>await</span> <span style=color:#a6e22e>request</span>.<span style=color:#a6e22e>formData</span>();
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>  <span style=color:#66d9ef>const</span> <span style=color:#a6e22e>title</span> <span style=color:#f92672>=</span> <span style=color:#a6e22e>formData</span>.<span style=color:#66d9ef>get</span>(<span style=color:#e6db74>&#34;title&#34;</span>);
+</span></span><span style=display:flex><span>  <span style=color:#66d9ef>const</span> <span style=color:#a6e22e>slug</span> <span style=color:#f92672>=</span> <span style=color:#a6e22e>formData</span>.<span style=color:#66d9ef>get</span>(<span style=color:#e6db74>&#34;slug&#34;</span>);
+</span></span><span style=display:flex><span>  <span style=color:#66d9ef>const</span> <span style=color:#a6e22e>markdown</span> <span style=color:#f92672>=</span> <span style=color:#a6e22e>formData</span>.<span style=color:#66d9ef>get</span>(<span style=color:#e6db74>&#34;markdown&#34;</span>);
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>  <span style=color:#66d9ef>await</span> <span style=color:#a6e22e>createPost</span>({ <span style=color:#a6e22e>title</span>, <span style=color:#a6e22e>slug</span>, <span style=color:#a6e22e>markdown</span> });
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>  <span style=color:#66d9ef>return</span> <span style=color:#a6e22e>redirect</span>(<span style=color:#e6db74>&#34;/admin&#34;</span>);
+</span></span><span style=display:flex><span>};
+</span></span></code></pre></td></tr></table></div></div><p>So what happens when I submit this form? Feels very smooth, let&rsquo;s look under the
+cover.</p><ul><li>a <code>POST</code> request is made to
+<code>/admin/new?_data=routes%2Fadmin%2Fnew</code> with regular form data payload.</li><li>but the response is interesting: status is set to <code>204 No Content</code> and there
+is an interesting header: <code>X-Remix-Redirect: /admin</code></li><li>apparently the &ldquo;redirect&rdquo; is then actually just frontend navigation to new
 route as there are no more requests except one for new data
-<code>/admin?_data=routes%2Fadmin</code></li>
-</ul>
-<h1 id=other-stuff>Other stuff</h1>
-<p>Then there is <a href=https://remix.run/docs/en/v1/tutorials/jokes>another much longer
+<code>/admin?_data=routes%2Fadmin</code></li></ul><h1 id=other-stuff>Other stuff</h1><p>Then there is <a href=https://remix.run/docs/en/v1/tutorials/jokes>another much longer
 tutorial</a> (also available as <a href="https://www.youtube.com/watch?v=hsIWJpuxNj0">a
 video</a>) that dives deeper and
 covers more topics (like cookies, authentication, validation, error handling,
-databases&mldr;).</p>
-<p>How about deployment? I did start this with the intent of deploying to
+databases&mldr;).</p><p>How about deployment? I did start this with the intent of deploying to
 Cloudflare but the post is already getting long and the app as-is is not really
 suitable (direct filesystem access is not supported) for deploying, so maybe in
-another post.</p>
-<h1 id=conclusion>Conclusion</h1>
-<p>We&rsquo;ll as much as I&rsquo;m not a home at writing frontend code and I dislike the idea
+another post.</p><h1 id=conclusion>Conclusion</h1><p>We&rsquo;ll as much as I&rsquo;m not a home at writing frontend code and I dislike the idea
 of &ldquo;full stack javascript&rdquo; this actually did not hurt a bit and I can see how
 time can be really useful for doing a very dynamic client app that as some
-server side components.</p>
-<p>Now, I would probably not pick this stack for a new project, mostly to me not
+server side components.</p><p>Now, I would probably not pick this stack for a new project, mostly to me not
 being comfortable with Node, but I might just use it for an opinionated React
-toolchain with SSR and all other goodies.</p>
-<hr>
-<p>Last modified on 2021-12-19</p>
-<a href=/posts/2021-09-12-podman-m1-amd64/>
-Previous Running amd64 docker images with Podman on Apple Silicon (M1)
-</a>
-<br>
-<a href=/posts/2021-12-29-speed-is-a-feature/>
-Next Speed is a feature; thoughts on modern web performance
-</a>
-</div>
-<script src=/js/instantclick.min.js data-no-instant></script>
-<script data-no-instant>InstantClick.init("mousedown")</script>
-</body>
-</html>
+toolchain with SSR and all other goodies.</p><hr><p>Last modified on 2021-12-19</p><a href=/posts/2021-09-12-podman-m1-amd64/>Previous Running amd64 docker images with Podman on Apple Silicon (M1)</a><br><a href=/posts/2021-12-29-speed-is-a-feature/>Next Speed is a feature; thoughts on modern web performance</a></div><script src=/js/instantclick.min.js data-no-instant></script>
+<script data-no-instant>InstantClick.init("mousedown")</script></body></html>

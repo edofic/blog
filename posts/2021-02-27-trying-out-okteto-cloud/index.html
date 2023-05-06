@@ -1,906 +1,582 @@
-<!doctype html><html>
-<head>
-<title>Trying out Okteto Cloud</title>
-<meta charset=utf-8>
-<meta name=X-UA-Compatible content="IE=edge">
-<meta name=google-site-verification content>
-<meta content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=0" name=viewport>
-<style>body{max-width:800px;margin:auto;line-height:1.6;font-size:18px;color:#444;padding:0 10px}h1,h2,h3{line-height:1.2}.nav a,.nav a:visited,.nav a:hover,.nav a:active{color:inherit}.nav .title{margin:0}.nav-sub{display:inline-block}.nav-item{margin:5px}.nav-sub-right{display:inline-block;float:right}.nav-icon{margin-right:5px}.main img{display:block;max-width:100%;margin:auto}.main pre{overflow:auto}" media="screen"></style>
-</head>
-<body>
-<div class=nav>
-<a href=/><h2 class=title>Andraž Bajt's blog</h2></a>
-<div class=nav-sub>
-<a class=nav-item href=/about/>
-About Me
-</a>
-<a class=nav-item href=/>
-Archive
-</a>
-</div>
-<div class=nav-sub-right>
-<a class=nav-icon href=https://github.com/edofic target=_blank><img src=/icons/github.svg width=20 height=20></a>
+<!doctype html><html><head><title>Trying out Okteto Cloud</title><meta charset=utf-8><meta name=X-UA-Compatible content="IE=edge"><meta name=google-site-verification content><meta content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=0" name=viewport><style>body{max-width:800px;margin:auto;line-height:1.6;font-size:18px;color:#444;padding:0 10px}h1,h2,h3{line-height:1.2}.nav a,.nav a:visited,.nav a:hover,.nav a:active{color:inherit}.nav .title{margin:0}.nav-sub{display:inline-block}.nav-item{margin:5px}.nav-sub-right{display:inline-block;float:right}.nav-icon{margin-right:5px}.main img{display:block;max-width:100%;margin:auto}.main pre{overflow:auto}" media="screen"></style></head><body><div class=nav><a href=/><h2 class=title>Andraž Bajt's blog</h2></a><div class=nav-sub><a class=nav-item href=/about/>About Me</a>
+<a class=nav-item href=/>Archive</a></div><div class=nav-sub-right><a class=nav-icon href=https://github.com/edofic target=_blank><img src=/icons/github.svg width=20 height=20></a>
 <a class=nav-icon href=https://www.linkedin.com/in/edofic target=_blank><img src=/icons/linkedin.svg width=20 height=20></a>
 <a class=nav-icon href=https://twitter.com/edofic target=_blank><img src=/icons/twitter.svg width=20 height=20></a>
 <a class=nav-icon href=/index.xml target=_blank><img src=/icons/rss.svg width=20 height=20></a>
-<a class=nav-icon href=mailto:blog@edofic.com target=_blank><img src=/icons/email.svg width=20 height=20></a>
-</div>
-</div>
-<hr>
-<div class=main>
-<h1>Trying out Okteto Cloud</h1>
-<time>2021-02-27</time>
-<a href=/tags/trying-out>trying-out</a>
-<hr>
-<p>This is a part two of <a href=/posts/2021-02-22-trying-out-okteto-cli/>Trying out Okteto</a>.
-I&rsquo;ll be trying out <a href=https://okteto.com/>okteto.com</a> - &ldquo;The Kubernetes development platform&rdquo;.</p>
-<p>At a first glance it looks like a hosted kubernetes solution + the CLI tool I
-already tested + some bells and whistles. Let&rsquo;s find out what those are.</p>
-<h1 id=first-impressions>First impressions</h1>
-<p>Login with github. Boom I&rsquo;m in, no extra sign up required. Big thumbs up.</p>
-<p>Looks like I got a managed namespace with 8G ram, 4cpus and 5G storage. Quite
-generous for a free plan.</p>
-<p>There is a convenient link to <a href=https://okteto.com/docs/getting-started/index.html>Getting started</a>.</p>
-<h1 id=getting-started>Getting started</h1>
-<p>Apparently those bells and whistles include build and deploy
-pipeline&mldr;.reminds me of Heroku :)</p>
-<p>I&rsquo;ll deviate from the guide and will try to deploy my buffalo test app because
-I actually want to dive deep and understand what&rsquo;s happening.</p>
-<p>Let&rsquo;s have a look at <a href=https://github.com/okteto/movies/blob/master/okteto-pipeline.yml>okteto-pipeline.yml from the example</a></p>
-<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2>
-<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">4
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">5
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">6
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">7
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">8
-</span></code></pre></td>
-<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-yaml data-lang=yaml><span style=color:#f92672>icon</span>: <span style=color:#ae81ff>https://apps.okteto.com/movies/icon.png</span>
-<span style=color:#f92672>deploy</span>:
-  - <span style=color:#ae81ff>okteto build -t okteto.dev/api:${OKTETO_GIT_COMMIT} api</span>
-  - <span style=color:#ae81ff>okteto build -t okteto.dev/frontend:${OKTETO_GIT_COMMIT} frontend</span>
-  - <span style=color:#ae81ff>helm upgrade --install movies chart --set tag=${OKTETO_GIT_COMMIT}</span>
-<span style=color:#f92672>devs</span>:
-  - <span style=color:#ae81ff>api/okteto.yml</span>
-  - <span style=color:#ae81ff>frontend/okteto.yml</span>
-</code></pre></td></tr></table>
-</div>
-</div><p>Quite a bit going on here. Looking at <code>okteto build -h</code> localy it seems this
+<a class=nav-icon href=mailto:blog@edofic.com target=_blank><img src=/icons/email.svg width=20 height=20></a></div></div><hr><div class=main><h1>Trying out Okteto Cloud</h1><time>2021-02-27</time>
+<a href=/tags/trying-out>trying-out</a><hr><p>This is a part two of <a href=/posts/2021-02-22-trying-out-okteto-cli/>Trying out Okteto</a>.
+I&rsquo;ll be trying out <a href=https://okteto.com/>okteto.com</a> - &ldquo;The Kubernetes development platform&rdquo;.</p><p>At a first glance it looks like a hosted kubernetes solution + the CLI tool I
+already tested + some bells and whistles. Let&rsquo;s find out what those are.</p><h1 id=first-impressions>First impressions</h1><p>Login with github. Boom I&rsquo;m in, no extra sign up required. Big thumbs up.</p><p>Looks like I got a managed namespace with 8G ram, 4cpus and 5G storage. Quite
+generous for a free plan.</p><p>There is a convenient link to <a href=https://okteto.com/docs/getting-started/index.html>Getting started</a>.</p><h1 id=getting-started>Getting started</h1><p>Apparently those bells and whistles include build and deploy
+pipeline&mldr;.reminds me of Heroku :)</p><p>I&rsquo;ll deviate from the guide and will try to deploy my buffalo test app because
+I actually want to dive deep and understand what&rsquo;s happening.</p><p>Let&rsquo;s have a look at <a href=https://github.com/okteto/movies/blob/master/okteto-pipeline.yml>okteto-pipeline.yml from the example</a></p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">4
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">5
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">6
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">7
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">8
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-yaml data-lang=yaml><span style=display:flex><span><span style=color:#f92672>icon</span>: <span style=color:#ae81ff>https://apps.okteto.com/movies/icon.png</span>
+</span></span><span style=display:flex><span><span style=color:#f92672>deploy</span>:
+</span></span><span style=display:flex><span>  - <span style=color:#ae81ff>okteto build -t okteto.dev/api:${OKTETO_GIT_COMMIT} api</span>
+</span></span><span style=display:flex><span>  - <span style=color:#ae81ff>okteto build -t okteto.dev/frontend:${OKTETO_GIT_COMMIT} frontend</span>
+</span></span><span style=display:flex><span>  - <span style=color:#ae81ff>helm upgrade --install movies chart --set tag=${OKTETO_GIT_COMMIT}</span>
+</span></span><span style=display:flex><span><span style=color:#f92672>devs</span>:
+</span></span><span style=display:flex><span>  - <span style=color:#ae81ff>api/okteto.yml</span>
+</span></span><span style=display:flex><span>  - <span style=color:#ae81ff>frontend/okteto.yml</span>
+</span></span></code></pre></td></tr></table></div></div><p>Quite a bit going on here. Looking at <code>okteto build -h</code> localy it seems this
 will build two Dockerfiles, push the images to okteto servers and then do a
 helm upgrade. This implies we need a helm chart for out app. Oh look, there is a
-<a href=https://github.com/okteto/movies/tree/master/chart>chart for the example app</a></p>
-<p>Let&rsquo;s try to mimic this and see how for I can get.</p>
-<h1 id=the-helm-digression>The helm digression</h1>
-<p>I&rsquo;ll admit I was a bit intimidated at the prospect of packaging my app up with
+<a href=https://github.com/okteto/movies/tree/master/chart>chart for the example app</a></p><p>Let&rsquo;s try to mimic this and see how for I can get.</p><h1 id=the-helm-digression>The helm digression</h1><p>I&rsquo;ll admit I was a bit intimidated at the prospect of packaging my app up with
 help just to get up and running as I&rsquo;ve only created a chart once previously and
-even that was not from scratch but with some tweaking. But&mldr;how hard can it be?</p>
-<p>First I copied over my test app since I&rsquo;ll probably be making some changes. I
+even that was not from scratch but with some tweaking. But&mldr;how hard can it be?</p><p>First I copied over my test app since I&rsquo;ll probably be making some changes. I
 already have a Dockerfile, okteto.yaml and database deployment configs. I think I
-should create a chart next so I can try to deploy the app.</p>
-<p><code>Chart.yaml</code></p>
-<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2>
-<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">4
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">5
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">6
-</span></code></pre></td>
-<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-yaml data-lang=yaml><span style=color:#f92672>apiVersion</span>: <span style=color:#ae81ff>v2</span>
-<span style=color:#f92672>name</span>: <span style=color:#ae81ff>tryingout</span>
-<span style=color:#f92672>description</span>: <span style=color:#ae81ff>Trying out Buffalo on Kubernetes</span>
-<span style=color:#f92672>type</span>: <span style=color:#ae81ff>application</span>
-<span style=color:#f92672>version</span>: <span style=color:#ae81ff>0.1.0</span>
-<span style=color:#f92672>appVersion</span>: <span style=color:#ae81ff>1.0.0</span>
-</code></pre></td></tr></table>
-</div>
-</div><p>Any my <code>values.yaml</code> (based of movies example)</p>
-<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2>
-<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">4
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">5
-</span></code></pre></td>
-<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-yaml data-lang=yaml><span style=color:#f92672>tag</span>: <span style=color:#ae81ff>dev</span>
-
-<span style=color:#f92672>web</span>:
-  <span style=color:#f92672>replicaCount</span>: <span style=color:#ae81ff>1</span>
-  <span style=color:#f92672>image</span>: <span style=color:#ae81ff>okteto.dev/web</span>
-</code></pre></td></tr></table>
-</div>
-</div><p>Copied over notes, helpers (with name replacement). Not it&rsquo;s time to get to
+should create a chart next so I can try to deploy the app.</p><p><code>Chart.yaml</code></p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">4
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">5
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">6
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-yaml data-lang=yaml><span style=display:flex><span><span style=color:#f92672>apiVersion</span>: <span style=color:#ae81ff>v2</span>
+</span></span><span style=display:flex><span><span style=color:#f92672>name</span>: <span style=color:#ae81ff>tryingout</span>
+</span></span><span style=display:flex><span><span style=color:#f92672>description</span>: <span style=color:#ae81ff>Trying out Buffalo on Kubernetes</span>
+</span></span><span style=display:flex><span><span style=color:#f92672>type</span>: <span style=color:#ae81ff>application</span>
+</span></span><span style=display:flex><span><span style=color:#f92672>version</span>: <span style=color:#ae81ff>0.1.0</span>
+</span></span><span style=display:flex><span><span style=color:#f92672>appVersion</span>: <span style=color:#ae81ff>1.0.0</span>
+</span></span></code></pre></td></tr></table></div></div><p>Any my <code>values.yaml</code> (based of movies example)</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">4
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">5
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-yaml data-lang=yaml><span style=display:flex><span><span style=color:#f92672>tag</span>: <span style=color:#ae81ff>dev</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#f92672>web</span>:
+</span></span><span style=display:flex><span>  <span style=color:#f92672>replicaCount</span>: <span style=color:#ae81ff>1</span>
+</span></span><span style=display:flex><span>  <span style=color:#f92672>image</span>: <span style=color:#ae81ff>okteto.dev/web</span>
+</span></span></code></pre></td></tr></table></div></div><p>Copied over notes, helpers (with name replacement). Not it&rsquo;s time to get to
 business with the actual templates. I&rsquo;ll just reuse my deployment for postgres
 and just add in the labels (though I should be a stateful set if I was even half
-serious).</p>
-<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2>
-<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">11
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">12
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">13
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">14
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">15
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">16
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">17
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">18
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">19
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">20
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">21
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">22
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">23
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">24
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">25
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">26
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">27
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">28
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">29
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">30
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">31
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">32
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">33
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">34
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">35
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">36
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">37
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">38
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">39
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">40
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">41
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">42
-</span></code></pre></td>
-<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-yaml data-lang=yaml><span style=color:#f92672>apiVersion</span>: <span style=color:#ae81ff>apps/v1</span>
-<span style=color:#f92672>kind</span>: <span style=color:#ae81ff>Deployment</span>
-<span style=color:#f92672>metadata</span>:
-  <span style=color:#f92672>name</span>: <span style=color:#ae81ff>db</span>
-  <span style=color:#f92672>labels</span>:
-    <span style=color:#f92672>component</span>: <span style=color:#ae81ff>db</span>
-    {{- <span style=color:#ae81ff>include &#34;tryingout.labels&#34; . | nindent 4 }}</span>
-<span style=color:#f92672>spec</span>:
-  <span style=color:#f92672>replicas</span>: <span style=color:#ae81ff>1</span>
-  <span style=color:#f92672>selector</span>:
-    <span style=color:#f92672>matchLabels</span>:
-      <span style=color:#f92672>component</span>: <span style=color:#ae81ff>db</span>
-      {{- <span style=color:#ae81ff>include &#34;tryingout.labels&#34; . | nindent 6 }}</span>
-  <span style=color:#f92672>template</span>:
-    <span style=color:#f92672>metadata</span>:
-      <span style=color:#f92672>labels</span>:
-        <span style=color:#f92672>component</span>: <span style=color:#ae81ff>db</span>
-        {{- <span style=color:#ae81ff>include &#34;tryingout.labels&#34; . | nindent 8 }}</span>
-    <span style=color:#f92672>spec</span>:
-      <span style=color:#f92672>containers</span>:
-      - <span style=color:#f92672>name</span>: <span style=color:#ae81ff>postgres</span>
-        <span style=color:#f92672>image</span>: <span style=color:#ae81ff>postgres:13.1-alpine</span>
-        <span style=color:#f92672>env</span>:
-        - <span style=color:#f92672>name</span>: <span style=color:#ae81ff>POSTGRES_PASSWORD</span>
-          <span style=color:#f92672>value</span>: <span style=color:#e6db74>&#34;postgres&#34;</span>
-        <span style=color:#f92672>ports</span>:
-        - <span style=color:#f92672>containerPort</span>: <span style=color:#ae81ff>5432</span>
----
-<span style=color:#f92672>apiVersion</span>: <span style=color:#ae81ff>v1</span>
-<span style=color:#f92672>kind</span>: <span style=color:#ae81ff>Service</span>
-<span style=color:#f92672>metadata</span>:
-  <span style=color:#f92672>name</span>: <span style=color:#ae81ff>db</span>
-  <span style=color:#f92672>labels</span>:
-    <span style=color:#f92672>component</span>: <span style=color:#ae81ff>db</span>
-    {{- <span style=color:#ae81ff>include &#34;tryingout.labels&#34; . | nindent 4 }}</span>
-<span style=color:#f92672>spec</span>:
-  <span style=color:#f92672>selector</span>:
-    <span style=color:#f92672>component</span>: <span style=color:#ae81ff>db</span>
-    {{- <span style=color:#ae81ff>include &#34;tryingout.labels&#34; . | nindent 4 }}</span>
-  <span style=color:#f92672>ports</span>:
-    - <span style=color:#f92672>protocol</span>: <span style=color:#ae81ff>TCP</span>
-      <span style=color:#f92672>port</span>: <span style=color:#ae81ff>5432</span>
-</code></pre></td></tr></table>
-</div>
-</div><p>Any now for the meat and the potatoes - my web deployment. Should be pretty much the same as postgres, I just need to
-grab the image from the values.</p>
-<p><em>A word of warning:</em> there are errors here - I left them in intentionally so I can
+serious).</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">11
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">12
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">13
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">14
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">15
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">16
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">17
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">18
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">19
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">20
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">21
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">22
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">23
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">24
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">25
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">26
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">27
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">28
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">29
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">30
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">31
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">32
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">33
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">34
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">35
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">36
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">37
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">38
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">39
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">40
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">41
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">42
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-yaml data-lang=yaml><span style=display:flex><span><span style=color:#f92672>apiVersion</span>: <span style=color:#ae81ff>apps/v1</span>
+</span></span><span style=display:flex><span><span style=color:#f92672>kind</span>: <span style=color:#ae81ff>Deployment</span>
+</span></span><span style=display:flex><span><span style=color:#f92672>metadata</span>:
+</span></span><span style=display:flex><span>  <span style=color:#f92672>name</span>: <span style=color:#ae81ff>db</span>
+</span></span><span style=display:flex><span>  <span style=color:#f92672>labels</span>:
+</span></span><span style=display:flex><span>    <span style=color:#f92672>component</span>: <span style=color:#ae81ff>db</span>
+</span></span><span style=display:flex><span>    {{- <span style=color:#ae81ff>include &#34;tryingout.labels&#34; . | nindent 4 }}</span>
+</span></span><span style=display:flex><span><span style=color:#f92672>spec</span>:
+</span></span><span style=display:flex><span>  <span style=color:#f92672>replicas</span>: <span style=color:#ae81ff>1</span>
+</span></span><span style=display:flex><span>  <span style=color:#f92672>selector</span>:
+</span></span><span style=display:flex><span>    <span style=color:#f92672>matchLabels</span>:
+</span></span><span style=display:flex><span>      <span style=color:#f92672>component</span>: <span style=color:#ae81ff>db</span>
+</span></span><span style=display:flex><span>      {{- <span style=color:#ae81ff>include &#34;tryingout.labels&#34; . | nindent 6 }}</span>
+</span></span><span style=display:flex><span>  <span style=color:#f92672>template</span>:
+</span></span><span style=display:flex><span>    <span style=color:#f92672>metadata</span>:
+</span></span><span style=display:flex><span>      <span style=color:#f92672>labels</span>:
+</span></span><span style=display:flex><span>        <span style=color:#f92672>component</span>: <span style=color:#ae81ff>db</span>
+</span></span><span style=display:flex><span>        {{- <span style=color:#ae81ff>include &#34;tryingout.labels&#34; . | nindent 8 }}</span>
+</span></span><span style=display:flex><span>    <span style=color:#f92672>spec</span>:
+</span></span><span style=display:flex><span>      <span style=color:#f92672>containers</span>:
+</span></span><span style=display:flex><span>      - <span style=color:#f92672>name</span>: <span style=color:#ae81ff>postgres</span>
+</span></span><span style=display:flex><span>        <span style=color:#f92672>image</span>: <span style=color:#ae81ff>postgres:13.1-alpine</span>
+</span></span><span style=display:flex><span>        <span style=color:#f92672>env</span>:
+</span></span><span style=display:flex><span>        - <span style=color:#f92672>name</span>: <span style=color:#ae81ff>POSTGRES_PASSWORD</span>
+</span></span><span style=display:flex><span>          <span style=color:#f92672>value</span>: <span style=color:#e6db74>&#34;postgres&#34;</span>
+</span></span><span style=display:flex><span>        <span style=color:#f92672>ports</span>:
+</span></span><span style=display:flex><span>        - <span style=color:#f92672>containerPort</span>: <span style=color:#ae81ff>5432</span>
+</span></span><span style=display:flex><span>---
+</span></span><span style=display:flex><span><span style=color:#f92672>apiVersion</span>: <span style=color:#ae81ff>v1</span>
+</span></span><span style=display:flex><span><span style=color:#f92672>kind</span>: <span style=color:#ae81ff>Service</span>
+</span></span><span style=display:flex><span><span style=color:#f92672>metadata</span>:
+</span></span><span style=display:flex><span>  <span style=color:#f92672>name</span>: <span style=color:#ae81ff>db</span>
+</span></span><span style=display:flex><span>  <span style=color:#f92672>labels</span>:
+</span></span><span style=display:flex><span>    <span style=color:#f92672>component</span>: <span style=color:#ae81ff>db</span>
+</span></span><span style=display:flex><span>    {{- <span style=color:#ae81ff>include &#34;tryingout.labels&#34; . | nindent 4 }}</span>
+</span></span><span style=display:flex><span><span style=color:#f92672>spec</span>:
+</span></span><span style=display:flex><span>  <span style=color:#f92672>selector</span>:
+</span></span><span style=display:flex><span>    <span style=color:#f92672>component</span>: <span style=color:#ae81ff>db</span>
+</span></span><span style=display:flex><span>    {{- <span style=color:#ae81ff>include &#34;tryingout.labels&#34; . | nindent 4 }}</span>
+</span></span><span style=display:flex><span>  <span style=color:#f92672>ports</span>:
+</span></span><span style=display:flex><span>    - <span style=color:#f92672>protocol</span>: <span style=color:#ae81ff>TCP</span>
+</span></span><span style=display:flex><span>      <span style=color:#f92672>port</span>: <span style=color:#ae81ff>5432</span>
+</span></span></code></pre></td></tr></table></div></div><p>Any now for the meat and the potatoes - my web deployment. Should be pretty much the same as postgres, I just need to
+grab the image from the values.</p><p><em>A word of warning:</em> there are errors here - I left them in intentionally so I can
 document my full process. See the <a href=https://github.com/edofic/trying-out/tree/main/okteto/v2/chart>git
 repo</a> for latest
-versions (which you can actually apply).</p>
-<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2>
-<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">11
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">12
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">13
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">14
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">15
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">16
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">17
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">18
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">19
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">20
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">21
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">22
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">23
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">24
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">25
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">26
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">27
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">28
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">29
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">30
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">31
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">32
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">33
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">34
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">35
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">36
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">37
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">38
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">39
-</span></code></pre></td>
-<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-yaml data-lang=yaml><span style=color:#f92672>apiVersion</span>: <span style=color:#ae81ff>apps/v1</span>
-<span style=color:#f92672>kind</span>: <span style=color:#ae81ff>Deployment</span>
-<span style=color:#f92672>metadata</span>:
-  <span style=color:#f92672>name</span>: <span style=color:#ae81ff>web</span>
-  <span style=color:#f92672>labels</span>:
-    <span style=color:#f92672>component</span>: <span style=color:#ae81ff>web</span>
-    {{- <span style=color:#ae81ff>include &#34;tryingout.labels&#34; . | nindent 4 }}</span>
-<span style=color:#f92672>spec</span>:
-  <span style=color:#f92672>replicas</span>: <span style=color:#ae81ff>1</span>
-  <span style=color:#f92672>selector</span>:
-    <span style=color:#f92672>matchLabels</span>:
-      <span style=color:#f92672>component</span>: <span style=color:#ae81ff>web</span>
-      {{- <span style=color:#ae81ff>include &#34;tryingout.labels&#34; . | nindent 6 }}</span>
-  <span style=color:#f92672>template</span>:
-    <span style=color:#f92672>metadata</span>:
-      <span style=color:#f92672>labels</span>:
-        <span style=color:#f92672>component</span>: <span style=color:#ae81ff>web</span>
-        {{- <span style=color:#ae81ff>include &#34;tryingout.labels&#34; . | nindent 8 }}</span>
-    <span style=color:#f92672>spec</span>:
-      <span style=color:#f92672>containers</span>:
-      - <span style=color:#f92672>name</span>: <span style=color:#ae81ff>web</span>
-        <span style=color:#f92672>image</span>: {{ <span style=color:#ae81ff>.Values.api.image }}:{{ .Values.tag }}</span>
-        <span style=color:#f92672>ports</span>:
-        - <span style=color:#f92672>containerPort</span>: <span style=color:#ae81ff>3000</span>
----
-<span style=color:#f92672>apiVersion</span>: <span style=color:#ae81ff>v1</span>
-<span style=color:#f92672>kind</span>: <span style=color:#ae81ff>Service</span>
-<span style=color:#f92672>metadata</span>:
-  <span style=color:#f92672>name</span>: <span style=color:#ae81ff>web</span>
-  <span style=color:#f92672>labels</span>:
-    <span style=color:#f92672>component</span>: <span style=color:#ae81ff>web</span>
-    {{- <span style=color:#ae81ff>include &#34;tryingout.labels&#34; . | nindent 4 }}</span>
-<span style=color:#f92672>spec</span>:
-  <span style=color:#f92672>selector</span>:
-    <span style=color:#f92672>component</span>: <span style=color:#ae81ff>web</span>
-    {{- <span style=color:#ae81ff>include &#34;tryingout.labels&#34; . | nindent 4 }}</span>
-  <span style=color:#f92672>ports</span>:
-    - <span style=color:#f92672>protocol</span>: <span style=color:#ae81ff>TCP</span>
-      <span style=color:#f92672>port</span>: <span style=color:#ae81ff>3000</span>
-</code></pre></td></tr></table>
-</div>
-</div><p>An ingress may come in handy as well.</p>
-<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2>
-<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">11
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">12
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">13
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">14
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">15
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">16
-</span></code></pre></td>
-<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-yaml data-lang=yaml><span style=color:#f92672>apiVersion</span>: <span style=color:#ae81ff>extensions/v1beta1</span>
-<span style=color:#f92672>kind</span>: <span style=color:#ae81ff>Ingress</span>
-<span style=color:#f92672>metadata</span>:
-  <span style=color:#f92672>name</span>: {{ <span style=color:#ae81ff>include &#34;tryingout.fullname&#34; . }}</span>
-  <span style=color:#f92672>labels</span>:
-    {{- <span style=color:#ae81ff>include &#34;tryingout.labels&#34; . | nindent 4 }}</span>
-  <span style=color:#f92672>annotations</span>:
-    <span style=color:#f92672>dev.okteto.com/generate-host</span>: <span style=color:#e6db74>&#34;true&#34;</span>
-<span style=color:#f92672>spec</span>:
-  <span style=color:#f92672>rules</span>:
-    - <span style=color:#f92672>http</span>:
-        <span style=color:#f92672>paths</span>:
-          - <span style=color:#f92672>path</span>: <span style=color:#ae81ff>/</span>
-            <span style=color:#f92672>backend</span>:
-              <span style=color:#f92672>serviceName</span>: <span style=color:#ae81ff>web</span>
-              <span style=color:#f92672>servicePort</span>: <span style=color:#ae81ff>3000</span>
-</code></pre></td></tr></table>
-</div>
-</div><p>And now tie it all together with a pipeline</p>
-<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2>
-<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">4
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">5
-</span></code></pre></td>
-<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-yaml data-lang=yaml><span style=color:#f92672>deploy</span>:
-  - <span style=color:#ae81ff>okteto build -t okteto.dev/web:${OKTETO_GIT_COMMIT} web</span>
-  - <span style=color:#ae81ff>helm upgrade --install tryingout chart --set tag=${OKTETO_GIT_COMMIT}</span>
-<span style=color:#f92672>devs</span>:
-  - <span style=color:#ae81ff>web/okteto.yml</span>
-</code></pre></td></tr></table>
-</div>
-</div><p>Now how do I run this? :)</p>
-<p>Let&rsquo;s read the docs again&mldr;.</p>
-<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2>
-<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">4
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">5
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">6
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">7
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">8
-</span></code></pre></td>
-<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-fallback data-lang=fallback> $ okteto namespace
-Authentication required. Do you want to log into Okteto? [y/n]: y
-What is the URL of your Okteto instance? [https://cloud.okteto.com]:
-Authentication will continue in your default browser
-You can also open a browser and navigate to the following address:
-https://cloud.okteto.com/auth/authorization-code?...
- ✓  Logged in as edofic
- ✓  Updated context &#39;cloud_okteto_com&#39; in &#39;/home/andraz/.kube/config&#39;
-</code></pre></td></tr></table>
-</div>
-</div><p>Got a browser window to authenticate and I was back in the shell, logged in. Smooth.</p>
-<p>Now how do I deploy from the terminal? There are <a href=https://okteto.com/docs/cloud/deploy-from-terminal>some docs</a>.</p>
-<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2>
-<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
-</span></code></pre></td>
-<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-fallback data-lang=fallback> $ okteto pipeline deploy
-  x  failed to analyze git repo: repository does not exist
-</code></pre></td></tr></table>
-</div>
-</div><p>I think this means it too want to be in the repo root. Time to switch gears,
+versions (which you can actually apply).</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">11
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">12
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">13
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">14
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">15
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">16
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">17
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">18
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">19
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">20
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">21
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">22
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">23
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">24
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">25
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">26
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">27
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">28
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">29
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">30
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">31
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">32
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">33
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">34
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">35
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">36
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">37
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">38
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">39
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-yaml data-lang=yaml><span style=display:flex><span><span style=color:#f92672>apiVersion</span>: <span style=color:#ae81ff>apps/v1</span>
+</span></span><span style=display:flex><span><span style=color:#f92672>kind</span>: <span style=color:#ae81ff>Deployment</span>
+</span></span><span style=display:flex><span><span style=color:#f92672>metadata</span>:
+</span></span><span style=display:flex><span>  <span style=color:#f92672>name</span>: <span style=color:#ae81ff>web</span>
+</span></span><span style=display:flex><span>  <span style=color:#f92672>labels</span>:
+</span></span><span style=display:flex><span>    <span style=color:#f92672>component</span>: <span style=color:#ae81ff>web</span>
+</span></span><span style=display:flex><span>    {{- <span style=color:#ae81ff>include &#34;tryingout.labels&#34; . | nindent 4 }}</span>
+</span></span><span style=display:flex><span><span style=color:#f92672>spec</span>:
+</span></span><span style=display:flex><span>  <span style=color:#f92672>replicas</span>: <span style=color:#ae81ff>1</span>
+</span></span><span style=display:flex><span>  <span style=color:#f92672>selector</span>:
+</span></span><span style=display:flex><span>    <span style=color:#f92672>matchLabels</span>:
+</span></span><span style=display:flex><span>      <span style=color:#f92672>component</span>: <span style=color:#ae81ff>web</span>
+</span></span><span style=display:flex><span>      {{- <span style=color:#ae81ff>include &#34;tryingout.labels&#34; . | nindent 6 }}</span>
+</span></span><span style=display:flex><span>  <span style=color:#f92672>template</span>:
+</span></span><span style=display:flex><span>    <span style=color:#f92672>metadata</span>:
+</span></span><span style=display:flex><span>      <span style=color:#f92672>labels</span>:
+</span></span><span style=display:flex><span>        <span style=color:#f92672>component</span>: <span style=color:#ae81ff>web</span>
+</span></span><span style=display:flex><span>        {{- <span style=color:#ae81ff>include &#34;tryingout.labels&#34; . | nindent 8 }}</span>
+</span></span><span style=display:flex><span>    <span style=color:#f92672>spec</span>:
+</span></span><span style=display:flex><span>      <span style=color:#f92672>containers</span>:
+</span></span><span style=display:flex><span>      - <span style=color:#f92672>name</span>: <span style=color:#ae81ff>web</span>
+</span></span><span style=display:flex><span>        <span style=color:#f92672>image</span>: {{ <span style=color:#ae81ff>.Values.api.image }}:{{ .Values.tag }}</span>
+</span></span><span style=display:flex><span>        <span style=color:#f92672>ports</span>:
+</span></span><span style=display:flex><span>        - <span style=color:#f92672>containerPort</span>: <span style=color:#ae81ff>3000</span>
+</span></span><span style=display:flex><span>---
+</span></span><span style=display:flex><span><span style=color:#f92672>apiVersion</span>: <span style=color:#ae81ff>v1</span>
+</span></span><span style=display:flex><span><span style=color:#f92672>kind</span>: <span style=color:#ae81ff>Service</span>
+</span></span><span style=display:flex><span><span style=color:#f92672>metadata</span>:
+</span></span><span style=display:flex><span>  <span style=color:#f92672>name</span>: <span style=color:#ae81ff>web</span>
+</span></span><span style=display:flex><span>  <span style=color:#f92672>labels</span>:
+</span></span><span style=display:flex><span>    <span style=color:#f92672>component</span>: <span style=color:#ae81ff>web</span>
+</span></span><span style=display:flex><span>    {{- <span style=color:#ae81ff>include &#34;tryingout.labels&#34; . | nindent 4 }}</span>
+</span></span><span style=display:flex><span><span style=color:#f92672>spec</span>:
+</span></span><span style=display:flex><span>  <span style=color:#f92672>selector</span>:
+</span></span><span style=display:flex><span>    <span style=color:#f92672>component</span>: <span style=color:#ae81ff>web</span>
+</span></span><span style=display:flex><span>    {{- <span style=color:#ae81ff>include &#34;tryingout.labels&#34; . | nindent 4 }}</span>
+</span></span><span style=display:flex><span>  <span style=color:#f92672>ports</span>:
+</span></span><span style=display:flex><span>    - <span style=color:#f92672>protocol</span>: <span style=color:#ae81ff>TCP</span>
+</span></span><span style=display:flex><span>      <span style=color:#f92672>port</span>: <span style=color:#ae81ff>3000</span>
+</span></span></code></pre></td></tr></table></div></div><p>An ingress may come in handy as well.</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">11
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">12
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">13
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">14
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">15
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">16
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-yaml data-lang=yaml><span style=display:flex><span><span style=color:#f92672>apiVersion</span>: <span style=color:#ae81ff>extensions/v1beta1</span>
+</span></span><span style=display:flex><span><span style=color:#f92672>kind</span>: <span style=color:#ae81ff>Ingress</span>
+</span></span><span style=display:flex><span><span style=color:#f92672>metadata</span>:
+</span></span><span style=display:flex><span>  <span style=color:#f92672>name</span>: {{ <span style=color:#ae81ff>include &#34;tryingout.fullname&#34; . }}</span>
+</span></span><span style=display:flex><span>  <span style=color:#f92672>labels</span>:
+</span></span><span style=display:flex><span>    {{- <span style=color:#ae81ff>include &#34;tryingout.labels&#34; . | nindent 4 }}</span>
+</span></span><span style=display:flex><span>  <span style=color:#f92672>annotations</span>:
+</span></span><span style=display:flex><span>    <span style=color:#f92672>dev.okteto.com/generate-host</span>: <span style=color:#e6db74>&#34;true&#34;</span>
+</span></span><span style=display:flex><span><span style=color:#f92672>spec</span>:
+</span></span><span style=display:flex><span>  <span style=color:#f92672>rules</span>:
+</span></span><span style=display:flex><span>    - <span style=color:#f92672>http</span>:
+</span></span><span style=display:flex><span>        <span style=color:#f92672>paths</span>:
+</span></span><span style=display:flex><span>          - <span style=color:#f92672>path</span>: <span style=color:#ae81ff>/</span>
+</span></span><span style=display:flex><span>            <span style=color:#f92672>backend</span>:
+</span></span><span style=display:flex><span>              <span style=color:#f92672>serviceName</span>: <span style=color:#ae81ff>web</span>
+</span></span><span style=display:flex><span>              <span style=color:#f92672>servicePort</span>: <span style=color:#ae81ff>3000</span>
+</span></span></code></pre></td></tr></table></div></div><p>And now tie it all together with a pipeline</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">4
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">5
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-yaml data-lang=yaml><span style=display:flex><span><span style=color:#f92672>deploy</span>:
+</span></span><span style=display:flex><span>  - <span style=color:#ae81ff>okteto build -t okteto.dev/web:${OKTETO_GIT_COMMIT} web</span>
+</span></span><span style=display:flex><span>  - <span style=color:#ae81ff>helm upgrade --install tryingout chart --set tag=${OKTETO_GIT_COMMIT}</span>
+</span></span><span style=display:flex><span><span style=color:#f92672>devs</span>:
+</span></span><span style=display:flex><span>  - <span style=color:#ae81ff>web/okteto.yml</span>
+</span></span></code></pre></td></tr></table></div></div><p>Now how do I run this? :)</p><p>Let&rsquo;s read the docs again&mldr;.</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">4
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">5
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">6
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">7
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">8
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-fallback data-lang=fallback><span style=display:flex><span> $ okteto namespace
+</span></span><span style=display:flex><span>Authentication required. Do you want to log into Okteto? [y/n]: y
+</span></span><span style=display:flex><span>What is the URL of your Okteto instance? [https://cloud.okteto.com]:
+</span></span><span style=display:flex><span>Authentication will continue in your default browser
+</span></span><span style=display:flex><span>You can also open a browser and navigate to the following address:
+</span></span><span style=display:flex><span>https://cloud.okteto.com/auth/authorization-code?...
+</span></span><span style=display:flex><span> ✓  Logged in as edofic
+</span></span><span style=display:flex><span> ✓  Updated context &#39;cloud_okteto_com&#39; in &#39;/home/andraz/.kube/config&#39;
+</span></span></code></pre></td></tr></table></div></div><p>Got a browser window to authenticate and I was back in the shell, logged in. Smooth.</p><p>Now how do I deploy from the terminal? There are <a href=https://okteto.com/docs/cloud/deploy-from-terminal>some docs</a>.</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-fallback data-lang=fallback><span style=display:flex><span> $ okteto pipeline deploy
+</span></span><span style=display:flex><span>  x  failed to analyze git repo: repository does not exist
+</span></span></code></pre></td></tr></table></div></div><p>I think this means it too want to be in the repo root. Time to switch gears,
 I&rsquo;ll try running steps manually. So we have a build and a helm chart install to
-do.</p>
-<p>I&rsquo;ll event set up <code>OKTETO_GIT_COMMIT</code> env variable so I can directly copy paste
-the commands.</p>
-<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2>
-<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">4
-</span></code></pre></td>
-<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-fallback data-lang=fallback> $ OKTETO_GIT_COMMIT=$(git rev-parse HEAD)
- $ okteto build -t okteto.dev/web:${OKTETO_GIT_COMMIT} web
- .... a lot of output ....
- ✓  Image &#39;okteto.dev/web:d9f4f4850cb3e2cbb8fa623e5de68ab8419df304&#39; successfully pushed
-</code></pre></td></tr></table>
-</div>
-</div><p>Looks like this actually pushed my &ldquo;docker context&rdquo; to the cloud and then ran
-something like <code>docker build</code> & <code>docker push</code> there. Nice.</p>
-<p>Let&rsquo;s try deploying my chart.</p>
-<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2>
-<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">4
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">5
-</span></code></pre></td>
-<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-fallback data-lang=fallback> $ helm upgrade --install tryingout chart --set tag=${OKTETO_GIT_COMMIT}
- Release &#34;tryingout&#34; does not exist. Installing it now.
- Error: template: tryingout/templates/web.yaml:22:25: executing
- &#34;tryingout/templates/web.yaml&#34; at &lt;.Values.api.image&gt;: nil pointer evaluating
- interface {}.image
-</code></pre></td></tr></table>
-</div>
-</div><p>Time to debug my yamls :D</p>
-<p>A quick look at the error message and my config: I did a stupid :) There is
+do.</p><p>I&rsquo;ll event set up <code>OKTETO_GIT_COMMIT</code> env variable so I can directly copy paste
+the commands.</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">4
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-fallback data-lang=fallback><span style=display:flex><span> $ OKTETO_GIT_COMMIT=$(git rev-parse HEAD)
+</span></span><span style=display:flex><span> $ okteto build -t okteto.dev/web:${OKTETO_GIT_COMMIT} web
+</span></span><span style=display:flex><span> .... a lot of output ....
+</span></span><span style=display:flex><span> ✓  Image &#39;okteto.dev/web:d9f4f4850cb3e2cbb8fa623e5de68ab8419df304&#39; successfully pushed
+</span></span></code></pre></td></tr></table></div></div><p>Looks like this actually pushed my &ldquo;docker context&rdquo; to the cloud and then ran
+something like <code>docker build</code> & <code>docker push</code> there. Nice.</p><p>Let&rsquo;s try deploying my chart.</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">4
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">5
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-fallback data-lang=fallback><span style=display:flex><span> $ helm upgrade --install tryingout chart --set tag=${OKTETO_GIT_COMMIT}
+</span></span><span style=display:flex><span> Release &#34;tryingout&#34; does not exist. Installing it now.
+</span></span><span style=display:flex><span> Error: template: tryingout/templates/web.yaml:22:25: executing
+</span></span><span style=display:flex><span> &#34;tryingout/templates/web.yaml&#34; at &lt;.Values.api.image&gt;: nil pointer evaluating
+</span></span><span style=display:flex><span> interface {}.image
+</span></span></code></pre></td></tr></table></div></div><p>Time to debug my yamls :D</p><p>A quick look at the error message and my config: I did a stupid :) There is
 <code>api.image</code> in the template but <code>web.image</code> in <code>values.yaml</code> - a copy paste
-gone wrong. Let&rsquo;s fix the template.</p>
-<p>relevant part</p>
-<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2>
-<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">4
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">5
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">6
-</span></code></pre></td>
-<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-yaml data-lang=yaml>    <span style=color:#f92672>spec</span>:
-      <span style=color:#f92672>containers</span>:
-      - <span style=color:#f92672>name</span>: <span style=color:#ae81ff>web</span>
-        <span style=color:#f92672>image</span>: {{ <span style=color:#ae81ff>.Values.web.image }}:{{ .Values.tag }}</span>
-        <span style=color:#f92672>ports</span>:
-        - <span style=color:#f92672>containerPort</span>: <span style=color:#ae81ff>3000</span>
-</code></pre></td></tr></table>
-</div>
-</div><p>And try again</p>
-<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2>
-<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
-</span></code></pre></td>
-<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-fallback data-lang=fallback>
- $ helm upgrade --install tryingout chart --set tag=${OKTETO_GIT_COMMIT}
-Release &#34;tryingout&#34; does not exist. Installing it now.
-NAME: tryingout
-LAST DEPLOYED: Mon Feb 15 16:37:14 2021
-NAMESPACE: edofic
-STATUS: deployed
-REVISION: 1
-TEST SUITE: None
-NOTES:
-</code></pre></td></tr></table>
-</div>
-</div><h1 id=some-success>Some success</h1>
-<p>And somthing popped up in the UI (no refresh needed!)</p>
-<p><img src=/images/okteto/1_my_chart.webp alt="my chart installed"></p>
-<p>I can see the status, I can destroy/redeploy&mldr;. How can I now try to open up
-the app? I created an ingress so let&rsquo;s see if I can use it.</p>
-<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2>
-<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
-</span></code></pre></td>
-<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-fallback data-lang=fallback> $ kubectl get ingress
-NAME        HOSTS                               ADDRESS        PORTS     AGE
-tryingout   tryingout-edofic.cloud.okteto.net   35.238.195.0   80, 443   13m
-</code></pre></td></tr></table>
-</div>
-</div><p>Oh wow, that actually worked we got a domain provisioned. Opening up this
-hostname gives my my error page - migrations haven&rsquo;t run yet.</p>
-<p><img src=/images/okteto/2_error_migrations.webp alt="migrations error"></p>
-<p>I should probably do a helm post upgrade hook to run migrations&mldr;but I&rsquo;ll half
-ass it and do it manually now since I&rsquo;m trying to focus on okteto instead.</p>
-<p>Looking at buffalo generated Dockerfile to orient myself I came across this
-helpful nugget</p>
-<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2>
-<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">4
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">5
-</span></code></pre></td>
-<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-fallback data-lang=fallback># Uncomment to run the binary in &#34;production&#34; mode:
-# ENV GO_ENV=production
-...
-# Uncomment to run the migrations before running the binary:
-# CMD /bin/app migrate; /bin/app
-</code></pre></td></tr></table>
-</div>
-</div><p>Let&rsquo;s try this to see if out app stands up, then actually uncomment this and
-we&rsquo;re off to the races!</p>
-<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2>
-<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">4
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">5
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">6
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">7
-</span></code></pre></td>
-<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-fallback data-lang=fallback> $ kubectl exec -it  web-644d8d487f-gp9hq -- sh
-/bin # export GO_ENV=production
-/bin # /bin/app migrate
-WARN[2021-02-15T15:59:59Z] Unless you set SESSION_SECRET env variable, your session storage is not protected!
-[POP] 2021/02/15 15:59:59 warn - ignoring file .pop-tmp.md because it does not match the migration file pattern
-[POP] 2021/02/15 16:00:00 info - 0.0901 seconds
-2021/02/15 16:00:00 Failed to run migrations: Migrator: problem creating schema migrations: couldn&#39;t start a new transaction: could not create new transaction: failed to connect to `host=db user=postgres database=trying_out_production`: server error (FATAL: database &#34;trying_out_production&#34; does not exist (SQLSTATE 3D000))
-</code></pre></td></tr></table>
-</div>
-</div><p>Apparently we also need to create the database. Let&rsquo;s do it manually at first to
-confirm.</p>
-<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2>
-<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">4
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">5
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">6
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">7
-</span></code></pre></td>
-<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-fallback data-lang=fallback> $ kubectl exec -it db-f9f647bd4-l9gf6 -- psql -U postgres
-create databasepsql (13.1)
-Type &#34;help&#34; for help.
-
-postgres=# create database trying_out_production;
-CREATE DATABASE
-postgres=#
-</code></pre></td></tr></table>
-</div>
-</div><p>Then try to run migrations again.</p>
-<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2>
-<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">4
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">5
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">6
-</span></code></pre></td>
-<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-fallback data-lang=fallback>/bin # /bin/app migrate
-WARN[2021-02-15T16:01:43Z] Unless you set SESSION_SECRET env variable, your session storage is not protected!
-[POP] 2021/02/15 16:01:43 warn - ignoring file .pop-tmp.md because it does not match the migration file pattern
-[POP] 2021/02/15 16:01:44 info - &gt; create_users
-[POP] 2021/02/15 16:01:44 info - Successfully applied 1 migrations.
-[POP] 2021/02/15 16:01:44 info - 0.2692 seconds
-</code></pre></td></tr></table>
-</div>
-</div><p>Let&rsquo;s enable this for our build by uncommennting lines in the dockerfile.
-And do the build & helm upgrade dance again.</p>
-<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2>
-<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">4
-</span></code></pre></td>
-<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-fallback data-lang=fallback> $ OKTETO_GIT_COMMIT=$(git rev-parse HEAD)
- $ okteto build -t okteto.dev/web:${OKTETO_GIT_COMMIT} web
- .... a lot of output ....
- ✓  Image &#39;okteto.dev/web:88607af3ea6dd4e5ee631d77dee462c5cf82f344&#39; successfully pushed
-</code></pre></td></tr></table>
-</div>
-</div><p>while this was building I looked up <a href=https://hub.docker.com/_/postgres>docs for my postgres
+gone wrong. Let&rsquo;s fix the template.</p><p>relevant part</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">4
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">5
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">6
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-yaml data-lang=yaml><span style=display:flex><span>    <span style=color:#f92672>spec</span>:
+</span></span><span style=display:flex><span>      <span style=color:#f92672>containers</span>:
+</span></span><span style=display:flex><span>      - <span style=color:#f92672>name</span>: <span style=color:#ae81ff>web</span>
+</span></span><span style=display:flex><span>        <span style=color:#f92672>image</span>: {{ <span style=color:#ae81ff>.Values.web.image }}:{{ .Values.tag }}</span>
+</span></span><span style=display:flex><span>        <span style=color:#f92672>ports</span>:
+</span></span><span style=display:flex><span>        - <span style=color:#f92672>containerPort</span>: <span style=color:#ae81ff>3000</span>
+</span></span></code></pre></td></tr></table></div></div><p>And try again</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-fallback data-lang=fallback><span style=display:flex><span>
+</span></span><span style=display:flex><span> $ helm upgrade --install tryingout chart --set tag=${OKTETO_GIT_COMMIT}
+</span></span><span style=display:flex><span>Release &#34;tryingout&#34; does not exist. Installing it now.
+</span></span><span style=display:flex><span>NAME: tryingout
+</span></span><span style=display:flex><span>LAST DEPLOYED: Mon Feb 15 16:37:14 2021
+</span></span><span style=display:flex><span>NAMESPACE: edofic
+</span></span><span style=display:flex><span>STATUS: deployed
+</span></span><span style=display:flex><span>REVISION: 1
+</span></span><span style=display:flex><span>TEST SUITE: None
+</span></span><span style=display:flex><span>NOTES:
+</span></span></code></pre></td></tr></table></div></div><h1 id=some-success>Some success</h1><p>And somthing popped up in the UI (no refresh needed!)</p><p><img src=/images/okteto/1_my_chart.webp alt="my chart installed"></p><p>I can see the status, I can destroy/redeploy&mldr;. How can I now try to open up
+the app? I created an ingress so let&rsquo;s see if I can use it.</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-fallback data-lang=fallback><span style=display:flex><span> $ kubectl get ingress
+</span></span><span style=display:flex><span>NAME        HOSTS                               ADDRESS        PORTS     AGE
+</span></span><span style=display:flex><span>tryingout   tryingout-edofic.cloud.okteto.net   35.238.195.0   80, 443   13m
+</span></span></code></pre></td></tr></table></div></div><p>Oh wow, that actually worked we got a domain provisioned. Opening up this
+hostname gives my my error page - migrations haven&rsquo;t run yet.</p><p><img src=/images/okteto/2_error_migrations.webp alt="migrations error"></p><p>I should probably do a helm post upgrade hook to run migrations&mldr;but I&rsquo;ll half
+ass it and do it manually now since I&rsquo;m trying to focus on okteto instead.</p><p>Looking at buffalo generated Dockerfile to orient myself I came across this
+helpful nugget</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">4
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">5
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-fallback data-lang=fallback><span style=display:flex><span># Uncomment to run the binary in &#34;production&#34; mode:
+</span></span><span style=display:flex><span># ENV GO_ENV=production
+</span></span><span style=display:flex><span>...
+</span></span><span style=display:flex><span># Uncomment to run the migrations before running the binary:
+</span></span><span style=display:flex><span># CMD /bin/app migrate; /bin/app
+</span></span></code></pre></td></tr></table></div></div><p>Let&rsquo;s try this to see if out app stands up, then actually uncomment this and
+we&rsquo;re off to the races!</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">4
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">5
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">6
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">7
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-fallback data-lang=fallback><span style=display:flex><span> $ kubectl exec -it  web-644d8d487f-gp9hq -- sh
+</span></span><span style=display:flex><span>/bin # export GO_ENV=production
+</span></span><span style=display:flex><span>/bin # /bin/app migrate
+</span></span><span style=display:flex><span>WARN[2021-02-15T15:59:59Z] Unless you set SESSION_SECRET env variable, your session storage is not protected!
+</span></span><span style=display:flex><span>[POP] 2021/02/15 15:59:59 warn - ignoring file .pop-tmp.md because it does not match the migration file pattern
+</span></span><span style=display:flex><span>[POP] 2021/02/15 16:00:00 info - 0.0901 seconds
+</span></span><span style=display:flex><span>2021/02/15 16:00:00 Failed to run migrations: Migrator: problem creating schema migrations: couldn&#39;t start a new transaction: could not create new transaction: failed to connect to `host=db user=postgres database=trying_out_production`: server error (FATAL: database &#34;trying_out_production&#34; does not exist (SQLSTATE 3D000))
+</span></span></code></pre></td></tr></table></div></div><p>Apparently we also need to create the database. Let&rsquo;s do it manually at first to
+confirm.</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">4
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">5
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">6
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">7
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-fallback data-lang=fallback><span style=display:flex><span> $ kubectl exec -it db-f9f647bd4-l9gf6 -- psql -U postgres
+</span></span><span style=display:flex><span>create databasepsql (13.1)
+</span></span><span style=display:flex><span>Type &#34;help&#34; for help.
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>postgres=# create database trying_out_production;
+</span></span><span style=display:flex><span>CREATE DATABASE
+</span></span><span style=display:flex><span>postgres=#
+</span></span></code></pre></td></tr></table></div></div><p>Then try to run migrations again.</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">4
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">5
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">6
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-fallback data-lang=fallback><span style=display:flex><span>/bin # /bin/app migrate
+</span></span><span style=display:flex><span>WARN[2021-02-15T16:01:43Z] Unless you set SESSION_SECRET env variable, your session storage is not protected!
+</span></span><span style=display:flex><span>[POP] 2021/02/15 16:01:43 warn - ignoring file .pop-tmp.md because it does not match the migration file pattern
+</span></span><span style=display:flex><span>[POP] 2021/02/15 16:01:44 info - &gt; create_users
+</span></span><span style=display:flex><span>[POP] 2021/02/15 16:01:44 info - Successfully applied 1 migrations.
+</span></span><span style=display:flex><span>[POP] 2021/02/15 16:01:44 info - 0.2692 seconds
+</span></span></code></pre></td></tr></table></div></div><p>Let&rsquo;s enable this for our build by uncommennting lines in the dockerfile.
+And do the build & helm upgrade dance again.</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">4
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-fallback data-lang=fallback><span style=display:flex><span> $ OKTETO_GIT_COMMIT=$(git rev-parse HEAD)
+</span></span><span style=display:flex><span> $ okteto build -t okteto.dev/web:${OKTETO_GIT_COMMIT} web
+</span></span><span style=display:flex><span> .... a lot of output ....
+</span></span><span style=display:flex><span> ✓  Image &#39;okteto.dev/web:88607af3ea6dd4e5ee631d77dee462c5cf82f344&#39; successfully pushed
+</span></span></code></pre></td></tr></table></div></div><p>while this was building I looked up <a href=https://hub.docker.com/_/postgres>docs for my postgres
 image</a> and found out I can automate the
 database creation part by setting <code>POSTGRES_DB</code> env variable. So I&rsquo;ll update the
-chart as well.</p>
-<p>From chart/templates/postgres.yaml</p>
-<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2>
-<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
-</span></code></pre></td>
-<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-fallback data-lang=fallback>      containers:
-      - name: postgres
-        image: postgres:13.1-alpine
-        env:
-        - name: POSTGRES_PASSWORD
-          value: &#34;postgres&#34;
-        - name: POSTGRES_DB
-          value: &#34;trying_out_production&#34;
-        ports:
-        - containerPort: 5432
-</code></pre></td></tr></table>
-</div>
-</div><p>I&rsquo;ll actually click destroy helm chart in the UI now to try it out and clean up
-to see if everyting stands up from scratch.</p>
-<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2>
-<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
-</span></code></pre></td>
-<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-fallback data-lang=fallback>helm upgrade --install movies chart --set tag=${OKTETO_GIT_COMMIT}
-</code></pre></td></tr></table>
-</div>
-</div><p>And we have liftoff!</p>
-<p><img src=/images/okteto/3_up_in_cloud.webp alt="app is up"></p>
-<p>Now I think my app is properly&mldr;.err&mldr;well enough packaged and I can actually
+chart as well.</p><p>From chart/templates/postgres.yaml</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-fallback data-lang=fallback><span style=display:flex><span>      containers:
+</span></span><span style=display:flex><span>      - name: postgres
+</span></span><span style=display:flex><span>        image: postgres:13.1-alpine
+</span></span><span style=display:flex><span>        env:
+</span></span><span style=display:flex><span>        - name: POSTGRES_PASSWORD
+</span></span><span style=display:flex><span>          value: &#34;postgres&#34;
+</span></span><span style=display:flex><span>        - name: POSTGRES_DB
+</span></span><span style=display:flex><span>          value: &#34;trying_out_production&#34;
+</span></span><span style=display:flex><span>        ports:
+</span></span><span style=display:flex><span>        - containerPort: 5432
+</span></span></code></pre></td></tr></table></div></div><p>I&rsquo;ll actually click destroy helm chart in the UI now to try it out and clean up
+to see if everyting stands up from scratch.</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-fallback data-lang=fallback><span style=display:flex><span>helm upgrade --install movies chart --set tag=${OKTETO_GIT_COMMIT}
+</span></span></code></pre></td></tr></table></div></div><p>And we have liftoff!</p><p><img src=/images/okteto/3_up_in_cloud.webp alt="app is up"></p><p>Now I think my app is properly&mldr;.err&mldr;well enough packaged and I can actually
 try out pipelines. I&rsquo;ll kill the helm chart once more so I can try the
-automation now.</p>
-<h1 id=trying-pipelines>Trying pipelines</h1>
-<p>I&rsquo;ll start off by creating a new orphan branch and then copy over my files
-(won&rsquo;t bother rewriting history).</p>
-<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2>
-<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">11
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">12
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">13
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">14
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">15
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">16
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">17
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">18
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">19
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">20
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">21
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">22
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">23
-</span></code></pre></td>
-<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-fallback data-lang=fallback> $ git checkout --orphan okteto-pipeline
-Switched to a new branch &#39;okteto-pipeline&#39;
- $ git reset .
- $ rm -rf *
- $ git checkout main -- ./okteto/v2
- $ mv okteto/v2/* ./
- $ rm -rf okteto
- $ git commit -am &#34;Initial pipeline commit&#34;
- ...
- $ git push -u origin HEAD
-Enumerating objects: 78, done.
-Counting objects: 100% (78/78), done.
-Delta compression using up to 8 threads
-Compressing objects: 100% (70/70), done.
-Writing objects: 100% (78/78), 167.44 KiB | 1.86 MiB/s, done.
-Total 78 (delta 2), reused 0 (delta 0), pack-reused 0
-remote: Resolving deltas: 100% (2/2), done.
-^[[Aremote:
-remote: Create a pull request for &#39;okteto-pipeline&#39; on GitHub by visiting:
-remote:      https://github.com/edofic/trying-out/pull/new/okteto-pipeline
-remote:
-To github.com:edofic/trying-out.git
- * [new branch]      HEAD -&gt; okteto-pipeline
-</code></pre></td></tr></table>
-</div>
-</div><p>Time to set up the pipeline</p>
-<p><img src=/images/okteto/4_empty_namespace.webp alt="deploy ui"></p>
-<p>UI is obvious enough&mldr;</p>
-<p><img src=/images/okteto/5_deploy.webp alt="deploy setup"></p>
-<p>Not much to configure&mldr;</p>
-<p><img src=/images/okteto/6_deploying.webp alt=deploying></p>
-<p>Looks like it&rsquo;s running the same process as I was locally just before,
-promising.</p>
-<p><img src=/images/okteto/7_deployed.webp alt=deployed></p>
-<p>Success!
-And out app is up again :D</p>
-<h1 id=development>Development</h1>
-<p>Now let&rsquo;s try developing it! I did need to update my <code>web/okteto.yml</code> with the
-new deployment name <code>web</code>.</p>
-<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2>
-<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
-</span></code></pre></td>
-<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-fallback data-lang=fallback> $ okteto up
- ✓  Development container activated
- ✓  Connected to your development container
- ✓  Files synchronized
-    Namespace: edofic
-    Name:      web
-    Forward:   2345 -&gt; 2345
-               3000 -&gt; 3000
-
-root@web-67456fb97b-85xcj:/src#
-</code></pre></td></tr></table>
-</div>
-</div><p>Amazingly the UI picked this up too</p>
-<p><img src=/images/okteto/8_in_development.webp alt="in development"></p>
-<p>Let&rsquo;s run a development version</p>
-<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2>
-<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
-</span></code></pre></td>
-<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-fallback data-lang=fallback>root@web-67456fb97b-85xcj:/src# buffalo dev
-...downloading the world for the first time
-...building the world for the first time
-</code></pre></td></tr></table>
-</div>
-</div><p>Meanwhile I checked the UI and I see I have some storage going on, these would
+automation now.</p><h1 id=trying-pipelines>Trying pipelines</h1><p>I&rsquo;ll start off by creating a new orphan branch and then copy over my files
+(won&rsquo;t bother rewriting history).</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">11
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">12
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">13
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">14
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">15
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">16
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">17
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">18
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">19
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">20
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">21
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">22
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">23
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-fallback data-lang=fallback><span style=display:flex><span> $ git checkout --orphan okteto-pipeline
+</span></span><span style=display:flex><span>Switched to a new branch &#39;okteto-pipeline&#39;
+</span></span><span style=display:flex><span> $ git reset .
+</span></span><span style=display:flex><span> $ rm -rf *
+</span></span><span style=display:flex><span> $ git checkout main -- ./okteto/v2
+</span></span><span style=display:flex><span> $ mv okteto/v2/* ./
+</span></span><span style=display:flex><span> $ rm -rf okteto
+</span></span><span style=display:flex><span> $ git commit -am &#34;Initial pipeline commit&#34;
+</span></span><span style=display:flex><span> ...
+</span></span><span style=display:flex><span> $ git push -u origin HEAD
+</span></span><span style=display:flex><span>Enumerating objects: 78, done.
+</span></span><span style=display:flex><span>Counting objects: 100% (78/78), done.
+</span></span><span style=display:flex><span>Delta compression using up to 8 threads
+</span></span><span style=display:flex><span>Compressing objects: 100% (70/70), done.
+</span></span><span style=display:flex><span>Writing objects: 100% (78/78), 167.44 KiB | 1.86 MiB/s, done.
+</span></span><span style=display:flex><span>Total 78 (delta 2), reused 0 (delta 0), pack-reused 0
+</span></span><span style=display:flex><span>remote: Resolving deltas: 100% (2/2), done.
+</span></span><span style=display:flex><span>^[[Aremote:
+</span></span><span style=display:flex><span>remote: Create a pull request for &#39;okteto-pipeline&#39; on GitHub by visiting:
+</span></span><span style=display:flex><span>remote:      https://github.com/edofic/trying-out/pull/new/okteto-pipeline
+</span></span><span style=display:flex><span>remote:
+</span></span><span style=display:flex><span>To github.com:edofic/trying-out.git
+</span></span><span style=display:flex><span> * [new branch]      HEAD -&gt; okteto-pipeline
+</span></span></code></pre></td></tr></table></div></div><p>Time to set up the pipeline</p><p><img src=/images/okteto/4_empty_namespace.webp alt="deploy ui"></p><p>UI is obvious enough&mldr;</p><p><img src=/images/okteto/5_deploy.webp alt="deploy setup"></p><p>Not much to configure&mldr;</p><p><img src=/images/okteto/6_deploying.webp alt=deploying></p><p>Looks like it&rsquo;s running the same process as I was locally just before,
+promising.</p><p><img src=/images/okteto/7_deployed.webp alt=deployed></p><p>Success!
+And out app is up again :D</p><h1 id=development>Development</h1><p>Now let&rsquo;s try developing it! I did need to update my <code>web/okteto.yml</code> with the
+new deployment name <code>web</code>.</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-fallback data-lang=fallback><span style=display:flex><span> $ okteto up
+</span></span><span style=display:flex><span> ✓  Development container activated
+</span></span><span style=display:flex><span> ✓  Connected to your development container
+</span></span><span style=display:flex><span> ✓  Files synchronized
+</span></span><span style=display:flex><span>    Namespace: edofic
+</span></span><span style=display:flex><span>    Name:      web
+</span></span><span style=display:flex><span>    Forward:   2345 -&gt; 2345
+</span></span><span style=display:flex><span>               3000 -&gt; 3000
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>root@web-67456fb97b-85xcj:/src#
+</span></span></code></pre></td></tr></table></div></div><p>Amazingly the UI picked this up too</p><p><img src=/images/okteto/8_in_development.webp alt="in development"></p><p>Let&rsquo;s run a development version</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-fallback data-lang=fallback><span style=display:flex><span>root@web-67456fb97b-85xcj:/src# buffalo dev
+</span></span><span style=display:flex><span>...downloading the world for the first time
+</span></span><span style=display:flex><span>...building the world for the first time
+</span></span></code></pre></td></tr></table></div></div><p>Meanwhile I checked the UI and I see I have some storage going on, these would
 be my persistent work environments and go cache so I don&rsquo;t always need to
-rebuild the world.</p>
-<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2>
-<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
-</span></code></pre></td>
-<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-fallback data-lang=fallback> $ kubectl get pvc
-NAME         STATUS   VOLUME                                     CAPACITY   ACCESS MODES   STORAGECLASS   AGE
-okteto-web   Bound    pvc-ead3ab73-9d8f-4e52-8990-bbe6a6d5b897   2Gi        RWO            okteto         4m8s
-</code></pre></td></tr></table>
-</div>
-</div><p>meanwhile the world has been built&mldr;</p>
-<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2>
-<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
-</span></code></pre></td>
-<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-fallback data-lang=fallback>INFO[2021-02-15T17:29:21Z] Starting application at http://127.0.0.1:3000
-INFO[2021-02-15T17:29:21Z] Starting Simple Background Worker
-</code></pre></td></tr></table>
-</div>
-</div><p>sigh&mldr;this won&rsquo;t work as we need to bind to external IP in order to be
-available from the cluster. Quick google search points me at <a href=https://gobuffalo.io/en/docs/getting-started/config-vars>buffalo docs</a> on how to setup the host:</p>
-<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2>
-<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
-</span></code></pre></td>
-<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-fallback data-lang=fallback> $ ADDR=0.0.0.0 buffalo dev
-</code></pre></td></tr></table>
-</div>
-</div><p>And we&rsquo;re up! Of course I forgot to create my databases again.
-Wait I minute, I do have a db I want to use. Let&rsquo;s edit <code>database.yaml</code> instead</p>
-<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2>
-<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">4
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">5
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">6
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">7
-</span></code></pre></td>
-<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-fallback data-lang=fallback>development:
-  dialect: postgres
-  database: trying_out_production
-  user: postgres
-  password: postgres
-  host: db
-  pool: 5
-</code></pre></td></tr></table>
-</div>
-</div><p>This is a bit nonsensical but I&rsquo;m just playing around. Note: I did the edit
-locally and the file sync picked it up. Sweet.</p>
-<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2>
-<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
-</span></code></pre></td>
-<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-fallback data-lang=fallback> $ ADDR=0.0.0.0 buffalo dev
-</code></pre></td></tr></table>
-</div>
-</div><p>And I finally have my dev server, that&rsquo;s one time setup for you :)</p>
-<p>Now let&rsquo;s do a silly edit. I&rsquo;ll change some text in <code>templates/users/index.plush.html</code> `</p>
-<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2>
-<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
-</span></code></pre></td>
-<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-html data-lang=html>&lt;<span style=color:#f92672>h3</span> <span style=color:#a6e22e>class</span><span style=color:#f92672>=</span><span style=color:#e6db74>&#34;d-inline-block&#34;</span>&gt;My Users&lt;/<span style=color:#f92672>h3</span>&gt;
-</code></pre></td></tr></table>
-</div>
-</div><p>File sync picked this up, synced, then dev server picked up and reloaded templates. By the time I switched from my editor to the browser and refreshed it was there. :o</p>
-<p>Now let&rsquo;s save this.</p>
-<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2>
-<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
-</span></code></pre></td>
-<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-fallback data-lang=fallback> $ okteto down
- ✓  Development container deactivated
- i  Run &#39;okteto push&#39; to deploy your code changes to the cluster
-</code></pre></td></tr></table>
-</div>
-</div><p>And we reverted back to the deployed image now. Let&rsquo;s try this suggested <code>okteto push</code></p>
-<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2>
-<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
-</span></code></pre></td>
-<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-fallback data-lang=fallback> $ okteto push
- ... build commences
-</code></pre></td></tr></table>
-</div>
-</div><p>This apparently pushed my context again, build the image remotely and updated my deployment live. Interesting. Let&rsquo;s try the pipeline way as well. I&rsquo;ll do another silly change and push just my commits to see what happens.</p>
-<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2>
-<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">4
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">5
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">6
-</span></code></pre></td>
-<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-fallback data-lang=fallback>  ... my edit
- $ git commit -am &#34;New text change&#34;
-[okteto-pipeline 99b7f64] New text change
- 1 file changed, 1 insertion(+), 1 deletion(-)
- $ git push
- ...
-</code></pre></td></tr></table>
-</div>
-</div><p>Nothing happened for 2min (maybe I&rsquo;m just too inpatient) so I&rsquo;ve hit redeploy in the UI. Did the trick - my changes are live. Much more quickly that with <code>okteto push</code></p>
-<h1 id=charts>Charts</h1>
-<p>Once more nice thing: you can deploy some helm charts from a catalog straight form the UI.</p>
-<p><img src=/images/okteto/9_deploy_charts.webp alt=charts></p>
-<h1 id=conclusion>Conclusion</h1>
-<p>In case this wasn&rsquo;t clear from my other remarks and commands I&rsquo;ve ran: okteto
+rebuild the world.</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-fallback data-lang=fallback><span style=display:flex><span> $ kubectl get pvc
+</span></span><span style=display:flex><span>NAME         STATUS   VOLUME                                     CAPACITY   ACCESS MODES   STORAGECLASS   AGE
+</span></span><span style=display:flex><span>okteto-web   Bound    pvc-ead3ab73-9d8f-4e52-8990-bbe6a6d5b897   2Gi        RWO            okteto         4m8s
+</span></span></code></pre></td></tr></table></div></div><p>meanwhile the world has been built&mldr;</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-fallback data-lang=fallback><span style=display:flex><span>INFO[2021-02-15T17:29:21Z] Starting application at http://127.0.0.1:3000
+</span></span><span style=display:flex><span>INFO[2021-02-15T17:29:21Z] Starting Simple Background Worker
+</span></span></code></pre></td></tr></table></div></div><p>sigh&mldr;this won&rsquo;t work as we need to bind to external IP in order to be
+available from the cluster. Quick google search points me at <a href=https://gobuffalo.io/en/docs/getting-started/config-vars>buffalo docs</a> on how to setup the host:</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-fallback data-lang=fallback><span style=display:flex><span> $ ADDR=0.0.0.0 buffalo dev
+</span></span></code></pre></td></tr></table></div></div><p>And we&rsquo;re up! Of course I forgot to create my databases again.
+Wait I minute, I do have a db I want to use. Let&rsquo;s edit <code>database.yaml</code> instead</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">4
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">5
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">6
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">7
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-fallback data-lang=fallback><span style=display:flex><span>development:
+</span></span><span style=display:flex><span>  dialect: postgres
+</span></span><span style=display:flex><span>  database: trying_out_production
+</span></span><span style=display:flex><span>  user: postgres
+</span></span><span style=display:flex><span>  password: postgres
+</span></span><span style=display:flex><span>  host: db
+</span></span><span style=display:flex><span>  pool: 5
+</span></span></code></pre></td></tr></table></div></div><p>This is a bit nonsensical but I&rsquo;m just playing around. Note: I did the edit
+locally and the file sync picked it up. Sweet.</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-fallback data-lang=fallback><span style=display:flex><span> $ ADDR=0.0.0.0 buffalo dev
+</span></span></code></pre></td></tr></table></div></div><p>And I finally have my dev server, that&rsquo;s one time setup for you :)</p><p>Now let&rsquo;s do a silly edit. I&rsquo;ll change some text in <code>templates/users/index.plush.html</code> `</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-html data-lang=html><span style=display:flex><span>&lt;<span style=color:#f92672>h3</span> <span style=color:#a6e22e>class</span><span style=color:#f92672>=</span><span style=color:#e6db74>&#34;d-inline-block&#34;</span>&gt;My Users&lt;/<span style=color:#f92672>h3</span>&gt;
+</span></span></code></pre></td></tr></table></div></div><p>File sync picked this up, synced, then dev server picked up and reloaded templates. By the time I switched from my editor to the browser and refreshed it was there. :o</p><p>Now let&rsquo;s save this.</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-fallback data-lang=fallback><span style=display:flex><span> $ okteto down
+</span></span><span style=display:flex><span> ✓  Development container deactivated
+</span></span><span style=display:flex><span> i  Run &#39;okteto push&#39; to deploy your code changes to the cluster
+</span></span></code></pre></td></tr></table></div></div><p>And we reverted back to the deployed image now. Let&rsquo;s try this suggested <code>okteto push</code></p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-fallback data-lang=fallback><span style=display:flex><span> $ okteto push
+</span></span><span style=display:flex><span> ... build commences
+</span></span></code></pre></td></tr></table></div></div><p>This apparently pushed my context again, build the image remotely and updated my deployment live. Interesting. Let&rsquo;s try the pipeline way as well. I&rsquo;ll do another silly change and push just my commits to see what happens.</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">4
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">5
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">6
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-fallback data-lang=fallback><span style=display:flex><span>  ... my edit
+</span></span><span style=display:flex><span> $ git commit -am &#34;New text change&#34;
+</span></span><span style=display:flex><span>[okteto-pipeline 99b7f64] New text change
+</span></span><span style=display:flex><span> 1 file changed, 1 insertion(+), 1 deletion(-)
+</span></span><span style=display:flex><span> $ git push
+</span></span><span style=display:flex><span> ...
+</span></span></code></pre></td></tr></table></div></div><p>Nothing happened for 2min (maybe I&rsquo;m just too inpatient) so I&rsquo;ve hit redeploy in the UI. Did the trick - my changes are live. Much more quickly that with <code>okteto push</code></p><h1 id=charts>Charts</h1><p>Once more nice thing: you can deploy some helm charts from a catalog straight form the UI.</p><p><img src=/images/okteto/9_deploy_charts.webp alt=charts></p><h1 id=conclusion>Conclusion</h1><p>In case this wasn&rsquo;t clear from my other remarks and commands I&rsquo;ve ran: okteto
 gave my a fully fledged managed kubernetes namespace - this way I was able to
-run my standard kubectl and helm commands.</p>
-<p>All in all the CLI toool impresses me most. But Okteto Cloud is very nice as
+run my standard kubectl and helm commands.</p><p>All in all the CLI toool impresses me most. But Okteto Cloud is very nice as
 well if you want a single opionionated full stack. You can cobble together
 something similar for an existing cluster as well but it will require quite some
-work and may have rough edges. (e.g. jenkins + argo cd + harbor registry)</p>
-<hr>
-<p>Last modified on 2021-02-27</p>
-<a href=/posts/2021-02-22-trying-out-okteto-cli/>
-Previous Trying out Okteto (CLI)
-</a>
-<br>
-<a href=/posts/2021-04-14-trying-out-rancher/>
-Next Trying out Rancher
-</a>
-</div>
-<script src=/js/instantclick.min.js data-no-instant></script>
-<script data-no-instant>InstantClick.init("mousedown")</script>
-</body>
-</html>
+work and may have rough edges. (e.g. jenkins + argo cd + harbor registry)</p><hr><p>Last modified on 2021-02-27</p><a href=/posts/2021-02-22-trying-out-okteto-cli/>Previous Trying out Okteto (CLI)</a><br><a href=/posts/2021-04-14-trying-out-rancher/>Next Trying out Rancher</a></div><script src=/js/instantclick.min.js data-no-instant></script>
+<script data-no-instant>InstantClick.init("mousedown")</script></body></html>

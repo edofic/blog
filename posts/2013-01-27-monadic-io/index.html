@@ -1,37 +1,9 @@
-<!doctype html><html>
-<head>
-<title>Monadic IO with ScalaZ</title>
-<meta charset=utf-8>
-<meta name=X-UA-Compatible content="IE=edge">
-<meta name=google-site-verification content>
-<meta content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=0" name=viewport>
-<style>body{max-width:800px;margin:auto;line-height:1.6;font-size:18px;color:#444;padding:0 10px}h1,h2,h3{line-height:1.2}.nav a,.nav a:visited,.nav a:hover,.nav a:active{color:inherit}.nav .title{margin:0}.nav-sub{display:inline-block}.nav-item{margin:5px}.nav-sub-right{display:inline-block;float:right}.nav-icon{margin-right:5px}.main img{display:block;max-width:100%;margin:auto}.main pre{overflow:auto}" media="screen"></style>
-</head>
-<body>
-<div class=nav>
-<a href=/><h2 class=title>Andraž Bajt's blog</h2></a>
-<div class=nav-sub>
-<a class=nav-item href=/about/>
-About Me
-</a>
-<a class=nav-item href=/>
-Archive
-</a>
-</div>
-<div class=nav-sub-right>
-<a class=nav-icon href=https://github.com/edofic target=_blank><img src=/icons/github.svg width=20 height=20></a>
+<!doctype html><html><head><title>Monadic IO with ScalaZ</title><meta charset=utf-8><meta name=X-UA-Compatible content="IE=edge"><meta name=google-site-verification content><meta content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=0" name=viewport><style>body{max-width:800px;margin:auto;line-height:1.6;font-size:18px;color:#444;padding:0 10px}h1,h2,h3{line-height:1.2}.nav a,.nav a:visited,.nav a:hover,.nav a:active{color:inherit}.nav .title{margin:0}.nav-sub{display:inline-block}.nav-item{margin:5px}.nav-sub-right{display:inline-block;float:right}.nav-icon{margin-right:5px}.main img{display:block;max-width:100%;margin:auto}.main pre{overflow:auto}" media="screen"></style></head><body><div class=nav><a href=/><h2 class=title>Andraž Bajt's blog</h2></a><div class=nav-sub><a class=nav-item href=/about/>About Me</a>
+<a class=nav-item href=/>Archive</a></div><div class=nav-sub-right><a class=nav-icon href=https://github.com/edofic target=_blank><img src=/icons/github.svg width=20 height=20></a>
 <a class=nav-icon href=https://www.linkedin.com/in/edofic target=_blank><img src=/icons/linkedin.svg width=20 height=20></a>
 <a class=nav-icon href=https://twitter.com/edofic target=_blank><img src=/icons/twitter.svg width=20 height=20></a>
 <a class=nav-icon href=/index.xml target=_blank><img src=/icons/rss.svg width=20 height=20></a>
-<a class=nav-icon href=mailto:blog@edofic.com target=_blank><img src=/icons/email.svg width=20 height=20></a>
-</div>
-</div>
-<hr>
-<div class=main>
-<h1>Monadic IO with ScalaZ</h1>
-<time>2013-01-27</time>
-<hr>
-<p>I just recently scratched the
+<a class=nav-icon href=mailto:blog@edofic.com target=_blank><img src=/icons/email.svg width=20 height=20></a></div></div><hr><div class=main><h1>Monadic IO with ScalaZ</h1><time>2013-01-27</time><hr><p>I just recently scratched the
 surface with <a href=http://code.google.com/p/scalaz/>scalaz</a>. Think of it as
 an additional standard library for scala that&rsquo;s
 <a href=http://en.wikipedia.org/wiki/Functional_programming title="Functional programming">FP</a>
@@ -44,79 +16,54 @@ scalaz&rdquo; - but I&rsquo;ll probably dive into source and scaladoc anyway. On
 fancy feature that&rsquo;s not noted on their<a href=http://code.google.com/p/scalaz/>Google Code
 page</a> is
 <a href=http://en.wikipedia.org/wiki/Io_%28programming_language%29 title="Io (programming language)">IO</a>
-monad implementation.</p>
-<p><img src=http://farm7.static.flickr.com/6157/6183470322_cbbf4881d2_m.jpg alt="Denali Landscape" title="Denali Landscape"></p>
-<p>I&rsquo;ve written a bit about monadic IO but let&rsquo;s recap. IO monad is a data structure that represents a tiny
+monad implementation.</p><p><img src=http://farm7.static.flickr.com/6157/6183470322_cbbf4881d2_m.jpg alt="Denali Landscape" title="Denali Landscape"></p><p>I&rsquo;ve written a bit about monadic IO but let&rsquo;s recap. IO monad is a data structure that represents a tiny
 language which let&rsquo;s you describe and compose IO actions without
 actually performing them - allowing you to keep your functions pure and
-compose/reuse better.</p>
-<h3 id=monadic-helloworldhttpenwikipediaorgwikihello_world_program-hello-world-program-with-scalaz>Monadic <a href=http://en.wikipedia.org/wiki/Hello_world_program title="Hello world program">HelloWorld</a> with scalaz</h3>
-<p>I&rsquo;ll be using SBT to manage dependencies(scala and scalaz) so let&rsquo;s
+compose/reuse better.</p><h3 id=monadic-helloworldhttpenwikipediaorgwikihello_world_program-hello-world-program-with-scalaz>Monadic <a href=http://en.wikipedia.org/wiki/Hello_world_program title="Hello world program">HelloWorld</a> with scalaz</h3><p>I&rsquo;ll be using SBT to manage dependencies(scala and scalaz) so let&rsquo;s
 create a project. We just need build.sbt file with this content(or use
-my template: g8 edofic/scalaz-empty)</p>
-<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2>
-<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">4
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">5
-</span></code></pre></td>
-<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-scala data-lang=scala>scalaVersion <span style=color:#66d9ef>:</span><span style=color:#f92672>=</span> <span style=color:#e6db74>&#34;2.9.2&#34;</span>
-
-resolvers <span style=color:#f92672>+=</span> <span style=color:#e6db74>&#34;Scala Tools Snapshots&#34;</span> at <span style=color:#e6db74>&#34;http://scala-tools.org/repo-snapshots/&#34;</span>
-
-libraryDependencies <span style=color:#f92672>+=</span> <span style=color:#e6db74>&#34;org.scalaz&#34;</span> <span style=color:#f92672>%%</span> <span style=color:#e6db74>&#34;scalaz-core&#34;</span> <span style=color:#f92672>%</span> <span style=color:#e6db74>&#34;6.0.4&#34;</span>
-</code></pre></td></tr></table>
-</div>
-</div><p>and then run &ldquo;sbt console&rdquo; to get a
+my template: g8 edofic/scalaz-empty)</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">4
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">5
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-scala data-lang=scala><span style=display:flex><span>scalaVersion <span style=color:#66d9ef>:</span><span style=color:#f92672>=</span> <span style=color:#e6db74>&#34;2.9.2&#34;</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>resolvers <span style=color:#f92672>+=</span> <span style=color:#e6db74>&#34;Scala Tools Snapshots&#34;</span> at <span style=color:#e6db74>&#34;http://scala-tools.org/repo-snapshots/&#34;</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>libraryDependencies <span style=color:#f92672>+=</span> <span style=color:#e6db74>&#34;org.scalaz&#34;</span> <span style=color:#f92672>%%</span> <span style=color:#e6db74>&#34;scalaz-core&#34;</span> <span style=color:#f92672>%</span> <span style=color:#e6db74>&#34;6.0.4&#34;</span>
+</span></span></code></pre></td></tr></table></div></div><p>and then run &ldquo;sbt console&rdquo; to get a
 <a href=http://en.wikipedia.org/wiki/Read%E2%80%93eval%E2%80%93print_loop title="Read–eval–print loop">REPL</a>
-with scala 2.9.2 and scalaz 6.0.4. Pretty useful. Let&rsquo;s get to code now.</p>
-<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2>
-<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
-</span></code></pre></td>
-<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-scala data-lang=scala><span style=color:#66d9ef>import</span> scalaz._
-<span style=color:#66d9ef>import</span> Scalaz._
-<span style=color:#66d9ef>import</span> scalaz.effects._
-
-<span style=color:#66d9ef>val</span> greeter <span style=color:#66d9ef>=</span> println<span style=color:#f92672>(</span><span style=color:#e6db74>&#34;hello world&#34;</span><span style=color:#f92672>).</span>pure<span style=color:#f92672>[</span><span style=color:#66d9ef>IO</span><span style=color:#f92672>]</span>
-
-<span style=color:#75715e>//scalaz provides a helper for that so we can write
-</span><span style=color:#75715e></span><span style=color:#66d9ef>val</span> greeter2 <span style=color:#66d9ef>=</span> putStrLn<span style=color:#f92672>(</span><span style=color:#e6db74>&#34;hello from scalaz&#34;</span><span style=color:#f92672>)</span>
-
-greeter<span style=color:#f92672>.</span>unsafePerformIO
-</code></pre></td></tr></table>
-</div>
-</div><p>First a bunch of imports to get scalaz magic and then the crucial line.
+with scala 2.9.2 and scalaz 6.0.4. Pretty useful. Let&rsquo;s get to code now.</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-scala data-lang=scala><span style=display:flex><span><span style=color:#66d9ef>import</span> scalaz._
+</span></span><span style=display:flex><span><span style=color:#66d9ef>import</span> Scalaz._
+</span></span><span style=display:flex><span><span style=color:#66d9ef>import</span> scalaz.effects._
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>val</span> greeter <span style=color:#66d9ef>=</span> println<span style=color:#f92672>(</span><span style=color:#e6db74>&#34;hello world&#34;</span><span style=color:#f92672>).</span>pure<span style=color:#f92672>[</span><span style=color:#66d9ef>IO</span><span style=color:#f92672>]</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e>//scalaz provides a helper for that so we can write
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span><span style=color:#66d9ef>val</span> greeter2 <span style=color:#66d9ef>=</span> putStrLn<span style=color:#f92672>(</span><span style=color:#e6db74>&#34;hello from scalaz&#34;</span><span style=color:#f92672>)</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>greeter<span style=color:#f92672>.</span>unsafePerformIO
+</span></span></code></pre></td></tr></table></div></div><p>First a bunch of imports to get scalaz magic and then the crucial line.
 Scalaz provides an implicit conversion which allows us to call .pure[A]
 on every value. This gets
 <a href=http://en.wikipedia.org/wiki/Monad_%28functional_programming%29 title="Monad (functional programming)">Monad</a>[A]
 instance from implicit scope and lifts the value into the monad. It&rsquo;s a
 type class way (think dependency injection) to invoke monad
-&ldquo;constructor&rdquo;, a simple sample</p>
-<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2>
-<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
-</span></code></pre></td>
-<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-scala data-lang=scala>scala<span style=color:#f92672>&gt;</span> <span style=color:#e6db74>&#34;hi&#34;</span><span style=color:#f92672>.</span>pure<span style=color:#f92672>[</span><span style=color:#66d9ef>Option</span><span style=color:#f92672>]</span>
-res0<span style=color:#66d9ef>:</span> <span style=color:#66d9ef>Option</span><span style=color:#f92672>[</span><span style=color:#66d9ef>java.lang.String</span><span style=color:#f92672>]</span> <span style=color:#66d9ef>=</span> <span style=color:#a6e22e>Some</span><span style=color:#f92672>(</span>hi<span style=color:#f92672>)</span>
-</code></pre></td></tr></table>
-</div>
-</div><p>Scalaz also provides a helper putStrLn(and many more, including readLn)
+&ldquo;constructor&rdquo;, a simple sample</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-scala data-lang=scala><span style=display:flex><span>scala<span style=color:#f92672>&gt;</span> <span style=color:#e6db74>&#34;hi&#34;</span><span style=color:#f92672>.</span>pure<span style=color:#f92672>[</span><span style=color:#66d9ef>Option</span><span style=color:#f92672>]</span>
+</span></span><span style=display:flex><span>res0<span style=color:#66d9ef>:</span> <span style=color:#66d9ef>Option</span><span style=color:#f92672>[</span><span style=color:#66d9ef>java.lang.String</span><span style=color:#f92672>]</span> <span style=color:#66d9ef>=</span> <span style=color:#a6e22e>Some</span><span style=color:#f92672>(</span>hi<span style=color:#f92672>)</span>
+</span></span></code></pre></td></tr></table></div></div><p>Scalaz also provides a helper putStrLn(and many more, including readLn)
 for more succinct code. Note that lifting our println(by hand) does call
 by name(<a href=http://en.wikipedia.org/wiki/Lazy_evaluation title="Lazy evaluation">lazy
 evaluation</a>)
@@ -130,70 +77,43 @@ readLn.map(_.toInt) gives you and action that will read and parse an
 integer returning you something of type Int. FlatMap is more interesting
 because it gives you composition. FlatMapping another IO action will
 execute actions in sequence giving last action access to previous
-actions' return values via closures. That&rsquo;s referred to as monadic
+actions&rsquo; return values via closures. That&rsquo;s referred to as monadic
 style. It&rsquo;s basically a pure way of doing imperative programming. A bit
-more involved example</p>
-<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2>
-<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">4
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">5
-</span></code></pre></td>
-<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-scala data-lang=scala><span style=color:#66d9ef>for</span><span style=color:#f92672>{</span>
-  <span style=color:#66d9ef>_</span>    <span style=color:#66d9ef>&lt;-</span> putStrLn<span style=color:#f92672>(</span><span style=color:#e6db74>&#34;who are you?&#34;</span><span style=color:#f92672>)</span>
-  name <span style=color:#66d9ef>&lt;-</span> readLn
-  <span style=color:#66d9ef>_</span>    <span style=color:#66d9ef>&lt;-</span> putStrLn<span style=color:#f92672>(</span><span style=color:#e6db74>&#34;hello &#34;</span> <span style=color:#f92672>+</span> name<span style=color:#f92672>)</span>
-<span style=color:#f92672>}</span> <span style=color:#66d9ef>yield</span> <span style=color:#f92672>()</span>
-</code></pre></td></tr></table>
-</div>
-</div><p>And a tiny calculator showing off composition</p>
-<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2>
-<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">11
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">12
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">13
-</span></code></pre></td>
-<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-scala data-lang=scala><span style=color:#66d9ef>val</span> inputInt <span style=color:#66d9ef>=</span> <span style=color:#66d9ef>for</span><span style=color:#f92672>{</span>
-  <span style=color:#66d9ef>_</span> <span style=color:#66d9ef>&lt;-</span> putStrLn<span style=color:#f92672>(</span><span style=color:#e6db74>&#34;enter an integer&#34;</span><span style=color:#f92672>)</span>
-  raw <span style=color:#66d9ef>&lt;-</span> readLn
-<span style=color:#f92672>}</span> <span style=color:#66d9ef>yield</span> raw<span style=color:#f92672>.</span>toInt
-
-<span style=color:#66d9ef>val</span> adderIO <span style=color:#66d9ef>=</span> <span style=color:#66d9ef>for</span> <span style=color:#f92672>{</span>
-  a <span style=color:#66d9ef>&lt;-</span> inputInt
-  b <span style=color:#66d9ef>&lt;-</span> inputInt
-  <span style=color:#66d9ef>_</span> <span style=color:#66d9ef>&lt;-</span> putStrLn<span style=color:#f92672>((</span>a<span style=color:#f92672>+</span>b<span style=color:#f92672>).</span>toString<span style=color:#f92672>)</span>
-<span style=color:#f92672>}</span> <span style=color:#66d9ef>yield</span> <span style=color:#f92672>()</span>
-
-<span style=color:#75715e>//and to run it
-</span><span style=color:#75715e></span>adderIO<span style=color:#f92672>.</span>unsafePerformIO
-</code></pre></td></tr></table>
-</div>
-</div>
-<hr>
-<p>Last modified on 2013-01-27</p>
-<a href=/posts/2013-01-27-null-coalescing/>
-Previous Null-coalescing(??) in scala
-</a>
-<br>
-<a href=/posts/2013-01-27-generic-singletons/>
-Next Generic singletons through dependent method types
-</a>
-</div>
-<script src=/js/instantclick.min.js data-no-instant></script>
-<script data-no-instant>InstantClick.init("mousedown")</script>
-</body>
-</html>
+more involved example</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">4
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">5
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-scala data-lang=scala><span style=display:flex><span><span style=color:#66d9ef>for</span><span style=color:#f92672>{</span>
+</span></span><span style=display:flex><span>  <span style=color:#66d9ef>_</span>    <span style=color:#66d9ef>&lt;-</span> putStrLn<span style=color:#f92672>(</span><span style=color:#e6db74>&#34;who are you?&#34;</span><span style=color:#f92672>)</span>
+</span></span><span style=display:flex><span>  name <span style=color:#66d9ef>&lt;-</span> readLn
+</span></span><span style=display:flex><span>  <span style=color:#66d9ef>_</span>    <span style=color:#66d9ef>&lt;-</span> putStrLn<span style=color:#f92672>(</span><span style=color:#e6db74>&#34;hello &#34;</span> <span style=color:#f92672>+</span> name<span style=color:#f92672>)</span>
+</span></span><span style=display:flex><span><span style=color:#f92672>}</span> <span style=color:#66d9ef>yield</span> <span style=color:#f92672>()</span>
+</span></span></code></pre></td></tr></table></div></div><p>And a tiny calculator showing off composition</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">11
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">12
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">13
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-scala data-lang=scala><span style=display:flex><span><span style=color:#66d9ef>val</span> inputInt <span style=color:#66d9ef>=</span> <span style=color:#66d9ef>for</span><span style=color:#f92672>{</span>
+</span></span><span style=display:flex><span>  <span style=color:#66d9ef>_</span> <span style=color:#66d9ef>&lt;-</span> putStrLn<span style=color:#f92672>(</span><span style=color:#e6db74>&#34;enter an integer&#34;</span><span style=color:#f92672>)</span>
+</span></span><span style=display:flex><span>  raw <span style=color:#66d9ef>&lt;-</span> readLn
+</span></span><span style=display:flex><span><span style=color:#f92672>}</span> <span style=color:#66d9ef>yield</span> raw<span style=color:#f92672>.</span>toInt
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>val</span> adderIO <span style=color:#66d9ef>=</span> <span style=color:#66d9ef>for</span> <span style=color:#f92672>{</span>
+</span></span><span style=display:flex><span>  a <span style=color:#66d9ef>&lt;-</span> inputInt
+</span></span><span style=display:flex><span>  b <span style=color:#66d9ef>&lt;-</span> inputInt
+</span></span><span style=display:flex><span>  <span style=color:#66d9ef>_</span> <span style=color:#66d9ef>&lt;-</span> putStrLn<span style=color:#f92672>((</span>a<span style=color:#f92672>+</span>b<span style=color:#f92672>).</span>toString<span style=color:#f92672>)</span>
+</span></span><span style=display:flex><span><span style=color:#f92672>}</span> <span style=color:#66d9ef>yield</span> <span style=color:#f92672>()</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e>//and to run it
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>adderIO<span style=color:#f92672>.</span>unsafePerformIO
+</span></span></code></pre></td></tr></table></div></div><hr><p>Last modified on 2013-01-27</p><a href=/posts/2013-01-27-null-coalescing/>Previous Null-coalescing(??) in scala</a><br><a href=/posts/2013-01-27-generic-singletons/>Next Generic singletons through dependent method types</a></div><script src=/js/instantclick.min.js data-no-instant></script>
+<script data-no-instant>InstantClick.init("mousedown")</script></body></html>

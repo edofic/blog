@@ -1,226 +1,75 @@
-<!doctype html><html>
-<head>
-<title>Hypermedia driven micro frontends</title>
-<meta charset=utf-8>
-<meta name=X-UA-Compatible content="IE=edge">
-<meta name=google-site-verification content>
-<meta content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=0" name=viewport>
-<style>body{max-width:800px;margin:auto;line-height:1.6;font-size:18px;color:#444;padding:0 10px}h1,h2,h3{line-height:1.2}.nav a,.nav a:visited,.nav a:hover,.nav a:active{color:inherit}.nav .title{margin:0}.nav-sub{display:inline-block}.nav-item{margin:5px}.nav-sub-right{display:inline-block;float:right}.nav-icon{margin-right:5px}.main img{display:block;max-width:100%;margin:auto}.main pre{overflow:auto}" media="screen"></style>
-</head>
-<body>
-<div class=nav>
-<a href=/><h2 class=title>Andraž Bajt's blog</h2></a>
-<div class=nav-sub>
-<a class=nav-item href=/about/>
-About Me
-</a>
-<a class=nav-item href=/>
-Archive
-</a>
-</div>
-<div class=nav-sub-right>
-<a class=nav-icon href=https://github.com/edofic target=_blank><img src=/icons/github.svg width=20 height=20></a>
+<!doctype html><html><head><title>Hypermedia driven micro frontends</title><meta charset=utf-8><meta name=X-UA-Compatible content="IE=edge"><meta name=google-site-verification content><meta content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=0" name=viewport><style>body{max-width:800px;margin:auto;line-height:1.6;font-size:18px;color:#444;padding:0 10px}h1,h2,h3{line-height:1.2}.nav a,.nav a:visited,.nav a:hover,.nav a:active{color:inherit}.nav .title{margin:0}.nav-sub{display:inline-block}.nav-item{margin:5px}.nav-sub-right{display:inline-block;float:right}.nav-icon{margin-right:5px}.main img{display:block;max-width:100%;margin:auto}.main pre{overflow:auto}" media="screen"></style></head><body><div class=nav><a href=/><h2 class=title>Andraž Bajt's blog</h2></a><div class=nav-sub><a class=nav-item href=/about/>About Me</a>
+<a class=nav-item href=/>Archive</a></div><div class=nav-sub-right><a class=nav-icon href=https://github.com/edofic target=_blank><img src=/icons/github.svg width=20 height=20></a>
 <a class=nav-icon href=https://www.linkedin.com/in/edofic target=_blank><img src=/icons/linkedin.svg width=20 height=20></a>
 <a class=nav-icon href=https://twitter.com/edofic target=_blank><img src=/icons/twitter.svg width=20 height=20></a>
 <a class=nav-icon href=/index.xml target=_blank><img src=/icons/rss.svg width=20 height=20></a>
-<a class=nav-icon href=mailto:blog@edofic.com target=_blank><img src=/icons/email.svg width=20 height=20></a>
-</div>
-</div>
-<hr>
-<div class=main>
-<h1>Hypermedia driven micro frontends</h1>
-<time>2022-06-29</time>
-<hr>
-<p>Micro frontends? Huh?</p>
-<blockquote>
-<p>extending the microservice idea to frontend development
-&ndash; <a href=https://micro-frontends.org/>https://micro-frontends.org/</a></p>
-</blockquote>
-<p>or: how to scale frontend development once you have too many engineers and they start stepping on each other&rsquo;s toes. Assuming of course your frontend is an SPA (<a href=https://grugbrain.dev/>grug</a> might have something to say about both points).</p>
-<p>But of course splitting an SPA into multiple smaller applications and having it all play together brings along a ton of additional complexity. Just like splitting a monolith into micro services 😉.</p>
-<p>The idea I want to share with this post is that it does not have to be this way.</p>
-<blockquote>
-<p>What are you trying to tell me? That I can dodge bullets?</p>
-<p>No, Neo. I&rsquo;m trying to tell you that when you&rsquo;re ready, you won&rsquo;t have to.</p>
-</blockquote>
-<h1 id=hypermedia-driven-application-architecture>Hypermedia-driven application architecture</h1>
-<p>In case you&rsquo;re not familiar just read <a href=https://htmx.org/essays/hypermedia-driven-applications/>the original essay</a>. Here&rsquo;s the intro to get the flavour:</p>
-<blockquote>
-<p>The Hypermedia Driven Application (HDA) architecture is a new/old approach to building web applications. It combines the simplicity & flexibility of traditional Multi-Page Applications (MPAs) with the better user experience of Single-Page Applications (SPAs).</p>
-</blockquote>
-<p>The particular implementation I like (see also <a href=/posts/2022-01-28-low-js/>How I fell in love with low-js</a>) is <a href=https://htmx.org/>htmx</a></p>
-<h1 id=micro-hdas>Micro HDAs?</h1>
-<p>How do you split up an HDA(hypermedia-driven application)? Into multiple &ldquo;micro HDA"s? No, in fact there is no need to split anything. Just like an SPA can call an API implemented by multiple services, an HDA can load hypermedia (think HTML over HTTPS) from a backend implemented by multiple services.</p>
-<p>Just like you can put an API gateway in front of your services you can put&mldr;.I don&rsquo;t know, we used to just call this reverse proxies. The point being: you can render your html wherever you want. It&rsquo;s all hypermedia. The <strong>browser</strong> already does the integration. In fact you can argue the original purpose of the web browser was/is to seamlessly integrate hypermedia from distinct services.</p>
-<h1 id=butproblems>But&mldr;..problems!</h1>
-<p>Surely this cannot really work? I mean support the complexities of a real world application. I&rsquo;ll admit I haven&rsquo;t tried it out on a real use case but pretty much whatever I throw at it seems to work. Browsers are really great nowadays.</p>
-<h2 id=styles>Styles</h2>
-<p>Ha, I still need to compile all my CSS to include in the main page! Not really. You can add both <code>link</code> and <code>style</code> tags to &ldquo;components&rdquo; (meaning async loaded HTML) and it will just work. Even get unloaded when you remove that part from the DOM. You only need to take care of scoping - making sure that component styles don&rsquo;t affect other components. But that&rsquo;s pretty easy by wrapping into a container and then using that in all selectors.</p>
-<h2 id=scripting>Scripting</h2>
-<p>This approach does not really work for JS. Yes you can add <code>script</code> tags but scoping is harder and there&rsquo;s no real way to unload.</p>
-<p>Solution is to embrace <a href=https://htmx.org/essays/locality-of-behaviour/>Locality of Behavior</a>. Just put your behavior next to the UI and the problem goes away. You might want to include e.g. <a href=https://hyperscript.org/>_hyperscript</a> or <a href=https://alpinejs.dev/>Alpine.js</a> in the main page - effectively standardising on the tooling - to get the most mileage out of this approach.</p>
-<p>I&rsquo;ll admit that &ldquo;standardising on tooling&rdquo; kinda defeats the purpose of micro frontends but you can still keep to <a href=https://youmightnotneedjquery.com/>pure JS</a> and still get to implement the server any way you see fit.</p>
-<p>You can still pull in full fledged JS frameworks but at this point are you still doing HDA?</p>
-<h1 id=an-example>An example</h1>
-<p>Now let me share a small (but complete) example of how this can work in practice to make things a bit more concrete.
-Below is a short video of two instances of my app side by side to demo the real time functionality.</p>
-<p><img src=/images/micro-frontends/demo.gif alt="demo video"></p>
-<p>It&rsquo;s a &ldquo;landing page&rdquo; with a &ldquo;subscribe&rdquo; functionality. But there is also a (very simplistic) chat on the bottom right. You might have guessed it - chat is implemented separately.</p>
-<h2 id=implementation>Implementation</h2>
-<p>Let&rsquo;s jump right in. For my <del>API gateway</del> reverse proxy I&rsquo;m using <a href=https://caddyserver.com/>Caddy</a> with the <a href=/files/micro-frontends/Caddyfile>following config</a></p>
-<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2>
-<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">4
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">5
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">6
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">7
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">8
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">9
-</span></code></pre></td>
-<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-Caddyfile data-lang=Caddyfile>{
-	<span style=color:#66d9ef>http_port</span> <span style=color:#ae81ff>3000</span>
-	<span style=color:#66d9ef>auto_https</span> <span style=color:#66d9ef>off</span>
-}
-
-localhost:3000 {
-	<span style=color:#66d9ef>reverse_proxy</span> <span style=color:#a6e22e>/chat*</span> localhost:<span style=color:#ae81ff>8080</span>
-	<span style=color:#66d9ef>reverse_proxy</span> <span style=color:#a6e22e>*</span> localhost:<span style=color:#ae81ff>8000</span>
-}
-</code></pre></td></tr></table>
-</div>
-</div><p>This will listen on port 3000 and proxy requests that have prefix <code>/chat</code> to port 8080 and everything else to port 8000. Yes I&rsquo;ll be implementing two services: one main page (my &ldquo;legacy monolith&rdquo; 😉) and a chat service (extracted microservice).</p>
-<p>If you want to follow along you only need <a href=https://go.dev/>Go</a>. To run caddy:</p>
-<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2>
-<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
-</span></code></pre></td>
-<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-sh data-lang=sh>go run github.com/caddyserver/caddy/v2/cmd/caddy@v2.5.1 <span style=color:#ae81ff>\
-</span><span style=color:#ae81ff></span>  run -config<span style=color:#f92672>=</span>Caddyfile
-</code></pre></td></tr></table>
-</div>
-</div><h3 id=landing-page>Landing page</h3>
-<p>Full source is <a href=/files/micro-frontends/landing.go>landing.go</a> - run with <code>go run landing.go</code>. This is stdlib http server serving the main template and a the &ldquo;subscribe&rdquo; form POST with the partial response. I&rsquo;m including <a href=https://htmx.org/>htmx</a> for interactivity</p>
-<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2>
-<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
-</span></code></pre></td>
-<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-html data-lang=html>&lt;<span style=color:#f92672>script</span> <span style=color:#a6e22e>src</span><span style=color:#f92672>=</span><span style=color:#e6db74>&#34;https://unpkg.com/htmx.org@1.7.0&#34;</span>&gt;&lt;/<span style=color:#f92672>script</span>&gt;
-</code></pre></td></tr></table>
-</div>
-</div><p>and some basic styles</p>
-<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2>
-<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
-</span></code></pre></td>
-<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-html data-lang=html>&lt;<span style=color:#f92672>link</span> <span style=color:#a6e22e>rel</span><span style=color:#f92672>=</span><span style=color:#e6db74>&#34;stylesheet&#34;</span> <span style=color:#a6e22e>href</span><span style=color:#f92672>=</span><span style=color:#e6db74>&#34;https://the.missing.style&#34;</span>&gt;
-</code></pre></td></tr></table>
-</div>
-</div><p>Subscribe form is pretty straightforward</p>
-<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2>
-<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">4
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">5
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">6
-</span></code></pre></td>
-<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-html data-lang=html>&lt;<span style=color:#f92672>form</span> <span style=color:#a6e22e>hx-get</span><span style=color:#f92672>=</span><span style=color:#e6db74>&#34;/subscribe&#34;</span>&gt;
-  &lt;<span style=color:#f92672>label</span>&gt;Email address
-    &lt;<span style=color:#f92672>input</span> <span style=color:#a6e22e>name</span><span style=color:#f92672>=</span><span style=color:#e6db74>&#34;email&#34;</span> <span style=color:#a6e22e>type</span><span style=color:#f92672>=</span><span style=color:#e6db74>&#34;email&#34;</span>&gt;
-  &lt;/<span style=color:#f92672>label</span>&gt;
-  &lt;<span style=color:#f92672>button</span> <span style=color:#a6e22e>type</span><span style=color:#f92672>=</span><span style=color:#e6db74>&#34;submit&#34;</span>&gt;Subscribe&lt;/<span style=color:#f92672>button</span>&gt;
-&lt;/<span style=color:#f92672>form</span>&gt;
-</code></pre></td></tr></table>
-</div>
-</div><p>But the real party is the link that loads the chat</p>
-<p><em>NOTE</em> adding <code>hx-trigger="load"</code> here will automatically load chat when the page loads, effectively lazy loading this component.</p>
-<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2>
-<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
-</span></code></pre></td>
-<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-html data-lang=html>&lt;<span style=color:#f92672>a</span> <span style=color:#a6e22e>hx-get</span><span style=color:#f92672>=</span><span style=color:#e6db74>&#34;/chat&#34;</span> <span style=color:#a6e22e>hx-swap</span><span style=color:#f92672>=</span><span style=color:#e6db74>&#34;outerHTML&#34;</span>&gt;Live chat&lt;/<span style=color:#f92672>a</span>&gt;
-</code></pre></td></tr></table>
-</div>
-</div><p>Huh? Plain old htmx. Nothing fancy. That&rsquo;s right. Plain old HDA. But since my reverse proxy is routing this request to the chat service the magic can happen.</p>
-<h1 id=chat-service>Chat service</h1>
-<p>Full source: <a href=/files/micro-frontends/chat.go>chat.go</a>. Run with <code>go run chat.go</code>. There&rsquo;s <code>/</code> which provides a basic wrapper for development so <code>/chat</code> can return a partial and be used by the landing page service. That&rsquo;s it. This is all the magic. The rest of this section will explain the inner workings of the chat itself - skip ahead if you&rsquo;re not interested. o</p>
-<p>Posting messages is a regular form</p>
-<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2>
-<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">4
-</span></code></pre></td>
-<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-html data-lang=html>&lt;<span style=color:#f92672>form</span> <span style=color:#a6e22e>hx-post</span><span style=color:#f92672>=</span><span style=color:#e6db74>&#34;/chat/msg&#34;</span>&gt;
-&lt;<span style=color:#f92672>input</span> <span style=color:#a6e22e>type</span><span style=color:#f92672>=</span><span style=color:#e6db74>&#34;text&#34;</span> <span style=color:#a6e22e>name</span><span style=color:#f92672>=</span><span style=color:#e6db74>&#34;msg&#34;</span> <span style=color:#a6e22e>autocomplete</span><span style=color:#f92672>=</span><span style=color:#e6db74>&#34;off&#34;</span>&gt;
-&lt;<span style=color:#f92672>button</span> <span style=color:#a6e22e>type</span><span style=color:#f92672>=</span><span style=color:#e6db74>&#34;submit&#34;</span>&gt;Send&lt;/<span style=color:#f92672>button</span>&gt;
-&lt;<span style=color:#f92672>form</span>&gt;
-</code></pre></td></tr></table>
-</div>
-</div><p>The handler will just return an empty form back. But it will also dispatch the message to all listeners. This oneliner sets up server-sent-events listener and wires the events into the DOM</p>
-<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2>
-<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">4
-</span></code></pre></td>
-<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-html data-lang=html>&lt;<span style=color:#f92672>div</span> <span style=color:#a6e22e>hx-sse</span><span style=color:#f92672>=</span><span style=color:#e6db74>&#34;connect:/chat/events
-</span><span style=color:#e6db74>     swap:message&#34;</span>
-     <span style=color:#a6e22e>hx-swap</span><span style=color:#f92672>=</span><span style=color:#e6db74>&#34;afterbegin&#34;</span>&gt;
-&lt;/<span style=color:#f92672>div</span>&gt;
-</code></pre></td></tr></table>
-</div>
-</div><p>On the server side this is is simple enough to implement without any libraries, just nee do set the content type</p>
-<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2>
-<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
-</span></code></pre></td>
-<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-go data-lang=go><span style=color:#a6e22e>w</span>.<span style=color:#a6e22e>Header</span>().<span style=color:#a6e22e>Set</span>(<span style=color:#e6db74>&#34;Content-Type&#34;</span>, <span style=color:#e6db74>&#34;text/event-stream&#34;</span>)
-</code></pre></td></tr></table>
-</div>
-</div><p>And write events as lines (and make sure to flush)</p>
-<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2>
-<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">4
-</span></code></pre></td>
-<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-go data-lang=go><span style=color:#a6e22e>fmt</span>.<span style=color:#a6e22e>Fprintf</span>(<span style=color:#a6e22e>w</span>, <span style=color:#e6db74>&#34;data: &lt;div&gt;%v&lt;/div&gt;\n\n&#34;</span>, <span style=color:#a6e22e>msg</span>)
-<span style=color:#66d9ef>if</span> <span style=color:#a6e22e>f</span>, <span style=color:#a6e22e>ok</span> <span style=color:#f92672>:=</span> <span style=color:#a6e22e>w</span>.(<span style=color:#a6e22e>http</span>.<span style=color:#a6e22e>Flusher</span>); <span style=color:#a6e22e>ok</span> {
-    <span style=color:#a6e22e>f</span>.<span style=color:#a6e22e>Flush</span>()
-}
-</code></pre></td></tr></table>
-</div>
-</div><h1 id=conclusion>Conclusion</h1>
-<p>I hope that a full example in 3 files is evidence enough that there really is nothing to see here and things just work (and the title is a bit clickbaity - whoops).</p>
-<p>That said I hope I still provided some useful insight. I do in fact see this pattern as useful if you&rsquo;re starting out with something simple, say a Rails/Django app, or maybe Wordpress or even a statically generated page and then figure out you want a piece of it that would really better be implemented as a separate service. HDA gives you an easy way out without implementing APIs and pulling in SPA frameworks. I do believe there is some value in here. But I would not go splitting up majestic HDA monoliths <a href=https://grugbrain.dev/#grug-on-microservices>for the sake of splitting them up</a>.</p>
-<hr>
-<p>Last modified on 2022-06-29</p>
-<a href=/posts/2022-01-28-low-js/>
-Previous How I fell in love with low-js
-</a>
-<br>
-<a>No newer posts.</a>
-</div>
-<script src=/js/instantclick.min.js data-no-instant></script>
-<script data-no-instant>InstantClick.init("mousedown")</script>
-</body>
-</html>
+<a class=nav-icon href=mailto:blog@edofic.com target=_blank><img src=/icons/email.svg width=20 height=20></a></div></div><hr><div class=main><h1>Hypermedia driven micro frontends</h1><time>2022-06-29</time><hr><p>Micro frontends? Huh?</p><blockquote><p>extending the microservice idea to frontend development
+&ndash; <a href=https://micro-frontends.org/>https://micro-frontends.org/</a></p></blockquote><p>or: how to scale frontend development once you have too many engineers and they start stepping on each other&rsquo;s toes. Assuming of course your frontend is an SPA (<a href=https://grugbrain.dev/>grug</a> might have something to say about both points).</p><p>But of course splitting an SPA into multiple smaller applications and having it all play together brings along a ton of additional complexity. Just like splitting a monolith into micro services 😉.</p><p>The idea I want to share with this post is that it does not have to be this way.</p><blockquote><p>What are you trying to tell me? That I can dodge bullets?</p><p>No, Neo. I&rsquo;m trying to tell you that when you&rsquo;re ready, you won&rsquo;t have to.</p></blockquote><h1 id=hypermedia-driven-application-architecture>Hypermedia-driven application architecture</h1><p>In case you&rsquo;re not familiar just read <a href=https://htmx.org/essays/hypermedia-driven-applications/>the original essay</a>. Here&rsquo;s the intro to get the flavour:</p><blockquote><p>The Hypermedia Driven Application (HDA) architecture is a new/old approach to building web applications. It combines the simplicity & flexibility of traditional Multi-Page Applications (MPAs) with the better user experience of Single-Page Applications (SPAs).</p></blockquote><p>The particular implementation I like (see also <a href=/posts/2022-01-28-low-js/>How I fell in love with low-js</a>) is <a href=https://htmx.org/>htmx</a></p><h1 id=micro-hdas>Micro HDAs?</h1><p>How do you split up an HDA(hypermedia-driven application)? Into multiple &ldquo;micro HDA"s? No, in fact there is no need to split anything. Just like an SPA can call an API implemented by multiple services, an HDA can load hypermedia (think HTML over HTTPS) from a backend implemented by multiple services.</p><p>Just like you can put an API gateway in front of your services you can put&mldr;.I don&rsquo;t know, we used to just call this reverse proxies. The point being: you can render your html wherever you want. It&rsquo;s all hypermedia. The <strong>browser</strong> already does the integration. In fact you can argue the original purpose of the web browser was/is to seamlessly integrate hypermedia from distinct services.</p><h1 id=butproblems>But&mldr;..problems!</h1><p>Surely this cannot really work? I mean support the complexities of a real world application. I&rsquo;ll admit I haven&rsquo;t tried it out on a real use case but pretty much whatever I throw at it seems to work. Browsers are really great nowadays.</p><h2 id=styles>Styles</h2><p>Ha, I still need to compile all my CSS to include in the main page! Not really. You can add both <code>link</code> and <code>style</code> tags to &ldquo;components&rdquo; (meaning async loaded HTML) and it will just work. Even get unloaded when you remove that part from the DOM. You only need to take care of scoping - making sure that component styles don&rsquo;t affect other components. But that&rsquo;s pretty easy by wrapping into a container and then using that in all selectors.</p><h2 id=scripting>Scripting</h2><p>This approach does not really work for JS. Yes you can add <code>script</code> tags but scoping is harder and there&rsquo;s no real way to unload.</p><p>Solution is to embrace <a href=https://htmx.org/essays/locality-of-behaviour/>Locality of Behavior</a>. Just put your behavior next to the UI and the problem goes away. You might want to include e.g. <a href=https://hyperscript.org/>_hyperscript</a> or <a href=https://alpinejs.dev/>Alpine.js</a> in the main page - effectively standardising on the tooling - to get the most mileage out of this approach.</p><p>I&rsquo;ll admit that &ldquo;standardising on tooling&rdquo; kinda defeats the purpose of micro frontends but you can still keep to <a href=https://youmightnotneedjquery.com/>pure JS</a> and still get to implement the server any way you see fit.</p><p>You can still pull in full fledged JS frameworks but at this point are you still doing HDA?</p><h1 id=an-example>An example</h1><p>Now let me share a small (but complete) example of how this can work in practice to make things a bit more concrete.
+Below is a short video of two instances of my app side by side to demo the real time functionality.</p><p><img src=/images/micro-frontends/demo.gif alt="demo video"></p><p>It&rsquo;s a &ldquo;landing page&rdquo; with a &ldquo;subscribe&rdquo; functionality. But there is also a (very simplistic) chat on the bottom right. You might have guessed it - chat is implemented separately.</p><h2 id=implementation>Implementation</h2><p>Let&rsquo;s jump right in. For my <del>API gateway</del> reverse proxy I&rsquo;m using <a href=https://caddyserver.com/>Caddy</a> with the <a href=/files/micro-frontends/Caddyfile>following config</a></p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">4
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">5
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">6
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">7
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">8
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">9
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-Caddyfile data-lang=Caddyfile><span style=display:flex><span>{
+</span></span><span style=display:flex><span>	<span style=color:#66d9ef>http_port</span> <span style=color:#ae81ff>3000</span>
+</span></span><span style=display:flex><span>	<span style=color:#66d9ef>auto_https</span> <span style=color:#66d9ef>off</span>
+</span></span><span style=display:flex><span>}
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>localhost:3000 {
+</span></span><span style=display:flex><span>	<span style=color:#66d9ef>reverse_proxy</span> <span style=color:#a6e22e>/chat*</span> localhost:<span style=color:#ae81ff>8080</span>
+</span></span><span style=display:flex><span>	<span style=color:#66d9ef>reverse_proxy</span> <span style=color:#a6e22e>*</span> localhost:<span style=color:#ae81ff>8000</span>
+</span></span><span style=display:flex><span>}
+</span></span></code></pre></td></tr></table></div></div><p>This will listen on port 3000 and proxy requests that have prefix <code>/chat</code> to port 8080 and everything else to port 8000. Yes I&rsquo;ll be implementing two services: one main page (my &ldquo;legacy monolith&rdquo; 😉) and a chat service (extracted microservice).</p><p>If you want to follow along you only need <a href=https://go.dev/>Go</a>. To run caddy:</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-sh data-lang=sh><span style=display:flex><span>go run github.com/caddyserver/caddy/v2/cmd/caddy@v2.5.1 <span style=color:#ae81ff>\
+</span></span></span><span style=display:flex><span><span style=color:#ae81ff></span>  run -config<span style=color:#f92672>=</span>Caddyfile
+</span></span></code></pre></td></tr></table></div></div><h3 id=landing-page>Landing page</h3><p>Full source is <a href=/files/micro-frontends/landing.go>landing.go</a> - run with <code>go run landing.go</code>. This is stdlib http server serving the main template and a the &ldquo;subscribe&rdquo; form POST with the partial response. I&rsquo;m including <a href=https://htmx.org/>htmx</a> for interactivity</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-html data-lang=html><span style=display:flex><span>&lt;<span style=color:#f92672>script</span> <span style=color:#a6e22e>src</span><span style=color:#f92672>=</span><span style=color:#e6db74>&#34;https://unpkg.com/htmx.org@1.7.0&#34;</span>&gt;&lt;/<span style=color:#f92672>script</span>&gt;
+</span></span></code></pre></td></tr></table></div></div><p>and some basic styles</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-html data-lang=html><span style=display:flex><span>&lt;<span style=color:#f92672>link</span> <span style=color:#a6e22e>rel</span><span style=color:#f92672>=</span><span style=color:#e6db74>&#34;stylesheet&#34;</span> <span style=color:#a6e22e>href</span><span style=color:#f92672>=</span><span style=color:#e6db74>&#34;https://the.missing.style&#34;</span>&gt;
+</span></span></code></pre></td></tr></table></div></div><p>Subscribe form is pretty straightforward</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">4
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">5
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">6
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-html data-lang=html><span style=display:flex><span>&lt;<span style=color:#f92672>form</span> <span style=color:#a6e22e>hx-get</span><span style=color:#f92672>=</span><span style=color:#e6db74>&#34;/subscribe&#34;</span>&gt;
+</span></span><span style=display:flex><span>  &lt;<span style=color:#f92672>label</span>&gt;Email address
+</span></span><span style=display:flex><span>    &lt;<span style=color:#f92672>input</span> <span style=color:#a6e22e>name</span><span style=color:#f92672>=</span><span style=color:#e6db74>&#34;email&#34;</span> <span style=color:#a6e22e>type</span><span style=color:#f92672>=</span><span style=color:#e6db74>&#34;email&#34;</span>&gt;
+</span></span><span style=display:flex><span>  &lt;/<span style=color:#f92672>label</span>&gt;
+</span></span><span style=display:flex><span>  &lt;<span style=color:#f92672>button</span> <span style=color:#a6e22e>type</span><span style=color:#f92672>=</span><span style=color:#e6db74>&#34;submit&#34;</span>&gt;Subscribe&lt;/<span style=color:#f92672>button</span>&gt;
+</span></span><span style=display:flex><span>&lt;/<span style=color:#f92672>form</span>&gt;
+</span></span></code></pre></td></tr></table></div></div><p>But the real party is the link that loads the chat</p><p><em>NOTE</em> adding <code>hx-trigger="load"</code> here will automatically load chat when the page loads, effectively lazy loading this component.</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-html data-lang=html><span style=display:flex><span>&lt;<span style=color:#f92672>a</span> <span style=color:#a6e22e>hx-get</span><span style=color:#f92672>=</span><span style=color:#e6db74>&#34;/chat&#34;</span> <span style=color:#a6e22e>hx-swap</span><span style=color:#f92672>=</span><span style=color:#e6db74>&#34;outerHTML&#34;</span>&gt;Live chat&lt;/<span style=color:#f92672>a</span>&gt;
+</span></span></code></pre></td></tr></table></div></div><p>Huh? Plain old htmx. Nothing fancy. That&rsquo;s right. Plain old HDA. But since my reverse proxy is routing this request to the chat service the magic can happen.</p><h1 id=chat-service>Chat service</h1><p>Full source: <a href=/files/micro-frontends/chat.go>chat.go</a>. Run with <code>go run chat.go</code>. There&rsquo;s <code>/</code> which provides a basic wrapper for development so <code>/chat</code> can return a partial and be used by the landing page service. That&rsquo;s it. This is all the magic. The rest of this section will explain the inner workings of the chat itself - skip ahead if you&rsquo;re not interested. o</p><p>Posting messages is a regular form</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">4
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-html data-lang=html><span style=display:flex><span>&lt;<span style=color:#f92672>form</span> <span style=color:#a6e22e>hx-post</span><span style=color:#f92672>=</span><span style=color:#e6db74>&#34;/chat/msg&#34;</span>&gt;
+</span></span><span style=display:flex><span>&lt;<span style=color:#f92672>input</span> <span style=color:#a6e22e>type</span><span style=color:#f92672>=</span><span style=color:#e6db74>&#34;text&#34;</span> <span style=color:#a6e22e>name</span><span style=color:#f92672>=</span><span style=color:#e6db74>&#34;msg&#34;</span> <span style=color:#a6e22e>autocomplete</span><span style=color:#f92672>=</span><span style=color:#e6db74>&#34;off&#34;</span>&gt;
+</span></span><span style=display:flex><span>&lt;<span style=color:#f92672>button</span> <span style=color:#a6e22e>type</span><span style=color:#f92672>=</span><span style=color:#e6db74>&#34;submit&#34;</span>&gt;Send&lt;/<span style=color:#f92672>button</span>&gt;
+</span></span><span style=display:flex><span>&lt;<span style=color:#f92672>form</span>&gt;
+</span></span></code></pre></td></tr></table></div></div><p>The handler will just return an empty form back. But it will also dispatch the message to all listeners. This oneliner sets up server-sent-events listener and wires the events into the DOM</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">4
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-html data-lang=html><span style=display:flex><span>&lt;<span style=color:#f92672>div</span> <span style=color:#a6e22e>hx-sse</span><span style=color:#f92672>=</span><span style=color:#e6db74>&#34;connect:/chat/events
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>     swap:message&#34;</span>
+</span></span><span style=display:flex><span>     <span style=color:#a6e22e>hx-swap</span><span style=color:#f92672>=</span><span style=color:#e6db74>&#34;afterbegin&#34;</span>&gt;
+</span></span><span style=display:flex><span>&lt;/<span style=color:#f92672>div</span>&gt;
+</span></span></code></pre></td></tr></table></div></div><p>On the server side this is is simple enough to implement without any libraries, just nee do set the content type</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-go data-lang=go><span style=display:flex><span><span style=color:#a6e22e>w</span>.<span style=color:#a6e22e>Header</span>().<span style=color:#a6e22e>Set</span>(<span style=color:#e6db74>&#34;Content-Type&#34;</span>, <span style=color:#e6db74>&#34;text/event-stream&#34;</span>)
+</span></span></code></pre></td></tr></table></div></div><p>And write events as lines (and make sure to flush)</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">4
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-go data-lang=go><span style=display:flex><span><span style=color:#a6e22e>fmt</span>.<span style=color:#a6e22e>Fprintf</span>(<span style=color:#a6e22e>w</span>, <span style=color:#e6db74>&#34;data: &lt;div&gt;%v&lt;/div&gt;\n\n&#34;</span>, <span style=color:#a6e22e>msg</span>)
+</span></span><span style=display:flex><span><span style=color:#66d9ef>if</span> <span style=color:#a6e22e>f</span>, <span style=color:#a6e22e>ok</span> <span style=color:#f92672>:=</span> <span style=color:#a6e22e>w</span>.(<span style=color:#a6e22e>http</span>.<span style=color:#a6e22e>Flusher</span>); <span style=color:#a6e22e>ok</span> {
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>f</span>.<span style=color:#a6e22e>Flush</span>()
+</span></span><span style=display:flex><span>}
+</span></span></code></pre></td></tr></table></div></div><h1 id=conclusion>Conclusion</h1><p>I hope that a full example in 3 files is evidence enough that there really is nothing to see here and things just work (and the title is a bit clickbaity - whoops).</p><p>That said I hope I still provided some useful insight. I do in fact see this pattern as useful if you&rsquo;re starting out with something simple, say a Rails/Django app, or maybe Wordpress or even a statically generated page and then figure out you want a piece of it that would really better be implemented as a separate service. HDA gives you an easy way out without implementing APIs and pulling in SPA frameworks. I do believe there is some value in here. But I would not go splitting up majestic HDA monoliths <a href=https://grugbrain.dev/#grug-on-microservices>for the sake of splitting them up</a>.</p><hr><p>Last modified on 2022-06-29</p><a href=/posts/2022-01-28-low-js/>Previous How I fell in love with low-js</a><br><a href=/blog/2023-03-31-awk-chatgpt/>Next (Re)Learning AWK with ChatGPT</a></div><script src=/js/instantclick.min.js data-no-instant></script>
+<script data-no-instant>InstantClick.init("mousedown")</script></body></html>

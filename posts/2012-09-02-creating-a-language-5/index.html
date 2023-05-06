@@ -1,207 +1,123 @@
-<!doctype html><html>
-<head>
-<title>Making a programming language Part 5 - variables and decisions</title>
-<meta charset=utf-8>
-<meta name=X-UA-Compatible content="IE=edge">
-<meta name=google-site-verification content>
-<meta content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=0" name=viewport>
-<style>body{max-width:800px;margin:auto;line-height:1.6;font-size:18px;color:#444;padding:0 10px}h1,h2,h3{line-height:1.2}.nav a,.nav a:visited,.nav a:hover,.nav a:active{color:inherit}.nav .title{margin:0}.nav-sub{display:inline-block}.nav-item{margin:5px}.nav-sub-right{display:inline-block;float:right}.nav-icon{margin-right:5px}.main img{display:block;max-width:100%;margin:auto}.main pre{overflow:auto}" media="screen"></style>
-</head>
-<body>
-<div class=nav>
-<a href=/><h2 class=title>Andraž Bajt's blog</h2></a>
-<div class=nav-sub>
-<a class=nav-item href=/about/>
-About Me
-</a>
-<a class=nav-item href=/>
-Archive
-</a>
-</div>
-<div class=nav-sub-right>
-<a class=nav-icon href=https://github.com/edofic target=_blank><img src=/icons/github.svg width=20 height=20></a>
+<!doctype html><html><head><title>Making a programming language Part 5 - variables and decisions</title><meta charset=utf-8><meta name=X-UA-Compatible content="IE=edge"><meta name=google-site-verification content><meta content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=0" name=viewport><style>body{max-width:800px;margin:auto;line-height:1.6;font-size:18px;color:#444;padding:0 10px}h1,h2,h3{line-height:1.2}.nav a,.nav a:visited,.nav a:hover,.nav a:active{color:inherit}.nav .title{margin:0}.nav-sub{display:inline-block}.nav-item{margin:5px}.nav-sub-right{display:inline-block;float:right}.nav-icon{margin-right:5px}.main img{display:block;max-width:100%;margin:auto}.main pre{overflow:auto}" media="screen"></style></head><body><div class=nav><a href=/><h2 class=title>Andraž Bajt's blog</h2></a><div class=nav-sub><a class=nav-item href=/about/>About Me</a>
+<a class=nav-item href=/>Archive</a></div><div class=nav-sub-right><a class=nav-icon href=https://github.com/edofic target=_blank><img src=/icons/github.svg width=20 height=20></a>
 <a class=nav-icon href=https://www.linkedin.com/in/edofic target=_blank><img src=/icons/linkedin.svg width=20 height=20></a>
 <a class=nav-icon href=https://twitter.com/edofic target=_blank><img src=/icons/twitter.svg width=20 height=20></a>
 <a class=nav-icon href=/index.xml target=_blank><img src=/icons/rss.svg width=20 height=20></a>
-<a class=nav-icon href=mailto:blog@edofic.com target=_blank><img src=/icons/email.svg width=20 height=20></a>
-</div>
-</div>
-<hr>
-<div class=main>
-<h1>Making a programming language Part 5 - variables and decisions</h1>
-<time>2012-09-02</time>
-<hr>
-<p><a href=http://commons.wikipedia.org/wiki/File%3AStdstreams-notitle.svg><img src=http://upload.wikimedia.org/wikipedia/commons/thumb/7/70/Stdstreams-notitle.svg/300px-Stdstreams-notitle.svg.png alt="A typical text terminal produces input and dis&mldr;"></a></p>
-<p><a href=/posts/2012-08-29-creating-a-language-1>Table of contents</a>, 
-<a href=https://github.com/edofic/scrat-lang>Whole project on github</a></p>
-<p>In <a href=/posts/2012-09-01-creating-a-language4>Part 4</a> I
+<a class=nav-icon href=mailto:blog@edofic.com target=_blank><img src=/icons/email.svg width=20 height=20></a></div></div><hr><div class=main><h1>Making a programming language Part 5 - variables and decisions</h1><time>2012-09-02</time><hr><p><a href=http://commons.wikipedia.org/wiki/File%3AStdstreams-notitle.svg><img src=http://upload.wikimedia.org/wikipedia/commons/thumb/7/70/Stdstreams-notitle.svg/300px-Stdstreams-notitle.svg.png alt="A typical text terminal produces input and dis&amp;hellip;"></a></p><p><a href=/posts/2012-08-29-creating-a-language-1>Table of contents</a>, 
+<a href=https://github.com/edofic/scrat-lang>Whole project on github</a></p><p>In <a href=/posts/2012-09-01-creating-a-language4>Part 4</a> I
 managed to create a <a href=http://en.wikipedia.org/wiki/Hello_world_program title="Hello world program">Hello World</a>.
 What&rsquo;s the next program after this in every programming tutorial? A
-program that asks your name and greets you. Greeter perhaps?</p>
-<p>Reading from <a href=http://en.wikipedia.org/wiki/Standard_streams title="Standard streams">standard
+program that asks your name and greets you. Greeter perhaps?</p><p>Reading from <a href=http://en.wikipedia.org/wiki/Standard_streams title="Standard streams">standard
 input</a>
 in pretty trivial, just wrapping up readLine
 <a href=http://en.wikipedia.org/wiki/Function_%28mathematics%29 title="Function (mathematics)">function</a>
 from scala, see previous post on how this is done. And I called this
-function readln.</p>
-<h3 id=variables>Variables</h3>
-<p>I could cheat a bit and write something like this</p>
-<pre><code>println(&quot;who are you?&quot;)
+function readln.</p><h3 id=variables>Variables</h3><p>I could cheat a bit and write something like this</p><pre><code>println(&quot;who are you?&quot;)
 println(&quot;hello&quot;, readln())
-</code></pre>
-<p>since I don&rsquo;t really have to store the name. This works but I also want
+</code></pre><p>since I don&rsquo;t really have to store the name. This works but I also want
 to make a program that responds differently to different input, e.g.
-simplified authentication. So I want to store the input. Something like</p>
-<pre><code>print(&quot;enter passcode&quot;)
+simplified authentication. So I want to store the input. Something like</p><pre><code>print(&quot;enter passcode&quot;)
 input = readln()
-</code></pre>
-<p>So I first create a case class to represent this</p>
-<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2>
-<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
-</span></code></pre></td>
-<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-scala data-lang=scala><span style=color:#66d9ef>case</span> <span style=color:#66d9ef>class</span> <span style=color:#a6e22e>Assignment</span><span style=color:#f92672>(</span>to<span style=color:#66d9ef>:</span> <span style=color:#66d9ef>Identifier</span><span style=color:#f92672>,</span> from<span style=color:#66d9ef>:</span> <span style=color:#66d9ef>Expression</span><span style=color:#f92672>)</span> <span style=color:#66d9ef>extends</span> <span style=color:#a6e22e>Expression</span>
-</code></pre></td></tr></table>
-</div>
-</div><p>parsing isn&rsquo;t that hard either</p>
-<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2>
-<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">4
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">5
-</span></code></pre></td>
-<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-scala data-lang=scala><span style=color:#66d9ef>private</span> <span style=color:#66d9ef>def</span> assignment<span style=color:#66d9ef>:</span> <span style=color:#66d9ef>Parser</span><span style=color:#f92672>[</span><span style=color:#66d9ef>Assignment</span><span style=color:#f92672>]</span> <span style=color:#66d9ef>=</span>
-  identifier <span style=color:#f92672>~</span> <span style=color:#e6db74>&#34;=&#34;</span> <span style=color:#f92672>~</span> expr <span style=color:#f92672>^^</span> <span style=color:#f92672>{</span>
-    <span style=color:#66d9ef>case</span> id <span style=color:#f92672>~</span> <span style=color:#e6db74>&#34;=&#34;</span> <span style=color:#f92672>~</span> exp <span style=color:#66d9ef>=&gt;</span> <span style=color:#a6e22e>Assignment</span><span style=color:#f92672>(</span>id<span style=color:#f92672>,</span> exp<span style=color:#f92672>)</span>
-  <span style=color:#f92672>}</span>
-<span style=color:#66d9ef>private</span> <span style=color:#66d9ef>def</span> expr<span style=color:#66d9ef>:</span> <span style=color:#66d9ef>Parser</span><span style=color:#f92672>[</span><span style=color:#66d9ef>Expression</span><span style=color:#f92672>]</span> <span style=color:#66d9ef>=</span> sum <span style=color:#f92672>|||</span> assignment
-</code></pre></td></tr></table>
-</div>
-</div><p>Notice again my abuse of <code>|||</code> where reverse order would have sufficed,
-don&rsquo;t do that.</p>
-<p>Evaluation&mldr;here I had to make a choice. Where to put the assigned
+</code></pre><p>So I first create a case class to represent this</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-scala data-lang=scala><span style=display:flex><span><span style=color:#66d9ef>case</span> <span style=color:#66d9ef>class</span> <span style=color:#a6e22e>Assignment</span><span style=color:#f92672>(</span>to<span style=color:#66d9ef>:</span> <span style=color:#66d9ef>Identifier</span><span style=color:#f92672>,</span> from<span style=color:#66d9ef>:</span> <span style=color:#66d9ef>Expression</span><span style=color:#f92672>)</span> <span style=color:#66d9ef>extends</span> <span style=color:#a6e22e>Expression</span>
+</span></span></code></pre></td></tr></table></div></div><p>parsing isn&rsquo;t that hard either</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">4
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">5
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-scala data-lang=scala><span style=display:flex><span><span style=color:#66d9ef>private</span> <span style=color:#66d9ef>def</span> assignment<span style=color:#66d9ef>:</span> <span style=color:#66d9ef>Parser</span><span style=color:#f92672>[</span><span style=color:#66d9ef>Assignment</span><span style=color:#f92672>]</span> <span style=color:#66d9ef>=</span>
+</span></span><span style=display:flex><span>  identifier <span style=color:#f92672>~</span> <span style=color:#e6db74>&#34;=&#34;</span> <span style=color:#f92672>~</span> expr <span style=color:#f92672>^^</span> <span style=color:#f92672>{</span>
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>case</span> id <span style=color:#f92672>~</span> <span style=color:#e6db74>&#34;=&#34;</span> <span style=color:#f92672>~</span> exp <span style=color:#66d9ef>=&gt;</span> <span style=color:#a6e22e>Assignment</span><span style=color:#f92672>(</span>id<span style=color:#f92672>,</span> exp<span style=color:#f92672>)</span>
+</span></span><span style=display:flex><span>  <span style=color:#f92672>}</span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>private</span> <span style=color:#66d9ef>def</span> expr<span style=color:#66d9ef>:</span> <span style=color:#66d9ef>Parser</span><span style=color:#f92672>[</span><span style=color:#66d9ef>Expression</span><span style=color:#f92672>]</span> <span style=color:#66d9ef>=</span> sum <span style=color:#f92672>|||</span> assignment
+</span></span></code></pre></td></tr></table></div></div><p>Notice again my abuse of <code>|||</code> where reverse order would have sufficed,
+don&rsquo;t do that.</p><p>Evaluation&mldr;here I had to make a choice. Where to put the assigned
 variables. In the same bucket as constants. <a href=http://en.wikipedia.org/wiki/Global_variable title="Global variable">Global
 variables</a>
 ARE evil but I don&rsquo;t care since I&rsquo;m having fun and I do it anyway. Don&rsquo;t
-worry this changes when I introduce function definitions and objects.</p>
-<p>So StdLib became ScratRuntime and has a mutable map for storing values
+worry this changes when I introduce function definitions and objects.</p><p>So StdLib became ScratRuntime and has a mutable map for storing values
 of identifiers. Full source
 <a href=https://github.com/edofic/scrat-lang/blob/51008205be59ec325dcb1de2f1058071c1703f4a/main/src/com/edofic/scrat/Runtime.scala>here</a> if you&rsquo;re interested. Of course some changes had to be made because of this
 refactoring. Full commit
-diff <a href=https://github.com/edofic/scrat-lang/commit/51008205be59ec325dcb1de2f1058071c1703f4a>here</a>.</p>
-<p>Evaluation of assignment is now simple map put</p>
-<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2>
-<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">4
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">5
-</span></code></pre></td>
-<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-scala data-lang=scala><span style=color:#66d9ef>case</span> <span style=color:#a6e22e>Assignment</span><span style=color:#f92672>(</span>name<span style=color:#f92672>,</span> exp<span style=color:#f92672>)</span> <span style=color:#66d9ef>=&gt;</span> <span style=color:#f92672>{</span>
-  <span style=color:#66d9ef>val</span> e <span style=color:#66d9ef>=</span> apply<span style=color:#f92672>(</span>exp<span style=color:#f92672>)</span>
-  runtime<span style=color:#f92672>.</span>identifiers<span style=color:#f92672>.</span>put<span style=color:#f92672>(</span>name<span style=color:#f92672>.</span>id<span style=color:#f92672>,</span> e<span style=color:#f92672>)</span>
-  e
-<span style=color:#f92672>}</span>
-</code></pre></td></tr></table>
-</div>
-</div><p>The expression returns the assigned value so you can do a=b=1(in fact I
-didn&rsquo;t try that yet)</p>
-<h3 id=what-if>What if</h3>
-<p>If expressions. I wasn&rsquo;t in the mood for parentheses or brackets so I
+diff <a href=https://github.com/edofic/scrat-lang/commit/51008205be59ec325dcb1de2f1058071c1703f4a>here</a>.</p><p>Evaluation of assignment is now simple map put</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">4
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">5
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-scala data-lang=scala><span style=display:flex><span><span style=color:#66d9ef>case</span> <span style=color:#a6e22e>Assignment</span><span style=color:#f92672>(</span>name<span style=color:#f92672>,</span> exp<span style=color:#f92672>)</span> <span style=color:#66d9ef>=&gt;</span> <span style=color:#f92672>{</span>
+</span></span><span style=display:flex><span>  <span style=color:#66d9ef>val</span> e <span style=color:#66d9ef>=</span> apply<span style=color:#f92672>(</span>exp<span style=color:#f92672>)</span>
+</span></span><span style=display:flex><span>  runtime<span style=color:#f92672>.</span>identifiers<span style=color:#f92672>.</span>put<span style=color:#f92672>(</span>name<span style=color:#f92672>.</span>id<span style=color:#f92672>,</span> e<span style=color:#f92672>)</span>
+</span></span><span style=display:flex><span>  e
+</span></span><span style=display:flex><span><span style=color:#f92672>}</span>
+</span></span></code></pre></td></tr></table></div></div><p>The expression returns the assigned value so you can do a=b=1(in fact I
+didn&rsquo;t try that yet)</p><h3 id=what-if>What if</h3><p>If expressions. I wasn&rsquo;t in the mood for parentheses or brackets so I
 went ruby style. Except my expressions are single line only(for now) so
 I had to put everything in one line. I needed a separator between the
 <a href=http://en.wikipedia.org/wiki/Predicate_%28grammar%29 title="Predicate (grammar)">predicate</a>
 and positive value and as an added bonus I didn&rsquo;t need the &ldquo;end&rdquo;. So not
-much like ruby anymore but it was good inspiration. </p>
-<p>I considered booleans but ultimately I can implement everything still in
+much like ruby anymore but it was good inspiration. </p><p>I considered booleans but ultimately I can implement everything still in
 doubles(too much work to make  whole <a href=http://en.wikipedia.org/wiki/Type_system title="Type system">type
 system</a> of
 primitives when you can have just one type). Zero is False and
 everything else is True. So AND becomes <code>*</code> and OR becomes <code>-</code>. I&rsquo;ll add
-some equality so I can compare strings too.</p>
-<p>I didn&rsquo;t need inequalities until now(didn&rsquo;t even think about before
-writing this post) so they aren&rsquo;t in the language yet.</p>
-<p>Sample if expression</p>
-<p>if input1*input2 then &ldquo;okay&rdquo; else &ldquo;nooooooo&rdquo;</p>
-<p>See, no parens. And I was inspired by scala to make the else part
-mandatory.</p>
-<p>So how do I implement this? Case class is quite trivial, it has tree
+some equality so I can compare strings too.</p><p>I didn&rsquo;t need inequalities until now(didn&rsquo;t even think about before
+writing this post) so they aren&rsquo;t in the language yet.</p><p>Sample if expression</p><p>if input1*input2 then &ldquo;okay&rdquo; else &ldquo;nooooooo&rdquo;</p><p>See, no parens. And I was inspired by scala to make the else part
+mandatory.</p><p>So how do I implement this? Case class is quite trivial, it has tree
 expressions: predicate, true value and false value. Evaluation just
 evaluates the predicate(recursion!!) and then evaluates and returns the
-appropriate expression</p>
-<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2>
-<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">4
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">5
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">6
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">7
-</span></code></pre></td>
-<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-scala data-lang=scala><span style=color:#66d9ef>case</span> <span style=color:#a6e22e>IfThenElse</span><span style=color:#f92672>(</span>pred<span style=color:#f92672>,</span> then<span style=color:#f92672>,</span> els<span style=color:#f92672>)</span> <span style=color:#66d9ef>=&gt;</span>
-  apply<span style=color:#f92672>(</span>pred<span style=color:#f92672>)</span> <span style=color:#66d9ef>match</span> <span style=color:#f92672>{</span>
-    <span style=color:#66d9ef>case</span> d<span style=color:#66d9ef>:</span> <span style=color:#66d9ef>Double</span> <span style=color:#f92672>=&gt;</span>
-      <span style=color:#66d9ef>if</span> <span style=color:#f92672>(</span>d <span style=color:#f92672>!=</span> <span style=color:#ae81ff>0</span><span style=color:#f92672>)</span> apply<span style=color:#f92672>(</span>then<span style=color:#f92672>)</span> <span style=color:#66d9ef>else</span> apply<span style=color:#f92672>(</span>els<span style=color:#f92672>)</span>
-    <span style=color:#66d9ef>case</span> other <span style=color:#66d9ef>=&gt;</span>
-      <span style=color:#66d9ef>throw</span> <span style=color:#66d9ef>new</span> <span style=color:#a6e22e>ScratInvalidTypeError</span><span style=color:#f92672>(</span><span style=color:#e6db74>&#34;expected a number, got &#34;</span> <span style=color:#f92672>+</span> other<span style=color:#f92672>)</span>
-  <span style=color:#f92672>}</span>
-</code></pre></td></tr></table>
-</div>
-</div><p>That error is just a class that extends exception.
+appropriate expression</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">4
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">5
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">6
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">7
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-scala data-lang=scala><span style=display:flex><span><span style=color:#66d9ef>case</span> <span style=color:#a6e22e>IfThenElse</span><span style=color:#f92672>(</span>pred<span style=color:#f92672>,</span> then<span style=color:#f92672>,</span> els<span style=color:#f92672>)</span> <span style=color:#66d9ef>=&gt;</span>
+</span></span><span style=display:flex><span>  apply<span style=color:#f92672>(</span>pred<span style=color:#f92672>)</span> <span style=color:#66d9ef>match</span> <span style=color:#f92672>{</span>
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>case</span> d<span style=color:#66d9ef>:</span> <span style=color:#66d9ef>Double</span> <span style=color:#f92672>=&gt;</span>
+</span></span><span style=display:flex><span>      <span style=color:#66d9ef>if</span> <span style=color:#f92672>(</span>d <span style=color:#f92672>!=</span> <span style=color:#ae81ff>0</span><span style=color:#f92672>)</span> apply<span style=color:#f92672>(</span>then<span style=color:#f92672>)</span> <span style=color:#66d9ef>else</span> apply<span style=color:#f92672>(</span>els<span style=color:#f92672>)</span>
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>case</span> other <span style=color:#66d9ef>=&gt;</span>
+</span></span><span style=display:flex><span>      <span style=color:#66d9ef>throw</span> <span style=color:#66d9ef>new</span> <span style=color:#a6e22e>ScratInvalidTypeError</span><span style=color:#f92672>(</span><span style=color:#e6db74>&#34;expected a number, got &#34;</span> <span style=color:#f92672>+</span> other<span style=color:#f92672>)</span>
+</span></span><span style=display:flex><span>  <span style=color:#f92672>}</span>
+</span></span></code></pre></td></tr></table></div></div><p>That error is just a class that extends exception.
 I added some more case classes and evaluation cases for Equals and
 NotEquals. They&rsquo;re very simple so I won&rsquo;t include them here(<a href=https://github.com/edofic/scrat-lang/commit/97312113282b484fa53357f61fb05990da0cd3ea>diff on
 github</a>)
-Parsing on the other hand is more interesting, here&rsquo;s the changed part.</p>
-<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2>
-<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">11
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">12
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">13
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">14
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">15
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">16
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">17
-</span></code></pre></td>
-<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-scala data-lang=scala><span style=color:#66d9ef>private</span> <span style=color:#66d9ef>def</span> ifThenElse<span style=color:#66d9ef>:</span> <span style=color:#66d9ef>Parser</span><span style=color:#f92672>[</span><span style=color:#66d9ef>IfThenElse</span><span style=color:#f92672>]</span> <span style=color:#66d9ef>=</span>
-  <span style=color:#e6db74>&#34;if&#34;</span> <span style=color:#f92672>~</span> expr <span style=color:#f92672>~</span> <span style=color:#e6db74>&#34;then&#34;</span> <span style=color:#f92672>~</span> expr <span style=color:#f92672>~</span> <span style=color:#e6db74>&#34;else&#34;</span> <span style=color:#f92672>~</span> expr <span style=color:#f92672>^^</span> <span style=color:#f92672>{</span>
-    <span style=color:#66d9ef>case</span> <span style=color:#e6db74>&#34;if&#34;</span> <span style=color:#f92672>~</span> predicate <span style=color:#f92672>~</span> <span style=color:#e6db74>&#34;then&#34;</span> <span style=color:#f92672>~</span> then <span style=color:#f92672>~</span> <span style=color:#e6db74>&#34;else&#34;</span> <span style=color:#f92672>~</span> els <span style=color:#66d9ef>=&gt;</span>
-      <span style=color:#a6e22e>IfThenElse</span><span style=color:#f92672>(</span>predicate<span style=color:#f92672>,</span> then<span style=color:#f92672>,</span> els<span style=color:#f92672>)</span>
-  <span style=color:#f92672>}</span>
-<span style=color:#66d9ef>private</span> <span style=color:#66d9ef>def</span> equality<span style=color:#66d9ef>:</span> <span style=color:#66d9ef>Parser</span><span style=color:#f92672>[</span><span style=color:#66d9ef>Expression</span><span style=color:#f92672>]</span> <span style=color:#66d9ef>=</span>
-  noEqExpr <span style=color:#f92672>~</span> rep<span style=color:#f92672>((</span><span style=color:#e6db74>&#34;==&#34;</span> <span style=color:#f92672>|</span> <span style=color:#e6db74>&#34;!=&#34;</span><span style=color:#f92672>)</span> <span style=color:#f92672>~</span> noEqExpr<span style=color:#f92672>)</span> <span style=color:#f92672>^^</span> <span style=color:#f92672>{</span>
-    <span style=color:#66d9ef>case</span> head <span style=color:#f92672>~</span> tail <span style=color:#66d9ef>=&gt;</span>
-      <span style=color:#66d9ef>var</span> tree<span style=color:#66d9ef>:</span> <span style=color:#66d9ef>Expression</span> <span style=color:#f92672>=</span> head
-      tail<span style=color:#f92672>.</span>foreach <span style=color:#f92672>{</span>
-        <span style=color:#66d9ef>case</span> <span style=color:#e6db74>&#34;==&#34;</span> <span style=color:#f92672>~</span> e <span style=color:#66d9ef>=&gt;</span> tree <span style=color:#66d9ef>=</span> <span style=color:#a6e22e>Equals</span><span style=color:#f92672>(</span>tree<span style=color:#f92672>,</span> e<span style=color:#f92672>)</span>
-        <span style=color:#66d9ef>case</span> <span style=color:#e6db74>&#34;!=&#34;</span> <span style=color:#f92672>~</span> e <span style=color:#66d9ef>=&gt;</span> tree <span style=color:#66d9ef>=</span> <span style=color:#a6e22e>NotEquals</span><span style=color:#f92672>(</span>tree<span style=color:#f92672>,</span> e<span style=color:#f92672>)</span>
-      <span style=color:#f92672>}</span>
-      tree
-  <span style=color:#f92672>}</span>
-<span style=color:#66d9ef>private</span> <span style=color:#66d9ef>def</span> noEqExpr<span style=color:#66d9ef>:</span> <span style=color:#66d9ef>Parser</span><span style=color:#f92672>[</span><span style=color:#66d9ef>Expression</span><span style=color:#f92672>]</span> <span style=color:#66d9ef>=</span>
-  sum <span style=color:#f92672>|||</span> assignment <span style=color:#f92672>|||</span> ifThenElseprivate <span style=color:#66d9ef>def</span> expr <span style=color:#66d9ef>=</span> noEqExpr <span style=color:#f92672>|||</span> equality
-</code></pre></td></tr></table>
-</div>
-</div><p><a href=http://www.flickr.com/photos/90863480@N00/4947839133><img src=http://farm5.static.flickr.com/4074/4947839133_086f0266e4_m.jpg alt=layers></a></p>
-<p>I finally got around to understand grammars a bit more. In order to make
+Parsing on the other hand is more interesting, here&rsquo;s the changed part.</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">11
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">12
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">13
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">14
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">15
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">16
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">17
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-scala data-lang=scala><span style=display:flex><span><span style=color:#66d9ef>private</span> <span style=color:#66d9ef>def</span> ifThenElse<span style=color:#66d9ef>:</span> <span style=color:#66d9ef>Parser</span><span style=color:#f92672>[</span><span style=color:#66d9ef>IfThenElse</span><span style=color:#f92672>]</span> <span style=color:#66d9ef>=</span>
+</span></span><span style=display:flex><span>  <span style=color:#e6db74>&#34;if&#34;</span> <span style=color:#f92672>~</span> expr <span style=color:#f92672>~</span> <span style=color:#e6db74>&#34;then&#34;</span> <span style=color:#f92672>~</span> expr <span style=color:#f92672>~</span> <span style=color:#e6db74>&#34;else&#34;</span> <span style=color:#f92672>~</span> expr <span style=color:#f92672>^^</span> <span style=color:#f92672>{</span>
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>case</span> <span style=color:#e6db74>&#34;if&#34;</span> <span style=color:#f92672>~</span> predicate <span style=color:#f92672>~</span> <span style=color:#e6db74>&#34;then&#34;</span> <span style=color:#f92672>~</span> then <span style=color:#f92672>~</span> <span style=color:#e6db74>&#34;else&#34;</span> <span style=color:#f92672>~</span> els <span style=color:#66d9ef>=&gt;</span>
+</span></span><span style=display:flex><span>      <span style=color:#a6e22e>IfThenElse</span><span style=color:#f92672>(</span>predicate<span style=color:#f92672>,</span> then<span style=color:#f92672>,</span> els<span style=color:#f92672>)</span>
+</span></span><span style=display:flex><span>  <span style=color:#f92672>}</span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>private</span> <span style=color:#66d9ef>def</span> equality<span style=color:#66d9ef>:</span> <span style=color:#66d9ef>Parser</span><span style=color:#f92672>[</span><span style=color:#66d9ef>Expression</span><span style=color:#f92672>]</span> <span style=color:#66d9ef>=</span>
+</span></span><span style=display:flex><span>  noEqExpr <span style=color:#f92672>~</span> rep<span style=color:#f92672>((</span><span style=color:#e6db74>&#34;==&#34;</span> <span style=color:#f92672>|</span> <span style=color:#e6db74>&#34;!=&#34;</span><span style=color:#f92672>)</span> <span style=color:#f92672>~</span> noEqExpr<span style=color:#f92672>)</span> <span style=color:#f92672>^^</span> <span style=color:#f92672>{</span>
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>case</span> head <span style=color:#f92672>~</span> tail <span style=color:#66d9ef>=&gt;</span>
+</span></span><span style=display:flex><span>      <span style=color:#66d9ef>var</span> tree<span style=color:#66d9ef>:</span> <span style=color:#66d9ef>Expression</span> <span style=color:#f92672>=</span> head
+</span></span><span style=display:flex><span>      tail<span style=color:#f92672>.</span>foreach <span style=color:#f92672>{</span>
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>case</span> <span style=color:#e6db74>&#34;==&#34;</span> <span style=color:#f92672>~</span> e <span style=color:#66d9ef>=&gt;</span> tree <span style=color:#66d9ef>=</span> <span style=color:#a6e22e>Equals</span><span style=color:#f92672>(</span>tree<span style=color:#f92672>,</span> e<span style=color:#f92672>)</span>
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>case</span> <span style=color:#e6db74>&#34;!=&#34;</span> <span style=color:#f92672>~</span> e <span style=color:#66d9ef>=&gt;</span> tree <span style=color:#66d9ef>=</span> <span style=color:#a6e22e>NotEquals</span><span style=color:#f92672>(</span>tree<span style=color:#f92672>,</span> e<span style=color:#f92672>)</span>
+</span></span><span style=display:flex><span>      <span style=color:#f92672>}</span>
+</span></span><span style=display:flex><span>      tree
+</span></span><span style=display:flex><span>  <span style=color:#f92672>}</span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>private</span> <span style=color:#66d9ef>def</span> noEqExpr<span style=color:#66d9ef>:</span> <span style=color:#66d9ef>Parser</span><span style=color:#f92672>[</span><span style=color:#66d9ef>Expression</span><span style=color:#f92672>]</span> <span style=color:#66d9ef>=</span>
+</span></span><span style=display:flex><span>  sum <span style=color:#f92672>|||</span> assignment <span style=color:#f92672>|||</span> ifThenElseprivate <span style=color:#66d9ef>def</span> expr <span style=color:#66d9ef>=</span> noEqExpr <span style=color:#f92672>|||</span> equality
+</span></span></code></pre></td></tr></table></div></div><p><a href=http://www.flickr.com/photos/90863480@N00/4947839133><img src=http://farm5.static.flickr.com/4074/4947839133_086f0266e4_m.jpg alt=layers></a></p><p>I finally got around to understand grammars a bit more. In order to make
 the grammar not ambiguous an not left recursive you stack layers upon
 layers. Like onion.  And you use these layers to separate layers of
 precedence - most lightly binding operations being the upper
@@ -211,25 +127,9 @@ an item from a higher layer - thus recursion - but it must first match
 something to avoid infinite recursion. And that&rsquo;s it. This is very well
 explained on <a href=https://www.coursera.org/compilers>compilers course on Coursera</a> 
 and I thought I understood the (very abstract) explanation but the evidence says
-I did not until I had some hands on experience.</p>
-<p>A quick sample in scrat to finish it of</p>
-<pre><code>print(&quot;enter passcode&quot;)
+I did not until I had some hands on experience.</p><p>A quick sample in scrat to finish it of</p><pre><code>print(&quot;enter passcode&quot;)
 pass = &quot;password&quot;
 state = if readln()==pass then &quot;granted&quot; else &quot;denied&quot;
 println(&quot;access&quot;, state)
-</code></pre>
-<p><strong>next <a href=/posts/2012-09-25-creating-a-language-6>implementing user defined functions</a></strong></p>
-<hr>
-<p>Last modified on 2012-09-02</p>
-<a href=/posts/2012-09-01-creating-a-language4/>
-Previous Making a programming language Part 4 - Hello World
-</a>
-<br>
-<a href=/posts/2012-09-17-composition/>
-Next Pretty function composition in scala and asynchronous function composition on android
-</a>
-</div>
-<script src=/js/instantclick.min.js data-no-instant></script>
-<script data-no-instant>InstantClick.init("mousedown")</script>
-</body>
-</html>
+</code></pre><p><strong>next <a href=/posts/2012-09-25-creating-a-language-6>implementing user defined functions</a></strong></p><hr><p>Last modified on 2012-09-02</p><a href=/posts/2012-09-01-creating-a-language4/>Previous Making a programming language Part 4 - Hello World</a><br><a href=/posts/2012-09-17-composition/>Next Pretty function composition in scala and asynchronous function composition on android</a></div><script src=/js/instantclick.min.js data-no-instant></script>
+<script data-no-instant>InstantClick.init("mousedown")</script></body></html>

@@ -1,97 +1,41 @@
-<!doctype html><html>
-<head>
-<title>Moving to Hugo</title>
-<meta charset=utf-8>
-<meta name=X-UA-Compatible content="IE=edge">
-<meta name=google-site-verification content>
-<meta content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=0" name=viewport>
-<style>body{max-width:800px;margin:auto;line-height:1.6;font-size:18px;color:#444;padding:0 10px}h1,h2,h3{line-height:1.2}.nav a,.nav a:visited,.nav a:hover,.nav a:active{color:inherit}.nav .title{margin:0}.nav-sub{display:inline-block}.nav-item{margin:5px}.nav-sub-right{display:inline-block;float:right}.nav-icon{margin-right:5px}.main img{display:block;max-width:100%;margin:auto}.main pre{overflow:auto}" media="screen"></style>
-</head>
-<body>
-<div class=nav>
-<a href=/><h2 class=title>Andraž Bajt's blog</h2></a>
-<div class=nav-sub>
-<a class=nav-item href=/about/>
-About Me
-</a>
-<a class=nav-item href=/>
-Archive
-</a>
-</div>
-<div class=nav-sub-right>
-<a class=nav-icon href=https://github.com/edofic target=_blank><img src=/icons/github.svg width=20 height=20></a>
+<!doctype html><html><head><title>Moving to Hugo</title><meta charset=utf-8><meta name=X-UA-Compatible content="IE=edge"><meta name=google-site-verification content><meta content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=0" name=viewport><style>body{max-width:800px;margin:auto;line-height:1.6;font-size:18px;color:#444;padding:0 10px}h1,h2,h3{line-height:1.2}.nav a,.nav a:visited,.nav a:hover,.nav a:active{color:inherit}.nav .title{margin:0}.nav-sub{display:inline-block}.nav-item{margin:5px}.nav-sub-right{display:inline-block;float:right}.nav-icon{margin-right:5px}.main img{display:block;max-width:100%;margin:auto}.main pre{overflow:auto}" media="screen"></style></head><body><div class=nav><a href=/><h2 class=title>Andraž Bajt's blog</h2></a><div class=nav-sub><a class=nav-item href=/about/>About Me</a>
+<a class=nav-item href=/>Archive</a></div><div class=nav-sub-right><a class=nav-icon href=https://github.com/edofic target=_blank><img src=/icons/github.svg width=20 height=20></a>
 <a class=nav-icon href=https://www.linkedin.com/in/edofic target=_blank><img src=/icons/linkedin.svg width=20 height=20></a>
 <a class=nav-icon href=https://twitter.com/edofic target=_blank><img src=/icons/twitter.svg width=20 height=20></a>
 <a class=nav-icon href=/index.xml target=_blank><img src=/icons/rss.svg width=20 height=20></a>
-<a class=nav-icon href=mailto:blog@edofic.com target=_blank><img src=/icons/email.svg width=20 height=20></a>
-</div>
-</div>
-<hr>
-<div class=main>
-<h1>Moving to Hugo</h1>
-<time>2020-01-15</time>
-<hr>
-<p>If you&rsquo;ve been here before you might notice the site looks different. Indeed I
-moved my content to yet another platform (first it was blogspot -> hakyll).</p>
-<p>I wanted to publish something but I ran into issues: my toolchain did not work.
+<a class=nav-icon href=mailto:blog@edofic.com target=_blank><img src=/icons/email.svg width=20 height=20></a></div></div><hr><div class=main><h1>Moving to Hugo</h1><time>2020-01-15</time><hr><p>If you&rsquo;ve been here before you might notice the site looks different. Indeed I
+moved my content to yet another platform (first it was blogspot -> hakyll).</p><p>I wanted to publish something but I ran into issues: my toolchain did not work.
 See, I&rsquo;ve been doing less Haskell on my machine lately and negligence led into
 my setup rotting (as I did upgrade my machine quite a bit). Truth be told the
 infrastructure was not designed to last the test of time. Anyways after a few
 rounds of debugging I once decided to finally give up my complicated custom
-setup and move to something off-the-shelf so I can focus on writing.</p>
-<h3 id=hakyll>Hakyll</h3>
-<p>This may come as a bit surprising but <a href=https://jaspervdj.be/hakyll/>Hakyll</a> is
+setup and move to something off-the-shelf so I can focus on writing.</p><h3 id=hakyll>Hakyll</h3><p>This may come as a bit surprising but <a href=https://jaspervdj.be/hakyll/>Hakyll</a> is
 not actually a ready-made tool. Rather it&rsquo;s a Haskell library to write your own
 static page generator. This means it&rsquo;s super customizable but it also means you
 need to own your generator and give it some love. Which I did for a while. But
-when I stopped I ran into trouble.</p>
-<p>But I wanted to keep my content. Preferably also the general architecture: keep
-posts in markdown and generate static html pages for publishing.</p>
-<p>I&rsquo;m and engineer by heart and I&rsquo;m the first to admit I love playing with shiny
+when I stopped I ran into trouble.</p><p>But I wanted to keep my content. Preferably also the general architecture: keep
+posts in markdown and generate static html pages for publishing.</p><p>I&rsquo;m and engineer by heart and I&rsquo;m the first to admit I love playing with shiny
 new tools. So why not jump ship and move to something new? Maybe something
-easier to maintain.</p>
-<h3 id=choosing-new-tools>Choosing new tools</h3>
-<p>With the hype around &ldquo;JAM stack&rdquo; and static page generation I imagined there is
+easier to maintain.</p><h3 id=choosing-new-tools>Choosing new tools</h3><p>With the hype around &ldquo;JAM stack&rdquo; and static page generation I imagined there is
 a proliferation of tooling focusing on my issue. A web search quickly led me to
 <a href=https://www.staticgen.com/>staticgen.com</a> - a site dedicated to providing a
-list of tools. Perfect.</p>
-<p>Few names sounded familiar. But reading descriptions I figured out I have a few
+list of tools. Perfect.</p><p>Few names sounded familiar. But reading descriptions I figured out I have a few
 more requirements. I don&rsquo;t want do deal with frontend frameworks
 (React/Vue/etc) - I want my content in markdown. And I also want my tools fast,
 easy to install/maintain and fully featured - no hacking to set up RSS (yes I
-want to support RSS in 2020 :D).</p>
-<p>A lot of research and playing around later I settled on
+want to support RSS in 2020 :D).</p><p>A lot of research and playing around later I settled on
 <a href=https://gohugo.io/>Hugo</a>. I ticks all my boxes, plus it&rsquo;s written in
 <a href=https://golang.org/>Go</a> which is probably my main language at the moment so
 I&rsquo;m very familiar with the tooling and thus comfortable handling
-installs/maintenance.</p>
-<p>So Hugo it is.</p>
-<h3 id=the-migration>The migration</h3>
-<p>Since Hugo works by the same principle - content in markdown + templates - it
+installs/maintenance.</p><p>So Hugo it is.</p><h3 id=the-migration>The migration</h3><p>Since Hugo works by the same principle - content in markdown + templates - it
 was quite straightforward. Copied over my content, updated the slight
 differences in metadata with a quick vim macro, whip up a basic config based on
 the tutorial et voila: blog was rendering. Well I took an off the shelf template
 to begin with. Then some modification to get it quite right and I was very
-happy. No code to maintain, just content, template, and a config file.</p>
-<h3 id=verdict>Verdict</h3>
-<p>The part that&rsquo;s actually impressive is the default features and speed make
+happy. No code to maintain, just content, template, and a config file.</p><h3 id=verdict>Verdict</h3><p>The part that&rsquo;s actually impressive is the default features and speed make
 for really pleasant experience. Out of the box I had automatic rebuilds with
 file watching, nice error messages for when I make a mistake and even automatic
 browser refreshes. And the whole thing is so quick that by the time I save in my
 editor and switch to browser it already rebuilt, refreshed the page and
-rendered. Feels instant. I love it.</p>
-<p>With technical hurdles removed maybe I&rsquo;ll start writing more again.</p>
-<hr>
-<p>Last modified on 2020-01-15</p>
-<a href=/posts/2018-05-25-linear-time-sorting/>
-Previous Linear time sorting
-</a>
-<br>
-<a href=/posts/2020-04-20-rebase-rename/>
-Next Rename rebase with git
-</a>
-</div>
-<script src=/js/instantclick.min.js data-no-instant></script>
-<script data-no-instant>InstantClick.init("mousedown")</script>
-</body>
-</html>
+rendered. Feels instant. I love it.</p><p>With technical hurdles removed maybe I&rsquo;ll start writing more again.</p><hr><p>Last modified on 2020-01-15</p><a href=/posts/2018-05-25-linear-time-sorting/>Previous Linear time sorting</a><br><a href=/posts/2020-04-20-rebase-rename/>Next Rename rebase with git</a></div><script src=/js/instantclick.min.js data-no-instant></script>
+<script data-no-instant>InstantClick.init("mousedown")</script></body></html>

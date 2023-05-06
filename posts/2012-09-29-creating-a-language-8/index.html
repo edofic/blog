@@ -1,39 +1,10 @@
-<!doctype html><html>
-<head>
-<title>Making a programming language Part 8 - going faster</title>
-<meta charset=utf-8>
-<meta name=X-UA-Compatible content="IE=edge">
-<meta name=google-site-verification content>
-<meta content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=0" name=viewport>
-<style>body{max-width:800px;margin:auto;line-height:1.6;font-size:18px;color:#444;padding:0 10px}h1,h2,h3{line-height:1.2}.nav a,.nav a:visited,.nav a:hover,.nav a:active{color:inherit}.nav .title{margin:0}.nav-sub{display:inline-block}.nav-item{margin:5px}.nav-sub-right{display:inline-block;float:right}.nav-icon{margin-right:5px}.main img{display:block;max-width:100%;margin:auto}.main pre{overflow:auto}" media="screen"></style>
-</head>
-<body>
-<div class=nav>
-<a href=/><h2 class=title>Andraž Bajt's blog</h2></a>
-<div class=nav-sub>
-<a class=nav-item href=/about/>
-About Me
-</a>
-<a class=nav-item href=/>
-Archive
-</a>
-</div>
-<div class=nav-sub-right>
-<a class=nav-icon href=https://github.com/edofic target=_blank><img src=/icons/github.svg width=20 height=20></a>
+<!doctype html><html><head><title>Making a programming language Part 8 - going faster</title><meta charset=utf-8><meta name=X-UA-Compatible content="IE=edge"><meta name=google-site-verification content><meta content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=0" name=viewport><style>body{max-width:800px;margin:auto;line-height:1.6;font-size:18px;color:#444;padding:0 10px}h1,h2,h3{line-height:1.2}.nav a,.nav a:visited,.nav a:hover,.nav a:active{color:inherit}.nav .title{margin:0}.nav-sub{display:inline-block}.nav-item{margin:5px}.nav-sub-right{display:inline-block;float:right}.nav-icon{margin-right:5px}.main img{display:block;max-width:100%;margin:auto}.main pre{overflow:auto}" media="screen"></style></head><body><div class=nav><a href=/><h2 class=title>Andraž Bajt's blog</h2></a><div class=nav-sub><a class=nav-item href=/about/>About Me</a>
+<a class=nav-item href=/>Archive</a></div><div class=nav-sub-right><a class=nav-icon href=https://github.com/edofic target=_blank><img src=/icons/github.svg width=20 height=20></a>
 <a class=nav-icon href=https://www.linkedin.com/in/edofic target=_blank><img src=/icons/linkedin.svg width=20 height=20></a>
 <a class=nav-icon href=https://twitter.com/edofic target=_blank><img src=/icons/twitter.svg width=20 height=20></a>
 <a class=nav-icon href=/index.xml target=_blank><img src=/icons/rss.svg width=20 height=20></a>
-<a class=nav-icon href=mailto:blog@edofic.com target=_blank><img src=/icons/email.svg width=20 height=20></a>
-</div>
-</div>
-<hr>
-<div class=main>
-<h1>Making a programming language Part 8 - going faster</h1>
-<time>2012-09-29</time>
-<hr>
-<p><a href=/posts/2012-08-29-creating-a-language-1>Table of contents</a>, 
-<a href=https://github.com/edofic/scrat-lang>Whole project on github</a></p>
-<p>First of all, I wrote some tests for scrat. That was a bit challenging
+<a class=nav-icon href=mailto:blog@edofic.com target=_blank><img src=/icons/email.svg width=20 height=20></a></div></div><hr><div class=main><h1>Making a programming language Part 8 - going faster</h1><time>2012-09-29</time><hr><p><a href=/posts/2012-08-29-creating-a-language-1>Table of contents</a>, 
+<a href=https://github.com/edofic/scrat-lang>Whole project on github</a></p><p>First of all, I wrote some tests for scrat. That was a bit challenging
 to get started. How do you test a language? I decided to write a bunch
 of programs that exercise and combine different language features. And
 then stare into code until I was absolutely sure they are correct.
@@ -47,8 +18,7 @@ ScalaTest that generates tests by iterating over the array of these
 <a href=http://en.wikipedia.org/wiki/Tuple title=Tuple>tuples</a>. Quite cool, oh and
 I also included some descriptions into the tuples. So I get nice output.
 I pondered this idea quite some time ago but finally implemented it a
-bit after functions and objects.</p>
-<p>So now I can do crazy
+bit after functions and objects.</p><p>So now I can do crazy
 <a href=http://www.techopedia.com/definition/3865/refactoring title=Refactoring>refactorings</a>
 while still maintaining the language - I trust my tests! But first of
 all, some benchmarks. I decided to measure execution time of parsing and
@@ -64,24 +34,16 @@ code</a>?
 That would mean about 3 seconds on a 1000 line file <strong>IF</strong> complexity is
 linear(which I later leart isn&rsquo;t!). And that&rsquo;s 3 seconds on fifth run
 or so, first run(which is the only one when doing real stuff) would be
-10 seconds+, unacceptable. (evaluation takes a few ms)</p>
-<h3 id=research>Research</h3>
-<p>At first I just gave it some thought. Well it&rsquo;s a <strong>recursive</strong> descent
+10 seconds+, unacceptable. (evaluation takes a few ms)</p><h3 id=research>Research</h3><p>At first I just gave it some thought. Well it&rsquo;s a <strong>recursive</strong> descent
 parser, and from what I remember it back traces on failure. So
 efficiency has a lot to do with grammar structure. And it won&rsquo;t be
 linear because you have to do (usually) more back tracing when dealing
-with longer input.</p>
-<p>Internets here I come. </p>
-<p>My thoughts were confirmed. I found some guys on forums complaining over
+with longer input.</p><p>Internets here I come. </p><p>My thoughts were confirmed. I found some guys on forums complaining over
 speed and then Mr. Odersky himself commented something like this(from
-memory):</p>
-<blockquote>
-<p>Well the parsers in scala standard library are more like an example
+memory):</p><blockquote><p>Well the parsers in scala standard library are more like an example
 how to do recusive descent, functional style. They are perfectly
 usable for parsing command lines but not for long files. You should
-use a parser generator for that.</p>
-</blockquote>
-<p>I was bummed. The reason I didn&rsquo;t use a parser generator was this close
+use a parser generator for that.</p></blockquote><p>I was bummed. The reason I didn&rsquo;t use a parser generator was this close
 integration that parser as a library could provide me. By the way
 implementation of
 <a href=http://en.wikipedia.org/wiki/Parsing title=Parsing>Parsers</a> is remarkably
@@ -100,9 +62,7 @@ Parsing</a>.
 <a href=http://scala-programming-language.1934581.n4.nabble.com/attachment/1956909/0/packrat_parsers.pdf>This paper</a>
 provides details but the gist of it is to use <a href=http://en.wikipedia.org/wiki/Lazy_evaluation title="Lazy evaluation">lazy
 evaluation</a>
-and memoization to reduce object creation and speed things up.</p>
-<h3 id=conversion-and-results>Conversion and results</h3>
-<p>Conversion is dead easy. It&rsquo;s fully described in scala api
+and memoization to reduce object creation and speed things up.</p><h3 id=conversion-and-results>Conversion and results</h3><p>Conversion is dead easy. It&rsquo;s fully described in scala api
 documentation. Basically you mix in PackratParsers and change
 <code>def : Parser[] = ...</code> to <code>lazy val : PackratParser[] = ...</code> and that&rsquo;s it. Mixed
 in trait provides the necessary implicit conversions, lazy makes sure
@@ -115,22 +75,8 @@ and packrat(packrat does include some overhead on specific grammars and
 inputs). But I just converted all and run the benchmark again. And
 behold&mldr;11ms. On the best run. More like 15 on average. But that&rsquo;s
 still more than a whole order of magnitude faster. And it should scale
-better. </p>
-<p><strong>next:</strong> don&rsquo;t know yet. I caught up with my implementation(finally!). I
+better. </p><p><strong>next:</strong> don&rsquo;t know yet. I caught up with my implementation(finally!). I
 thinking about making functions stronger by relaxing the rules of
 invocation and doing some syntax sugar for lambdas. That and java
-interop. Or possibly compiling to bytecode. </p>
-<hr>
-<p>Last modified on 2012-09-29</p>
-<a href=/posts/2012-09-27-creating-a-language-7a/>
-Previous Making a programming language Part 7a - objects
-</a>
-<br>
-<a href=/posts/2012-10-08-creating-a-language-7b/>
-Next Making a programming language Part 7b - using objects
-</a>
-</div>
-<script src=/js/instantclick.min.js data-no-instant></script>
-<script data-no-instant>InstantClick.init("mousedown")</script>
-</body>
-</html>
+interop. Or possibly compiling to bytecode. </p><hr><p>Last modified on 2012-09-29</p><a href=/posts/2012-09-27-creating-a-language-7a/>Previous Making a programming language Part 7a - objects</a><br><a href=/posts/2012-10-08-creating-a-language-7b/>Next Making a programming language Part 7b - using objects</a></div><script src=/js/instantclick.min.js data-no-instant></script>
+<script data-no-instant>InstantClick.init("mousedown")</script></body></html>

@@ -1,46 +1,14 @@
-<!doctype html><html>
-<head>
-<title>Making a programming language Part 6 - functions</title>
-<meta charset=utf-8>
-<meta name=X-UA-Compatible content="IE=edge">
-<meta name=google-site-verification content>
-<meta content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=0" name=viewport>
-<style>body{max-width:800px;margin:auto;line-height:1.6;font-size:18px;color:#444;padding:0 10px}h1,h2,h3{line-height:1.2}.nav a,.nav a:visited,.nav a:hover,.nav a:active{color:inherit}.nav .title{margin:0}.nav-sub{display:inline-block}.nav-item{margin:5px}.nav-sub-right{display:inline-block;float:right}.nav-icon{margin-right:5px}.main img{display:block;max-width:100%;margin:auto}.main pre{overflow:auto}" media="screen"></style>
-</head>
-<body>
-<div class=nav>
-<a href=/><h2 class=title>Andraž Bajt's blog</h2></a>
-<div class=nav-sub>
-<a class=nav-item href=/about/>
-About Me
-</a>
-<a class=nav-item href=/>
-Archive
-</a>
-</div>
-<div class=nav-sub-right>
-<a class=nav-icon href=https://github.com/edofic target=_blank><img src=/icons/github.svg width=20 height=20></a>
+<!doctype html><html><head><title>Making a programming language Part 6 - functions</title><meta charset=utf-8><meta name=X-UA-Compatible content="IE=edge"><meta name=google-site-verification content><meta content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=0" name=viewport><style>body{max-width:800px;margin:auto;line-height:1.6;font-size:18px;color:#444;padding:0 10px}h1,h2,h3{line-height:1.2}.nav a,.nav a:visited,.nav a:hover,.nav a:active{color:inherit}.nav .title{margin:0}.nav-sub{display:inline-block}.nav-item{margin:5px}.nav-sub-right{display:inline-block;float:right}.nav-icon{margin-right:5px}.main img{display:block;max-width:100%;margin:auto}.main pre{overflow:auto}" media="screen"></style></head><body><div class=nav><a href=/><h2 class=title>Andraž Bajt's blog</h2></a><div class=nav-sub><a class=nav-item href=/about/>About Me</a>
+<a class=nav-item href=/>Archive</a></div><div class=nav-sub-right><a class=nav-icon href=https://github.com/edofic target=_blank><img src=/icons/github.svg width=20 height=20></a>
 <a class=nav-icon href=https://www.linkedin.com/in/edofic target=_blank><img src=/icons/linkedin.svg width=20 height=20></a>
 <a class=nav-icon href=https://twitter.com/edofic target=_blank><img src=/icons/twitter.svg width=20 height=20></a>
 <a class=nav-icon href=/index.xml target=_blank><img src=/icons/rss.svg width=20 height=20></a>
-<a class=nav-icon href=mailto:blog@edofic.com target=_blank><img src=/icons/email.svg width=20 height=20></a>
-</div>
-</div>
-<hr>
-<div class=main>
-<h1>Making a programming language Part 6 - functions</h1>
-<time>2012-09-25</time>
-<hr>
-<p><a href=http://commons.wikipedia.org/wiki/File%3AFunction_illustration.svg><img src=http://upload.wikimedia.org/wikipedia/commons/thumb/8/8a/Function_illustration.svg/200px-Function_illustration.svg.png alt="Illustration of Function (mathematics)."></a></p>
-<p><a href=/posts/2012-08-29-creating-a-language-1>Table of contents</a>,
-<a href=https://github.com/edofic/scrat-lang>Whole project on github</a></p>
-<p>Long overdue, I&rsquo;m finally writing about the most interesting part -
+<a class=nav-icon href=mailto:blog@edofic.com target=_blank><img src=/icons/email.svg width=20 height=20></a></div></div><hr><div class=main><h1>Making a programming language Part 6 - functions</h1><time>2012-09-25</time><hr><p><a href=http://commons.wikipedia.org/wiki/File%3AFunction_illustration.svg><img src=http://upload.wikimedia.org/wikipedia/commons/thumb/8/8a/Function_illustration.svg/200px-Function_illustration.svg.png alt="Illustration of Function (mathematics)."></a></p><p><a href=/posts/2012-08-29-creating-a-language-1>Table of contents</a>,
+<a href=https://github.com/edofic/scrat-lang>Whole project on github</a></p><p>Long overdue, I&rsquo;m finally writing about the most interesting part -
 <a href=http://en.wikipedia.org/wiki/User-defined_function title="User-defined function">user defined functions</a>.
 Objects should be in the next post as they are a natural extension of
 what I&rsquo;m about to do. And because I&rsquo;m to lazy to write a post that
-long.</p>
-<h3 id=whats-a-function>What&rsquo;s a function?</h3>
-<p>A function is something that takes parameters and returns a result. And
+long.</p><h3 id=whats-a-function>What&rsquo;s a function?</h3><p>A function is something that takes parameters and returns a result. And
 I&rsquo;m opting for side-effects as this is simpler to get something working
 that doing the whole <a href=http://en.wikipedia.org/wiki/Referential_transparency_%28computer_science%29 title="Referential transparency (computer science)">referential
 transparency</a>
@@ -50,15 +18,12 @@ and
 Although it would be interesting to have sort of <a href=http://en.wikipedia.org/wiki/Type_system title="Type system">dynamically
 typed</a>
 <a href=http://haskell.org/ title="Haskell (programming language)">Haskell</a>
-thingy&mldr;maybe in the future. </p>
-<p>So -
+thingy&mldr;maybe in the future. </p><p>So -
 <a href=http://en.wikipedia.org/wiki/Side_effect_%28computer_science%29 title="Side effect (computer science)">side-effect</a>-ful
 functions mean function body is a block of expressions, not just an
 expression, if I&rsquo;m to do useful side-effects. This also means I want
 <a href=http://en.wikipedia.org/wiki/Scope_%28computer_science%29 title="Scope (computer science)">lexical
-scope</a>. </p>
-<h4 id=body-scope>Body scope</h4>
-<p>Let&rsquo;s think about that. A function body needs a scope. It&rsquo;s parent scope
+scope</a>. </p><h4 id=body-scope>Body scope</h4><p>Let&rsquo;s think about that. A function body needs a scope. It&rsquo;s parent scope
 is kinda obvious - it&rsquo;s the scope in which the function was defined. I
 want closures! It&rsquo;s <a href=http://en.wikipedia.org/wiki/Local_variable title="Local variable">local
 scope</a>
@@ -68,104 +33,70 @@ executions a parent variable may be shadowed or not. This means I cannot
 reuse the body scope, as the shadows need to be cleaned out(I&rsquo;m
 considering an implementation that reuses it currently, but that&rsquo;s
 another story). As I&rsquo;m not after performance I can simply create a new
-scope for each invocation of the function. </p>
-<p>Parameters can be implemented as regular variables pre-put into the
-local scope before executing the function body. </p>
-<h3 id=parsing>Parsing</h3>
-<p>That was the hardest part. I had quite some problems in my grammar as I
+scope for each invocation of the function. </p><p>Parameters can be implemented as regular variables pre-put into the
+local scope before executing the function body. </p><h3 id=parsing>Parsing</h3><p>That was the hardest part. I had quite some problems in my grammar as I
 tried to introduce blocks. Mostly ambiguity and infinite recursion. I&rsquo;ll
 just post the interesting bits here - see <a href=https://github.com/edofic/scrat-lang/commit/181d513801567cb51e7ebc5637d1a64913290b13>the full
 commit</a> if
-you&rsquo;re interested in details.</p>
-<p>The function definition boils down to:</p>
-<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2>
-<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">4
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">5
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">6
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">7
-</span></code></pre></td>
-<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-scala data-lang=scala><span style=color:#66d9ef>private</span> <span style=color:#66d9ef>def</span> exprList<span style=color:#66d9ef>:</span> <span style=color:#66d9ef>Parser</span><span style=color:#f92672>[</span><span style=color:#66d9ef>List</span><span style=color:#f92672>[</span><span style=color:#66d9ef>Expression</span><span style=color:#f92672>]]</span> <span style=color:#66d9ef>=</span> repsep<span style=color:#f92672>(</span>expr<span style=color:#f92672>,</span> <span style=color:#e6db74>&#34;\\n+&#34;</span><span style=color:#f92672>.</span>
-<span style=color:#66d9ef>private</span> <span style=color:#66d9ef>def</span> block<span style=color:#66d9ef>:</span> <span style=color:#66d9ef>Parser</span><span style=color:#f92672>[</span><span style=color:#66d9ef>List</span><span style=color:#f92672>[</span><span style=color:#66d9ef>Expression</span><span style=color:#f92672>]]</span> <span style=color:#66d9ef>=</span>
-  <span style=color:#e6db74>&#34;&#34;&#34;\{\n*&#34;&#34;&#34;</span><span style=color:#f92672>.</span>r <span style=color:#f92672>~&gt;</span> exprList <span style=color:#f92672>&lt;~</span> <span style=color:#e6db74>&#34;&#34;&#34;\n*\}&#34;&#34;&#34;</span><span style=color:#f92672>.</span>
-<span style=color:#66d9ef>private</span> <span style=color:#66d9ef>def</span> functionDef<span style=color:#66d9ef>:</span> <span style=color:#66d9ef>Parser</span><span style=color:#f92672>[</span><span style=color:#66d9ef>FunctionDef</span><span style=color:#f92672>]</span> <span style=color:#66d9ef>=</span>
-  <span style=color:#e6db74>&#34;func&#34;</span> <span style=color:#f92672>~&gt;</span> identifier <span style=color:#f92672>~</span> <span style=color:#f92672>(</span><span style=color:#e6db74>&#34;(&#34;</span> <span style=color:#f92672>~&gt;</span> repsep<span style=color:#f92672>(</span>identifier<span style=color:#f92672>,</span> <span style=color:#e6db74>&#34;,&#34;</span><span style=color:#f92672>)</span> <span style=color:#f92672>&lt;~</span> <span style=color:#e6db74>&#34;)&#34;</span><span style=color:#f92672>)</span> <span style=color:#f92672>~</span> block <span style=color:#f92672>^^</span> <span style=color:#f92672>{</span>
-    <span style=color:#66d9ef>case</span> id <span style=color:#f92672>~</span> args <span style=color:#f92672>~</span> body <span style=color:#66d9ef>=&gt;</span> <span style=color:#a6e22e>FunctionDef</span><span style=color:#f92672>(</span>id<span style=color:#f92672>,</span> args<span style=color:#f92672>,</span> body<span style=color:#f92672>)</span>
-  <span style=color:#f92672>}</span>
-</code></pre></td></tr></table>
-</div>
-</div><p>Oh yes, and since I use newlines as separators now, they aren&rsquo;t
-whitespace and I have to handle them explicitly.</p>
-<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2>
-<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
-</span></code></pre></td>
-<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-scala data-lang=scala><span style=color:#66d9ef>override</span> <span style=color:#66d9ef>protected</span> <span style=color:#66d9ef>val</span> whiteSpace <span style=color:#66d9ef>=</span> <span style=color:#e6db74>&#34;&#34;&#34;[ \t\x0B\f\r]&#34;&#34;&#34;</span><span style=color:#f92672>.</span>r
-</code></pre></td></tr></table>
-</div>
-</div><p>And later on I added lambdas which have optional identifier - so the
-only shcange is opt(identifier) in the parser.</p>
-<h3 id=evaluation>Evaluation</h3>
-<p>It&rsquo;s just another node in the AST - a case class.</p>
-<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2>
-<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
-</span></code></pre></td>
-<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-scala data-lang=scala><span style=color:#66d9ef>case</span> <span style=color:#66d9ef>class</span> <span style=color:#a6e22e>FunctionDef</span><span style=color:#f92672>(</span>name<span style=color:#66d9ef>:</span> <span style=color:#66d9ef>Identifier</span><span style=color:#f92672>,</span> args<span style=color:#66d9ef>:</span> <span style=color:#66d9ef>List</span><span style=color:#f92672>[</span><span style=color:#66d9ef>Identifier</span><span style=color:#f92672>],</span>
-                       body<span style=color:#66d9ef>:</span> <span style=color:#66d9ef>List</span><span style=color:#f92672>[</span><span style=color:#66d9ef>Expression</span><span style=color:#f92672>])</span> <span style=color:#66d9ef>extends</span> <span style=color:#a6e22e>Expression</span>
-</code></pre></td></tr></table>
-</div>
-</div><p>Now I needed something to execute the definition and create a <a href=http://en.wikipedia.org/wiki/Function_%28mathematics%29 title="Function (mathematics)">function
+you&rsquo;re interested in details.</p><p>The function definition boils down to:</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">4
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">5
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">6
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">7
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-scala data-lang=scala><span style=display:flex><span><span style=color:#66d9ef>private</span> <span style=color:#66d9ef>def</span> exprList<span style=color:#66d9ef>:</span> <span style=color:#66d9ef>Parser</span><span style=color:#f92672>[</span><span style=color:#66d9ef>List</span><span style=color:#f92672>[</span><span style=color:#66d9ef>Expression</span><span style=color:#f92672>]]</span> <span style=color:#66d9ef>=</span> repsep<span style=color:#f92672>(</span>expr<span style=color:#f92672>,</span> <span style=color:#e6db74>&#34;\\n+&#34;</span><span style=color:#f92672>.</span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>private</span> <span style=color:#66d9ef>def</span> block<span style=color:#66d9ef>:</span> <span style=color:#66d9ef>Parser</span><span style=color:#f92672>[</span><span style=color:#66d9ef>List</span><span style=color:#f92672>[</span><span style=color:#66d9ef>Expression</span><span style=color:#f92672>]]</span> <span style=color:#66d9ef>=</span>
+</span></span><span style=display:flex><span>  <span style=color:#e6db74>&#34;&#34;&#34;\{\n*&#34;&#34;&#34;</span><span style=color:#f92672>.</span>r <span style=color:#f92672>~&gt;</span> exprList <span style=color:#f92672>&lt;~</span> <span style=color:#e6db74>&#34;&#34;&#34;\n*\}&#34;&#34;&#34;</span><span style=color:#f92672>.</span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>private</span> <span style=color:#66d9ef>def</span> functionDef<span style=color:#66d9ef>:</span> <span style=color:#66d9ef>Parser</span><span style=color:#f92672>[</span><span style=color:#66d9ef>FunctionDef</span><span style=color:#f92672>]</span> <span style=color:#66d9ef>=</span>
+</span></span><span style=display:flex><span>  <span style=color:#e6db74>&#34;func&#34;</span> <span style=color:#f92672>~&gt;</span> identifier <span style=color:#f92672>~</span> <span style=color:#f92672>(</span><span style=color:#e6db74>&#34;(&#34;</span> <span style=color:#f92672>~&gt;</span> repsep<span style=color:#f92672>(</span>identifier<span style=color:#f92672>,</span> <span style=color:#e6db74>&#34;,&#34;</span><span style=color:#f92672>)</span> <span style=color:#f92672>&lt;~</span> <span style=color:#e6db74>&#34;)&#34;</span><span style=color:#f92672>)</span> <span style=color:#f92672>~</span> block <span style=color:#f92672>^^</span> <span style=color:#f92672>{</span>
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>case</span> id <span style=color:#f92672>~</span> args <span style=color:#f92672>~</span> body <span style=color:#66d9ef>=&gt;</span> <span style=color:#a6e22e>FunctionDef</span><span style=color:#f92672>(</span>id<span style=color:#f92672>,</span> args<span style=color:#f92672>,</span> body<span style=color:#f92672>)</span>
+</span></span><span style=display:flex><span>  <span style=color:#f92672>}</span>
+</span></span></code></pre></td></tr></table></div></div><p>Oh yes, and since I use newlines as separators now, they aren&rsquo;t
+whitespace and I have to handle them explicitly.</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-scala data-lang=scala><span style=display:flex><span><span style=color:#66d9ef>override</span> <span style=color:#66d9ef>protected</span> <span style=color:#66d9ef>val</span> whiteSpace <span style=color:#66d9ef>=</span> <span style=color:#e6db74>&#34;&#34;&#34;[ \t\x0B\f\r]&#34;&#34;&#34;</span><span style=color:#f92672>.</span>r
+</span></span></code></pre></td></tr></table></div></div><p>And later on I added lambdas which have optional identifier - so the
+only shcange is opt(identifier) in the parser.</p><h3 id=evaluation>Evaluation</h3><p>It&rsquo;s just another node in the AST - a case class.</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-scala data-lang=scala><span style=display:flex><span><span style=color:#66d9ef>case</span> <span style=color:#66d9ef>class</span> <span style=color:#a6e22e>FunctionDef</span><span style=color:#f92672>(</span>name<span style=color:#66d9ef>:</span> <span style=color:#66d9ef>Identifier</span><span style=color:#f92672>,</span> args<span style=color:#66d9ef>:</span> <span style=color:#66d9ef>List</span><span style=color:#f92672>[</span><span style=color:#66d9ef>Identifier</span><span style=color:#f92672>],</span>
+</span></span><span style=display:flex><span>                       body<span style=color:#66d9ef>:</span> <span style=color:#66d9ef>List</span><span style=color:#f92672>[</span><span style=color:#66d9ef>Expression</span><span style=color:#f92672>])</span> <span style=color:#66d9ef>extends</span> <span style=color:#a6e22e>Expression</span>
+</span></span></code></pre></td></tr></table></div></div><p>Now I needed something to execute the definition and create a <a href=http://en.wikipedia.org/wiki/Function_%28mathematics%29 title="Function (mathematics)">function
 value</a>
-in the enclosing scope. (this is in Evaluator class)</p>
-<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2>
-<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">11
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">12
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">13
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">14
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">15
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">16
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">17
-</span></code></pre></td>
-<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-scala data-lang=scala><span style=color:#66d9ef>def</span> createFunFromAst<span style=color:#f92672>(</span>arglist<span style=color:#66d9ef>:</span> <span style=color:#66d9ef>List</span><span style=color:#f92672>[</span><span style=color:#66d9ef>Identifier</span><span style=color:#f92672>],</span>
-      body<span style=color:#66d9ef>:</span> <span style=color:#66d9ef>List</span><span style=color:#f92672>[</span><span style=color:#66d9ef>Expression</span><span style=color:#f92672>],</span> scope<span style=color:#66d9ef>:</span> <span style=color:#66d9ef>SScope</span><span style=color:#f92672>)</span><span style=color:#66d9ef>:</span> <span style=color:#66d9ef>FunctionVarArg</span> <span style=color:#f92672>=</span>
-  <span style=color:#f92672>(</span>args<span style=color:#66d9ef>:</span> <span style=color:#66d9ef>Any</span><span style=color:#f92672>)</span> <span style=color:#66d9ef>=&gt;</span> args <span style=color:#66d9ef>match</span> <span style=color:#f92672>{</span>
-    <span style=color:#66d9ef>case</span> lst<span style=color:#66d9ef>:</span> <span style=color:#66d9ef>List</span><span style=color:#f92672>[</span><span style=color:#66d9ef>Any</span><span style=color:#f92672>]</span> <span style=color:#66d9ef>=&gt;</span> <span style=color:#f92672>{</span>
-      <span style=color:#66d9ef>if</span> <span style=color:#f92672>(</span>lst<span style=color:#f92672>.</span>length <span style=color:#f92672>!=</span> arglist<span style=color:#f92672>.</span>length<span style=color:#f92672>)</span> <span style=color:#f92672>{</span>
-        <span style=color:#66d9ef>throw</span> <span style=color:#66d9ef>new</span> <span style=color:#a6e22e>ScratInvalidTypeError</span><span style=color:#f92672>(</span>
-          <span style=color:#e6db74>&#34;expected &#34;</span> <span style=color:#f92672>+</span> arglist<span style=color:#f92672>.</span>length <span style=color:#f92672>+</span> <span style=color:#e6db74>&#34; arguments, but got &#34;</span> <span style=color:#f92672>+</span> lst<span style=color:#f92672>.</span>length<span style=color:#f92672>)</span>
-      <span style=color:#f92672>}</span> <span style=color:#66d9ef>else</span> <span style=color:#f92672>{</span>
-        <span style=color:#66d9ef>val</span> closure <span style=color:#66d9ef>=</span> <span style=color:#66d9ef>new</span> <span style=color:#a6e22e>SScope</span><span style=color:#f92672>(</span><span style=color:#a6e22e>Some</span><span style=color:#f92672>(</span>scope<span style=color:#f92672>))</span>
-        <span style=color:#f92672>(</span>arglist zip lst<span style=color:#f92672>)</span> foreach <span style=color:#f92672>{</span>
-        t <span style=color:#66d9ef>=&gt;</span> closure<span style=color:#f92672>.</span>put<span style=color:#f92672>(</span>t<span style=color:#f92672>.</span>_1<span style=color:#f92672>.</span>id<span style=color:#f92672>,</span> t<span style=color:#f92672>.</span>_2<span style=color:#f92672>)</span>
-        <span style=color:#f92672>}</span>
-        apply<span style=color:#f92672>(</span>body<span style=color:#f92672>)(</span>closure<span style=color:#f92672>)</span>        <span style=color:#f92672>}</span>
-    <span style=color:#f92672>}</span>
-    <span style=color:#66d9ef>case</span> other <span style=color:#66d9ef>=&gt;</span>
-      <span style=color:#66d9ef>throw</span> <span style=color:#66d9ef>new</span> <span style=color:#a6e22e>ScratInvalidTypeError</span><span style=color:#f92672>(</span><span style=color:#e6db74>&#34;expected list of arguments but got&#34;</span> <span style=color:#f92672>+</span> other<span style=color:#f92672>)</span>
-  <span style=color:#f92672>}</span>
-</code></pre></td></tr></table>
-</div>
-</div><p>So, what am I doing here? I&rsquo;m taking a part of the function
+in the enclosing scope. (this is in Evaluator class)</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">11
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">12
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">13
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">14
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">15
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">16
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">17
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-scala data-lang=scala><span style=display:flex><span><span style=color:#66d9ef>def</span> createFunFromAst<span style=color:#f92672>(</span>arglist<span style=color:#66d9ef>:</span> <span style=color:#66d9ef>List</span><span style=color:#f92672>[</span><span style=color:#66d9ef>Identifier</span><span style=color:#f92672>],</span>
+</span></span><span style=display:flex><span>      body<span style=color:#66d9ef>:</span> <span style=color:#66d9ef>List</span><span style=color:#f92672>[</span><span style=color:#66d9ef>Expression</span><span style=color:#f92672>],</span> scope<span style=color:#66d9ef>:</span> <span style=color:#66d9ef>SScope</span><span style=color:#f92672>)</span><span style=color:#66d9ef>:</span> <span style=color:#66d9ef>FunctionVarArg</span> <span style=color:#f92672>=</span>
+</span></span><span style=display:flex><span>  <span style=color:#f92672>(</span>args<span style=color:#66d9ef>:</span> <span style=color:#66d9ef>Any</span><span style=color:#f92672>)</span> <span style=color:#66d9ef>=&gt;</span> args <span style=color:#66d9ef>match</span> <span style=color:#f92672>{</span>
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>case</span> lst<span style=color:#66d9ef>:</span> <span style=color:#66d9ef>List</span><span style=color:#f92672>[</span><span style=color:#66d9ef>Any</span><span style=color:#f92672>]</span> <span style=color:#66d9ef>=&gt;</span> <span style=color:#f92672>{</span>
+</span></span><span style=display:flex><span>      <span style=color:#66d9ef>if</span> <span style=color:#f92672>(</span>lst<span style=color:#f92672>.</span>length <span style=color:#f92672>!=</span> arglist<span style=color:#f92672>.</span>length<span style=color:#f92672>)</span> <span style=color:#f92672>{</span>
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>throw</span> <span style=color:#66d9ef>new</span> <span style=color:#a6e22e>ScratInvalidTypeError</span><span style=color:#f92672>(</span>
+</span></span><span style=display:flex><span>          <span style=color:#e6db74>&#34;expected &#34;</span> <span style=color:#f92672>+</span> arglist<span style=color:#f92672>.</span>length <span style=color:#f92672>+</span> <span style=color:#e6db74>&#34; arguments, but got &#34;</span> <span style=color:#f92672>+</span> lst<span style=color:#f92672>.</span>length<span style=color:#f92672>)</span>
+</span></span><span style=display:flex><span>      <span style=color:#f92672>}</span> <span style=color:#66d9ef>else</span> <span style=color:#f92672>{</span>
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>val</span> closure <span style=color:#66d9ef>=</span> <span style=color:#66d9ef>new</span> <span style=color:#a6e22e>SScope</span><span style=color:#f92672>(</span><span style=color:#a6e22e>Some</span><span style=color:#f92672>(</span>scope<span style=color:#f92672>))</span>
+</span></span><span style=display:flex><span>        <span style=color:#f92672>(</span>arglist zip lst<span style=color:#f92672>)</span> foreach <span style=color:#f92672>{</span>
+</span></span><span style=display:flex><span>        t <span style=color:#66d9ef>=&gt;</span> closure<span style=color:#f92672>.</span>put<span style=color:#f92672>(</span>t<span style=color:#f92672>.</span>_1<span style=color:#f92672>.</span>id<span style=color:#f92672>,</span> t<span style=color:#f92672>.</span>_2<span style=color:#f92672>)</span>
+</span></span><span style=display:flex><span>        <span style=color:#f92672>}</span>
+</span></span><span style=display:flex><span>        apply<span style=color:#f92672>(</span>body<span style=color:#f92672>)(</span>closure<span style=color:#f92672>)</span>        <span style=color:#f92672>}</span>
+</span></span><span style=display:flex><span>    <span style=color:#f92672>}</span>
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>case</span> other <span style=color:#66d9ef>=&gt;</span>
+</span></span><span style=display:flex><span>      <span style=color:#66d9ef>throw</span> <span style=color:#66d9ef>new</span> <span style=color:#a6e22e>ScratInvalidTypeError</span><span style=color:#f92672>(</span><span style=color:#e6db74>&#34;expected list of arguments but got&#34;</span> <span style=color:#f92672>+</span> other<span style=color:#f92672>)</span>
+</span></span><span style=display:flex><span>  <span style=color:#f92672>}</span>
+</span></span></code></pre></td></tr></table></div></div><p>So, what am I doing here? I&rsquo;m taking a part of the function
 definition(all except name - which is optional in the definition and not
 needed here) and the parent scope and then returning &ldquo;FunctionVarArg&rdquo;
 which is the same as native functions in standard library. This new
@@ -182,29 +113,8 @@ Oh yes, there is also a case clause in Evaluator&rsquo;s apply that invokes
 createFunFromAst, again trivial.
 Such functions are indistinguishable to native functions from scrat&rsquo;s
 point of view and are invoked by same syntax and by same code in
-Evaluator.</p>
-<h3 id=a-sample>A sample</h3>
-<p>First thing I tried to implement(literaly) was fibonaci&rsquo;s sequence</p>
-<p>func fib(n) { if n==0 then 1 else if n==1 then 1 else fib(n-1) + fib(n-2) }
-println(&ldquo;20th fibbonacci number is&rdquo;, fib(20))</p>
-<p>Excuse me for the ugly nested if&rsquo;s, but this was neccessary as I have
-not implemented &lt; yet. But hey, it works.</p>
-<h4 id=sneak-peak>Sneak peak</h4>
-<p>At this point I realised an awesome way to implement objects. With
-constructors like:</p>
-<p>func create(n){this}</p>
-<p><strong>next <a href=/posts/2012-09-27-creating-a-language-7a>objects and costructors</a></strong></p>
-<hr>
-<p>Last modified on 2012-09-25</p>
-<a href=/posts/2012-09-21-power-sets/>
-Previous Power sets
-</a>
-<br>
-<a href=/posts/2012-09-27-creating-a-language-7a/>
-Next Making a programming language Part 7a - objects
-</a>
-</div>
-<script src=/js/instantclick.min.js data-no-instant></script>
-<script data-no-instant>InstantClick.init("mousedown")</script>
-</body>
-</html>
+Evaluator.</p><h3 id=a-sample>A sample</h3><p>First thing I tried to implement(literaly) was fibonaci&rsquo;s sequence</p><p>func fib(n) { if n==0 then 1 else if n==1 then 1 else fib(n-1) + fib(n-2) }
+println(&ldquo;20th fibbonacci number is&rdquo;, fib(20))</p><p>Excuse me for the ugly nested if&rsquo;s, but this was neccessary as I have
+not implemented &lt; yet. But hey, it works.</p><h4 id=sneak-peak>Sneak peak</h4><p>At this point I realised an awesome way to implement objects. With
+constructors like:</p><p>func create(n){this}</p><p><strong>next <a href=/posts/2012-09-27-creating-a-language-7a>objects and costructors</a></strong></p><hr><p>Last modified on 2012-09-25</p><a href=/posts/2012-09-21-power-sets/>Previous Power sets</a><br><a href=/posts/2012-09-27-creating-a-language-7a/>Next Making a programming language Part 7a - objects</a></div><script src=/js/instantclick.min.js data-no-instant></script>
+<script data-no-instant>InstantClick.init("mousedown")</script></body></html>

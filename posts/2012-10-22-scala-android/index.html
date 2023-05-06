@@ -1,45 +1,14 @@
-<!doctype html><html>
-<head>
-<title>Setting up for scala development on Android</title>
-<meta charset=utf-8>
-<meta name=X-UA-Compatible content="IE=edge">
-<meta name=google-site-verification content>
-<meta content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=0" name=viewport>
-<style>body{max-width:800px;margin:auto;line-height:1.6;font-size:18px;color:#444;padding:0 10px}h1,h2,h3{line-height:1.2}.nav a,.nav a:visited,.nav a:hover,.nav a:active{color:inherit}.nav .title{margin:0}.nav-sub{display:inline-block}.nav-item{margin:5px}.nav-sub-right{display:inline-block;float:right}.nav-icon{margin-right:5px}.main img{display:block;max-width:100%;margin:auto}.main pre{overflow:auto}" media="screen"></style>
-</head>
-<body>
-<div class=nav>
-<a href=/><h2 class=title>Andraž Bajt's blog</h2></a>
-<div class=nav-sub>
-<a class=nav-item href=/about/>
-About Me
-</a>
-<a class=nav-item href=/>
-Archive
-</a>
-</div>
-<div class=nav-sub-right>
-<a class=nav-icon href=https://github.com/edofic target=_blank><img src=/icons/github.svg width=20 height=20></a>
+<!doctype html><html><head><title>Setting up for scala development on Android</title><meta charset=utf-8><meta name=X-UA-Compatible content="IE=edge"><meta name=google-site-verification content><meta content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=0" name=viewport><style>body{max-width:800px;margin:auto;line-height:1.6;font-size:18px;color:#444;padding:0 10px}h1,h2,h3{line-height:1.2}.nav a,.nav a:visited,.nav a:hover,.nav a:active{color:inherit}.nav .title{margin:0}.nav-sub{display:inline-block}.nav-item{margin:5px}.nav-sub-right{display:inline-block;float:right}.nav-icon{margin-right:5px}.main img{display:block;max-width:100%;margin:auto}.main pre{overflow:auto}" media="screen"></style></head><body><div class=nav><a href=/><h2 class=title>Andraž Bajt's blog</h2></a><div class=nav-sub><a class=nav-item href=/about/>About Me</a>
+<a class=nav-item href=/>Archive</a></div><div class=nav-sub-right><a class=nav-icon href=https://github.com/edofic target=_blank><img src=/icons/github.svg width=20 height=20></a>
 <a class=nav-icon href=https://www.linkedin.com/in/edofic target=_blank><img src=/icons/linkedin.svg width=20 height=20></a>
 <a class=nav-icon href=https://twitter.com/edofic target=_blank><img src=/icons/twitter.svg width=20 height=20></a>
 <a class=nav-icon href=/index.xml target=_blank><img src=/icons/rss.svg width=20 height=20></a>
-<a class=nav-icon href=mailto:blog@edofic.com target=_blank><img src=/icons/email.svg width=20 height=20></a>
-</div>
-</div>
-<hr>
-<div class=main>
-<h1>Setting up for scala development on Android</h1>
-<time>2012-10-22</time>
-<hr>
-<p><a href=http://www.crunchbase.com/product/android><img src=http://www.crunchbase.com/assets/images/resized/0001/4601/14601v1-max-450x450.png alt="Image representing Android as depicted in Crun&mldr;"></a></p>
-<p><a href=http://en.wikipedia.org/wiki/File%3AScala_logo.png><img src=http://upload.wikimedia.org/wikipedia/en/thumb/8/85/Scala_logo.png/300px-Scala_logo.png alt="Scala (programming language)"></a></p>
-<p>I&rsquo;ve been developing for android more than a year now and a few months
+<a class=nav-icon href=mailto:blog@edofic.com target=_blank><img src=/icons/email.svg width=20 height=20></a></div></div><hr><div class=main><h1>Setting up for scala development on Android</h1><time>2012-10-22</time><hr><p><a href=http://www.crunchbase.com/product/android><img src=http://www.crunchbase.com/assets/images/resized/0001/4601/14601v1-max-450x450.png alt="Image representing Android as depicted in Crun&amp;hellip;"></a></p><p><a href=http://en.wikipedia.org/wiki/File%3AScala_logo.png><img src=http://upload.wikimedia.org/wikipedia/en/thumb/8/85/Scala_logo.png/300px-Scala_logo.png alt="Scala (programming language)"></a></p><p>I&rsquo;ve been developing for android more than a year now and a few months
 in scala. So naturally I wanted to combine the two. But it&rsquo;s not dead
 simple. This is kinda a tutorial an a reference if I ever forget how to
 do this. It took me a few days to figure it all out. I tried maven, ant
 with special config and sbt(I need to learn more about this one) but in
-the end I just wanted fast solution integrated into my IDE.</p>
-<p>So I use <a href=http://www.jetbrains.com/idea/ title="IntelliJ IDEA">IntelliJ
+the end I just wanted fast solution integrated into my IDE.</p><p>So I use <a href=http://www.jetbrains.com/idea/ title="IntelliJ IDEA">IntelliJ
 IDEA</a> community edition
 for my IDE.  You should check it out, it&rsquo;s totally awesome. It&rsquo;s primary
 a Java IDE but scala plugin rocks. It offers some more advanced text
@@ -52,64 +21,33 @@ refactorings. But scala
 <a href=http://en.wikipedia.org/wiki/Read%E2%80%93eval%E2%80%93print_loop title="Read–eval–print loop">REPL</a>
 is where fun begins. You get your module classpath pre-set and you get
 <strong>full editor capabilities in REPL</strong>. Enough with advertisement(they
-didn&rsquo;t pay me to do this) and let&rsquo;s get to work. </p>
-<h3 id=prerequisites>Prerequisites</h3>
-<ul>
-<li>JDK&mldr;duh!  I use
+didn&rsquo;t pay me to do this) and let&rsquo;s get to work. </p><h3 id=prerequisites>Prerequisites</h3><ul><li>JDK&mldr;duh!  I use
 <a href=http://openjdk.java.net/projects/jdk7/ title=OpenJDK>OpenJDK</a> 7, IDEA
-gives some warnings but it works like a charm</li>
-<li><a href=http://en.wikipedia.org/wiki/Android_software_development title="Android software development">Android
+gives some warnings but it works like a charm</li><li><a href=http://en.wikipedia.org/wiki/Android_software_development title="Android software development">Android
 SDK</a>
-and at least one platform</li>
-<li>IntelliJ IDEA</li>
-<li>scala distribution. I recommend you use latest stable release from
-<a href=http://www.scala-lang.org/downloads>here</a> </li>
-</ul>
-<h3 id=setting-up>Setting up</h3>
-<p>First install scala plugin. It&rsquo;s quite straightforward. Plugin
-Manager->Browse repos->search for scala->select->ok.</p>
-<p>Now actual setting up. I use global libraries for all my projects, you
-can also put these into just Libraries and to that on per-project basis.</p>
-<p>Open project structure(no project open) and go to Global Libraries. You
-need to create two libraries containing jars from /lib/.</p>
-<p>First scala-compiler
+and at least one platform</li><li>IntelliJ IDEA</li><li>scala distribution. I recommend you use latest stable release from
+<a href=http://www.scala-lang.org/downloads>here</a> </li></ul><h3 id=setting-up>Setting up</h3><p>First install scala plugin. It&rsquo;s quite straightforward. Plugin
+Manager->Browse repos->search for scala->select->ok.</p><p>Now actual setting up. I use global libraries for all my projects, you
+can also put these into just Libraries and to that on per-project basis.</p><p>Open project structure(no project open) and go to Global Libraries. You
+need to create two libraries containing jars from /lib/.</p><p>First scala-compiler
 with scala-compiler.jar and scala-library.jar and then scala-library
 with scala-library.jar and anything else you might need. Reason for
 scala library in compiler is that compiler also relies on scala lib. I
-needed quite some time to figure this out.</p>
-<p>This whole process can be automated if you add scala to your project
+needed quite some time to figure this out.</p><p>This whole process can be automated if you add scala to your project
 when creating it but it&rsquo;s not possible with android so you need to know
-how to do it by hand. </p>
-<h3 id=creating-a-project>Creating a project</h3>
-<ul>
-<li>Project from scratch</li>
-<li>add android module and configure it</li>
-<li>now go to project structure. add scala facet to this module and go
-to its settings and set the compiler jar.</li>
-<li>back to module and add dependency to global scala-library</li>
-<li>set dependency to <strong>provided</strong>. This is important. Else it will try
+how to do it by hand. </p><h3 id=creating-a-project>Creating a project</h3><ul><li>Project from scratch</li><li>add android module and configure it</li><li>now go to project structure. add scala facet to this module and go
+to its settings and set the compiler jar.</li><li>back to module and add dependency to global scala-library</li><li>set dependency to <strong>provided</strong>. This is important. Else it will try
 to dex whole library and you&rsquo;ll end up with &ldquo;too  many methods
-error&rdquo;.</li>
-</ul>
-<p>Now your project should compile. But not run.</p>
-<h3 id=running>Running</h3>
-<p>Obviously not including scala library in the build means you need to
+error&rdquo;.</li></ul><p>Now your project should compile. But not run.</p><h3 id=running>Running</h3><p>Obviously not including scala library in the build means you need to
 provide it in another way. For developing on emulator I customized it to
 provide predexed scala library. <a href=http://zegoggl.es/2011/07/how-to-preinstall-scala-on-your-android-phone.html>Excellent
-tutorial.</a></p>
-<p>In a nutshell</p>
-<pre><code>$ git clone git://github.com/jberkel/android-sdk-scala.git$ cd android-sdk-scala$ ./bin/createdexlibs
+tutorial.</a></p><p>In a nutshell</p><pre><code>$ git clone git://github.com/jberkel/android-sdk-scala.git$ cd android-sdk-scala$ ./bin/createdexlibs
 $ bin/createramdisks
 $ emulator -avd ... -ramdisk /path/to/custom.img$ adb shell mkdir -p /data/framework$ for i in configs/framework/*.jar; do adb push $i /data/framework/; done
-</code></pre>
-<p>And reboot.</p>
-<p>There is also (not so trivial) part about patching a device. However you
+</code></pre><p>And reboot.</p><p>There is also (not so trivial) part about patching a device. However you
 can try <a href="https://play.google.com/store/apps/details?id=com.mobilemagic.scalainstaller&feature=search_result#?t=W251bGwsMSwxLDEsImNvbS5tb2JpbGVtYWdpYy5zY2FsYWluc3RhbGxlciJd">Scala
 Installer</a> from
-Play to do this. I had some success and some failures.</p>
-<p>Now the app should run on your device.</p>
-<h3 id=deploying>Deploying</h3>
-<p>Well it doesn&rsquo;t work on other devices right now. For export you need to
+Play to do this. I had some success and some failures.</p><p>Now the app should run on your device.</p><h3 id=deploying>Deploying</h3><p>Well it doesn&rsquo;t work on other devices right now. For export you need to
 change scala-library dependency back to <strong>compile</strong>to include it into
 the build. Trick now is to enable ProGuard to remove unnecessary methods
 and classed to fit the jar through dexer. You do this in
@@ -118,33 +56,13 @@ Select ProGuard and your config. I got mine from jberkel&rsquo;s repo. That&rsqu
 it. Sadly this export takes quite some time. Scala&rsquo;s standard library is
 not a piece of cake afterall(actually <em>it is</em> a cake). Minute and a
 half on my machine for small apps. So I only to this for testing on
-other phones and deployment.</p>
-<h3 id=faster-compilation>Faster compilation</h3>
-<p>Compiling with scala-libray set to provided is much faster but not fast
+other phones and deployment.</p><h3 id=faster-compilation>Faster compilation</h3><p>Compiling with scala-libray set to provided is much faster but not fast
 enough for me. I want to be doing stuff not <a href=http://xkcd.com/303/>waiting for it to
-compile</a>. </p>
-<p>Turns out compiler is the big time sucker(and I&rsquo;m being Capt. Obvious).
-Afterall scalac is not known for it&rsquo;s speed.</p>
-<p>Enter <strong>FSC</strong>or Fast Scala Compiler. This is a scala compiler running in
+compile</a>. </p><p>Turns out compiler is the big time sucker(and I&rsquo;m being Capt. Obvious).
+Afterall scalac is not known for it&rsquo;s speed.</p><p>Enter <strong>FSC</strong>or Fast Scala Compiler. This is a scala compiler running in
 the background having everything preloaded and just does incremental
 compilation. It even comes with standard scala distribution and is
-supported by IntelliJ IDEA. Great. </p>
-<p>To set it up just head over to Project Structure->Scala facet and
+supported by IntelliJ IDEA. Great. </p><p>To set it up just head over to Project Structure->Scala facet and
 select Use FSC. And then immediately click Setting to access Project
-Settings and set compiler jar for the compiler.</p>
-<p>Success. Scala builds are now on par(or even faster!) than java ones. </p>
-<p>No more fencing for me.</p>
-<hr>
-<p>Last modified on 2012-10-22</p>
-<a href=/posts/2012-10-21-javascript-ftl/>
-Previous Javascript faster than light! (well C actually)
-</a>
-<br>
-<a href=/posts/2012-10-29-design-patterns-bullshit/>
-Next Design patterns are bullshit!
-</a>
-</div>
-<script src=/js/instantclick.min.js data-no-instant></script>
-<script data-no-instant>InstantClick.init("mousedown")</script>
-</body>
-</html>
+Settings and set compiler jar for the compiler.</p><p>Success. Scala builds are now on par(or even faster!) than java ones. </p><p>No more fencing for me.</p><hr><p>Last modified on 2012-10-22</p><a href=/posts/2012-10-21-javascript-ftl/>Previous Javascript faster than light! (well C actually)</a><br><a href=/posts/2012-10-29-design-patterns-bullshit/>Next Design patterns are bullshit!</a></div><script src=/js/instantclick.min.js data-no-instant></script>
+<script data-no-instant>InstantClick.init("mousedown")</script></body></html>
